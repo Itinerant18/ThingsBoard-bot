@@ -46,4 +46,9 @@ public interface DeviceEventRepository extends JpaRepository<DeviceEvent, Long> 
             @Param("customerId") String customerId,
             @Param("startTime") Instant startTime,
             @Param("endTime") Instant endTime);
+
+    @Query(value = "SELECT DISTINCT ON (branch_node_id) * FROM device_events WHERE customer_id = :customerId AND field = :field ORDER BY branch_node_id, event_time DESC", nativeQuery = true)
+    List<DeviceEvent> findLatestEventsForEachBranch(
+            @Param("customerId") String customerId,
+            @Param("field") String field);
 }

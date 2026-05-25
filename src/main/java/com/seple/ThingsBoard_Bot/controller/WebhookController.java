@@ -45,8 +45,8 @@ public class WebhookController {
                     event.getPrevValue(),
                     event.getNewValue());
             
-            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, "iot.event.device", event);
-            log.info("✅ Event sent to exchange: {}", RabbitMQConfig.EXCHANGE_NAME);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, "iot.event." + event.getCustomerId(), event);
+            log.info("✅ Event sent to exchange: {} with routing key: {}", RabbitMQConfig.EXCHANGE_NAME, "iot.event." + event.getCustomerId());
             
             return ResponseEntity.ok().build();
             

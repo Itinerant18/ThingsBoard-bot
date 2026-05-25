@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import com.seple.ThingsBoard_Bot.entity.BranchAncestorPath;
+import com.seple.ThingsBoard_Bot.repository.BranchAncestorPathRepository;
 
 @Slf4j
 @Service
@@ -21,8 +24,9 @@ public class EventConsumerService {
     private final RedisCacheService redisCacheService;
     private final AncestorPathCache ancestorPathCache;
     private final LuaScriptService luaScriptService;
+    private final BranchAncestorPathRepository branchAncestorPathRepository;
 
-    @RabbitListener(queues = "iot.events")
+    @RabbitListener(id = "eventListener", queues = "iot.events")
     public void consume(TbEventPayload event) {
         log.info("📥 Consumed event: device={}, field={}, value={}",
                 event.getDeviceName(), event.getField(), event.getNewValue());
@@ -59,8 +63,14 @@ public class EventConsumerService {
         
         List<String> ancestors = ancestorPathCache.getAncestors(customerId, branchNodeId);
         if (ancestors.isEmpty()) {
-            ancestors = buildDefaultAncestors(customerId, branchNodeId);
-            ancestorPathCache.cacheAncestors(customerId, branchNodeId, ancestors);
+            Optional<BranchAncestorPath> dbPathOpt = branchAncestorPathRepository.findByBranchNodeIdAndCustomerId(branchNodeId, customerId);
+            if (dbPathOpt.isPresent()) {
+                ancestors = dbPathOpt.get().getAncestorList();
+                ancestorPathCache.cacheAncestors(customerId, branchNodeId, ancestors);
+            } else {
+                ancestors = buildDefaultAncestors(customerId, branchNodeId);
+                ancestorPathCache.cacheAncestors(customerId, branchNodeId, ancestors);
+            }
         }
         
         luaScriptService.executeUpdateCounters(
