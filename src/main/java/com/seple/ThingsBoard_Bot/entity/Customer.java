@@ -20,6 +20,9 @@ public class Customer {
     @Column(name = "customer_id", length = 64)
     private String customerId;
 
+    @Column(name = "tb_customer_id", unique = true, length = 64)
+    private String tbCustomerId;
+
     @Column(name = "name", nullable = false, length = 256)
     private String name;
 

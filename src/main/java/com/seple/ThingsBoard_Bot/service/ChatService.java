@@ -16,6 +16,7 @@ import com.seple.ThingsBoard_Bot.model.dto.ChatResponse;
 import com.seple.ThingsBoard_Bot.service.query.DeterministicAnswerService;
 import com.seple.ThingsBoard_Bot.service.index.GlobalAggregatorService;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
+import com.seple.ThingsBoard_Bot.service.query.QueryRouterService;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntentResolver;
 import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
 import com.seple.ThingsBoard_Bot.util.StructuredContextBuilder;
@@ -57,13 +58,15 @@ public class ChatService {
     private final DeterministicAnswerService deterministicAnswerService;
     private final StructuredContextBuilder structuredContextBuilder;
     private final GlobalAggregatorService globalAggregatorService;
+    private final QueryRouterService queryRouterService;
 
     public ChatService(UserDataService userDataService, OpenAIClient openAIClient,
             ChartService chartService, ChatMemoryService chatMemoryService,
             ChatbotConfig chatbotConfig,
             QueryIntentResolver queryIntentResolver, DeterministicAnswerService deterministicAnswerService,
             StructuredContextBuilder structuredContextBuilder,
-            GlobalAggregatorService globalAggregatorService) {
+            GlobalAggregatorService globalAggregatorService,
+            QueryRouterService queryRouterService) {
         this.userDataService = userDataService;
         this.openAIClient = openAIClient;
         this.chatMemoryService = chatMemoryService;
@@ -72,6 +75,7 @@ public class ChatService {
         this.deterministicAnswerService = deterministicAnswerService;
         this.structuredContextBuilder = structuredContextBuilder;
         this.globalAggregatorService = globalAggregatorService;
+        this.queryRouterService = queryRouterService;
     }
 
     public ChatResponse answerQuestion(ChatRequest request, String userToken) {
@@ -84,6 +88,27 @@ public class ChatService {
                         .answer("Please log in first.")
                         .error(true)
                         .build();
+            }
+
+            String customerId = userDataService.resolveCustomerIdPrefix(userToken);
+            if (queryRouterService.classify(request.getQuestion()) == QueryRouterService.QueryComplexity.SIMPLE_REDIS) {
+                String simpleAnswer = queryRouterService.routeAndAnswerSimple(customerId, request.getQuestion());
+                if (simpleAnswer != null) {
+                    log.info("[ROUTER] Answering query from local Redis cache (SIMPLE_REDIS): '{}'", request.getQuestion());
+                    chatMemoryService.recordInteraction(sessionId, request.getQuestion(), simpleAnswer);
+                    return ChatResponse.builder()
+                            .answer(simpleAnswer)
+                            .metadata(AnswerMetadata.builder()
+                                    .intent("SIMPLE_REDIS")
+                                    .matchedBranch(null)
+                                    .deterministic(true)
+                                    .confidence(1.0)
+                                    .build())
+                            .tokensUsed(0)
+                            .timestamp(System.currentTimeMillis())
+                            .error(false)
+                            .build();
+                }
             }
 
             boolean twoStepEnabled = userDataService.isTwoStepFetchEnabled();

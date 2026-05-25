@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.seple.ThingsBoard_Bot.client.UserAwareThingsBoardClient;
 import com.seple.ThingsBoard_Bot.config.ThingsBoardConfig;
 import com.seple.ThingsBoard_Bot.model.domain.BranchSnapshot;
 import com.seple.ThingsBoard_Bot.model.dto.DeviceIndexEntry;
@@ -22,176 +20,110 @@ import com.seple.ThingsBoard_Bot.service.index.BranchIndexService;
 import com.seple.ThingsBoard_Bot.service.normalization.BranchSnapshotMapper;
 import com.seple.ThingsBoard_Bot.service.query.IntentKeyProfileRegistry;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
+import com.seple.ThingsBoard_Bot.repository.CustomerRepository;
+import com.seple.ThingsBoard_Bot.repository.HierarchyNodeRepository;
+import com.seple.ThingsBoard_Bot.entity.HierarchyNode;
+import com.seple.ThingsBoard_Bot.util.JwtParserUtil;
 
-/**
- * Per-user data caching service with 5-MINUTE TTL + background refresh.
- * <p>
- * Each user (identified by their JWT token / user ID) has their own
- * separate cache. Data is refreshed in background every 4 minutes.
- * Users always get instant responses from cache.
- * </p>
- */
 @Service
 public class UserDataService {
 
     private static final Logger log = LoggerFactory.getLogger(UserDataService.class);
-    private final UserAwareThingsBoardClient userTbClient;
     private final BranchSnapshotMapper branchSnapshotMapper;
     private final BranchIndexService branchIndexService;
     private final IntentKeyProfileRegistry intentKeyProfileRegistry;
     private final ThingsBoardConfig thingsBoardConfig;
+    private final CustomerRepository customerRepository;
+    private final HierarchyNodeRepository hierarchyNodeRepository;
+    private final RedisCacheService redisCacheService;
 
-    // Per-user cache: key = userToken hash, value = cached data + timestamp
-    private final ConcurrentHashMap<String, CachedUserData> userCacheMap = new ConcurrentHashMap<>();
+    // Keep an empty cache map to avoid breaking any dailyCacheMemoryWipe references
+    private final ConcurrentHashMap<String, Object> userCacheMap = new ConcurrentHashMap<>();
 
-    // 5-MINUTE TTL
-    private static final long CACHE_TTL_MS = 5 * 60 * 1000;
-    // Refresh threshold (refresh when 80% of TTL elapsed)
-    private static final long REFRESH_THRESHOLD_MS = CACHE_TTL_MS * 80 / 100;
-
-    public UserDataService(UserAwareThingsBoardClient userTbClient, BranchSnapshotMapper branchSnapshotMapper,
-            BranchIndexService branchIndexService, IntentKeyProfileRegistry intentKeyProfileRegistry,
-            ThingsBoardConfig thingsBoardConfig) {
-        this.userTbClient = userTbClient;
+    public UserDataService(BranchSnapshotMapper branchSnapshotMapper,
+                           BranchIndexService branchIndexService,
+                           IntentKeyProfileRegistry intentKeyProfileRegistry,
+                           ThingsBoardConfig thingsBoardConfig,
+                           CustomerRepository customerRepository,
+                           HierarchyNodeRepository hierarchyNodeRepository,
+                           RedisCacheService redisCacheService) {
         this.branchSnapshotMapper = branchSnapshotMapper;
         this.branchIndexService = branchIndexService;
         this.intentKeyProfileRegistry = intentKeyProfileRegistry;
         this.thingsBoardConfig = thingsBoardConfig;
-    }
-
-    // ==================== Cache Entry ====================
-
-    private static class CachedUserData {
-        final List<Map<String, Object>> devicesData;
-        final long timestamp;
-        final AtomicBoolean isRefreshing = new AtomicBoolean(false);
-
-        CachedUserData(List<Map<String, Object>> devicesData, long timestamp) {
-            this.devicesData = devicesData;
-            this.timestamp = timestamp;
-        }
-
-        boolean isExpired() {
-            return (System.currentTimeMillis() - timestamp) > CACHE_TTL_MS;
-        }
-
-        boolean shouldRefresh() {
-            return (System.currentTimeMillis() - timestamp) > REFRESH_THRESHOLD_MS;
-        }
+        this.customerRepository = customerRepository;
+        this.hierarchyNodeRepository = hierarchyNodeRepository;
+        this.redisCacheService = redisCacheService;
     }
 
     // ==================== Public API ====================
 
     /**
      * Get all device data for the logged-in user.
-     * ALWAYS returns cached data instantly. Background refresh happens automatically.
+     * Fetches metadata from DB and real-time state from Redis.
      */
     public List<Map<String, Object>> getUserDevicesData(String userToken) {
-        String cacheKey = getCacheKey(userToken);
-
-        // Check cache - return instantly if available
-        CachedUserData cached = userCacheMap.get(cacheKey);
-        if (cached != null) {
-            long ageSeconds = (System.currentTimeMillis() - cached.timestamp) / 1000;
-            log.info("✅ Returning cached user data ({}s old, {} devices)", ageSeconds, cached.devicesData.size());
+        String customerId = resolveCustomerIdPrefix(userToken);
+        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
+        List<Map<String, Object>> devicesData = new ArrayList<>();
+        
+        for (HierarchyNode node : nodes) {
+            Map<String, Object> deviceMap = new HashMap<>();
+            String deviceId = node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
+            deviceMap.put("device_id", deviceId);
+            deviceMap.put("device_name", node.getDisplayName());
+            deviceMap.put("deviceName", node.getDisplayName());
+            deviceMap.put("formattedBranchName", node.getDisplayName());
+            deviceMap.put("branchName", node.getDisplayName());
+            deviceMap.put("device_type", "default");
             
-            // Trigger background refresh if needed
-            if (cached.shouldRefresh() && !cached.isRefreshing.get()) {
-                refreshUserCacheAsync(userToken, cacheKey);
+            // Enrich with state from Redis
+            Map<Object, Object> redisState = redisCacheService.getDeviceState(customerId, deviceId);
+            if (redisState != null) {
+                redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
             }
             
-            return new ArrayList<>(cached.devicesData); // Return copy to avoid mutation
+            devicesData.add(deviceMap);
         }
-
-        // First request: fetch synchronously
-        log.info("⚠️ Cache empty for user. Fetching synchronously...");
-        List<Map<String, Object>> freshData = fetchUserDevicesData(userToken);
-        userCacheMap.put(cacheKey, new CachedUserData(freshData, System.currentTimeMillis()));
-        return freshData != null ? freshData : new ArrayList<>();
-    }
-
-
-
-    /**
-     * Refresh user cache asynchronously in background.
-     */
-    private void refreshUserCacheAsync(String userToken, String cacheKey) {
-        CachedUserData cached = userCacheMap.get(cacheKey);
-        if (cached == null || cached.isRefreshing.getAndSet(true)) {
-            return;
-        }
-
-        Thread backgroundThread = new Thread(() -> {
-            try {
-                List<Map<String, Object>> freshData = fetchUserDevicesData(userToken);
-                userCacheMap.put(cacheKey, new CachedUserData(freshData, System.currentTimeMillis()));
-                log.info("✅ User cache refreshed in background ({} devices)", freshData.size());
-            } catch (Exception e) {
-                log.error("❌ Error refreshing user cache: {}", e.getMessage());
-            } finally {
-                cached.isRefreshing.set(false);
-            }
-        }, "UserDataService-BackgroundRefresh");
-        backgroundThread.start();
+        return devicesData;
     }
 
     /**
-     * Fetch user device data from ThingsBoard.
-     */
-    private List<Map<String, Object>> fetchUserDevicesData(String userToken) {
-        log.info("🔄 Fetching user device data from ThingsBoard...");
-        long fetchStart = System.currentTimeMillis();
-
-        List<Map<String, String>> devices = userTbClient.getUserDevices(userToken);
-        List<Map<String, Object>> allDevicesData = new ArrayList<>();
-
-        for (Map<String, String> device : devices) {
-            String deviceId = device.get("id");
-            if (deviceId == null || deviceId.isBlank() || "null".equals(deviceId)) {
-                log.warn("⚠️ Skipping device with missing or null ID: {}", device);
-                continue;
-            }
-            Map<String, Object> deviceData = new HashMap<>();
-
-            // Basic info
-            deviceData.put("device_id", deviceId);
-            deviceData.put("device_name", device.get("name"));
-            deviceData.put("device_type", device.get("type"));
-
-            try {
-                deviceData.putAll(userTbClient.getAttributes(userToken, "CLIENT_SCOPE", deviceId));
-                deviceData.putAll(userTbClient.getAttributes(userToken, "SERVER_SCOPE", deviceId));
-                deviceData.putAll(userTbClient.getAttributes(userToken, "SHARED_SCOPE", deviceId));
-                deviceData.putAll(userTbClient.getTelemetry(userToken, deviceId));
-            } catch (Exception e) {
-                log.error("❌ Error fetching data for device {}: {}", device.get("name"), e.getMessage());
-            }
-
-            allDevicesData.add(deviceData);
-        }
-
-        long fetchTime = System.currentTimeMillis() - fetchStart;
-        log.info("✅ User device data fetched ({} devices, took {}ms)", allDevicesData.size(), fetchTime);
-
-        return allDevicesData;
-    }
-
-    /**
-     * Get data for a specific device by its ID for the logged-in user.
-     * Searches the user's cached devices first.
+     * Get a specific device data by ID from local DB + Redis.
      */
     public Map<String, Object> getUserDeviceDataById(String userToken, String deviceId) {
-        List<Map<String, Object>> allDevices = getUserDevicesData(userToken);
+        String customerId = resolveCustomerIdPrefix(userToken);
+        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
         
-        for (Map<String, Object> device : allDevices) {
-            if (deviceId.equals(device.get("device_id"))) {
-                log.info("✅ Found device {} in user cache", deviceId);
-                return new HashMap<>(device);
+        HierarchyNode matchedNode = null;
+        for (HierarchyNode node : nodes) {
+            String nodeDevId = node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
+            if (deviceId.equals(nodeDevId)) {
+                matchedNode = node;
+                break;
             }
         }
         
-        log.warn("⚠️ Device {} not found in user cache", deviceId);
-        return new HashMap<>();
+        if (matchedNode == null) {
+            log.warn("⚠️ Device {} not found in user local DB scope", deviceId);
+            return new HashMap<>();
+        }
+        
+        Map<String, Object> deviceMap = new HashMap<>();
+        deviceMap.put("device_id", deviceId);
+        deviceMap.put("device_name", matchedNode.getDisplayName());
+        deviceMap.put("deviceName", matchedNode.getDisplayName());
+        deviceMap.put("formattedBranchName", matchedNode.getDisplayName());
+        deviceMap.put("branchName", matchedNode.getDisplayName());
+        deviceMap.put("device_type", "default");
+        
+        Map<Object, Object> redisState = redisCacheService.getDeviceState(customerId, deviceId);
+        if (redisState != null) {
+            redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
+        }
+        
+        log.info("✅ Found device {} in user local DB scope", deviceId);
+        return deviceMap;
     }
 
     /**
@@ -206,7 +138,6 @@ public class UserDataService {
         } else {
             flat.put("total_devices", allDevices.size());
             for (Map<String, Object> deviceData : allDevices) {
-                // ✅ Use device_id as prefix if name is blank
                 String name = deviceData.getOrDefault("device_name", "").toString().trim();
                 if (name.isBlank()) {
                     name = deviceData.getOrDefault("device_id", "unknown").toString();
@@ -225,7 +156,19 @@ public class UserDataService {
      * Get the user's device list (id + name only).
      */
     public List<Map<String, String>> getUserDevicesList(String userToken) {
-        return userTbClient.getUserDevices(userToken);
+        String customerId = resolveCustomerIdPrefix(userToken);
+        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
+        List<Map<String, String>> result = new ArrayList<>();
+        
+        for (HierarchyNode node : nodes) {
+            Map<String, String> basicInfo = new HashMap<>();
+            String deviceId = node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
+            basicInfo.put("id", deviceId);
+            basicInfo.put("name", node.getDisplayName());
+            basicInfo.put("type", "default");
+            result.add(basicInfo);
+        }
+        return result;
     }
 
     public List<BranchSnapshot> getUserBranchSnapshots(String userToken) {
@@ -271,7 +214,7 @@ public class UserDataService {
             return null;
         }
 
-        List<String> keys = intentKeyProfileRegistry.keysFor(intent);
+        String customerId = resolveCustomerIdPrefix(userToken);
         Map<String, Object> raw = new HashMap<>();
         raw.put("device_id", matched.getDeviceId());
         raw.put("device_name", matched.getBranchName());
@@ -280,11 +223,11 @@ public class UserDataService {
         raw.put("branchName", matched.getBranchName());
         raw.put("device_type", matched.getDeviceType());
 
-        // In phase-2 we keep attributes broad and scope telemetry to intent keys.
-        raw.putAll(userTbClient.getAttributes(userToken, "CLIENT_SCOPE", matched.getDeviceId()));
-        raw.putAll(userTbClient.getAttributes(userToken, "SERVER_SCOPE", matched.getDeviceId()));
-        raw.putAll(userTbClient.getAttributes(userToken, "SHARED_SCOPE", matched.getDeviceId()));
-        raw.putAll(userTbClient.getTelemetry(userToken, matched.getDeviceId(), keys));
+        // Fetch state from Redis cache
+        Map<Object, Object> redisState = redisCacheService.getDeviceState(customerId, matched.getDeviceId());
+        if (redisState != null) {
+            redisState.forEach((k, v) -> raw.put(String.valueOf(k), v));
+        }
 
         return branchSnapshotMapper.map(raw);
     }
@@ -296,29 +239,37 @@ public class UserDataService {
     // ==================== Raw Data API ====================
 
     public Object getRawAttributes(String userToken, String scope, String deviceId) {
-        return userTbClient.getRawAttributes(userToken, scope, deviceId);
+        String customerId = resolveCustomerIdPrefix(userToken);
+        return redisCacheService.getDeviceState(customerId, deviceId);
     }
 
     public Object getRawTelemetry(String userToken, String deviceId) {
-        return userTbClient.getRawTelemetry(userToken, deviceId);
+        String customerId = resolveCustomerIdPrefix(userToken);
+        return redisCacheService.getDeviceState(customerId, deviceId);
     }
 
     /**
      * Invalidate cache for a specific user.
      */
     public void invalidateUserCache(String userToken) {
-        String cacheKey = getCacheKey(userToken);
-        userCacheMap.remove(cacheKey);
+        branchIndexService.invalidate(userToken);
         log.info("🗑️ Cache invalidated for user");
     }
 
     // ==================== Helpers ====================
 
-    /**
-     * Generate a stable cache key from the user token.
-     */
-    private String getCacheKey(String userToken) {
-        return String.valueOf(userToken.hashCode());
+    public String resolveCustomerIdPrefix(String userToken) {
+        String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);
+        if (tbCustomerId == null) {
+            log.warn("Could not extract customer UUID from token. Defaulting to BOI.");
+            return "BOI";
+        }
+        return customerRepository.findByTbCustomerId(tbCustomerId)
+                .map(com.seple.ThingsBoard_Bot.entity.Customer::getCustomerId)
+                .orElseGet(() -> {
+                    log.warn("Customer mapping not found for UUID: {}. Defaulting to BOI.", tbCustomerId);
+                    return "BOI";
+                });
     }
 
     private String normalizeKey(String value) {

@@ -3,6 +3,7 @@ package com.seple.ThingsBoard_Bot.service;
 import com.seple.ThingsBoard_Bot.model.dto.TbEventPayload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Profile("consumer")
 public class EventConsumerService {
 
     private final IdempotencyService idempotencyService;

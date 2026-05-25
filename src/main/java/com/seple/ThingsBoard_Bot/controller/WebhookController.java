@@ -6,6 +6,7 @@ import com.seple.ThingsBoard_Bot.config.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/webhooks")
 @RequiredArgsConstructor
+@Profile("ingestion")
 public class WebhookController {
 
     private final EventParseService eventParseService;

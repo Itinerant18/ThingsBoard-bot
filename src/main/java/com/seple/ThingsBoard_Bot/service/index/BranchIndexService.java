@@ -9,9 +9,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.seple.ThingsBoard_Bot.client.UserAwareThingsBoardClient;
 import com.seple.ThingsBoard_Bot.config.ThingsBoardConfig;
 import com.seple.ThingsBoard_Bot.model.dto.DeviceIndexEntry;
+import com.seple.ThingsBoard_Bot.repository.CustomerRepository;
+import com.seple.ThingsBoard_Bot.repository.HierarchyNodeRepository;
+import com.seple.ThingsBoard_Bot.entity.HierarchyNode;
+import com.seple.ThingsBoard_Bot.util.JwtParserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,13 +22,17 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class BranchIndexService {
 
-    private final UserAwareThingsBoardClient userAwareThingsBoardClient;
     private final ThingsBoardConfig thingsBoardConfig;
+    private final CustomerRepository customerRepository;
+    private final HierarchyNodeRepository hierarchyNodeRepository;
     private final ConcurrentHashMap<String, List<DeviceIndexEntry>> indexByUser = new ConcurrentHashMap<>();
 
-    public BranchIndexService(UserAwareThingsBoardClient userAwareThingsBoardClient, ThingsBoardConfig thingsBoardConfig) {
-        this.userAwareThingsBoardClient = userAwareThingsBoardClient;
+    public BranchIndexService(ThingsBoardConfig thingsBoardConfig,
+                              CustomerRepository customerRepository,
+                              HierarchyNodeRepository hierarchyNodeRepository) {
         this.thingsBoardConfig = thingsBoardConfig;
+        this.customerRepository = customerRepository;
+        this.hierarchyNodeRepository = hierarchyNodeRepository;
     }
 
     public List<DeviceIndexEntry> getIndex(String userToken) {
@@ -39,22 +46,30 @@ public class BranchIndexService {
     }
 
     public List<DeviceIndexEntry> refreshIndex(String userToken) {
-        int pageSize = thingsBoardConfig.getDevicePageSize() > 0 ? thingsBoardConfig.getDevicePageSize() : 100;
-        List<DeviceIndexEntry> entries = userAwareThingsBoardClient.getUserDevicesPaged(userToken, pageSize).stream()
-                .map(device -> {
-                    String name = device.getOrDefault("name", "");
+        String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);
+        String customerId = "BOI";
+        if (tbCustomerId != null) {
+            customerId = customerRepository.findByTbCustomerId(tbCustomerId)
+                    .map(com.seple.ThingsBoard_Bot.entity.Customer::getCustomerId)
+                    .orElse("BOI");
+        }
+
+        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
+        List<DeviceIndexEntry> entries = nodes.stream()
+                .map(node -> {
+                    String deviceId = node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
                     return DeviceIndexEntry.builder()
-                            .deviceId(device.get("id"))
-                            .branchName(name)
-                            .deviceType(device.get("type"))
-                            .aliases(aliases(name))
+                            .deviceId(deviceId)
+                            .branchName(node.getDisplayName())
+                            .deviceType("default")
+                            .aliases(aliases(node.getDisplayName()))
                             .indexedAt(System.currentTimeMillis())
                             .build();
                 })
                 .toList();
 
         indexByUser.put(cacheKey(userToken), new ArrayList<>(entries));
-        log.info("Indexed {} devices for user cache {}", entries.size(), cacheKey(userToken));
+        log.info("Indexed {} devices from local DB for user cache {}", entries.size(), cacheKey(userToken));
         return entries;
     }
 
@@ -64,7 +79,6 @@ public class BranchIndexService {
 
     @Scheduled(fixedDelayString = "${iotchatbot.thingsboard.sync-interval-seconds:60}000")
     public void periodicCleanup() {
-        // Phase-1 minimal safety: keep memory bounded if inactive sessions accumulate.
         if (indexByUser.size() > 5000) {
             log.warn("Branch index cache is large ({}). Clearing inactive cache entries.", indexByUser.size());
             indexByUser.clear();

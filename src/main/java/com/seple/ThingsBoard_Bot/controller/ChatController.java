@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.context.annotation.Profile;
 import com.seple.ThingsBoard_Bot.model.dto.ChatRequest;
 import com.seple.ThingsBoard_Bot.model.dto.ChatResponse;
 import com.seple.ThingsBoard_Bot.service.ChatService;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/chat")
+@Profile("chat")
 public class ChatController {
 
     private final ChatService chatService;

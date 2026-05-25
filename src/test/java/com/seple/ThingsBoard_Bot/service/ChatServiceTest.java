@@ -29,6 +29,7 @@ import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntentResolver;
 import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
 import com.seple.ThingsBoard_Bot.util.StructuredContextBuilder;
+import com.seple.ThingsBoard_Bot.service.query.QueryRouterService;
 
 class ChatServiceTest {
 
@@ -41,6 +42,7 @@ class ChatServiceTest {
     private final DeterministicAnswerService deterministicAnswerService = mock(DeterministicAnswerService.class);
     private final StructuredContextBuilder structuredContextBuilder = mock(StructuredContextBuilder.class);
     private final GlobalAggregatorService globalAggregatorService = mock(GlobalAggregatorService.class);
+    private final QueryRouterService queryRouterService = mock(QueryRouterService.class);
 
     private final ChatService service = new ChatService(
             userDataService,
@@ -51,7 +53,8 @@ class ChatServiceTest {
             queryIntentResolver,
             deterministicAnswerService,
             structuredContextBuilder,
-            globalAggregatorService);
+            globalAggregatorService,
+            queryRouterService);
 
     @Test
     void shouldApplyPendingTopicForBranchOnlyFollowUpAndUseDeterministicAnswer() {
