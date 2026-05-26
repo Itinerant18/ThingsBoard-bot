@@ -10,7 +10,7 @@ import com.seple.ThingsBoard_Bot.model.domain.NormalizedState;
 public class ValueNormalizer {
 
     public NormalizedState toState(String rawValue) {
-        if (rawValue == null || rawValue.isBlank() || "null".equalsIgnoreCase(rawValue)) {
+        if (isNullOrCorrupt(rawValue)) {
             return NormalizedState.UNKNOWN;
         }
 
@@ -26,7 +26,7 @@ public class ValueNormalizer {
     }
 
     public Boolean toBoolean(String rawValue) {
-        if (rawValue == null || rawValue.isBlank() || "null".equalsIgnoreCase(rawValue)) {
+        if (isNullOrCorrupt(rawValue)) {
             return null;
         }
 
@@ -43,7 +43,7 @@ public class ValueNormalizer {
             return null;
         }
         String text = String.valueOf(rawValue).trim();
-        if (text.isBlank() || "null".equalsIgnoreCase(text) || "N/A".equalsIgnoreCase(text)) {
+        if (isNullOrCorrupt(text) || "N/A".equalsIgnoreCase(text) || "na".equalsIgnoreCase(text) || "-".equals(text)) {
             return null;
         }
 
@@ -58,10 +58,26 @@ public class ValueNormalizer {
         if (rawValue == null) {
             return fallback;
         }
+        String text = String.valueOf(rawValue).trim();
+        if (isNullOrCorrupt(text) || "N/A".equalsIgnoreCase(text) || "na".equalsIgnoreCase(text) || "-".equals(text)) {
+            return fallback;
+        }
         try {
-            return Integer.parseInt(String.valueOf(rawValue).trim());
+            return Integer.parseInt(text);
         } catch (NumberFormatException ignored) {
             return fallback;
         }
+    }
+
+    private boolean isNullOrCorrupt(String text) {
+        if (text == null) {
+            return true;
+        }
+        String value = text.trim().toLowerCase(Locale.ROOT);
+        return value.isBlank() 
+                || "null".equals(value) 
+                || value.startsWith("null") 
+                || "not_found".equals(value) 
+                || "not found".equals(value);
     }
 }

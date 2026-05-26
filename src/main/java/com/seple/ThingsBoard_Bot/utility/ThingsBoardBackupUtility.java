@@ -103,10 +103,10 @@ public class ThingsBoardBackupUtility {
             deviceRecord.put("id", deviceId);
             deviceRecord.put("name", deviceName);
             deviceRecord.put("type", deviceType);
-            deviceRecord.set("telemetry", telemetry != null ? parseTelemetryValues(telemetry) : objectMapper.createObjectNode());
-            deviceRecord.set("serverAttributes", serverAttrs != null ? parseAttributeValues(serverAttrs) : objectMapper.createObjectNode());
-            deviceRecord.set("clientAttributes", clientAttrs != null ? parseAttributeValues(clientAttrs) : objectMapper.createObjectNode());
-            deviceRecord.set("sharedAttributes", sharedAttrs != null ? parseAttributeValues(sharedAttrs) : objectMapper.createObjectNode());
+            deviceRecord.set("telemetry", telemetry != null ? flattenJsonNode(parseTelemetryValues(telemetry)) : objectMapper.createObjectNode());
+            deviceRecord.set("serverAttributes", serverAttrs != null ? flattenJsonNode(parseAttributeValues(serverAttrs)) : objectMapper.createObjectNode());
+            deviceRecord.set("clientAttributes", clientAttrs != null ? flattenJsonNode(parseAttributeValues(clientAttrs)) : objectMapper.createObjectNode());
+            deviceRecord.set("sharedAttributes", sharedAttrs != null ? flattenJsonNode(parseAttributeValues(sharedAttrs)) : objectMapper.createObjectNode());
 
             backupArray.add(deviceRecord);
 
@@ -253,5 +253,53 @@ public class ThingsBoardBackupUtility {
             }
         }
         return parsed;
+    }
+
+    JsonNode flattenJsonNode(JsonNode root) {
+        if (root == null || !root.isObject()) {
+            return root;
+        }
+        ObjectNode result = objectMapper.createObjectNode();
+        root.fields().forEachRemaining(entry -> {
+            String key = entry.getKey();
+            JsonNode value = entry.getValue();
+            
+            // Put the original key-value pair
+            result.set(key, value);
+            
+            // 1. If it's a stringified JSON, parse it first
+            JsonNode parsedChild = null;
+            if (value.isTextual()) {
+                String text = value.asText().trim();
+                if ((text.startsWith("{") && text.endsWith("}")) || (text.startsWith("[") && text.endsWith("]"))) {
+                    try {
+                        parsedChild = objectMapper.readTree(text);
+                    } catch (Exception ignored) {
+                        // Not a valid JSON
+                    }
+                }
+            } else if (value.isObject()) {
+                // 2. If it's already a JSON object
+                parsedChild = value;
+            }
+            
+            // If we successfully parsed/identified a child object, flatten its fields
+            if (parsedChild != null && parsedChild.isObject()) {
+                parsedChild.fields().forEachRemaining(childEntry -> {
+                    String childKey = childEntry.getKey();
+                    JsonNode childValue = childEntry.getValue();
+                    String newKey = key + "_" + childKey;
+                    
+                    if (childValue.isContainerNode()) {
+                        // Serialize arrays/objects as JSON strings for mapping compatibility
+                        result.put(newKey, childValue.toString());
+                    } else {
+                        // Primitives
+                        result.set(newKey, childValue);
+                    }
+                });
+            }
+        });
+        return result;
     }
 }
