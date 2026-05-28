@@ -23,4 +23,7 @@ public interface HierarchyNodeRepository extends JpaRepository<HierarchyNode, St
     List<HierarchyNode> findByCustomerIdAndNodeType(String customerId, String nodeType);
 
     boolean existsByCustomerIdAndDisplayNameIgnoreCase(String customerId, String displayName);
+
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT n.customerId FROM HierarchyNode n")
+    List<String> findDistinctCustomerIds();
 }

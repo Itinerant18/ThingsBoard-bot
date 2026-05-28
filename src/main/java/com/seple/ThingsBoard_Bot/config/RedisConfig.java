@@ -20,6 +20,12 @@ public class RedisConfig {
     private String host = "localhost";
     private int port = 6379;
     private String password;
+    private Ssl ssl = new Ssl();
+
+    @Data
+    public static class Ssl {
+        private boolean enabled = false;
+    }
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
@@ -29,7 +35,15 @@ public class RedisConfig {
         if (password != null && !password.isEmpty()) {
             config.setPassword(password);
         }
-        return new LettuceConnectionFactory(config);
+
+        org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration.LettuceClientConfigurationBuilder builder = 
+                org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration.builder();
+        
+        if (ssl != null && ssl.isEnabled()) {
+            builder.useSsl();
+        }
+
+        return new LettuceConnectionFactory(config, builder.build());
     }
 
     @Bean

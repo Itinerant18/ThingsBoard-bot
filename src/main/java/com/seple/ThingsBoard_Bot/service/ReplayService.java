@@ -26,6 +26,23 @@ public class ReplayService {
     private final AncestorPathCache ancestorPathCache;
 
     public void replayForCustomer(String customerId, Instant startTime, Instant endTime) {
+        if ("ALL".equalsIgnoreCase(customerId)) {
+            log.info("[REPLAY] Requested replay for ALL customers");
+            List<String> customerIds = hierarchyNodeRepository.findDistinctCustomerIds();
+            log.info("[REPLAY] Found {} distinct customers to replay: {}", customerIds.size(), customerIds);
+            for (String cid : customerIds) {
+                try {
+                    replaySingleCustomer(cid, startTime, endTime);
+                } catch (Exception e) {
+                    log.error("[REPLAY] Replay failed for customer: {}", cid, e);
+                }
+            }
+        } else {
+            replaySingleCustomer(customerId, startTime, endTime);
+        }
+    }
+
+    private void replaySingleCustomer(String customerId, Instant startTime, Instant endTime) {
         log.info("[REPLAY] Starting replay for customer: {}, from: {}, to: {}", customerId, startTime, endTime);
 
         // Step 1: Clear Redis cache for this customer
