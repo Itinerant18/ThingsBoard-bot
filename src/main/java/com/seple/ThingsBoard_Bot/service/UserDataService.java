@@ -25,6 +25,14 @@ import com.seple.ThingsBoard_Bot.repository.HierarchyNodeRepository;
 import com.seple.ThingsBoard_Bot.entity.HierarchyNode;
 import com.seple.ThingsBoard_Bot.util.JwtParserUtil;
 
+import com.seple.ThingsBoard_Bot.client.UserAwareThingsBoardClient;
+import com.seple.ThingsBoard_Bot.repository.BranchAncestorPathRepository;
+import com.seple.ThingsBoard_Bot.entity.BranchAncestorPath;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.Objects;
+import java.util.Optional;
+
 @Service
 public class UserDataService {
 
@@ -36,6 +44,8 @@ public class UserDataService {
     private final CustomerRepository customerRepository;
     private final HierarchyNodeRepository hierarchyNodeRepository;
     private final RedisCacheService redisCacheService;
+    private final UserAwareThingsBoardClient userAwareThingsBoardClient;
+    private final BranchAncestorPathRepository branchAncestorPathRepository;
 
     // Keep an empty cache map to avoid breaking any dailyCacheMemoryWipe references
     private final ConcurrentHashMap<String, Object> userCacheMap = new ConcurrentHashMap<>();
@@ -46,7 +56,9 @@ public class UserDataService {
                            ThingsBoardConfig thingsBoardConfig,
                            CustomerRepository customerRepository,
                            HierarchyNodeRepository hierarchyNodeRepository,
-                           RedisCacheService redisCacheService) {
+                           RedisCacheService redisCacheService,
+                           UserAwareThingsBoardClient userAwareThingsBoardClient,
+                           BranchAncestorPathRepository branchAncestorPathRepository) {
         this.branchSnapshotMapper = branchSnapshotMapper;
         this.branchIndexService = branchIndexService;
         this.intentKeyProfileRegistry = intentKeyProfileRegistry;
@@ -54,9 +66,92 @@ public class UserDataService {
         this.customerRepository = customerRepository;
         this.hierarchyNodeRepository = hierarchyNodeRepository;
         this.redisCacheService = redisCacheService;
+        this.userAwareThingsBoardClient = userAwareThingsBoardClient;
+        this.branchAncestorPathRepository = branchAncestorPathRepository;
     }
 
     // ==================== Public API ====================
+
+    private List<HierarchyNode> getFilteredUserNodes(String userToken) {
+        String customerId = resolveCustomerIdPrefix(userToken);
+        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
+        boolean filtered = false;
+        
+        try {
+            List<Map<String, String>> userDevices = userAwareThingsBoardClient.getUserDevices(userToken);
+            if (userDevices != null && !userDevices.isEmpty()) {
+                Set<String> authDeviceIds = userDevices.stream()
+                        .map(d -> d.get("id"))
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
+                
+                nodes = nodes.stream()
+                        .filter(node -> {
+                            String devId = node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
+                            return authDeviceIds.contains(devId);
+                        })
+                        .toList();
+                log.info("Filtered nodes to {} authorized devices for token", nodes.size());
+                filtered = true;
+            } else {
+                log.warn("ThingsBoard returned empty device list for user token.");
+            }
+        } catch (Exception e) {
+            log.error("Failed to filter nodes via ThingsBoard API (e.g. token expired): {}", e.getMessage());
+        }
+        
+        // Fallback: local zone-based ancestor path filtering
+        if (!filtered) {
+            String zoneName = resolveZoneName(userToken);
+            if (zoneName != null) {
+                log.info("Attempting local fallback filtering for zone: {}", zoneName);
+                Optional<HierarchyNode> zoNodeOpt = hierarchyNodeRepository.findAll().stream()
+                        .filter(node -> "ZO".equalsIgnoreCase(node.getNodeType()) && 
+                                        (node.getDisplayName().equalsIgnoreCase(zoneName) || 
+                                         node.getNodeId().toUpperCase().contains(zoneName.replace(" ", "_"))))
+                        .findFirst();
+                
+                if (zoNodeOpt.isPresent()) {
+                    String zoNodeId = zoNodeOpt.get().getNodeId();
+                    List<BranchAncestorPath> ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+                    Set<String> branchIdsInZone = ancestorPaths.stream()
+                            .filter(path -> path.getAncestorList().contains(zoNodeId))
+                            .map(BranchAncestorPath::getBranchNodeId)
+                            .collect(Collectors.toSet());
+                    
+                    nodes = nodes.stream()
+                            .filter(node -> branchIdsInZone.contains(node.getNodeId()))
+                            .toList();
+                    log.info("Successfully filtered nodes to {} branches for zone: {}", nodes.size(), zoneName);
+                } else {
+                    log.warn("Could not find ZO node for zone: {} in database.", zoneName);
+                }
+            }
+        }
+        
+        return nodes;
+    }
+
+    private String resolveZoneName(String userToken) {
+        String firstName = JwtParserUtil.extractClaim(userToken, "firstName");
+        String lastName = JwtParserUtil.extractClaim(userToken, "lastName");
+        if (firstName != null && lastName != null) {
+            String combined = (firstName + " " + lastName).toUpperCase();
+            if (combined.contains("ZO ")) {
+                return combined.substring(combined.indexOf("ZO ")).trim(); // e.g., "ZO HOWRAH"
+            }
+        }
+        String sub = JwtParserUtil.extractClaim(userToken, "sub");
+        if (sub != null && sub.contains("@")) {
+            String prefix = sub.split("@")[0].toUpperCase();
+            if (prefix.contains(".")) {
+                String firstPart = prefix.split("\\.")[0];
+                return "ZO " + firstPart; // e.g. "ZO HOWRAH"
+            }
+            return "ZO " + prefix;
+        }
+        return null;
+    }
 
     /**
      * Get all device data for the logged-in user.
@@ -64,7 +159,7 @@ public class UserDataService {
      */
     public List<Map<String, Object>> getUserDevicesData(String userToken) {
         String customerId = resolveCustomerIdPrefix(userToken);
-        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
+        List<HierarchyNode> nodes = getFilteredUserNodes(userToken);
         List<Map<String, Object>> devicesData = new ArrayList<>();
         
         for (HierarchyNode node : nodes) {
@@ -93,7 +188,7 @@ public class UserDataService {
      */
     public Map<String, Object> getUserDeviceDataById(String userToken, String deviceId) {
         String customerId = resolveCustomerIdPrefix(userToken);
-        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
+        List<HierarchyNode> nodes = getFilteredUserNodes(userToken);
         
         HierarchyNode matchedNode = null;
         for (HierarchyNode node : nodes) {
@@ -156,8 +251,7 @@ public class UserDataService {
      * Get the user's device list (id + name only).
      */
     public List<Map<String, String>> getUserDevicesList(String userToken) {
-        String customerId = resolveCustomerIdPrefix(userToken);
-        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
+        List<HierarchyNode> nodes = getFilteredUserNodes(userToken);
         List<Map<String, String>> result = new ArrayList<>();
         
         for (HierarchyNode node : nodes) {

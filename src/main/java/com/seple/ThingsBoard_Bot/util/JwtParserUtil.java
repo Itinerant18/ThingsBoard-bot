@@ -39,4 +39,26 @@ public class JwtParserUtil {
             return null;
         }
     }
+
+    public static String extractClaim(String token, String claimName) {
+        if (token == null || token.isBlank()) {
+            return null;
+        }
+        try {
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            }
+            String[] parts = token.split("\\.");
+            if (parts.length < 2) {
+                return null;
+            }
+            String payload = new String(Base64.getUrlDecoder().decode(parts[1]));
+            JsonNode json = mapper.readTree(payload);
+            JsonNode claimNode = json.get(claimName);
+            return claimNode != null ? claimNode.asText(null) : null;
+        } catch (Exception e) {
+            log.error("Failed to parse JWT claim: {}", e.getMessage());
+            return null;
+        }
+    }
 }
