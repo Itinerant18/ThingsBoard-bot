@@ -43,7 +43,7 @@ public class ReplayService {
     }
 
     private void replaySingleCustomer(String customerId, Instant startTime, Instant endTime) {
-        log.info("[REPLAY] Starting replay for customer: {}, from: {}, to: {}", customerId, startTime, endTime);
+        log.info("[REPLAY] Starting optimized in-memory replay for customer: {}, from: {}, to: {}", customerId, startTime, endTime);
 
         // Step 1: Clear Redis cache for this customer
         redisCacheService.clearCustomerCache(customerId);
@@ -65,19 +65,41 @@ public class ReplayService {
 
         // Step 4: Stream/Fetch events sorted by eventTime ASC
         List<DeviceEvent> events = deviceEventRepository.streamByCustomerIdAndTimeRange(customerId, startTime, endTime);
-        log.info("[REPLAY] Found {} events to replay for customer: {}", events.size(), customerId);
+        log.info("[REPLAY] Found {} events for customer: {}", events.size(), customerId);
 
-        int count = 0;
+        // Step 5: Aggregate states in memory
+        Map<String, Map<String, String>> deviceStates = new HashMap<>();
+        Map<String, String> deviceNodeIds = new HashMap<>();
+        Map<String, String> deviceBranchNames = new HashMap<>();
+
         for (DeviceEvent event : events) {
             String branchNodeId = event.getBranchNodeId();
             String deviceId = branchNameToDeviceId.getOrDefault(branchNodeId, branchNodeId);
             String branchName = branchNameToDisplayName.getOrDefault(branchNodeId, branchNodeId);
 
-            // Update state in Redis
-            redisCacheService.updateDeviceState(customerId, deviceId, event.getField(), event.getNewValue());
-            redisCacheService.setDeviceMeta(customerId, deviceId, branchNodeId, branchName);
+            deviceNodeIds.put(deviceId, branchNodeId);
+            deviceBranchNames.put(deviceId, branchName);
 
-            // Fetch ancestors from cache
+            String value = event.getNewValue();
+            if (event.getRawPayload() != null && event.getRawPayload().containsKey("value")) {
+                Object rawVal = event.getRawPayload().get("value");
+                if (rawVal != null) {
+                    value = String.valueOf(rawVal);
+                }
+            }
+            deviceStates.computeIfAbsent(deviceId, k -> new HashMap<>())
+                        .put(event.getField(), value);
+        }
+
+        // Step 6: Compute node and global counters in memory
+        Map<String, Map<String, Integer>> nodeCounters = new HashMap<>();
+        Map<String, Integer> globalCounters = new HashMap<>();
+
+        for (Map.Entry<String, Map<String, String>> entry : deviceStates.entrySet()) {
+            String deviceId = entry.getKey();
+            String branchNodeId = deviceNodeIds.get(deviceId);
+            if (branchNodeId == null) continue;
+
             List<String> ancestors = ancestorPathCache.getAncestors(customerId, branchNodeId);
             if (ancestors.isEmpty()) {
                 // Generate default ancestors if not in DB/cache
@@ -85,19 +107,40 @@ public class ReplayService {
                 ancestorPathCache.cacheAncestors(customerId, branchNodeId, ancestors);
             }
 
-            // Update hierarchy counters
-            luaScriptService.executeUpdateCounters(
-                    customerId,
-                    deviceId,
-                    branchNodeId,
-                    ancestors,
-                    event.getField(),
-                    event.getNewValue(),
-                    event.getPrevValue()
-            );
-            count++;
+            Map<String, String> fields = entry.getValue();
+            for (Map.Entry<String, String> fieldEntry : fields.entrySet()) {
+                String field = fieldEntry.getKey();
+                String value = fieldEntry.getValue();
+
+                if (isStatusField(field) && isOnlineState(value)) {
+                    // Increment global counter
+                    globalCounters.put(field, globalCounters.getOrDefault(field, 0) + 1);
+
+                    // Increment ancestor counters
+                    for (String ancestorNodeId : ancestors) {
+                        nodeCounters.computeIfAbsent(ancestorNodeId, k -> new HashMap<>())
+                                    .put(field, nodeCounters.get(ancestorNodeId).getOrDefault(field, 0) + 1);
+                    }
+                }
+            }
         }
 
-        log.info("[REPLAY] Replay complete. Processed {} events.", count);
+        // Step 7: Push aggregated states & counters to Redis in a single pipelined batch
+        log.info("[REPLAY] Writing pipelined bulk data to Redis. Devices={}, NodeCounters={}", 
+                 deviceStates.size(), nodeCounters.size());
+        redisCacheService.writeBulkData(customerId, deviceStates, deviceNodeIds, deviceBranchNames, nodeCounters, globalCounters);
+
+        log.info("[REPLAY] Replay complete for customer: {}", customerId);
+    }
+
+    private boolean isStatusField(String field) {
+        return field != null && (field.contains("status") || field.contains("Status") || 
+               field.equals("gateway_status") || field.equals("online"));
+    }
+
+    private boolean isOnlineState(String value) {
+        if (value == null) return false;
+        String lower = value.toLowerCase();
+        return lower.equals("online") || lower.equals("on") || lower.equals("1") || lower.equals("true");
     }
 }

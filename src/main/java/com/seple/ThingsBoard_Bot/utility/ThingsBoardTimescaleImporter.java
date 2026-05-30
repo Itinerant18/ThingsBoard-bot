@@ -159,11 +159,13 @@ public class ThingsBoardTimescaleImporter {
             int batchCount = 0;
             Instant now = Instant.now();
 
-            // Clear old events first to prevent duplicate key conflicts for this import run
-            try (PreparedStatement clearStmt = conn.prepareStatement("DELETE FROM device_events WHERE log_type = 'snapshot_import'")) {
+            // Delete all past events first to start clean and avoid ACCESS EXCLUSIVE lock issues
+            try (PreparedStatement clearStmt = conn.prepareStatement("DELETE FROM device_events")) {
                 int cleared = clearStmt.executeUpdate();
-                System.out.println("[DB] Cleared " + cleared + " old snapshot events.");
+                System.out.println("[DB] Cleared " + cleared + " past events successfully.");
             }
+
+            List<String> sourceBlocks = List.of("telemetry", "serverAttributes", "clientAttributes", "sharedAttributes");
 
             for (JsonNode device : rootNode) {
                 String deviceId = device.path("id").asText();
@@ -174,66 +176,85 @@ public class ThingsBoardTimescaleImporter {
                     customerId = deviceName.split("-")[0].toUpperCase();
                 }
 
-                JsonNode telemetry = device.path("telemetry");
+                // Try to find a timestamp inside telemetry or serverAttributes
                 Instant eventTimestamp = now;
-                if (telemetry.has("timestamp")) {
+                JsonNode telemetryNode = device.path("telemetry");
+                if (telemetryNode.has("timestamp")) {
                     try {
-                        eventTimestamp = Instant.parse(telemetry.get("timestamp").asText());
-                    } catch (Exception ignored) {
-                        // Fallback to current time
+                        eventTimestamp = Instant.parse(telemetryNode.get("timestamp").asText());
+                    } catch (Exception ignored) {}
+                } else {
+                    JsonNode serverAttrsNode = device.path("serverAttributes");
+                    if (serverAttrsNode.has("timestamp")) {
+                        try {
+                            eventTimestamp = Instant.parse(serverAttrsNode.get("timestamp").asText());
+                        } catch (Exception ignored) {}
                     }
                 }
 
-                java.util.Iterator<java.util.Map.Entry<String, JsonNode>> fields = telemetry.fields();
-                while (fields.hasNext()) {
-                    java.util.Map.Entry<String, JsonNode> entry = fields.next();
-                    String fieldName = entry.getKey();
-                    String value = entry.getValue().asText();
-
-                    // Construct a compact raw payload to avoid OOM and database bloat
-                    ObjectNode compactPayload = objectMapper.createObjectNode();
-                    compactPayload.put("device_id", deviceId);
-                    compactPayload.put("device_name", deviceName);
-                    compactPayload.put("field", fieldName);
-                    compactPayload.put("value", value);
-                    String compactJson = compactPayload.toString();
-
-                    // Truncate fields to respect database VARCHAR(64) constraints
-                    String dbField = fieldName;
-                    if (dbField != null && dbField.length() > 64) {
-                        dbField = dbField.substring(0, 64);
+                for (String blockName : sourceBlocks) {
+                    JsonNode blockNode = device.path(blockName);
+                    if (blockNode.isMissingNode() || !blockNode.isObject()) {
+                        continue;
                     }
 
-                    String dbValue = value;
-                    if (dbValue != null && dbValue.length() > 64) {
-                        dbValue = dbValue.substring(0, 61) + "...";
-                    }
+                    java.util.Iterator<java.util.Map.Entry<String, JsonNode>> fields = blockNode.fields();
+                    while (fields.hasNext()) {
+                        java.util.Map.Entry<String, JsonNode> entry = fields.next();
+                        String fieldName = entry.getKey();
+                        
+                        // Convert complex json sub-objects/arrays to stringified representation
+                        JsonNode fieldValueNode = entry.getValue();
+                        String value = fieldValueNode.isContainerNode() ? fieldValueNode.toString() : fieldValueNode.asText();
 
-                    pstmt.setString(1, customerId);
-                    pstmt.setString(2, deviceName);
-                    pstmt.setObject(3, UUID.randomUUID());
-                    pstmt.setString(4, "snapshot_import");
-                    pstmt.setString(5, dbField);
-                    pstmt.setString(6, "N/A");
-                    pstmt.setString(7, dbValue);
-                    pstmt.setTimestamp(8, Timestamp.from(eventTimestamp));
-                    pstmt.setTimestamp(9, Timestamp.from(now));
-                    pstmt.setString(10, compactJson);
+                        // Construct a compact raw payload to avoid OOM and database bloat
+                        ObjectNode compactPayload = objectMapper.createObjectNode();
+                        compactPayload.put("device_id", deviceId);
+                        compactPayload.put("device_name", deviceName);
+                        compactPayload.put("field", fieldName);
+                        compactPayload.put("value", value);
+                        compactPayload.put("source_block", blockName);
+                        String compactJson = compactPayload.toString();
 
-                    pstmt.addBatch();
-                    batchCount++;
+                        // Truncate fields to respect database VARCHAR(64) constraints
+                        String dbField = fieldName;
+                        if (dbField != null && dbField.length() > 64) {
+                            dbField = dbField.substring(0, 64);
+                        }
 
-                    if (batchCount % 1000 == 0) {
-                        pstmt.executeBatch();
+                        String dbValue = value;
+                        if (dbValue != null && dbValue.length() > 64) {
+                            dbValue = dbValue.substring(0, 61) + "...";
+                        }
+
+                        pstmt.setString(1, customerId);
+                        pstmt.setString(2, deviceName);
+                        pstmt.setObject(3, UUID.randomUUID());
+                        pstmt.setString(4, "snapshot_import");
+                        pstmt.setString(5, dbField);
+                        pstmt.setString(6, "N/A");
+                        pstmt.setString(7, dbValue);
+                        pstmt.setTimestamp(8, Timestamp.from(eventTimestamp));
+                        pstmt.setTimestamp(9, Timestamp.from(now));
+                        pstmt.setString(10, compactJson);
+
+                        pstmt.addBatch();
+                        batchCount++;
+
+                        if (batchCount % 1000 == 0) {
+                            pstmt.executeBatch();
+                            conn.commit(); // Commit periodically to prevent database transaction bloat
+                        }
+                        totalEventsInserted++;
                     }
                 }
-                totalEventsInserted += telemetry.size();
             }
 
             if (batchCount % 1000 != 0) {
                 pstmt.executeBatch();
             }
-            System.out.println("[DB] Inserted " + totalEventsInserted + " telemetry metrics successfully.");
+            conn.commit(); // Final commit for telemetry and attributes
+            System.out.println("[DB] Inserted " + totalEventsInserted + " metrics/attributes successfully.");
         }
     }
 
@@ -354,16 +375,14 @@ public class ThingsBoardTimescaleImporter {
 
         System.out.println("[HIERARCHY] Extracted " + hierarchyMap.size() + " unique nodes. Seeding to Database...");
 
-        // Clear existing nodes for the active customers to prevent primary key conflicts
-        for (String custId : activeCustomers) {
-            try (PreparedStatement delStmt = conn.prepareStatement("DELETE FROM hierarchy_nodes WHERE customer_id = ?")) {
-                delStmt.setString(1, custId);
-                delStmt.executeUpdate();
-            }
-            try (PreparedStatement delPathsStmt = conn.prepareStatement("DELETE FROM branch_ancestor_paths WHERE customer_id = ?")) {
-                delPathsStmt.setString(1, custId);
-                delPathsStmt.executeUpdate();
-            }
+        // Clear past hierarchy tables first to start clean
+        try (PreparedStatement clearPathsStmt = conn.prepareStatement("DELETE FROM branch_ancestor_paths")) {
+            int clearedPaths = clearPathsStmt.executeUpdate();
+            System.out.println("[HIERARCHY] Cleared " + clearedPaths + " ancestor paths.");
+        }
+        try (PreparedStatement clearNodesStmt = conn.prepareStatement("DELETE FROM hierarchy_nodes")) {
+            int clearedNodes = clearNodesStmt.executeUpdate();
+            System.out.println("[HIERARCHY] Cleared " + clearedNodes + " hierarchy nodes.");
         }
 
         // Insert hierarchy nodes

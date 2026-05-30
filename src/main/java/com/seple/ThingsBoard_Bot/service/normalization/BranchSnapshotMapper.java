@@ -169,7 +169,7 @@ public class BranchSnapshotMapper {
         Integer online = null;
         String hddStatus = null;
 
-        String cameraDetails = stringValue(raw.get("rock_CAMERAdETAILS"));
+        String cameraDetails = choose(raw, "rock_CAMERAdETAILS", "CAMERAdETAILS", "CAMERA_DETAILS");
         if (cameraDetails != null && cameraDetails.startsWith("[")) {
             try {
                 JsonNode node = objectMapper.readTree(cameraDetails);
@@ -193,7 +193,7 @@ public class BranchSnapshotMapper {
             }
         }
 
-        String hddInfo = stringValue(raw.get("rock_HddINFO"));
+        String hddInfo = choose(raw, "rock_HddINFO", "HddINFO", "HDD_INFO");
         if (hddInfo != null && hddInfo.startsWith("[")) {
             try {
                 JsonNode node = objectMapper.readTree(hddInfo);

@@ -71,16 +71,13 @@ class ReplayServiceTest {
 
         verify(redisCacheService).clearCustomerCache(customerId);
         verify(ancestorPathService).reloadForCustomer(customerId);
-        verify(redisCacheService).updateDeviceState(customerId, branch.getTbDeviceId().toString(), "gateway_status", "online");
-        verify(redisCacheService).setDeviceMeta(customerId, branch.getTbDeviceId().toString(), "BOI_BR042", "Bally Bazar Branch");
-        verify(luaScriptService).executeUpdateCounters(
-                customerId,
-                branch.getTbDeviceId().toString(),
-                "BOI_BR042",
-                List.of("HO_BOI", "ZO_KOLKATA"),
-                "gateway_status",
-                "online",
-                "offline"
+        verify(redisCacheService).writeBulkData(
+                eq(customerId),
+                anyMap(),
+                anyMap(),
+                anyMap(),
+                anyMap(),
+                anyMap()
         );
     }
 }

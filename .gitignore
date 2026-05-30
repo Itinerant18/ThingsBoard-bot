@@ -44,3 +44,5 @@ conversasion.text
 push_error.txt
 *.log
 new_architecture/
+nul
+Thingsboard-Data/

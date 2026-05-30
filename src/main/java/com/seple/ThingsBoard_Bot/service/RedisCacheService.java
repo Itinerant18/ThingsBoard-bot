@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.SessionCallback;
+import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -97,5 +100,70 @@ public class RedisCacheService {
         if (!globalKeys.isEmpty()) stringRedisTemplate.delete(globalKeys);
         
         log.info("[REDIS] Cleared cache for customer: {}", customerId);
+    }
+
+    public void writeBulkData(
+            String customerId,
+            Map<String, Map<String, String>> deviceStates,
+            Map<String, String> deviceNodeIds,
+            Map<String, String> deviceBranchNames,
+            Map<String, Map<String, Integer>> nodeCounters,
+            Map<String, Integer> globalCounters) {
+
+        redisTemplate.executePipelined(new SessionCallback<Object>() {
+            @Override
+            public Object execute(RedisOperations operations) throws DataAccessException {
+                // 1. Write device states and meta
+                for (Map.Entry<String, Map<String, String>> entry : deviceStates.entrySet()) {
+                    String deviceId = entry.getKey();
+                    Map<String, String> stateMap = entry.getValue();
+
+                    String stateKey = String.format(KEY_DEVICE_STATE, customerId, deviceId);
+                    operations.opsForHash().putAll(stateKey, stateMap);
+                    operations.expire(stateKey, DEFAULT_TTL);
+
+                    String branchNodeId = deviceNodeIds.get(deviceId);
+                    String branchName = deviceBranchNames.get(deviceId);
+                    if (branchNodeId != null && branchName != null) {
+                        String metaKey = String.format(KEY_DEVICE_META, customerId, deviceId);
+                        Map<String, String> meta = new HashMap<>();
+                        meta.put("customer_id", customerId);
+                        meta.put("branch_node_id", branchNodeId);
+                        meta.put("branch_name", branchName);
+                        operations.opsForHash().putAll(metaKey, meta);
+                        operations.expire(metaKey, DEFAULT_TTL);
+                    }
+                }
+
+                // 2. Write node counters
+                for (Map.Entry<String, Map<String, Integer>> entry : nodeCounters.entrySet()) {
+                    String nodeId = entry.getKey();
+                    Map<String, Integer> counters = entry.getValue();
+                    Map<String, String> stringCounters = new HashMap<>();
+                    for (Map.Entry<String, Integer> cEntry : counters.entrySet()) {
+                        stringCounters.put(cEntry.getKey(), String.valueOf(cEntry.getValue()));
+                    }
+
+                    String nodeKey = String.format(KEY_NODE_COUNTERS, customerId, nodeId);
+                    operations.opsForHash().putAll(nodeKey, stringCounters);
+                    operations.expire(nodeKey, COUNTER_TTL);
+                }
+
+                // 3. Write global counters
+                if (!globalCounters.isEmpty()) {
+                    Map<String, String> stringGlobalCounters = new HashMap<>();
+                    for (Map.Entry<String, Integer> entry : globalCounters.entrySet()) {
+                        stringGlobalCounters.put(entry.getKey(), String.valueOf(entry.getValue()));
+                    }
+                    String globalKey = String.format(KEY_GLOBAL_COUNTERS, customerId);
+                    operations.opsForHash().putAll(globalKey, stringGlobalCounters);
+                    operations.expire(globalKey, COUNTER_TTL);
+                }
+
+                return null;
+            }
+        });
+        log.info("[REDIS] Bulk write complete for customer: {}. Devices={}, NodeCounters={}", 
+                 customerId, deviceStates.size(), nodeCounters.size());
     }
 }

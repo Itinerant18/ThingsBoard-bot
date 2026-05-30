@@ -41,7 +41,7 @@ public interface DeviceEventRepository extends JpaRepository<DeviceEvent, Long> 
             @Param("field") String field,
             @Param("value") String value);
 
-    @Query(value = "SELECT * FROM device_events WHERE customer_id = :customerId AND event_time BETWEEN :startTime AND :endTime ORDER BY event_time ASC", nativeQuery = true)
+    @Query("SELECT e FROM DeviceEvent e WHERE e.customerId = :customerId AND e.eventTime BETWEEN :startTime AND :endTime ORDER BY e.eventTime ASC")
     List<DeviceEvent> streamByCustomerIdAndTimeRange(
             @Param("customerId") String customerId,
             @Param("startTime") Instant startTime,
