@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  chatbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatbot-demo
+    ports:
+      - "8083:8083"
+    env_file:
+      - .env
+    restart: always
