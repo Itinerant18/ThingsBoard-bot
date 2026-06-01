@@ -46,3 +46,13 @@ push_error.txt
 new_architecture/
 nul
 Thingsboard-Data/
+
+### Frontend Build ###
+node_modules/
+dist/
+src/main/resources/static/*.js
+src/main/resources/static/*.css
+src/main/resources/static/index.html
+pnpm-lock.yaml
+yarn.lock
+package-lock.json

@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-stone-950 text-stone-50;
+    font-family: "Trebuchet MS", sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .border-subtle {
+    @apply border-stone-800;
+  }
+
+  .bg-surface {
+    @apply bg-stone-900;
+  }
+
+  .text-secondary {
+    @apply text-stone-600;
+  }
+}
+
+/* Smooth scrolling */
+.chat-messages {
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styling */
+.chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  @apply bg-stone-800 rounded;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  @apply bg-stone-700;
+}
+
+/* Message animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-enter {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes bounce-typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+.typing-dot {
+  animation: bounce-typing 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 320ms;
+}
