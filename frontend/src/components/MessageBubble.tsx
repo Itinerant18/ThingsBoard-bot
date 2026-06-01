@@ -14,7 +14,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
           isUser
             ? 'bg-accent-gold text-stone-950 font-medium rounded-br-none'
-            : 'bg-stone-900 text-stone-50 border border-stone-800 rounded-bl-none'
+            : 'bg-[#faf8f5] text-[#221d17] border border-[#d6cfc4] rounded-bl-none'
         }`}
       >
         <div className="whitespace-pre-wrap break-words">{message.content}</div>

@@ -22,36 +22,67 @@ export const ChatInput: React.FC = () => {
   }
 
   return (
-    <div className="border-t border-stone-800 bg-stone-900 p-3 space-y-2">
-      <p className="text-center text-[10px] text-stone-600 opacity-50">
-        AI can make mistakes — verify important info
-      </p>
+    <div className="border-t border-[#d6cfc4] bg-[#faf8f5] px-4 py-3 flex-shrink-0">
+      <div className="flex items-center gap-2 relative">
+        <div className="relative flex-1">
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ask anything..."
+            disabled={isLoading}
+            className="w-full bg-[#faf8f5] border border-[#d6cfc4] rounded-2xl pl-4 pr-10 py-3.5 text-xs text-[#221d17] placeholder-[#868078] outline-none transition-all focus:border-[#ca8a04] focus:ring-1 focus:ring-[#ca8a04]/20 disabled:opacity-50 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]"
+          />
 
-      <div className="flex items-center gap-2">
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Ask about your devices…"
-          disabled={isLoading}
-          className="flex-1 bg-stone-800 border border-stone-700 rounded-3xl px-4 py-2.5 text-sm text-stone-50 placeholder-stone-600 outline-none transition-colors focus:border-accent-gold focus:ring-1 focus:ring-accent-gold/20 disabled:opacity-50"
-        />
+          {/* Microphone Icon */}
+          <button 
+            type="button"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#868078] hover:text-[#ca8a04] transition-colors p-1"
+            title="Voice Input (Mock)"
+          >
+            <svg
+              className="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+              <line x1="12" y1="19" x2="12" y2="22" />
+            </svg>
+          </button>
+        </div>
 
+        {/* Send Button */}
         <button
           onClick={handleSend}
           disabled={!input.trim() || isLoading}
-          className="w-10 h-10 rounded-full bg-accent-gold text-stone-950 flex items-center justify-center font-semibold transition-all hover:scale-105 disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed"
+          className="w-11 h-11 rounded-2xl bg-[#ca8a04] hover:bg-[#a16f03] text-stone-950 flex items-center justify-center transition-all hover:scale-105 disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-sm flex-shrink-0"
         >
           <svg
-            className="w-5 h-5"
+            className="w-4.5 h-4.5 transform rotate-45 -translate-x-0.5 translate-y-0.5 text-stone-950"
             viewBox="0 0 24 24"
-            fill="currentColor"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
           </svg>
         </button>
+      </div>
+
+      {/* Footer info subtext */}
+      <div className="flex items-center justify-between text-[8px] font-semibold text-[#868078] mt-2 px-1">
+        <div>ThingsBoard Expert • AI Powered • Diagrams supported</div>
+        <div>3 free questions left</div>
       </div>
     </div>
   )

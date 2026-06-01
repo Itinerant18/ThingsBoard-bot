@@ -1,9 +1,18 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+@theme {
+  --color-brand-bg: #ece8de;
+  --color-brand-surface: #faf8f5;
+  --color-brand-text: #221d17;
+  --color-brand-border: #d6cfc4;
+  --color-accent-gold: #ca8a04;
+}
+
 @layer base {
   body {
-    @apply bg-stone-950 text-stone-50;
+    background-color: #ece8de;
+    color: #221d17;
     font-family: "Trebuchet MS", sans-serif;
   }
 
@@ -13,18 +22,13 @@
   }
 }
 
-@layer components {
-  .border-subtle {
-    @apply border-stone-800;
-  }
-
-  .bg-surface {
-    @apply bg-stone-900;
-  }
-
-  .text-secondary {
-    @apply text-stone-600;
-  }
+/* Grid background pattern */
+.grid-bg {
+  background-color: #ece8de;
+  background-image: 
+    linear-gradient(rgba(34, 29, 23, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 29, 23, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* Smooth scrolling */
@@ -34,19 +38,20 @@
 
 /* Scrollbar styling */
 .chat-messages::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
 
 .chat-messages::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-  @apply bg-stone-800 rounded;
+  background: #d6cfc4;
+  border-radius: 9999px;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
-  @apply bg-stone-700;
+  background: #ca8a04;
 }
 
 /* Message animations */

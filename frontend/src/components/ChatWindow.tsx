@@ -14,35 +14,46 @@ export const ChatWindow: React.FC = () => {
   }, [messages, isLoading])
 
   return (
-    <div className="flex flex-col h-full bg-stone-950">
+    <div className="flex flex-col h-full bg-[#faf8f5]">
       {/* Header */}
-      <div className="border-b border-stone-800 bg-stone-900 px-4 py-3 flex items-center gap-3 flex-shrink-0">
-        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-gold to-accent-gold/70 flex items-center justify-center flex-shrink-0">
-          <svg
-            className="w-6 h-6 text-stone-950"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z" />
-            <circle cx="9" cy="13" r="1" />
-            <circle cx="15" cy="13" r="1" />
-            <path d="M9 17h6" />
-          </svg>
+      <div className="border-b border-[#d6cfc4] bg-[#faf8f5]/80 backdrop-blur-md px-4 py-3 flex items-center justify-between flex-shrink-0 z-10">
+        <div className="flex items-center gap-2">
+          <div className="w-9 h-9 rounded-xl bg-[#2e2620] flex items-center justify-center flex-shrink-0">
+            {/* ThingsBoard/IoT styled logo */}
+            <svg
+              className="w-5 h-5 text-[#e2b13c]"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <rect x="3" y="14" width="4" height="6" rx="1" />
+              <rect x="10" y="8" width="4" height="12" rx="1" />
+              <rect x="17" y="3" width="4" height="17" rx="1" />
+            </svg>
+          </div>
+
+          <div>
+            <div className="font-bold text-xs text-[#221d17] leading-tight">SAI Tech Support</div>
+            <div className="text-[9px] text-[#868078] truncate max-w-[120px] xs:max-w-none">Technical support, troubleshooting...</div>
+          </div>
         </div>
 
-        <div className="flex-1">
-          <div className="font-semibold text-stone-50">SAI</div>
-          <div className="text-xs text-accent-gold flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-gold pulse-dot inline-block" />
-            Online — Ready to help
+        <div className="flex items-center gap-1.5">
+          {/* Language Selector */}
+          <div className="flex items-center gap-1 bg-[#f4ebd0] border border-[#e8d8b0] px-2 py-1.5 rounded-xl text-[10px] font-semibold text-[#8a7238] cursor-pointer hover:bg-[#ebdcb0] transition-colors">
+            <span>🌐</span>
+            <span>GB English</span>
+            <span className="text-[7px]">▼</span>
           </div>
+
+          {/* Sign In Button */}
+          <button className="bg-[#ca8a04] hover:bg-[#a16f03] text-stone-950 px-2.5 py-1.5 rounded-xl text-[10px] font-bold transition-colors">
+            Sign In
+          </button>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto chat-messages p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto chat-messages grid-bg p-4 space-y-4">
         {messages.length === 0 && <WelcomeMessage />}
 
         {messages.map((msg) => (
@@ -56,11 +67,6 @@ export const ChatWindow: React.FC = () => {
 
       {/* Input */}
       <ChatInput />
-
-      {/* Footer */}
-      <div className="text-center text-[10px] text-stone-600 py-2 border-t border-stone-800 flex-shrink-0">
-        Powered by <span className="font-semibold text-accent-gold">SEPLE</span>
-      </div>
     </div>
   )
 }
