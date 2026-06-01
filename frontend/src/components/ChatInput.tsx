@@ -4,6 +4,7 @@ import { useChat } from '../context/ChatContext'
 export const ChatInput: React.FC = () => {
   const { sendMessage, isLoading } = useChat()
   const [input, setInput] = useState('')
+  const [isListening, setIsListening] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSend = async () => {
@@ -21,8 +22,46 @@ export const ChatInput: React.FC = () => {
     }
   }
 
+  const startVoiceInput = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert('Speech recognition is not supported in this browser.')
+      return
+    }
+
+    if (isListening) {
+      setIsListening(false)
+      return
+    }
+
+    const recognition = new SpeechRecognition()
+    recognition.continuous = false
+    recognition.interimResults = false
+    recognition.lang = 'en-US'
+
+    recognition.onstart = () => {
+      setIsListening(true)
+    }
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript
+      setInput((prev) => prev + (prev ? ' ' : '') + transcript)
+    }
+
+    recognition.onerror = (event: any) => {
+      console.error('Speech recognition error:', event.error)
+      setIsListening(false)
+    }
+
+    recognition.onend = () => {
+      setIsListening(false)
+    }
+
+    recognition.start()
+  }
+
   return (
-    <div className="border-t border-[#d6cfc4] bg-[#faf8f5] px-4 py-3 flex-shrink-0">
+    <div className="border-t border-[#d6cfc4] bg-[#faf8f5] px-4 py-3.5 flex-shrink-0">
       <div className="flex items-center gap-2 relative">
         <div className="relative flex-1">
           <input
@@ -39,8 +78,13 @@ export const ChatInput: React.FC = () => {
           {/* Microphone Icon */}
           <button 
             type="button"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#868078] hover:text-[#ca8a04] transition-colors p-1"
-            title="Voice Input (Mock)"
+            onClick={startVoiceInput}
+            className={`absolute right-3 top-1/2 -translate-y-1/2 transition-colors p-1 rounded-full ${
+              isListening 
+                ? 'text-red-500 bg-red-50 animate-pulse' 
+                : 'text-[#868078] hover:text-[#ca8a04]'
+            }`}
+            title={isListening ? "Listening... Click to stop" : "Voice Input"}
           >
             <svg
               className="w-4 h-4"
@@ -77,12 +121,6 @@ export const ChatInput: React.FC = () => {
             <polygon points="22 2 15 22 11 13 2 9 22 2" />
           </svg>
         </button>
-      </div>
-
-      {/* Footer info subtext */}
-      <div className="flex items-center justify-between text-[8px] font-semibold text-[#868078] mt-2 px-1">
-        <div>ThingsBoard Expert • AI Powered • Diagrams supported</div>
-        <div>3 free questions left</div>
       </div>
     </div>
   )
