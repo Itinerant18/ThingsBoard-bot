@@ -9,7 +9,7 @@ export const ChatToggle: React.FC = () => {
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 w-15 h-15 rounded-full bg-accent-gold text-stone-950 flex items-center justify-center z-[99999] transition-all duration-300 hover:scale-110 ${
+        className={`fixed bottom-6 right-6 w-16 h-16 rounded-full bg-accent-gold text-stone-950 flex items-center justify-center z-[99999] transition-all duration-300 hover:scale-110 ${
           isOpen ? 'rotate-45' : ''
         }`}
         aria-label="Open chat"

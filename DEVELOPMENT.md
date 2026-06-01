@@ -66,6 +66,7 @@ Outputs to `../src/main/resources/static/`. Spring Boot serves these assets.
 ## Backend Setup
 
 ### Prerequisites
+
 - Java 21+
 - Maven 3.8+
 - PostgreSQL 13+
@@ -82,11 +83,13 @@ Starts Spring Boot at `http://localhost:8080`.
 ## Full Stack Development
 
 **Terminal 1 (Backend):**
+
 ```bash
 mvn spring-boot:run
 ```
 
 **Terminal 2 (Frontend):**
+
 ```bash
 cd frontend && npm run dev
 ```
@@ -96,6 +99,7 @@ Visit `http://localhost:5173` → Frontend talks to backend via `/api` proxy.
 ## Frontend Architecture
 
 ### Components
+
 - **ChatToggle** — Floating button + window container
 - **ChatWindow** — Main chat UI
 - **MessageBubble** — Message rendering (user + bot)
@@ -104,11 +108,13 @@ Visit `http://localhost:5173` → Frontend talks to backend via `/api` proxy.
 - **TypingIndicator** — Loading animation
 
 ### State Management
+
 - **ChatContext** — Global chat state (messages, loading, JWT token)
 - Auto-detects JWT from localStorage, URL params, or postMessage
 - Message history in memory (add localStorage persistence if needed)
 
 ### Design System
+
 - **Colors** (from CSSOM analysis):
   - Stone-950: `#1c1917` (primary dark)
   - Stone-900: `#44403c` (surface)
@@ -125,15 +131,18 @@ Visit `http://localhost:5173` → Frontend talks to backend via `/api` proxy.
 ## Backend Architecture
 
 ### Controllers
+
 - **ChatController** — POST `/api/v1/chat/ask`, GET `/api/v1/chat/init`
 
 ### Services
+
 - **ChatService** — Orchestrates chat requests, calls OpenAI, manages context
 - **ThingsBoardClient** — Fetches device data from TB
 - **OpenAIClient** — Calls OpenAI API for responses
 - Other services for caching, event handling, etc.
 
 ### Configuration
+
 - `ChatbotConfig.java` — Chat-specific settings
 - `ThingsBoardConfig.java` — TB connection
 - `OpenAIConfig.java` — OpenAI keys
@@ -144,6 +153,7 @@ Visit `http://localhost:5173` → Frontend talks to backend via `/api` proxy.
 ### Chat Endpoint
 
 **Request:**
+
 ```
 POST /api/v1/chat/ask
 Header: X-TB-Token: <jwt_token>
@@ -151,6 +161,7 @@ Body: { "question": "What devices do I have?" }
 ```
 
 **Response:**
+
 ```json
 {
   "answer": "You have 3 devices...",
@@ -165,6 +176,7 @@ Body: { "question": "What devices do I have?" }
 ### Development Build
 
 Frontend + Backend run separately (hot reload):
+
 ```bash
 # Terminal 1
 mvn spring-boot:run
@@ -176,16 +188,19 @@ cd frontend && npm run dev
 ### Production Build
 
 1. Build frontend:
+
    ```bash
    cd frontend && npm run build
    ```
 
 2. Build backend (includes frontend assets):
+
    ```bash
    mvn clean package
    ```
 
 3. Run JAR:
+
    ```bash
    java -jar target/ThingsBoard-Bot-1.0.0.jar
    ```
@@ -195,21 +210,25 @@ JAR includes static assets from `src/main/resources/static/`.
 ## Troubleshooting
 
 ### Frontend can't reach backend
+
 - Backend should be on `:8080`
 - Check `frontend/vite.config.ts` proxy URL
 - Verify CORS in `CorsConfig.java`
 
 ### JWT token not detected
+
 - Check browser localStorage for `jwt_token`
 - Check URL for `?jwt_token=...` param
 - Verify ThingsBoard sending postMessage
 
 ### Build fails
+
 - Clear `node_modules`: `rm -rf node_modules && npm install`
 - Clear Maven cache: `mvn clean`
 - Update dependencies: `npm update`
 
 ### Port already in use
+
 - Backend (`:8080`): `lsof -i :8080` → kill process
 - Frontend (`:5173`): Configure in `vite.config.ts`
 
@@ -234,5 +253,22 @@ JAR includes static assets from `src/main/resources/static/`.
 - **Add tests** (Jest + Vitest for frontend, JUnit for backend)
 
 See individual README files:
+
 - `frontend/README.md` — Frontend details
 - Root `README.md` — High-level overview
+
+Option 1: Using the Maven Wrapper (Recommended)
+Run this command in the project root directory:
+
+powershell
+.\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=dev,chat
+Option 2: Using Global Maven (if installed)
+powershell
+mvn spring-boot:run -Dspring-boot.run.profiles=dev,chat
+Option 3: Building and Running the JAR File
+Build the JAR:
+powershell
+.\mvnw.cmd clean package -DskipTests
+Run the JAR with the dev and chat profiles:
+powershell
+java -jar -Dspring.profiles.active=dev,chat target/ThingsBoard-Bot-0.0.1-SNAPSHOT.jar
