@@ -1,4 +1,4 @@
-﻿# 🤖 ThingsBoard AI IoT Assistant (SAI)
+# 🤖 ThingsBoard AI IoT Assistant (SAI)
 
 <div align="center">
 
@@ -7,8 +7,6 @@
 [![Version](https://img.shields.io/badge/version-0.0.1--SNAPSHOT-orange?style=flat-square)](https://github.com)
 [![Java](https://img.shields.io/badge/Java-21-red?style=flat-square)](https://oracle.com/java)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.3-brightgreen?style=flat-square)](https://spring.io)
-
-![ThingsBoard Bot Banner](https://via.placeholder.com/1200x400?text=Smart+IoT+Monitoring+Assistant)
 
 ## **Your IoT Data, Simplified. Ask. Analyze. Act. Done.**
 
@@ -67,6 +65,7 @@ We created a **Senior Security Analyst AI** that:
 - ✅ Explains complex sensor data (like battery voltage) in simple terms.
 - ✅ Remembers your previous questions to provide detailed follow-ups.
 - ✅ Anchors every answer to a specific branch so there's never confusion.
+- ✅ Automatically suggests follow-up queries based on the current context.
 
 ---
 
@@ -79,18 +78,22 @@ We created a **Senior Security Analyst AI** that:
    → "What is the CCTV status of BALLY BAZAR?"
 
 2. BOT FETCHES TRUTH
-   → The bot reads the real-time sensor data from ThingsBoard.
+   → The bot reads the real-time sensor data from ThingsBoard / Redis.
 
 3. BRAIN ANALYZES
-   → The AI looks at the numbers (e.g., "14/16 cameras online").
+   → The AI looks at the numbers (e.g., "2 of 16 cameras online").
 
 4. PROFESSIONAL REPORT
-   → SAI formats a clean response: 
-     "Branch BALLY BAZAR: CCTV Camera Status is 14 cameras ONLINE."
+   → SAI formats a clean response listing the offline cameras by channel:
+     "For Branch BALLY BAZAR, CCTV Camera Status is 2 of 16 cameras ONLINE.
+      Offline Cameras:
+      - Channel 1: 24080129_003352-VMDS
+      - CP-UNC-VC21L5C-VMD-LQ (7 units: Channels 5, 7-9, 12-13, 15)..."
 
-5. FOLLOW UP
-   → You ask: "What about the battery?"
-   → SAI remembers you're talking about BALLY BAZAR and gives you the voltage.
+5. INTERACTIVE CHIPS
+   → SAI offers interactive suggestion chips:
+     [What is the power status of BRANCH BALLY BAZAR?]
+     [Are there any active alarms for BRANCH BALLY BAZAR?]
 ```
 
 ---
@@ -98,9 +101,9 @@ We created a **Senior Security Analyst AI** that:
 ## Key Benefits
 
 ✅ **Save Time:** Get a full branch health report in 3 seconds instead of 10 minutes.  
-✅ **Zero Learning Curve:** If you can send a WhatsApp message, you can use SAI.  
-✅ **Mathematically Accurate:** Uses "Truth-Injection" logic to ensure counts are always correct.  
-✅ **Proactive Analysis:** SAI links different data points (like power loss vs. battery drop) to warn you of risks.  
+✅ **Zero Learning Curve:** If you can send a chat message, you can use SAI.  
+✅ **Strict Access Controls:** Scopes user data so users only see branches they are authorized to view (e.g., Regional/Zonal/Head Office users).  
+✅ **Advanced Formatting:** Automatically aggregates similar device configurations (like identical model numbers) and lists them neatly with channel range grouping.  
 
 ---
 
@@ -123,18 +126,18 @@ Ask "What is the HDD status?" before driving to a branch so you know exactly whi
 
 **Screenshot 1: The Global Overview**
 ![Home Screen Placeholder](https://via.placeholder.com/300x600?text=Total+Online/Offline)  
-*See your entire bank network status in one sentence.*
+*See your entire bank network status in one sentence, with collapsible list sections.*
 
 **Screenshot 2: Precision Reporting**
 ![Report Screen Placeholder](https://via.placeholder.com/300x600?text=Branch+Metrics)  
-*Self-descriptive answers anchored to specific branch names.*
+*Self-descriptive answers anchored to specific branch names with quick-reply recommendation chips.*
 
 ---
 
 ## Frequently Asked Questions (Non-Technical)
 
 ### 🔒 **Q: Is my data safe?**
-**A:** Yes. SAI acts as a "Read-Only" analyst. It cannot change your device settings, and it only sees the data your account has permission to view.
+**A:** Yes. SAI acts as a "Read-Only" analyst. It cannot change your device settings, and it enforces strict scoping based on your ThingsBoard credentials.
 
 ### 📱 **Q: Does it work on my phone?**
 **A:** Yes! The chat widget works in any modern web browser on desktop, tablet, or smartphone.
@@ -149,9 +152,12 @@ Ask "What is the HDD status?" before driving to a branch so you know exactly whi
 1. [Technical Overview](#technical-overview)
 2. [Tech Stack](#tech-stack)
 3. [System Architecture](#system-architecture)
-4. [Getting Started](#getting-started)
-5. [Folder & File Structure](#folder--file-structure)
-6. [Testing & Validation](#testing)
+4. [Scoping & Security](#scoping--security)
+5. [Caching Mechanisms](#caching-mechanisms)
+6. [CCTV Formatting & Channel-Range Grouping](#cctv-formatting--channel-range-grouping)
+7. [Getting Started](#getting-started)
+8. [Folder & File Structure](#folder--file-structure)
+9. [Testing & Validation](#testing--validation)
 
 ---
 
@@ -163,7 +169,7 @@ SAI is built as a **Context-Augmented Generation (CAG)** system. Unlike standard
 
 ✅ **Ambiguity Filter:** Detects queries missing a target branch and requests clarification.  
 ✅ **Topic Retention:** Stores "Pending Intent" in session memory to handle context-heavy follow-ups.  
-✅ **Deep Mapping:** Recursively parses nested JSON telemetry (CCTV channels, HDD slots) into AI-ready structures.  
+✅ **Scoping Enforcement:** Intercepts questions to prevent cross-customer or unauthorized branch access.  
 
 ---
 
@@ -173,10 +179,12 @@ SAI is built as a **Context-Augmented Generation (CAG)** system. Unlike standard
 |----------|-----------|---------|---------|
 | **Backend** | Java | 21 | Core Language |
 | **Framework** | Spring Boot | 4.0.3 | Application Framework |
+| **Database** | TimescaleDB / PostgreSQL | 15+ | Timeseries Event Database |
+| **Cache Store**| Redis (Upstash) | 6.x / 7.x | High-Speed Active State Mirroring |
+| **Queue Broker**| RabbitMQ | 3.x | Real-Time Events Ingestion Queue |
+| **Frontend** | React, TypeScript, Vite | 5.x / 18.x | Dynamic Chat UI |
 | **Build Tool** | Maven | 3.8+ | Dependency Management |
-| **IoT Platform** | ThingsBoard | Cloud/PE | Source of Truth (REST API) |
 | **LLM Engine** | OpenAI | GPT-4o | Natural Language Processing |
-| **Memory** | ConcurrentLinkedDeque | In-Memory | Stateless Session History |
 
 ---
 
@@ -184,15 +192,44 @@ SAI is built as a **Context-Augmented Generation (CAG)** system. Unlike standard
 
 ```mermaid
 graph TD
-    User((User)) -->|Question| Controller[ChatController]
-    Controller -->|Resolve Intent| Intent[QueryIntentResolver]
-    Intent -->|Match Branch| Index[BranchAliasIndex]
-    Intent -->|Fetch Data| TB[ThingsBoard API]
-    TB -->|Raw JSON| Filter[ContextFilterUtil]
-    Filter -->|Truth Note| Service[ChatService]
-    Service -->|CAG Prompt| OpenAI[OpenAI API]
-    OpenAI -->|Formatted Answer| User
+    User((User Web App)) -->|1. Submit Question + JWT token| ChatController[ChatController]
+    ChatController -->|2. Validate Authorization Scoping| UserDataService[UserDataService]
+    UserDataService -->|Query Scoped Node IDs| Postgres[(PostgreSQL / TimescaleDB)]
+    ChatController -->|3. Route Query Intent| Intent[QueryIntentResolver]
+    Intent -->|4. Resolve Cached State| RedisCache[(Redis State Store)]
+    RedisCache -->|Extract Telemetry / Attributes| SnapshotMapper[BranchSnapshotMapper]
+    SnapshotMapper -->|Inject Verified Context| ChatService[ChatService]
+    ChatService -->|5. Truth-Injected Prompts| OpenAI[OpenAI GPT-4o]
+    OpenAI -->|6. Formatted Markdown + Suggestions| ControllerResponse[Response Handler]
+    ControllerResponse -->|7. Collapsible UI + Quick Chips| User
 ```
+
+---
+
+## Scoping & Security
+
+SAI enforces strict multi-level tenancy scoping based on ThingsBoard user scopes (`HO`, `ZO`, `Regional`, `Branch` levels):
+1. **Token Parsing:** Decodes client JWT claims to retrieve authorized customer IDs and regional properties.
+2. **Access Intersection:** Filters all active branch snapshots against the user's scope nodes retrieved from TimescaleDB.
+3. **Question Interception:** If a user queries details about an unauthorized branch name, the request is blocked and returned immediately as:
+   `*Branch [Name] was not found, or you do not have permission to view it.*`
+
+---
+
+## Caching Mechanisms
+
+To achieve response latencies under **200ms**, SAI employs a dual-layer caching strategy:
+1. **Redis Cache Mirroring:** Telemetry and attribute changes from the RabbitMQ ingestion pipeline are mirrored directly into Redis hashes.
+2. **Concurrent In-Memory JVM Caching:** Node hierarchy mappings and path lookups in TimescaleDB are cached within JVM memory with a **5-minute TTL** self-expiring model, completely eliminating query overhead on database connection pools.
+
+---
+
+## CCTV Formatting & Channel-Range Grouping
+
+Offline CCTV camera listings parse raw JSON entries (`rock_CAMERAdETAILS`, `CAMERAdETAILS`, `CAMERA_DETAILS`), formatting them dynamically:
+* **Channel Prefixing:** Renders entries as `Channel [No]: [Model/Name]`.
+* **Channel Range Grouping:** Merges identical camera models or hashes, and compiles their channel numbers into compact sorted ranges (e.g. `CP-UNC-VC21L5C-VMD-LQ (7 units: Channels 5, 7-9, 12-13, 15)`).
+* **Consistently Bulleted:** Lists offline cameras as bullet points below the status overview for superior readability.
 
 ---
 
@@ -200,8 +237,9 @@ graph TD
 
 ### Prerequisites
 *   **Java 21** installed and configured in `PATH`.
+*   **Node.js 18+** & **npm** (for compiling the frontend).
 *   **OpenAI API Key** with GPT-4 access.
-*   **ThingsBoard Credentials** (Tenant or Customer level).
+*   **ThingsBoard Credentials** or a running local setup.
 
 ### 1. Installation
 ```bash
@@ -209,23 +247,41 @@ git clone https://github.com/singhaganesh/ThingsBoard-Bot.git
 cd ThingsBoard-Bot
 ```
 
-### 2. Configuration
-Edit `src/main/resources/application.properties`:
-```properties
-# ThingsBoard
-iotchatbot.thingsboard.url=https://thingsboard.cloud
-iotchatbot.thingsboard.username=your_email
-iotchatbot.thingsboard.password=your_password
-
-# OpenAI
-iotchatbot.openai.api-key=sk-your-key
-iotchatbot.openai.model=gpt-4o
+### 2. Compile Frontend Assets
+Build the React UI bundle and copy it directly to the Spring Boot static resource directory:
+```bash
+cd frontend
+npm install
+npm run build
+cd ..
 ```
 
-### 3. Run the Bot
+### 3. Configuration
+Edit `src/main/resources/application-dev.properties`:
+```properties
+# ThingsBoard API
+iotchatbot.thingsboard.url=https://seple.iot-private.cloud
+iotchatbot.thingsboard.username=your_admin_email
+iotchatbot.thingsboard.password=your_admin_password
+
+# Database Settings
+spring.datasource.url=jdbc:postgresql://your-timescaledb-host:32311/tsdb
+spring.datasource.username=tsdbadmin
+spring.datasource.password=your_db_password
+
+# Redis Settings
+spring.data.redis.host=your-upstash-redis-host
+spring.data.redis.port=6379
+spring.data.redis.password=your_redis_password
+spring.data.redis.ssl.enabled=true
+
+# OpenAI API Key
+iotchatbot.openai.api-key=sk-your-key
+```
+
+### 4. Run the Bot (Dev & Chat Profiles)
 ```bash
-./mvnw clean package -DskipTests
-java -jar target/ThingsBoard-Bot-0.0.1-SNAPSHOT.jar
+./mvnw spring-boot:run "-Dspring-boot.run.profiles=dev,chat" "-Dspring-boot.run.arguments=--server.port=8083"
 ```
 
 ---
@@ -234,16 +290,18 @@ java -jar target/ThingsBoard-Bot-0.0.1-SNAPSHOT.jar
 
 ```
 ThingsBoard-Bot/
+├── frontend/                # React / TypeScript Vite Frontend UI
 ├── src/main/java/com/seple/ThingsBoard_Bot/
 │   ├── client/              # OpenAI & ThingsBoard API Wrappers
-│   ├── config/              # Security, Cache, and OpenAI Configs
+│   ├── config/              # Security, Cache, RabbitMQ, and OpenAI Configs
 │   ├── model/domain/        # Structured IoT Domain Objects (Branch, Power, CCTV)
-│   ├── service/             # CORE LOGIC
-│   │   ├── ChatService.java # Orchestrator (Truth-Injection Logic)
+│   ├── service/             # CORE SERVICES
+│   │   ├── ChatService.java # Orchestrator (Scoping & LLM Prompting)
+│   │   ├── UserDataService.java # Tenancy Scope Rules Engine
 │   │   ├── normalization/   # Key mapping and Data Cleanup
-│   │   └── query/           # Intent Resolution & Deterministic Answers
+│   │   └── query/           # Intent Resolution, Caching & Templates
 │   └── util/                # Token Counting & Context Filtering
-└── src/main/resources/static/ # Floating Chat UI
+└── src/main/resources/static/ # Compiled static Frontend Assets
 ```
 
 ---
@@ -259,8 +317,8 @@ SAI uses a **Golden Question** testing strategy to ensure 100% accuracy.
 
 **Key Test Areas:**
 *   `QueryIntentResolverTest`: Validates that user questions map to correct metrics.
-*   `DeterministicAnswerServiceTest`: Ensures "Truth-Injection" calculates correct counts.
-*   `BranchSnapshotMapperTest`: Verifies that technical ThingsBoard data is correctly unwrapped.
+*   `DeterministicAnswerServiceTest`: Ensures "Truth-Injection" calculates correct counts and validates channel-range grouping layout rules.
+*   `ChatServiceTest`: Verifies scope verification intercepts and JWT-scoping compliance.
 
 ---
 *Developed by Ganesh Singha — Senior IoT Developer.*
