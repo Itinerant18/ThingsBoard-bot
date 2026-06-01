@@ -11,7 +11,7 @@
 
 @layer base {
   body {
-    background-color: #ece8de;
+    background-color: transparent;
     color: #221d17;
     font-family: "Trebuchet MS", sans-serif;
   }

@@ -37,18 +37,9 @@ export const ChatWindow: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          {/* Language Selector */}
-          <div className="flex items-center gap-1 bg-[#f4ebd0] border border-[#e8d8b0] px-2 py-1.5 rounded-xl text-[10px] font-semibold text-[#8a7238] cursor-pointer hover:bg-[#ebdcb0] transition-colors">
-            <span>🌐</span>
-            <span>GB English</span>
-            <span className="text-[7px]">▼</span>
-          </div>
-
-          {/* Sign In Button */}
-          <button className="bg-[#ca8a04] hover:bg-[#a16f03] text-stone-950 px-2.5 py-1.5 rounded-xl text-[10px] font-bold transition-colors">
-            Sign In
-          </button>
+        <div className="flex items-center gap-1.5 bg-[#eaf7f2] px-2 py-1 rounded-lg">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] pulse-dot" />
+          <span className="text-[10px] font-bold text-[#10b981]">Online</span>
         </div>
       </div>
 

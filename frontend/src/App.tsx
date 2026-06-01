@@ -1,11 +1,14 @@
 import { ChatProvider } from './context/ChatContext'
-import { ChatWindow } from './components/ChatWindow'
+import { ChatToggle } from './components/ChatToggle'
 
 function App() {
   return (
     <ChatProvider>
-      <div className="w-full h-screen flex flex-col bg-[#faf8f5] overflow-hidden">
-        <ChatWindow />
+      {/* Container is transparent and non-blocking for dashboard placement */}
+      <div className="w-screen h-screen bg-transparent pointer-events-none relative overflow-hidden">
+        <div className="pointer-events-auto">
+          <ChatToggle />
+        </div>
       </div>
     </ChatProvider>
   )
