@@ -6,7 +6,7 @@ import { ChatInput } from './ChatInput'
 import { WelcomeMessage } from './WelcomeMessage'
 
 export const ChatWindow: React.FC = () => {
-  const { messages, isLoading } = useChat()
+  const { messages, isLoading, sendMessage } = useChat()
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const ChatWindow: React.FC = () => {
         {messages.length === 0 && <WelcomeMessage />}
 
         {messages.map((msg) => (
-          <MessageBubble key={msg.id} message={msg} />
+          <MessageBubble key={msg.id} message={msg} onSuggestionClick={sendMessage} />
         ))}
 
         {isLoading && <TypingIndicator />}

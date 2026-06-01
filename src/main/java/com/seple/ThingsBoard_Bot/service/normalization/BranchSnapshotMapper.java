@@ -181,7 +181,16 @@ public class BranchSnapshotMapper {
                             continue;
                         }
                         totalCount++;
-                        String status = camera.has("status") ? camera.path("status").asText() : camera.path("Active Status").asText();
+                        String status = null;
+                        if (camera.has("cameraStatus")) {
+                            status = camera.path("cameraStatus").asText();
+                        } else if (camera.has("status")) {
+                            status = camera.path("status").asText();
+                        } else if (camera.has("Active Status")) {
+                            status = camera.path("Active Status").asText();
+                        } else if (camera.has("camera_status")) {
+                            status = camera.path("camera_status").asText();
+                        }
                         if ("active".equalsIgnoreCase(status) || "online".equalsIgnoreCase(status)) {
                             onlineCount++;
                         }

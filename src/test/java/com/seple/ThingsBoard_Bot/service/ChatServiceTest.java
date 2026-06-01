@@ -87,17 +87,19 @@ class ChatServiceTest {
         when(userDataService.getUserBranchSnapshots(token)).thenReturn(snapshots);
         when(queryIntentResolver.resolve(eq(question), eq(snapshots), eq(null))).thenReturn(initial);
         when(chatbotConfig.isDeterministicAnswersEnabled()).thenReturn(true);
-        when(chatbotConfig.isLogDecisionMetadata()).thenReturn(false);
-        when(deterministicAnswerService.answer(any(ResolvedQuery.class), eq(snapshots)))
+        when(deterministicAnswerService.answer(any(ResolvedQuery.class), eq(snapshots), any()))
                 .thenReturn("For Branch BRANCH CHANDANNAGAR, Battery Voltage Reading is 0.0V DC.");
 
         ChatResponse response = service.answerQuestion(new ChatRequest(question, null, null), token);
 
         ArgumentCaptor<ResolvedQuery> queryCaptor = ArgumentCaptor.forClass(ResolvedQuery.class);
-        verify(deterministicAnswerService).answer(queryCaptor.capture(), eq(snapshots));
+        verify(deterministicAnswerService).answer(queryCaptor.capture(), eq(snapshots), any());
         assertEquals(QueryIntent.BATTERY_VOLTAGE, queryCaptor.getValue().getIntent());
         assertFalse(response.isError());
-        assertEquals("For Branch CHANDANNAGAR, Battery Voltage Reading is 0.0V DC.", response.getAnswer());
+        String expectedAnswer = "For Branch CHANDANNAGAR, Battery Voltage Reading is 0.0V DC.\n\n[SUGGESTIONS]\n" +
+                "- What is the CCTV status of BRANCH CHANDANNAGAR?\n" +
+                "- Are there any active alarms for BRANCH CHANDANNAGAR?\n";
+        assertEquals(expectedAnswer, response.getAnswer());
         verify(chatMemoryService).setPendingTopic(token, null);
         verify(openAIClient, never()).chat(any(), any(), any());
     }

@@ -411,4 +411,29 @@ class DeterministicAnswerServiceTest {
         assertTrue(answer.contains("Access Control Alarm Status"));
         assertTrue(answer.contains("NOT INSTALLED"));
     }
+
+    @Test
+    void shouldGroupOfflineCamerasByChannelRange() {
+        AnswerTemplateService templateService = new AnswerTemplateService();
+        BranchSnapshot branch = new BranchSnapshot();
+        com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity = new com.seple.ThingsBoard_Bot.model.domain.BranchIdentity();
+        identity.setBranchName("BRANCH BALLY BAZAR");
+        branch.setIdentity(identity);
+        
+        java.util.Map<String, Object> rawData = new java.util.HashMap<>();
+        rawData.put("rock_CAMERAdETAILS", "[" +
+            "{\"channel_no\":\"1\",\"status\":\"Inactive\",\"Channel Name\":\"24080129_003352-VMDS\"}," +
+            "{\"channel_no\":\"2\",\"status\":\"Inactive\",\"Channel Name\":\"YZWLY9ZSBX6MYX5TMD-LQ\"}," +
+            "{\"channel_no\":\"5\",\"status\":\"Inactive\",\"Channel Name\":\"CP-UNC-VC21L5C-VMD-LQ\"}," +
+            "{\"channel_no\":\"7\",\"status\":\"Inactive\",\"Channel Name\":\"CP-UNC-VC21L5C-VMD-LQ\"}," +
+            "{\"channel_no\":\"8\",\"status\":\"Inactive\",\"Channel Name\":\"CP-UNC-VC21L5C-VMD-LQ\"}" +
+        "]");
+        branch.setRawData(rawData);
+
+        String answer = templateService.renderCctvStatus(branch, 2, 7);
+        assertTrue(answer.contains("Offline Cameras:"));
+        assertTrue(answer.contains("Channel 1: 24080129_003352-VMDS"));
+        assertTrue(answer.contains("Channel 2: YZWLY9ZSBX6MYX5TMD-LQ"));
+        assertTrue(answer.contains("CP-UNC-VC21L5C-VMD-LQ (3 units: Channels 5, 7-8)"));
+    }
 }

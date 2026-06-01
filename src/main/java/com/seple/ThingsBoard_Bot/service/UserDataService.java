@@ -50,6 +50,35 @@ public class UserDataService {
     // Keep an empty cache map to avoid breaking any dailyCacheMemoryWipe references
     private final ConcurrentHashMap<String, Object> userCacheMap = new ConcurrentHashMap<>();
 
+    private final Map<String, CachedHierarchy> hierarchyCache = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static class CachedHierarchy {
+        final List<HierarchyNode> allNodes;
+        final List<BranchAncestorPath> ancestorPaths;
+        final long cachedAt;
+
+        CachedHierarchy(List<HierarchyNode> allNodes, List<BranchAncestorPath> ancestorPaths) {
+            this.allNodes = allNodes;
+            this.ancestorPaths = ancestorPaths;
+            this.cachedAt = System.currentTimeMillis();
+        }
+
+        boolean isExpired() {
+            return System.currentTimeMillis() - cachedAt > 300_000; // 5 minutes TTL
+        }
+    }
+
+    private CachedHierarchy getCachedHierarchy(String customerId) {
+        CachedHierarchy cached = hierarchyCache.get(customerId);
+        if (cached == null || cached.isExpired()) {
+            List<HierarchyNode> allNodes = hierarchyNodeRepository.findByCustomerId(customerId);
+            List<BranchAncestorPath> ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+            cached = new CachedHierarchy(allNodes, ancestorPaths);
+            hierarchyCache.put(customerId, cached);
+        }
+        return cached;
+    }
+
     public UserDataService(BranchSnapshotMapper branchSnapshotMapper,
                            BranchIndexService branchIndexService,
                            IntentKeyProfileRegistry intentKeyProfileRegistry,
@@ -72,10 +101,20 @@ public class UserDataService {
 
     // ==================== Public API ====================
 
+    private static final List<String> REGIONAL_PREFIXES = List.of("FGMO", "LHO", "ZO", "CO", "RO", "RBO", "NBG");
+
+    private String normalizeName(String name) {
+        if (name == null) return "";
+        return name.replaceAll("[^a-zA-Z0-9]", "").toUpperCase();
+    }
+
     private List<HierarchyNode> getFilteredUserNodes(String userToken) {
         String customerId = resolveCustomerIdPrefix(userToken);
-        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
-        boolean filtered = false;
+        CachedHierarchy cached = getCachedHierarchy(customerId);
+        
+        List<HierarchyNode> nodes = cached.allNodes.stream()
+                .filter(n -> Boolean.TRUE.equals(n.getIsLeaf()))
+                .collect(Collectors.toList());
         
         try {
             List<Map<String, String>> userDevices = userAwareThingsBoardClient.getUserDevices(userToken);
@@ -92,53 +131,52 @@ public class UserDataService {
                         })
                         .toList();
                 log.info("Filtered nodes to {} authorized devices for token", nodes.size());
-                filtered = true;
-            } else {
-                log.warn("ThingsBoard returned empty device list for user token.");
             }
         } catch (Exception e) {
             log.error("Failed to filter nodes via ThingsBoard API (e.g. token expired): {}", e.getMessage());
         }
         
-        // Fallback: local zone-based ancestor path filtering
-        if (!filtered) {
-            String zoneName = resolveZoneName(userToken);
-            if (zoneName != null) {
-                log.info("Attempting local fallback filtering for zone: {}", zoneName);
-                Optional<HierarchyNode> zoNodeOpt = hierarchyNodeRepository.findAll().stream()
-                        .filter(node -> "ZO".equalsIgnoreCase(node.getNodeType()) && 
-                                        (node.getDisplayName().equalsIgnoreCase(zoneName) || 
-                                         node.getNodeId().toUpperCase().contains(zoneName.replace(" ", "_"))))
-                        .findFirst();
+        // ALWAYS apply local regional ancestor path filtering if the token resolves to a specific region/zone
+        String regionName = resolveRegionName(userToken);
+        if (regionName != null) {
+            log.info("Applying regional filtering for region: {}", regionName);
+            String normalizedRegion = normalizeName(regionName);
+            
+            Optional<HierarchyNode> regionNodeOpt = cached.allNodes.stream()
+                    .filter(node -> !Boolean.TRUE.equals(node.getIsLeaf()) && 
+                                    (normalizeName(node.getDisplayName()).equals(normalizedRegion) || 
+                                     normalizeName(node.getNodeId()).contains(normalizedRegion)))
+                    .findFirst();
+            
+            if (regionNodeOpt.isPresent()) {
+                String regionNodeId = regionNodeOpt.get().getNodeId();
+                List<BranchAncestorPath> ancestorPaths = cached.ancestorPaths;
+                Set<String> branchIdsInRegion = ancestorPaths.stream()
+                        .filter(path -> path.getAncestorList().contains(regionNodeId))
+                        .map(BranchAncestorPath::getBranchNodeId)
+                        .collect(Collectors.toSet());
                 
-                if (zoNodeOpt.isPresent()) {
-                    String zoNodeId = zoNodeOpt.get().getNodeId();
-                    List<BranchAncestorPath> ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
-                    Set<String> branchIdsInZone = ancestorPaths.stream()
-                            .filter(path -> path.getAncestorList().contains(zoNodeId))
-                            .map(BranchAncestorPath::getBranchNodeId)
-                            .collect(Collectors.toSet());
-                    
-                    nodes = nodes.stream()
-                            .filter(node -> branchIdsInZone.contains(node.getNodeId()))
-                            .toList();
-                    log.info("Successfully filtered nodes to {} branches for zone: {}", nodes.size(), zoneName);
-                } else {
-                    log.warn("Could not find ZO node for zone: {} in database.", zoneName);
-                }
+                nodes = nodes.stream()
+                        .filter(node -> branchIdsInRegion.contains(node.getNodeId()))
+                        .toList();
+                log.info("Successfully filtered nodes to {} branches for region: {}", nodes.size(), regionName);
+            } else {
+                log.warn("Could not find matching hierarchy node for region: {} (normalized: {}) in database.", regionName, normalizedRegion);
             }
         }
         
         return nodes;
     }
 
-    private String resolveZoneName(String userToken) {
+    private String resolveRegionName(String userToken) {
         String firstName = JwtParserUtil.extractClaim(userToken, "firstName");
         String lastName = JwtParserUtil.extractClaim(userToken, "lastName");
         if (firstName != null && lastName != null) {
             String combined = (firstName + " " + lastName).toUpperCase();
-            if (combined.contains("ZO ")) {
-                return combined.substring(combined.indexOf("ZO ")).trim(); // e.g., "ZO HOWRAH"
+            for (String prefix : REGIONAL_PREFIXES) {
+                if (combined.contains(prefix + " ")) {
+                    return combined.substring(combined.indexOf(prefix + " ")).trim();
+                }
             }
         }
         String sub = JwtParserUtil.extractClaim(userToken, "sub");
@@ -146,7 +184,12 @@ public class UserDataService {
             String prefix = sub.split("@")[0].toUpperCase();
             if (prefix.contains(".")) {
                 String firstPart = prefix.split("\\.")[0];
-                return "ZO " + firstPart; // e.g. "ZO HOWRAH"
+                for (String p : REGIONAL_PREFIXES) {
+                    if (prefix.startsWith(p + ".")) {
+                        return prefix.replace(".", " ");
+                    }
+                }
+                return "ZO " + firstPart;
             }
             return "ZO " + prefix;
         }
@@ -324,6 +367,61 @@ public class UserDataService {
         }
 
         return branchSnapshotMapper.map(raw);
+    }
+
+    public String detectUnauthorizedBranchName(String question, String userToken) {
+        String customerId = resolveCustomerIdPrefix(userToken);
+        CachedHierarchy cached = getCachedHierarchy(customerId);
+        
+        List<HierarchyNode> allNodes = cached.allNodes.stream()
+                .filter(n -> Boolean.TRUE.equals(n.getIsLeaf()))
+                .collect(Collectors.toList());
+                
+        List<HierarchyNode> authNodes = getFilteredUserNodes(userToken);
+        
+        log.info("[SCOPING] detectUnauthorizedBranchName for customerId={}, allNodes.size={}, authNodes.size={}", 
+                 customerId, allNodes.size(), authNodes.size());
+        
+        java.util.Set<String> authNames = new java.util.HashSet<>();
+        for (HierarchyNode node : authNodes) {
+            authNames.add(normalizeKey(node.getDisplayName()));
+            authNames.add(normalizeKey(node.getNodeId()));
+        }
+        
+        String normalizedQuestion = normalizeKey(question);
+        log.info("[SCOPING] normalizedQuestion: '{}'", normalizedQuestion);
+
+        
+        // Sort allNodes by name length descending to match longest name first
+        List<HierarchyNode> sortedNodes = allNodes.stream()
+                .sorted((a, b) -> Integer.compare(b.getDisplayName().length(), a.getDisplayName().length()))
+                .toList();
+                
+        log.info("[SCOPING] authNames: {}", authNames);
+        
+        for (HierarchyNode node : sortedNodes) {
+            String normName = normalizeKey(node.getDisplayName());
+            String normId = normalizeKey(node.getNodeId());
+            
+            // Check if the name or ID is contained in the question
+            if ((normName.length() >= 4 && normalizedQuestion.contains(normName)) || 
+                (normId.length() >= 5 && normalizedQuestion.contains(normId))) {
+                
+                boolean nameAuth = authNames.contains(normName);
+                boolean idAuth = authNames.contains(normId);
+                
+                log.info("[SCOPING] Matched branch in question: node.displayName='{}', nodeId='{}', normName='{}', normId='{}', nameAuth={}, idAuth={}", 
+                         node.getDisplayName(), node.getNodeId(), normName, normId, nameAuth, idAuth);
+                
+                // If this matched branch is NOT in the user's authorized nodes, return its display name
+                if (!nameAuth && !idAuth) {
+                    log.info("[SCOPING] Rejecting unauthorized query for branch display name: '{}'", node.getDisplayName());
+                    return node.getDisplayName();
+                }
+            }
+        }
+        log.info("[SCOPING] No unauthorized branch name detected in question.");
+        return null;
     }
 
     public boolean isTwoStepFetchEnabled() {

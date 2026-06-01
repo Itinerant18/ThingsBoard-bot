@@ -1,6 +1,7 @@
 package com.seple.ThingsBoard_Bot.service;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
@@ -91,6 +92,23 @@ public class ChatService {
             }
 
             String customerId = userDataService.resolveCustomerIdPrefix(userToken);
+            String unauthorizedBranch = userDataService.detectUnauthorizedBranchName(request.getQuestion(), userToken);
+            if (unauthorizedBranch != null) {
+                String errorMsg = "**Branch " + unauthorizedBranch + " was not found, or you do not have permission to view it.**";
+                chatMemoryService.recordInteraction(sessionId, request.getQuestion(), errorMsg);
+                return ChatResponse.builder()
+                        .answer(errorMsg)
+                        .metadata(AnswerMetadata.builder()
+                                .intent("UNAUTHORIZED")
+                                .matchedBranch(unauthorizedBranch)
+                                .deterministic(true)
+                                .confidence(1.0)
+                                .build())
+                        .tokensUsed(0)
+                        .timestamp(System.currentTimeMillis())
+                        .error(false)
+                        .build();
+            }
             if (queryRouterService.classify(request.getQuestion()) == QueryRouterService.QueryComplexity.SIMPLE_REDIS) {
                 String simpleAnswer = queryRouterService.routeAndAnswerSimple(customerId, request.getQuestion());
                 if (simpleAnswer != null) {
@@ -193,14 +211,15 @@ public class ChatService {
             }
 
             String deterministicAnswer = chatbotConfig.isDeterministicAnswersEnabled()
-                    ? deterministicAnswerService.answer(resolvedQuery, snapshots)
+                    ? deterministicAnswerService.answer(resolvedQuery, snapshots, customerId)
                     : null;
             if (deterministicAnswer != null) {
                 deterministicAnswer = normalizeAnswerStyle(deterministicAnswer);
                 logDecision(resolvedQuery, true, 0);
                 chatMemoryService.recordInteraction(sessionId, request.getQuestion(), deterministicAnswer);
+                String answerWithSuggestions = appendSuggestedFollowups(deterministicAnswer, resolvedQuery);
                 return ChatResponse.builder()
-                        .answer(deterministicAnswer)
+                        .answer(answerWithSuggestions)
                         .metadata(buildMetadata(resolvedQuery, true))
                         .tokensUsed(0)
                         .timestamp(System.currentTimeMillis())
@@ -234,8 +253,9 @@ public class ChatService {
             logDecision(resolvedQuery, false, estimatedTokens);
             chatMemoryService.recordInteraction(sessionId, request.getQuestion(), answer);
 
+            String answerWithSuggestions = appendSuggestedFollowups(answer, resolvedQuery);
             return ChatResponse.builder()
-                    .answer(answer)
+                    .answer(answerWithSuggestions)
                     .metadata(buildMetadata(resolvedQuery, false))
                     .tokensUsed(estimatedTokens)
                     .timestamp(System.currentTimeMillis())
@@ -376,5 +396,66 @@ public class ChatService {
             case "cctv", "camera" -> "cctv";
             default -> currentTargetSystem;
         };
+    }
+
+    private String appendSuggestedFollowups(String answer, ResolvedQuery query) {
+        if (answer == null || query == null) {
+            return answer;
+        }
+        
+        List<String> suggestions = new ArrayList<>();
+        String branchName = null;
+        if (query.getTargetBranch() != null && query.getTargetBranch().getIdentity() != null) {
+            branchName = query.getTargetBranch().getIdentity().getBranchName();
+            if (branchName != null) {
+                branchName = branchName.replaceFirst("(?i)^BRANCH\\s+", "").trim();
+            }
+        }
+        
+        if (branchName != null) {
+            switch (query.getIntent()) {
+                case CCTV_STATUS:
+                case CCTV_HDD_ERROR_STATUS:
+                case CCTV_HDD_INFO:
+                case CCTV_RECORDING_INFO:
+                    suggestions.add("What is the power status of BRANCH " + branchName + "?");
+                    suggestions.add("Are there any active alarms for BRANCH " + branchName + "?");
+                    break;
+                case BATTERY_VOLTAGE:
+                case AC_VOLTAGE:
+                case SYSTEM_CURRENT:
+                case BATTERY_LOW_STATUS:
+                    suggestions.add("What is the CCTV status of BRANCH " + branchName + "?");
+                    suggestions.add("Are there any active alarms for BRANCH " + branchName + "?");
+                    break;
+                case ALARM_STATUS:
+                case ERROR_STATUS:
+                case SUBSYSTEM_FAULT_STATUS:
+                case SUBSYSTEM_ALARM_STATUS:
+                    suggestions.add("What is the CCTV status of BRANCH " + branchName + "?");
+                    suggestions.add("What is the power status of BRANCH " + branchName + "?");
+                    break;
+                default:
+                    suggestions.add("What is the CCTV status of BRANCH " + branchName + "?");
+                    suggestions.add("What is the power status of BRANCH " + branchName + "?");
+                    suggestions.add("Are there any active alarms for BRANCH " + branchName + "?");
+                    break;
+            }
+        } else {
+            suggestions.add("Are there any inactive branches?");
+            suggestions.add("Show CCTV status overview for all branches.");
+            suggestions.add("Show battery voltage overview for all branches.");
+        }
+        
+        if (suggestions.isEmpty()) {
+            return answer;
+        }
+        
+        StringBuilder sb = new StringBuilder(answer);
+        sb.append("\n\n[SUGGESTIONS]\n");
+        for (String suggestion : suggestions) {
+            sb.append("- ").append(suggestion).append("\n");
+        }
+        return sb.toString();
     }
 }
