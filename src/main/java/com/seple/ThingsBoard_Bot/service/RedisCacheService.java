@@ -33,7 +33,7 @@ public class RedisCacheService {
     public void updateDeviceState(String customerId, String deviceId, String field, String value) {
         String key = String.format(KEY_DEVICE_STATE, customerId, deviceId);
         redisTemplate.opsForHash().put(key, field, value);
-        redisTemplate.expire(key, DEFAULT_TTL);
+        // redisTemplate.expire(key, DEFAULT_TTL);
         log.info("[REDIS] Updated device state: {}/{} -> {}={}", customerId, deviceId, field, value);
     }
 
@@ -49,7 +49,7 @@ public class RedisCacheService {
         meta.put("branch_node_id", branchNodeId);
         meta.put("branch_name", branchName);
         redisTemplate.opsForHash().putAll(key, meta);
-        redisTemplate.expire(key, DEFAULT_TTL);
+        // redisTemplate.expire(key, DEFAULT_TTL);
         log.info("[REDIS] Set device meta: {}/{} -> branch={}", customerId, deviceId, branchName);
     }
 
@@ -61,7 +61,7 @@ public class RedisCacheService {
     public void updateGlobalCounters(String customerId, String field, long delta) {
         String key = String.format(KEY_GLOBAL_COUNTERS, customerId);
         redisTemplate.opsForHash().increment(key, field, delta);
-        redisTemplate.expire(key, COUNTER_TTL);
+        // redisTemplate.expire(key, COUNTER_TTL);
         log.info("[REDIS] Updated global counter: {}/{} += {}", customerId, field, delta);
     }
 
@@ -73,7 +73,7 @@ public class RedisCacheService {
     public void updateNodeCounters(String customerId, String nodeId, String field, long delta) {
         String key = String.format(KEY_NODE_COUNTERS, customerId, nodeId);
         redisTemplate.opsForHash().increment(key, field, delta);
-        redisTemplate.expire(key, COUNTER_TTL);
+        // redisTemplate.expire(key, COUNTER_TTL);
         log.info("[REDIS] Updated node counter: {}/{}/{} += {}", customerId, nodeId, field, delta);
     }
 
@@ -120,7 +120,7 @@ public class RedisCacheService {
 
                     String stateKey = String.format(KEY_DEVICE_STATE, customerId, deviceId);
                     operations.opsForHash().putAll(stateKey, stateMap);
-                    operations.expire(stateKey, DEFAULT_TTL);
+                    // operations.expire(stateKey, DEFAULT_TTL);
 
                     String branchNodeId = deviceNodeIds.get(deviceId);
                     String branchName = deviceBranchNames.get(deviceId);
@@ -131,7 +131,7 @@ public class RedisCacheService {
                         meta.put("branch_node_id", branchNodeId);
                         meta.put("branch_name", branchName);
                         operations.opsForHash().putAll(metaKey, meta);
-                        operations.expire(metaKey, DEFAULT_TTL);
+                        // operations.expire(metaKey, DEFAULT_TTL);
                     }
                 }
 
@@ -146,7 +146,7 @@ public class RedisCacheService {
 
                     String nodeKey = String.format(KEY_NODE_COUNTERS, customerId, nodeId);
                     operations.opsForHash().putAll(nodeKey, stringCounters);
-                    operations.expire(nodeKey, COUNTER_TTL);
+                    // operations.expire(nodeKey, COUNTER_TTL);
                 }
 
                 // 3. Write global counters
@@ -157,7 +157,7 @@ public class RedisCacheService {
                     }
                     String globalKey = String.format(KEY_GLOBAL_COUNTERS, customerId);
                     operations.opsForHash().putAll(globalKey, stringGlobalCounters);
-                    operations.expire(globalKey, COUNTER_TTL);
+                    // operations.expire(globalKey, COUNTER_TTL);
                 }
 
                 return null;

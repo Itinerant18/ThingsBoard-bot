@@ -188,6 +188,8 @@ public class ChatService {
             BranchSnapshot targetBranch = resolvedQuery.getTargetBranch();
             if (targetBranch != null && targetBranch.getIdentity() != null) {
                 chatMemoryService.setActiveBranch(sessionId, targetBranch.getIdentity().getTechnicalId());
+            } else if (resolvedQuery.isGlobal()) {
+                chatMemoryService.setActiveBranch(sessionId, null);
             }
 
             String deterministicAnswer = chatbotConfig.isDeterministicAnswersEnabled()
@@ -213,10 +215,20 @@ public class ChatService {
                 throw new ContextOverflowException("Structured context exceeded local token budget");
             }
 
-            String userMessage = "Structured Branch Context:\n" + contextJson
-                    + "\nNOTE: You are currently reporting for " + targetBranch.getIdentity().getBranchName() + ". You MUST explicitly name this branch in your response header (e.g. **Branch " + targetBranch.getIdentity().getBranchName() + ": ...**)."
-                    + (activeTopic != null ? "\nCRITICAL: The user is following up on a previous question about '" + activeTopic + "'. You MUST ONLY report on this specific topic for the branch." : "")
-                    + "\n\nUser Question: " + request.getQuestion();
+            String userMessage;
+            if (targetBranch != null && targetBranch.getIdentity() != null) {
+                userMessage = "Structured Branch Context:\n" + contextJson
+                        + "\nNOTE: You are currently reporting for " + targetBranch.getIdentity().getBranchName() 
+                        + ". You MUST explicitly name this branch in your response header (e.g. **Branch " + targetBranch.getIdentity().getBranchName() + ": ...**)."
+                        + (activeTopic != null ? "\nCRITICAL: The user is following up on a previous question about '" + activeTopic + "'. You MUST ONLY report on this specific topic for the branch." : "")
+                        + "\n\nUser Question: " + request.getQuestion();
+            } else {
+                userMessage = "Structured Context (all branches):\n" + contextJson
+                        + "\nNOTE: This is a global query. Analyze all branches in the structured context and provide a summary answering the user's question."
+                        + "\nNOTE: Since this is a global query across multiple branches, you are EXEMPTED from the MANDATORY HEADER RULES. Do NOT use a single-branch header format (like **Branch [Name]: ...**). Instead, answer the question globally (e.g. summarize across all branches)."
+                        + "\nNOTE: Do NOT associate this answer with any branch from prior history or memory, as the user is explicitly asking about all branches."
+                        + "\n\nUser Question: " + request.getQuestion();
+            }
             String answer = openAIClient.chat(SYSTEM_PROMPT, history, userMessage);
             answer = normalizeAnswerStyle(answer);
             logDecision(resolvedQuery, false, estimatedTokens);

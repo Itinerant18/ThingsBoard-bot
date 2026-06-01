@@ -252,7 +252,13 @@ public class QueryIntentResolver {
                 || question.contains("what branches")
                 || question.contains("what devices")
                 || question.contains("which branches")
-                || question.contains("how many branches");
+                || question.contains("how many branches")
+                || question.contains("inactive branches")
+                || question.contains("active branches")
+                || question.contains("any inactive")
+                || question.contains("any active")
+                || question.contains("any branches")
+                || question.contains("are there branches");
     }
 
     private boolean containsSubsystemKeyword(String normalizedQuestion) {

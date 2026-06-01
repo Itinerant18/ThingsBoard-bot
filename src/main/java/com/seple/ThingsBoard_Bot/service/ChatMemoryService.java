@@ -129,9 +129,14 @@ public class ChatMemoryService {
     }
 
     public void setActiveBranch(String sessionId, String branchAlias) {
-        if (sessionId != null && branchAlias != null && !branchAlias.isBlank()) {
-            activeBranch.put(sessionId, branchAlias);
-            log.debug("Set active branch for session '{}' to {}", sessionId, branchAlias);
+        if (sessionId != null) {
+            if (branchAlias == null || branchAlias.isBlank()) {
+                activeBranch.remove(sessionId);
+                log.debug("Cleared active branch for session '{}'", sessionId);
+            } else {
+                activeBranch.put(sessionId, branchAlias);
+                log.debug("Set active branch for session '{}' to {}", sessionId, branchAlias);
+            }
         }
     }
 
