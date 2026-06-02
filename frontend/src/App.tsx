@@ -4,12 +4,9 @@ import { ChatToggle } from './components/ChatToggle'
 function App() {
   return (
     <ChatProvider>
-      {/* Container is transparent and non-blocking for dashboard placement */}
-      <div className="w-screen h-screen bg-transparent pointer-events-none relative overflow-hidden">
-        <div className="pointer-events-auto">
-          <ChatToggle />
-        </div>
-      </div>
+      {/* No wrapper div — all ChatToggle elements are fixed-positioned.
+          Body/root have pointer-events:none so only the fixed elements intercept clicks. */}
+      <ChatToggle />
     </ChatProvider>
   )
 }

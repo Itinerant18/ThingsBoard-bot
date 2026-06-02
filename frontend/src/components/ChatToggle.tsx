@@ -9,7 +9,7 @@ export const ChatToggle: React.FC = () => {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center z-[99999] transition-all duration-300 hover:scale-110 overflow-hidden ${
+        className={`pointer-events-auto fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center z-[99999] transition-all duration-300 hover:scale-110 overflow-hidden ${
           isOpen ? 'bg-accent-gold text-stone-950 border border-[#d6cfc4] shadow-lg' : 'bg-transparent'
         }`}
         aria-label="Toggle chat"
@@ -37,7 +37,7 @@ export const ChatToggle: React.FC = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-[380px] h-[580px] max-h-[85vh] bg-[#faf8f5] rounded-3xl border border-[#d6cfc4] z-[99998] flex flex-col shadow-[0_12px_40px_rgba(34,29,23,0.15)] overflow-hidden">
+        <div className="pointer-events-auto fixed bottom-24 right-6 w-[380px] h-[580px] max-h-[85vh] bg-[#faf8f5] rounded-3xl border border-[#d6cfc4] z-[99998] flex flex-col shadow-[0_12px_40px_rgba(34,29,23,0.15)] overflow-hidden">
           <ChatWindow />
         </div>
       )}
@@ -46,7 +46,7 @@ export const ChatToggle: React.FC = () => {
       {isOpen && (
         <button
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-[99997] md:hidden"
+          className="pointer-events-auto fixed inset-0 z-[99997] md:hidden"
           aria-label="Close chat"
         />
       )}
