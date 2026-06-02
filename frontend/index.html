@@ -1,13 +1,37 @@
 <!doctype html>
-<html lang="en" style="background: transparent;">
+<html lang="en" style="background-color: rgba(0,0,0,0) !important; background: transparent !important;">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IoT Assistant</title>
+    <style>
+      /* Force complete transparency for iframe embedding in ThingsBoard */
+      html, body, #root {
+        background-color: rgba(0, 0, 0, 0) !important;
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      body {
+        overflow: hidden !important;
+      }
+    </style>
+    <script>
+      // JS fallback: force transparent background immediately before any render
+      // Required for some browsers that ignore CSS transparency in cross-origin iframes
+      (function() {
+        document.documentElement.style.cssText = 'background-color: transparent !important; background: transparent !important;';
+        document.addEventListener('DOMContentLoaded', function() {
+          document.body.style.cssText = 'background-color: transparent !important; background: transparent !important; margin: 0; overflow: hidden;';
+          var root = document.getElementById('root');
+          if (root) root.style.cssText = 'background-color: transparent !important; background: transparent !important;';
+        });
+      })();
+    </script>
   </head>
-  <body style="background: transparent; margin: 0; overflow: hidden;">
-    <div id="root"></div>
+  <body style="background-color: rgba(0,0,0,0) !important; background: transparent !important; margin: 0; overflow: hidden;">
+    <div id="root" style="background-color: transparent !important; background: transparent !important;"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
