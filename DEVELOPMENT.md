@@ -261,7 +261,7 @@ Option 1: Using the Maven Wrapper (Recommended)
 Run this command in the project root directory:
 
 powershell
-.\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=dev,chat
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev,chat"
 Option 2: Using Global Maven (if installed)
 powershell
 mvn spring-boot:run -Dspring-boot.run.profiles=dev,chat
