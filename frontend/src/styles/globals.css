@@ -148,7 +148,7 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.5) 0%, rgba(139, 92, 246, 0.25) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(202, 138, 4, 0.4) 0%, rgba(34, 29, 23, 0.2) 60%, transparent 80%);
   filter: blur(6px);
   animation: breathe-aura 4s ease-in-out infinite alternate;
 }
@@ -159,6 +159,47 @@
   border-radius: 14px;
   object-fit: cover;
   animation: float-logo 3.5s ease-in-out infinite;
-  box-shadow: 0 4px 14px rgba(6, 182, 212, 0.2);
+  box-shadow: 0 4px 14px rgba(202, 138, 4, 0.15);
 }
+
+/* Toggle Button Logo Animations */
+@keyframes float-toggle {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.logo-toggle-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float-toggle 4s ease-in-out infinite;
+}
+
+.logo-toggle-glow {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(202, 138, 4, 0.5) 0%, rgba(34, 29, 23, 0.25) 60%, transparent 80%);
+  filter: blur(5px);
+  animation: breathe-aura 4s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+.logo-toggle-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  border-radius: 50%;
+}
+
 
