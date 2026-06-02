@@ -109,7 +109,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, onSuggest
         className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
           isUser
             ? 'bg-accent-gold text-stone-950 font-medium rounded-br-none'
-            : 'bg-white/70 text-[#221d17] border border-[#d6cfc4]/60 rounded-bl-none'
+            : 'bg-[#faf8f5] text-[#221d17] border border-[#d6cfc4] rounded-bl-none'
         }`}
       >
         <div className="space-y-2">

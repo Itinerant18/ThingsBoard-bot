@@ -29,15 +29,13 @@
   }
 }
 
-/* Grid background pattern - translucent for ThingsBoard overlay */
+/* Grid background pattern */
 .grid-bg {
-  background-color: rgba(236, 232, 222, 0.55);
+  background-color: #ece8de;
   background-image: 
-    linear-gradient(rgba(34, 29, 23, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 29, 23, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(34, 29, 23, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 29, 23, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 /* Glassmorphism chat container */

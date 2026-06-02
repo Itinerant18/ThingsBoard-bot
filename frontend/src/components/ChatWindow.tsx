@@ -14,9 +14,9 @@ export const ChatWindow: React.FC = () => {
   }, [messages, isLoading])
 
   return (
-    <div className="flex flex-col h-full bg-transparent">
+    <div className="flex flex-col h-full bg-[#faf8f5]">
       {/* Header */}
-      <div className="glass-header px-4 py-3 flex items-center justify-between flex-shrink-0 z-10">
+      <div className="border-b border-[#d6cfc4] bg-[#faf8f5]/80 backdrop-blur-md px-4 py-3 flex items-center justify-between flex-shrink-0 z-10">
         <div className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-xl bg-[#2e2620] flex items-center justify-center flex-shrink-0">
             {/* ThingsBoard/IoT styled logo */}

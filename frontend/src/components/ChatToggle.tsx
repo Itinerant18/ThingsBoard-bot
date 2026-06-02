@@ -37,7 +37,7 @@ export const ChatToggle: React.FC = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-[380px] h-[580px] max-h-[85vh] glass-chat rounded-3xl z-[99998] flex flex-col overflow-hidden">
+        <div className="fixed bottom-24 right-6 w-[380px] h-[580px] max-h-[85vh] bg-[#faf8f5] rounded-3xl border border-[#d6cfc4] z-[99998] flex flex-col shadow-[0_12px_40px_rgba(34,29,23,0.15)] overflow-hidden">
           <ChatWindow />
         </div>
       )}

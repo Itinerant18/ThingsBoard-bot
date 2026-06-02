@@ -40,7 +40,7 @@ export const WelcomeMessage: React.FC = () => {
           <button
             key={action.question}
             onClick={() => sendMessage(action.question)}
-            className="w-full text-left bg-white/50 hover:bg-white/80 border border-[#d6cfc4]/60 rounded-2xl p-3.5 flex items-start gap-3 transition-all hover:scale-[1.01] hover:border-[#ca8a04] shadow-[0_2px_4px_rgba(34,29,23,0.02)]"
+            className="w-full text-left bg-[#faf8f5] hover:bg-white border border-[#d6cfc4] rounded-2xl p-3.5 flex items-start gap-3 transition-all hover:scale-[1.01] hover:border-[#ca8a04] shadow-[0_2px_4px_rgba(34,29,23,0.02)]"
           >
             <span className="text-[#ca8a04] font-mono text-sm leading-none mt-0.5">➔</span>
             <span className="text-xs text-[#221d17] font-medium leading-normal">{action.label}</span>
@@ -54,7 +54,7 @@ export const WelcomeMessage: React.FC = () => {
           <button
             key={tag.label}
             onClick={() => sendMessage(tag.question)}
-            className="px-3 py-1.5 bg-white/40 hover:bg-[#f4ebd0]/80 border border-[#d6cfc4]/60 hover:border-[#ca8a04] rounded-full text-[10px] font-semibold text-[#57534e] hover:text-[#ca8a04] transition-all"
+            className="px-3 py-1.5 bg-[#faf8f5]/80 hover:bg-[#f4ebd0] border border-[#d6cfc4] hover:border-[#ca8a04] rounded-full text-[10px] font-semibold text-[#57534e] hover:text-[#ca8a04] transition-all"
           >
             {tag.label}
           </button>
