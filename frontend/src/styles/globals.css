@@ -22,13 +22,40 @@
   }
 }
 
-/* Grid background pattern */
+/* Grid background pattern - translucent for ThingsBoard overlay */
 .grid-bg {
-  background-color: #ece8de;
+  background-color: rgba(236, 232, 222, 0.55);
   background-image: 
-    linear-gradient(rgba(34, 29, 23, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 29, 23, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(34, 29, 23, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 29, 23, 0.04) 1px, transparent 1px);
   background-size: 24px 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Glassmorphism chat container */
+.glass-chat {
+  background: rgba(250, 248, 245, 0.82);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(214, 207, 196, 0.6);
+  box-shadow: 0 12px 40px rgba(34, 29, 23, 0.12), 0 0 0 1px rgba(255,255,255,0.08) inset;
+}
+
+/* Glass header */
+.glass-header {
+  background: rgba(250, 248, 245, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(214, 207, 196, 0.5);
+}
+
+/* Glass input bar */
+.glass-input {
+  background: rgba(250, 248, 245, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(214, 207, 196, 0.5);
 }
 
 /* Smooth scrolling */

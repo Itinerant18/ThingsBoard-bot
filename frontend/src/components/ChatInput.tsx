@@ -61,7 +61,7 @@ export const ChatInput: React.FC = () => {
   }
 
   return (
-    <div className="border-t border-[#d6cfc4] bg-[#faf8f5] px-4 py-3.5 flex-shrink-0">
+    <div className="glass-input px-4 py-3.5 flex-shrink-0">
       <div className="flex items-center gap-2 relative">
         <div className="relative flex-1">
           <input
@@ -72,7 +72,7 @@ export const ChatInput: React.FC = () => {
             onKeyDown={handleKeyDown}
             placeholder="Ask anything..."
             disabled={isLoading}
-            className="w-full bg-[#faf8f5] border border-[#d6cfc4] rounded-2xl pl-4 pr-10 py-3.5 text-xs text-[#221d17] placeholder-[#868078] outline-none transition-all focus:border-[#ca8a04] focus:ring-1 focus:ring-[#ca8a04]/20 disabled:opacity-50 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]"
+            className="w-full bg-white/60 border border-[#d6cfc4]/60 rounded-2xl pl-4 pr-10 py-3.5 text-xs text-[#221d17] placeholder-[#868078] outline-none transition-all focus:border-[#ca8a04] focus:ring-1 focus:ring-[#ca8a04]/20 disabled:opacity-50 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]"
           />
 
           {/* Microphone Icon */}
