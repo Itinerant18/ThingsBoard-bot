@@ -1,5 +1,6 @@
 import React from 'react'
 import { useChat } from '../context/ChatContext'
+import botLogo from '../assets/thingsboard_bot_logo.png'
 
 const QUICK_ACTIONS = [
   { label: 'Are there any inactive branches in the network?', question: 'Are there any inactive branches?' },
@@ -21,9 +22,10 @@ export const WelcomeMessage: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center py-6 px-2">
-      {/* Bot Icon */}
-      <div className="w-12 h-12 rounded-2xl bg-[#cfe6de] border border-[#a2cebe] flex items-center justify-center mb-4 shadow-sm">
-        <span className="text-2xl">🤖</span>
+      {/* Bot Icon with Claude-style Breathing Glow & Float */}
+      <div className="logo-container mb-4">
+        <div className="logo-glow" />
+        <img src={botLogo} alt="SAI Bot Logo" className="logo-img" />
       </div>
 
       {/* Main Headers */}
