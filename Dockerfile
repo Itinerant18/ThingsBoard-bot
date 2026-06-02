@@ -1,14 +1,23 @@
-# Use OpenJDK 17 base image
-FROM openjdk:17-jdk-slim
+# Stage 1: Build React Frontend
+FROM node:18-alpine AS frontend-builder
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm ci
+COPY frontend/ ./
+RUN npm run build
 
-# Set the working directory inside the container
+# Stage 2: Build Spring Boot Backend
+FROM maven:3.9-eclipse-temurin-21 AS backend-builder
 WORKDIR /app
+COPY pom.xml ./
+COPY src ./src
+# Copy the compiled static assets from Stage 1 into the src/main/resources/static directory
+COPY --from=frontend-builder /app/src/main/resources/static/ ./src/main/resources/static/
+RUN mvn clean package -DskipTests
 
-# Copy the built JAR file from target/ into the container
-COPY target/ThingsBoard-Bot-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose the chatbot service port (default is 8083 for chat profile, 8080/8083 for others)
+# Stage 3: Packaging JVM JRE runner
+FROM eclipse-temurin:21-jre-jammy
+WORKDIR /app
+COPY --from=backend-builder /app/target/ThingsBoard-Bot-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8083
-
-# Define the entrypoint to run the JAR
 ENTRYPOINT ["java", "-jar", "app.jar"]
