@@ -6,8 +6,24 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: chatbot-demo
-    ports:
-      - "8083:8083"
+    expose:
+      - "8083" # Keep it internal, let Caddy expose it on 443 (HTTPS)
     env_file:
       - .env
     restart: always
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy-proxy
+    restart: always
+    ports:
+      - "80:80"      # Required for Let's Encrypt verification
+      - "443:443"    # HTTPS port
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    command: caddy reverse-proxy --from 3.7.240.120.nip.io --to chatbot:8083
+
+volumes:
+  caddy_data:
+  caddy_config:
