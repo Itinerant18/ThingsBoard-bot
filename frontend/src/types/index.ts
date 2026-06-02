@@ -25,4 +25,5 @@ export interface ChatContextType {
   sendMessage: (question: string) => Promise<void>
   clearHistory: () => void
   jwtToken: string | null
+  tbHost?: string | null
 }

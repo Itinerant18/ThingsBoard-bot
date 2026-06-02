@@ -61,4 +61,15 @@ public class JwtParserUtil {
             return null;
         }
     }
+
+    public static String extractHost(String token) {
+        String iss = extractClaim(token, "iss");
+        if (iss != null && !iss.isBlank()) {
+            if (!iss.startsWith("http://") && !iss.startsWith("https://")) {
+                iss = "https://" + iss;
+            }
+            return iss;
+        }
+        return null;
+    }
 }

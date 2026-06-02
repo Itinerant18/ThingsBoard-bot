@@ -7,17 +7,33 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [jwtToken, setJwtToken] = useState<string | null>(null)
+  const [tbHost, setTbHost] = useState<string | null>(null)
 
-  // Get JWT token from various sources
+  // Get JWT token and TB Host from various sources
   useEffect(() => {
     const token = getJwtToken()
     if (token) setJwtToken(token)
+
+    const host = getTbHost()
+    if (host) setTbHost(host)
 
     // Listen for postMessage from ThingsBoard
     const handleMessage = (event: MessageEvent) => {
       if (event.data?.type === 'TB_AUTH_TOKEN' && event.data?.token) {
         setJwtToken(event.data.token)
         localStorage.setItem('jwt_token', event.data.token)
+      }
+      if (event.data?.type === 'TB_HOST' && event.data?.host) {
+        setTbHost(event.data.host)
+        localStorage.setItem('tb_host', event.data.host)
+      }
+      if (event.data?.type === 'TB_AUTH_DATA' && event.data?.token) {
+        setJwtToken(event.data.token)
+        localStorage.setItem('jwt_token', event.data.token)
+        if (event.data.host) {
+          setTbHost(event.data.host)
+          localStorage.setItem('tb_host', event.data.host)
+        }
       }
     }
 
@@ -46,6 +62,9 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         if (jwtToken) {
           headers['X-TB-Token'] = jwtToken
+        }
+        if (tbHost) {
+          headers['X-TB-Host'] = tbHost
         }
 
         const response = await fetch('/api/v1/chat/ask', {
@@ -78,7 +97,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setIsLoading(false)
       }
     },
-    [isLoading, jwtToken]
+    [isLoading, jwtToken, tbHost]
   )
 
   const clearHistory = useCallback(() => {
@@ -86,7 +105,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [])
 
   return (
-    <ChatContext.Provider value={{ messages, isLoading, sendMessage, clearHistory, jwtToken }}>
+    <ChatContext.Provider value={{ messages, isLoading, sendMessage, clearHistory, jwtToken, tbHost }}>
       {children}
     </ChatContext.Provider>
   )
@@ -124,6 +143,32 @@ function getJwtToken(): string | null {
     }
   } catch (e) {
     console.debug('Cannot access parent window', e)
+  }
+
+  return null
+}
+
+function getTbHost(): string | null {
+  // Check URL parameters
+  const urlParams = new URLSearchParams(window.location.search)
+  let host = urlParams.get('host') || urlParams.get('tb_host') || urlParams.get('origin')
+  if (host) {
+    localStorage.setItem('tb_host', host)
+    return host
+  }
+
+  // Check localStorage
+  host = localStorage.getItem('tb_host')
+  if (host) return host
+
+  // Try parent window (for iframe context)
+  try {
+    if (window.parent !== window) {
+      const parentHost = window.parent.location.origin
+      if (parentHost) return parentHost
+    }
+  } catch (e) {
+    console.debug('Cannot access parent window origin', e)
   }
 
   return null

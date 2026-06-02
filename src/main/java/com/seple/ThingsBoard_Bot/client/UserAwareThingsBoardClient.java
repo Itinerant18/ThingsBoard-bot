@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seple.ThingsBoard_Bot.config.ThingsBoardConfig;
+import com.seple.ThingsBoard_Bot.util.ThingsBoardRequestContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,14 @@ public class UserAwareThingsBoardClient {
     private final ThingsBoardConfig config;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+
+    private String getThingsBoardUrl() {
+        String contextHost = ThingsBoardRequestContext.getHost();
+        if (contextHost != null && !contextHost.trim().isEmpty()) {
+            return contextHost;
+        }
+        return config.getUrl();
+    }
 
     public UserAwareThingsBoardClient(ThingsBoardConfig config,
             @Qualifier("thingsBoardRestTemplate") RestTemplate restTemplate) {
@@ -52,7 +61,7 @@ public class UserAwareThingsBoardClient {
     // ==================== User Info ====================
 
     public String getCustomerId(String userToken) {
-        String url = config.getUrl() + "/api/auth/user";
+        String url = getThingsBoardUrl() + "/api/auth/user";
         try {
             HttpEntity<Void> entity = new HttpEntity<>(getHeaders(userToken));
             ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
@@ -108,7 +117,7 @@ public class UserAwareThingsBoardClient {
         int page = 0;
         boolean hasNext = true;
         while (hasNext) {
-            String url = config.getUrl() + "/api/customer/" + customerId + "/devices?pageSize=" + pageSize + "&page=" + page;
+            String url = getThingsBoardUrl() + "/api/customer/" + customerId + "/devices?pageSize=" + pageSize + "&page=" + page;
             try {
                 HttpEntity<Void> entity = new HttpEntity<>(getHeaders(userToken));
                 ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
@@ -149,7 +158,7 @@ public class UserAwareThingsBoardClient {
     }
 
     public Map<String, Object> queryUserDevicesPage(String userToken, int page, int pageSize) {
-        String url = config.getUrl() + "/api/entitiesQuery/find";
+        String url = getThingsBoardUrl() + "/api/entitiesQuery/find";
         List<Map<String, String>> devices = new ArrayList<>();
         boolean hasNext = false;
 
@@ -217,7 +226,7 @@ public class UserAwareThingsBoardClient {
     }
 
     public JsonNode queryEntityData(String userToken, JsonNode payload) {
-        String url = config.getUrl() + "/api/queries/entityData";
+        String url = getThingsBoardUrl() + "/api/queries/entityData";
         try {
             HttpEntity<String> entity = new HttpEntity<>(objectMapper.writeValueAsString(payload), getHeaders(userToken));
             ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.POST, entity, String.class);
@@ -235,7 +244,7 @@ public class UserAwareThingsBoardClient {
         int page = 0;
         boolean hasNext = true;
         while (hasNext) {
-            String url = config.getUrl() + "/api/tenant/devices?pageSize=" + pageSize + "&page=" + page;
+            String url = getThingsBoardUrl() + "/api/tenant/devices?pageSize=" + pageSize + "&page=" + page;
             try {
                 HttpEntity<Void> entity = new HttpEntity<>(getHeaders(userToken));
                 ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
@@ -275,7 +284,7 @@ public class UserAwareThingsBoardClient {
         int page = 0;
         boolean hasNext = true;
         while (hasNext) {
-            String url = config.getUrl() + "/api/customer/devices?pageSize=" + pageSize + "&page=" + page;
+            String url = getThingsBoardUrl() + "/api/customer/devices?pageSize=" + pageSize + "&page=" + page;
             try {
                 HttpEntity<Void> entity = new HttpEntity<>(getHeaders(userToken));
                 ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
@@ -312,7 +321,7 @@ public class UserAwareThingsBoardClient {
     // ==================== Telemetry ====================
 
     public Map<String, Object> getTelemetry(String userToken, String deviceId) {
-        String url = config.getUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/timeseries";
+        String url = getThingsBoardUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/timeseries";
         log.debug("Fetching all telemetry for device {} with user token", deviceId);
         Map<String, Object> result = new HashMap<>();
 
@@ -344,7 +353,7 @@ public class UserAwareThingsBoardClient {
         if (keys == null || keys.isEmpty()) {
             return getTelemetry(userToken, deviceId);
         }
-        String url = config.getUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId
+        String url = getThingsBoardUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId
                 + "/values/timeseries?keys=" + String.join(",", keys);
         log.debug("Fetching selected telemetry keys ({}) for device {}", keys.size(), deviceId);
         Map<String, Object> result = new HashMap<>();
@@ -373,7 +382,7 @@ public class UserAwareThingsBoardClient {
     // ==================== Attributes ====================
 
     public Map<String, Object> getAttributes(String userToken, String scope, String deviceId) {
-        String url = config.getUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/attributes/" + scope;
+        String url = getThingsBoardUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/attributes/" + scope;
         log.debug("Fetching all {} attributes for device {} with user token", scope, deviceId);
         Map<String, Object> result = new HashMap<>();
 
@@ -421,7 +430,7 @@ public class UserAwareThingsBoardClient {
 
     public Map<String, List<Map<String, Object>>> getHistory(String userToken, String deviceId, String key, long startTs,
             long endTs) {
-        String url = config.getUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/timeseries?keys=" + key
+        String url = getThingsBoardUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/timeseries?keys=" + key
                 + "&startTs=" + startTs + "&endTs=" + endTs + "&limit=100";
         Map<String, List<Map<String, Object>>> result = new HashMap<>();
         try {
@@ -449,7 +458,7 @@ public class UserAwareThingsBoardClient {
     // ==================== Raw Data Fetchers (Un-restructured) ====================
 
     public Object getRawAttributes(String userToken, String scope, String deviceId) {
-        String url = config.getUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/attributes/" + scope;
+        String url = getThingsBoardUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/attributes/" + scope;
         try {
             HttpEntity<Void> entity = new HttpEntity<>(getHeaders(userToken));
             ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
@@ -464,7 +473,7 @@ public class UserAwareThingsBoardClient {
     }
 
     public Object getRawTelemetry(String userToken, String deviceId) {
-        String url = config.getUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/timeseries";
+        String url = getThingsBoardUrl() + "/api/plugins/telemetry/DEVICE/" + deviceId + "/values/timeseries";
         try {
             HttpEntity<Void> entity = new HttpEntity<>(getHeaders(userToken));
             ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
