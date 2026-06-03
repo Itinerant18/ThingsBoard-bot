@@ -14,19 +14,19 @@ const CollapsibleSection: React.FC<{ summary: string; content: string; isOpenDef
   const [isOpen, setIsOpen] = React.useState(isOpenDefault)
 
   return (
-    <div className="my-2 border border-[#d6cfc4] rounded-xl bg-white overflow-hidden shadow-sm transition-all">
+    <div className="my-2 border border-[#d6cfc4] rounded-lg overflow-hidden shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)] bg-[#FAF7F2]/50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-3 py-2.5 bg-[#fbfaf8] hover:bg-[#ca8a04]/5 text-stone-900 font-semibold text-xs transition-colors border-b border-[#e8e3d9]"
+        className="w-full flex items-center justify-between px-3 py-2 bg-[#f0ede8] hover:bg-[#CA8A04]/10 text-stone-900 font-bold text-xs transition-colors border-b border-[#d6cfc4] cursor-pointer"
       >
         <span className="flex items-center gap-1.5 text-left">
-          <span className="text-[#ca8a04] text-[9px]">{isOpen ? '▼' : '▶'}</span>
+          <span className="text-[#CA8A04] text-[9px]">{isOpen ? '▼' : '▶'}</span>
           {summary}
         </span>
-        <span className="text-[9px] text-[#ca8a04] font-bold flex-shrink-0 ml-2">{isOpen ? 'Hide' : 'Show'}</span>
+        <span className="text-[9px] text-[#CA8A04] font-bold flex-shrink-0 ml-2">{isOpen ? 'Hide' : 'Show'}</span>
       </button>
       {isOpen && (
-        <div className="p-3 text-xs whitespace-pre-wrap break-words leading-relaxed text-stone-700 bg-white">
+        <div className="p-3 text-xs whitespace-pre-wrap break-words leading-relaxed text-stone-700 bg-[#FAF7F2]">
           {content}
         </div>
       )}
@@ -104,13 +104,30 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, onSuggest
   const blocks = parseContentBlocks(mainContent)
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} message-enter`}>
+    <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} message-enter items-start max-w-[85%] ${isUser ? 'ml-auto' : 'mr-auto'}`}>
+      {/* Avatar with vintage skeuomorphic border */}
+      <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md border ${
+        isUser 
+          ? 'text-[#FAF7F2] font-bold text-xs border-[#3d2519]' 
+          : 'text-[#EAB308] font-bold text-xs border-[#3d2519]'
+      }`}
+      style={{
+        background: isUser 
+          ? 'linear-gradient(135deg, #7c4f37 0%, #5c3a2a 50%, #4b2e22 100%)' 
+          : 'linear-gradient(135deg, #2e2620 0%, #1c1917 50%, #0c0a09 100%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.15)'
+      }}>
+        {isUser ? 'U' : '🤖'}
+      </div>
+
+      {/* Bubble */}
       <div
-        className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+        className={`px-4.5 py-3 text-sm leading-relaxed shadow-md ${
           isUser
-            ? 'bg-accent-gold text-stone-950 font-medium rounded-br-none'
-            : 'bg-[#faf8f5] text-[#221d17] border border-[#d6cfc4] rounded-bl-none'
+            ? 'leather-bubble rounded-tr-none'
+            : 'paper-card rounded-tl-none text-[#1C1917]'
         }`}
+        style={!isUser ? { transform: 'none' } : undefined} // Prevent hover translateY on message bubbles to keep text stable
       >
         <div className="space-y-2">
           {blocks.map((block, idx) => {
@@ -131,17 +148,24 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, onSuggest
               )
             }
           })}
+          {!isUser && message.streaming && (
+            <span className="streaming-cursor" aria-hidden="true" />
+          )}
         </div>
 
         {suggestions.length > 0 && onSuggestionClick && (
-          <div className="mt-3.5 pt-3 border-t border-[#e8e3d9] flex flex-col gap-1.5">
-            <div className="text-[10px] font-bold text-stone-500 uppercase tracking-wider mb-0.5">Suggested follow-ups</div>
+          <div className="mt-3.5 pt-3 border-t border-[#D6CFC4] flex flex-col gap-1.5">
+            <div className="text-[9px] font-bold text-[#78716c] uppercase tracking-wider mb-0.5"
+              style={{ textShadow: '0 1px 0 rgba(255,255,255,0.6)' }}
+            >
+              Suggested follow-ups
+            </div>
             <div className="flex flex-wrap gap-1.5">
               {suggestions.map((suggestion, idx) => (
                 <button
                   key={idx}
                   onClick={() => onSuggestionClick(suggestion)}
-                  className="px-2.5 py-1.5 bg-white hover:bg-[#ca8a04]/5 border border-[#d6cfc4] hover:border-[#ca8a04] active:bg-[#ca8a04]/10 rounded-lg text-xs font-semibold text-[#ca8a04] transition-all text-left shadow-sm hover:scale-[1.01]"
+                  className="brass-tag px-3 py-1.5 text-xs text-[#44403C] hover:text-[#92400e] text-left transition-all"
                 >
                   {suggestion}
                 </button>
@@ -151,13 +175,15 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, onSuggest
         )}
 
         {!isUser && typeof message.tokensUsed === 'number' && message.tokensUsed > 0 && (
-          <div className="mt-2 flex items-center gap-1 text-xs text-stone-600 pt-2 border-t border-[#e8e3d9]">
+          <div className="mt-2 flex items-center gap-1 text-[10px] text-stone-500 pt-2 border-t border-[#D6CFC4] font-medium"
+            style={{ textShadow: '0 1px 0 rgba(255,255,255,0.6)' }}
+          >
             <svg
-              className="w-3 h-3"
+              className="w-3 h-3 text-[#CA8A04]"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="2.5"
             >
               <circle cx="12" cy="12" r="10" />
               <path d="M12 6v6l4 2" />

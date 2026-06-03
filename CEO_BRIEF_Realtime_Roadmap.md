@@ -268,12 +268,12 @@ This is a realistic look at the engineering work between today and the real-time
 ### Phase 2 (now → 2 sprints)
 | Task | Estimate | Notes |
 |---|---|---|
-| Stabilize `BranchSnapshotMapper` against all 10 tenants | 4–5 days | Per-tenant data quirks |
-| Tighten `FieldPrecedenceResolver` rules | 2 days | |
+| Stabilize `BranchSnapshotMapper` against all tenants | 1 days | Per-tenant data quirks |
+| Tighten `FieldPrecedenceResolver` rules | 1 days | |
 | Promote `BranchAliasIndex` from soft to authoritative | 2 days | |
-| Increase golden-question accuracy to > 95% | 3 days | Iterative |
-| Performance test on 24h synthetic payload | 2 days | |
-| **Subtotal** | **~13 working days** | |
+| Increase golden-question accuracy to > 95% | 2 days | Iterative |
+| Performance test on 24h synthetic payload | 1 days | |
+| **Subtotal** | **~7 working days** | |
 
 ### Phase 3 (2 sprints after Phase 2)
 | Task | Estimate | Notes |
@@ -304,10 +304,10 @@ Week  1  2  3  4  5  6  7  8  9
 ```
 
 - **Today:** Bot in production on static data.
-- **End of Week 2:** New data structure stable, golden-questions > 95%.
-- **End of Week 4:** Webhook pipeline code-complete.
-- **End of Week 5:** Dual-run for one customer (pilot bank), then full cutover.
-- **End of Week 6:** Real-time bot fully live across all 10 tenants.
+- **End of Week 1:** New data structure stable, golden-questions > 95%.
+- **End of Week 1:** Webhook pipeline code-complete.
+- **End of Week 2:** Dual-run for one customer (pilot bank), then full cutover.
+- **End of Week 2:** Real-time bot fully live across all 10 tenants.
 
 ---
 
@@ -349,4 +349,3 @@ No additional headcount required. No new vendors. The same React + Spring stack 
 
 ---
 
-*Prepared by Engineering · Source: in-code analysis of `C:\workspace\thingsboard\ThingsBoard-Bot` and the full `CODEBASE_ANALYSIS_REPORT.md` companion document.*

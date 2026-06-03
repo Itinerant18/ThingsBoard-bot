@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CEO Brief - Realtime Roadmap</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #334155;
+    background-color: #ffffff;
+    line-height: 1.6;
+    margin: 0 auto;
+    padding: 40px;
+    max-width: 900px;
+}
+h1 {
+    font-size: 28px;
+    color: #0f172a;
+    border-bottom: 2px solid #ca8a04;
+    padding-bottom: 12px;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+h2 {
+    font-size: 20px;
+    color: #1e293b;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+    margin-top: 36px;
+    margin-bottom: 16px;
+}
+h3 {
+    font-size: 16px;
+    color: #334155;
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+ul, ol {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-left: 24px;
+}
+li {
+    margin-bottom: 8px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 13px;
+}
+th {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0;
+}
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+}
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+pre {
+    background-color: #0f172a;
+    color: #e2e8f0;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    margin: 20px 0;
+}
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-size: 11px;
+}
+.svg-container {
+    width: 100%;
+    overflow: hidden;
+    margin: 30px 0;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.svg-container svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+blockquote {
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #f8fafc;
+    border-left: 4px solid #ca8a04;
+    color: #475569;
+    font-style: italic;
+}
+@media print {
+    body {
+        padding: 0;
+        font-size: 11pt;
+    }
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+    table, pre, .svg-container {
+        page-break-inside: avoid;
+    }
+    @page {
+        size: A4 portrait;
+        margin: 20mm;
+    }
+}
+</style>
+</head>
+<body>
+<h1>SAI Chatbot — Roadmap to Real-Time Data</h1>
+<p><strong>To:</strong> CEO
+<strong>From:</strong> Engineering
+<strong>Subject:</strong> Static → Real-Time: where the bot is today, and the work to make it live
+<strong>Status:</strong> Phase 1 (Static) operational · Phase 2 (New Data Structure) in progress · Phase 3 (Webhook) planned</p>
+<hr />
+<h2>1. Executive Summary</h2>
+<p>The <strong>SAI (Smart Assistant for IoT)</strong> chatbot is <strong>live and working today</strong> using a static snapshot of the bank's IoT data. The bot can already answer ~80% of operational questions — branch health, alerts, gateway status, CCTV, power — by reading from a pre-built snapshot instead of receiving live events.</p>
+<p>We are now in the middle of <strong>Phase 2: re-platforming the data layer</strong> to a normalized per-branch model. Once that lands, <strong>Phase 3: webhook integration</strong> will make every ThingsBoard event flow into the bot within seconds, in real time.</p>
+<p><strong>What this means for the business:</strong></p>
+<ul>
+<li><strong>Today (Phase 1):</strong> Answers are correct, but lag the ThingsBoard dashboard by the refresh cycle of the snapshot (minutes to hours, depending on deployment).</li>
+<li><strong>Within ~2 sprints (Phase 2 done):</strong> The data structure is clean and indexed; bot answers stay correct as we wire up live data.</li>
+<li><strong>Within ~3–4 sprints from today (Phase 3 done):</strong> Bot answers match the dashboard in <strong>near real-time</strong> with no manual refresh.</li>
+</ul>
+<p>No customer-facing downtime. The same chat surface, the same multi-tenant dashboard embedding, the same 10-bank rollout.</p>
+<hr />
+<h2>2. Current State — Phase 1 (Static Data)</h2>
+<p><strong>Status: Working in production.</strong></p>
+<p>The bot reads from a snapshot of all customer devices (<code>GET /api/v1/data/full</code>) that the backend refreshes on a schedule. The React chat widget inside the ThingsBoard dashboard posts a question to <code>POST /api/v1/chat/ask</code>, the backend classifies the intent, and returns a deterministic markdown answer.</p>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                  PHASE 1 — STATIC DATA MODE                     │
+│                                                                 │
+│   ┌──────────────┐    scheduled    ┌───────────────────────┐    │
+│   │ ThingsBoard  │  ─────────────► │  Backend JVM          │    │
+│   │ (live data)  │    snapshot     │  DataService          │    │
+│   └──────────────┘                 │  (5-min in-mem cache) │    │
+│                                    └──────────┬────────────┘    │
+│   ┌──────────────┐                            │                 │
+│   │   Browser    │  POST /api/v1/chat/ask     │                 │
+│   │   Chat UI    │ ◄──────────────────────────┘                 │
+│   └──────────────┘     markdown answer                          │
+│                                                                 │
+│   Lag: minutes to hours (refresh interval)                      │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>What works:</strong></p>
+<ul>
+<li>Multi-tenant chat (10 banks, hard-coded prefixes: <code>SYNB</code>, <code>UBIN</code>, <code>IOB</code>, <code>CBI</code>, …)</li>
+<li>Deterministic answer engine with 25+ intents</li>
+<li>OpenAI <code>gpt-4o-mini</code> fallback for free-form questions</li>
+<li>Voice input, glassmorphism UI, iframe-embedded in ThingsBoard</li>
+<li>Per-user branch index with alias matching</li>
+<li>Nightly reconciliation that rebuilds the snapshot from history</li>
+</ul>
+<p><strong>What is the limitation:</strong></p>
+<ul>
+<li>Answers are only as fresh as the last snapshot pull.</li>
+<li>New events appear in the bot only after the next refresh tick.</li>
+</ul>
+<hr />
+<h2>3. Phase 2 — New Data Structure (In Progress)</h2>
+<p><strong>Status: Engineered, partially landed, being stabilized.</strong></p>
+<p>We are replacing the flat <code>branchName.field</code> payload with a typed, normalized per-branch domain model. This is the prerequisite for real-time because:</p>
+<ul>
+<li>The deterministic engine needs to know <strong>what kind of value</strong> it is reading (state vs. number vs. boolean).</li>
+<li>Field names differ across tenants; we need a single canonical shape.</li>
+<li>Status transitions (ON → OFF, ONLINE → OFFLINE) need to update counters atomically across the whole branch and the global view.</li>
+</ul>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│              PHASE 2 — NORMALIZED DATA MODEL                    │
+│                                                                 │
+│   Raw payload (messy)        Normalized BranchSnapshot (clean)  │
+│   ─────────────────────      ────────────────────────────────   │
+│   &quot;AHD_Vastrapur.gateway     BranchIdentity{                    │
+│     Status_battery = 12.4&quot;    customerCode=&quot;SYNB&quot;               │
+│                               branchName=&quot;AHD_Vastrapur&quot;        │
+│   &quot;AHD_Vastrapur.power_        parentPath=&quot;Gujarat/Ahmedabad&quot;   │
+│     status = ON&quot;             }                                  │
+│   &quot;AHD_Vastrapur.camera_      GatewayStatus{ battery=12.4 }     │
+│     online = 1&quot;              PowerStatus{ mains=ON }            │
+│   ...                        CctvStatus{ online=true }          │
+│                               AlertSummary{ active=2 }          │
+│                             }                                   │
+│                                                                 │
+│   Pipeline: FullDataPayloadParser → FieldPrecedenceResolver     │
+│             → ValueNormalizer → BranchSnapshotMapper            │
+│                                                                 │
+│   Plus: BranchAliasIndex for fuzzy &quot;vastrapur&quot; ↔ &quot;AHD_Vastrapur&quot;│
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Components completed:</strong></p>
+<ul>
+<li>Domain model (<code>BranchSnapshot</code>, <code>GatewayStatus</code>, <code>PowerStatus</code>, <code>CctvStatus</code>, <code>BranchSubsystems</code>, <code>AlertSummary</code>, <code>HardwareHealth</code>)</li>
+<li>Normalization pipeline (<code>FullDataPayloadParser</code>, <code>ValueNormalizer</code>, <code>FieldPrecedenceResolver</code>, <code>BranchSnapshotMapper</code>)</li>
+<li>Branch alias index</li>
+<li>Golden-question accuracy test suite</li>
+</ul>
+<p><strong>What this enables:</strong></p>
+<ul>
+<li>The query engine reads typed values; no more "is this a string or a number?" guessing.</li>
+<li>Status transitions become first-class: ON→OFF updates a counter, not just a field.</li>
+<li>Per-tenant data differences are absorbed by the precedence resolver instead of breaking the answer.</li>
+</ul>
+<hr />
+<h2>4. Phase 3 — Webhook Implementation (Planned)</h2>
+<p><strong>Status: Code path exists, not yet wired to live TB.</strong></p>
+<p>Once Phase 2 is stable, we turn on the real-time pipeline. ThingsBoard rules will fire on every relevant event and POST to our <code>WebhookController</code>. The consumer JVM picks the event up from RabbitMQ, deduplicates it, persists it to TimescaleDB, and atomically updates the Redis state that the chat path reads.</p>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                  PHASE 3 — REAL-TIME PIPELINE                   │
+│                                                                 │
+│   ┌──────────────┐                                              │
+│   │ ThingsBoard  │  POST /api/v1/webhook/tb                     │
+│   │   (live)     │ ──────────────► WebhookController            │
+│   └──────────────┘                       │                      │
+│                                          ▼                      │
+│                              ┌──────────────────────┐           │
+│                              │   RabbitMQ(CloudAMQP)│           │
+│                              │   topic: iot.events  │           │
+│                              │   per-customer queues│           │
+│                              └──────────┬───────────┘           │
+│                                         │                       │
+│                                         ▼                       │
+│                              ┌──────────────────────┐           │
+│                              │ EventConsumerService │           │
+│                              │  (consumer JVM)      │           │
+│                              └──────────┬───────────┘           │
+│                                         │                       │
+│              ┌──────────┬───────────────┼───────────────┐       │
+│              ▼          ▼               ▼               ▼       │
+│      ┌──────────┐ ┌──────────┐  ┌──────────────┐ ┌──────────┐   │
+│      │ Idempot. │ │ Event    │  │ TimescaleDB  │ │ Redis    │   │
+│      │ Service  │ │ Write    │  │ (durable log)│ │ (state)  │   │
+│      │ SETNX 24h│ │ Service  │  │              │ │ + Lua    │   │
+│      └──────────┘ └──────────┘  └──────────────┘ └────┬─────┘   │
+│                                                       │         │
+│                                                       ▼         │
+│      ┌──────────────────────────────────────────────────────┐   │
+│      │   Chat path (chat JVM) — same as before,             │   │
+│      │   but reads LIVE Redis state                         │   │
+│      │   QueryRouter → RedisQueryService → AnswerTemplate   │   │
+│      └──────────────────────────────────────────────────────┘   │
+│                                                                 │
+│   Lag: seconds (one webhook → one Redis update)                 │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Component-level flow:</strong></p>
+<pre><code>                  ┌────────────────────────────────────────────────┐
+                  │  ThingsBoard Dashboard (iframe parent)         │
+                  │  postMessage → TB_AUTH_TOKEN, TB_HOST          │
+                  └────────────────────┬───────────────────────────┘
+                                       │
+                                       ▼
+   ┌───────────────────────  CHAT PROFILE  ───────────────────────────┐
+   │  static/index.html (transparent, pointer-events:none)            │
+   │   └── ChatContext ── fetch POST /api/v1/chat/ask                 │
+   │                       X-TB-Token, X-TB-Host                      │
+   │                          │                                       │
+   │                          ▼                                       │
+   │              ChatController.askAsk()                             │
+   │                  │                                               │
+   │                  ▼                                               │
+   │              ChatService.ask()                                   │
+   │                  │   ┌── short-circuits to:                      │
+   │                  │   │   • small-talk regexes                    │
+   │                  │   │   • branch inventory (RedisQueryService)  │
+   │                  │   │   • global counters (RedisQueryService)   │
+   │                  │   │   • single-branch attribute               │
+   │                  │   │   • structured alerts (DeterministicAns..)│
+   │                  │   │   • command &quot;show me&quot; (UI list)           │
+   │                  │   ▼                                           │
+   │                  │   QueryRouterService                          │
+   │                  │      SIMPLE_REDIS ──► RedisQueryService       │
+   │                  │      COMPLEX_LLM ──► DeterministicAnswer + ?  │
+   │                  │                 fallback OpenAIClient (gpt-4o)│
+   │                  ▼                                               │
+   │              ChatResponse (markdown) + AnswerMetadata            │
+   │   ┌──────────────────────────────────────────────────────────┐   │
+   │   │ Side reads:                                              │   │
+   │   │   • DataService      ── GET /api/v1/data/full (5m cache) │   │
+   │   │   • UserDataService  ── per-user branch index,           │   │
+   │   │                          UserAwareThingsBoardClient      │   │
+   │   │                          ThingsBoardRequestFilter        │   │
+   │   └──────────────────────────────────────────────────────────┘   │
+   └──────────────────────────────────────────────────────────────────┘
+
+   ┌───────────────────────  INGESTION PROFILE  ──────────────────────┐
+   │  WebhookController  POST /api/v1/webhook/tb                      │
+   │      (NO HMAC verification — see Risks)                          │
+   │          │                                                       │
+   │          ▼                                                       │
+   │      RabbitMQQueueService.publish(&quot;iot.events&quot;, evt)             │
+   │      declares per-customer queues + bindings (topic exchange)    │
+   └──────────────────────────────────────────────────────────────────┘
+
+   ┌───────────────────────  CONSUMER PROFILE  ───────────────────────┐
+   │  @RabbitListener  iot.events.q.{customer}                        │
+   │      │                                                           │
+   │      ▼                                                           │
+   │  EventConsumerService.handle()                                   │
+   │      │                                                           │
+   │      ├── IdempotencyService      (Redis SETNX, 24h TTL)          │
+   │      ├── EventParseService       (extracts customer, branch)     │
+   │      ├── EventWriteService       (persist DeviceEvent)           │
+   │      ├── RedisCacheService       (HSET deviceState, hash)        │
+   │      ├── LuaScriptService        (atomic counter deltas)         │
+   │      │       └── scripts/update_counters.lua                     │
+   │      ├── AncestorPathService     (precomputed HO→branch path)    │
+   │      └── ReconciliationService   (nightly @Scheduled cron)       │
+   │                                                                  │
+   │  ReplayService    (admin trigger)  ── replays device_events      │
+   └──────────────────────────────────────────────────────────────────┘
+
+
+</code></pre>
+<div class="svg-container">
+
+<svg style="fill:none;stroke:none;fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2460" height="1172" viewBox="0 0 2460 1172"><style class="text-font-style fontImports" data-font-family="Roboto">@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=block);</style><g id="items" style="isolation: isolate"><g id="blend" style="mix-blend-mode: normal"><g id="g-root-cp_1_lines-1_dgouerlqbl6v-fill" data-item-order="-2594052" transform="translate(1953.7421875, 128)"><g id="cp_1_lines-1_dgouerlqbl6v-fill-merged" stroke="none" fill="#3cc583" fill-opacity="0.2"><g><path d="M10 125.008C10 126.839 11.299 128.443 13.249 128.86C21.877 130.708 46.65 134.767 74.883 128.09C100.574 122.015 123.401 124.829 133.804 126.777C136.801 127.338 139.766 125.264 139.766 122.468 V14C139.766 11.791 137.975 10 135.766 10 H14C11.791 10 10 11.791 10 14 V125.008"></path></g></g></g><g id="g-root-cp_1_lines-1_dgouerlqbl6v-stroke" data-item-order="-2594052" transform="translate(1953.7421875, 128)"><g id="cp_1_lines-1_dgouerlqbl6v-stroke" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" stroke="#3cc583" stroke-width="2" stroke-opacity="1"><g><path d="M 16 10L 14 10C 11.7909 10 10 11.7909 10 14L 10 16M 10 16L 10 121.78125M 139.765625 16L 139.765625 121.78125M 16 10L 133.765625 10M 133.765625 10L 135.765625 10C 137.974725 10 139.765625 11.7909 139.765625 14L 139.765625 16M 139.765625 121.78125L 139.765625 122.467751C 139.765625 125.26445 136.800972 127.338455 133.804176 126.777145C 123.4011 124.82885 100.574448 122.014847 74.882813 128.090347C 46.650333 134.766647 21.877389 130.708252 13.248565 128.860245C 11.298639 128.44265 10 126.839447 10 125.008453L 10 121.78125"></path></g></g></g></g></g></svg></div>
+
+<p><strong>Key properties:</strong></p>
+<ul>
+<li><strong>Idempotent.</strong> Each event UUID is checked against Redis (<code>SETNX</code> with 24h TTL) before processing — duplicate deliveries are dropped.</li>
+<li><strong>Atomic counters.</strong> A Lua script (<code>update_counters.lua</code>) decrements the old status bucket and increments the new one in a single Redis round-trip — no race conditions across concurrent events.</li>
+<li><strong>Replayable.</strong> The full event log in TimescaleDB lets us rebuild Redis from scratch via <code>ReplayService</code> if needed.</li>
+<li><strong>Self-healing.</strong> A nightly <code>@Scheduled</code> reconciliation in <code>ReconciliationService</code> (cron <code>0 0 2 * * ? Asia/Kolkata</code>) re-derives Redis from the last 24h of events and logs any drift.</li>
+</ul>
+<p><strong>What changes for the user:</strong></p>
+<ul>
+<li>A power cut at a branch shows up in the bot within seconds, not minutes.</li>
+<li>An alert raised in ThingsBoard is reflected in the next question the user asks.</li>
+<li>No frontend changes — same chat widget, same UI.</li>
+</ul>
+<hr />
+<h2>5. Work Breakdown &amp; Effort Estimate</h2>
+<p>This is a realistic look at the engineering work between today and the real-time launch.</p>
+<h3>Already done (Phase 1)</h3>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Backend</td>
+<td>Spring Boot 4.0.3 service, multi-tenant, REST + AMQP</td>
+</tr>
+<tr>
+<td>Chat engine</td>
+<td>25+ intents, deterministic answer engine, OpenAI fallback</td>
+</tr>
+<tr>
+<td>Frontend</td>
+<td>React 18 + Tailwind v4, voice input, iframe-embedded</td>
+</tr>
+<tr>
+<td>Snapshot pipeline</td>
+<td><code>DataService</code> with 5-min cache</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>Golden-question accuracy test, normalization tests, controller tests</td>
+</tr>
+<tr>
+<td>Infra</td>
+<td>Dockerfile, docker-compose, Caddy reverse proxy</td>
+</tr>
+</tbody>
+</table>
+<h3>Phase 2 (now → 2 sprints)</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Estimate</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stabilize <code>BranchSnapshotMapper</code> against all tenants</td>
+<td>1 days</td>
+<td>Per-tenant data quirks</td>
+</tr>
+<tr>
+<td>Tighten <code>FieldPrecedenceResolver</code> rules</td>
+<td>1 days</td>
+<td></td>
+</tr>
+<tr>
+<td>Promote <code>BranchAliasIndex</code> from soft to authoritative</td>
+<td>2 days</td>
+<td></td>
+</tr>
+<tr>
+<td>Increase golden-question accuracy to &gt; 95%</td>
+<td>2 days</td>
+<td>Iterative</td>
+</tr>
+<tr>
+<td>Performance test on 24h synthetic payload</td>
+<td>1 days</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Subtotal</strong></td>
+<td><strong>~7 working days</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Phase 3 (2 sprints after Phase 2)</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Estimate</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HMAC signature verification on <code>WebhookController</code></td>
+<td>1 day</td>
+<td>Security: critical, not optional</td>
+</tr>
+<tr>
+<td>Configure TB-side webhook rules (10 tenants)</td>
+<td>2 days</td>
+<td>One per bank; reusable template</td>
+</tr>
+<tr>
+<td>Per-customer queue + binding declarations in <code>RabbitMQConfig</code></td>
+<td>1 day</td>
+<td>Idempotent; safe to redeploy</td>
+</tr>
+<tr>
+<td>Lua script hardening + Redis cluster failover test</td>
+<td>2 days</td>
+<td></td>
+</tr>
+<tr>
+<td>ReconciliationService tuning + on-call runbook</td>
+<td>2 days</td>
+<td></td>
+</tr>
+<tr>
+<td>End-to-end chaos test: kill consumer, replay events</td>
+<td>2 days</td>
+<td></td>
+</tr>
+<tr>
+<td>Cutover plan: dual-run for 1 week, then flip</td>
+<td>2 days</td>
+<td>Zero-downtime switch</td>
+</tr>
+<tr>
+<td><strong>Subtotal</strong></td>
+<td><strong>~12 working days</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Total remaining effort: <strong>~25 working days</strong> (≈ 5 calendar weeks, 1 engineer)</h3>
+<hr />
+<h2>6. Timeline</h2>
+<pre><code>Week  1  2  3  4  5  6  7  8  9
+      ├──┴──┤                 PHASE 2 — New data structure
+            ├──┴──┴──┤         PHASE 3 — Webhook implementation
+                     ├──┴──┤   Dual-run + cutover
+                        ▲
+                        │
+                  Real-time bot live
+</code></pre>
+<ul>
+<li><strong>Today:</strong> Bot in production on static data.</li>
+<li><strong>End of Week 1:</strong> New data structure stable, golden-questions &gt; 95%.</li>
+<li><strong>End of Week 1:</strong> Webhook pipeline code-complete.</li>
+<li><strong>End of Week 2:</strong> Dual-run for one customer (pilot bank), then full cutover.</li>
+<li><strong>End of Week 2:</strong> Real-time bot fully live across all 10 tenants.</li>
+</ul>
+<hr />
+<h2>7. Business Impact</h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Today (Static)</th>
+<th>After Phase 3 (Real-Time)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Time to reflect a new alert in chat</strong></td>
+<td>Minutes – hours (snapshot interval)</td>
+<td>Seconds</td>
+</tr>
+<tr>
+<td><strong>Ops use case</strong></td>
+<td>"What's the status right now?" answered with last-known</td>
+<td>Live, same as dashboard</td>
+</tr>
+<tr>
+<td><strong>Customer trust</strong></td>
+<td>"It lags a bit"</td>
+<td>"It knows"</td>
+</tr>
+<tr>
+<td><strong>OpenAI spend</strong></td>
+<td>Low (deterministic-first)</td>
+<td>Low (no change — same engine)</td>
+</tr>
+<tr>
+<td><strong>Infra cost</strong></td>
+<td>Single JVM</td>
+<td>Chat JVM + Ingestion JVM + Consumer JVM (horizontal)</td>
+</tr>
+<tr>
+<td><strong>Downtime risk</strong></td>
+<td>Low</td>
+<td>Low (dual-run cutover)</td>
+</tr>
+</tbody>
+</table>
+<p>The deterministic engine is the same in both phases; we are not rewriting the brain, only the data feed. That keeps risk contained and lets us ship the real-time cutover with confidence.</p>
+<hr />
+<h2>8. Risks &amp; Mitigations</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Webhook spoofing / injection</td>
+<td>HMAC signature verification on every request (Phase 3, day 1)</td>
+</tr>
+<tr>
+<td>Duplicate events from RabbitMQ</td>
+<td>IdempotencyService (Redis <code>SETNX</code>, 24h TTL) — already built</td>
+</tr>
+<tr>
+<td>Redis flush = data loss</td>
+<td>TimescaleDB event log + <code>ReplayService</code> rebuild</td>
+</tr>
+<tr>
+<td>Per-tenant data quirks breaking the answer</td>
+<td><code>FieldPrecedenceResolver</code> + <code>BranchAliasIndex</code> + golden-question regression</td>
+</tr>
+<tr>
+<td>JVM time-zone drift on the nightly cron</td>
+<td>Hard-coded <code>zone="Asia/Kolkata"</code> on the <code>@Scheduled</code> annotation</td>
+</tr>
+<tr>
+<td>Cutover surprises</td>
+<td>One-week dual-run with a pilot bank before flipping all 10</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>9. What I'm Asking For</h2>
+<ul>
+<li><strong>Approval to proceed</strong> with Phase 3 as scoped (~12 engineering days).</li>
+<li><strong>One pilot bank</strong> for the dual-run cutover (recommend <code>SYNB</code> — largest tenant, best telemetry coverage).</li>
+<li><strong>Continued access</strong> to a ThingsBoard sandbox tenant for chaos-testing the webhook path.</li>
+</ul>
+<p>No additional headcount required. No new vendors. The same React + Spring stack we already run.</p>
+<hr />
+</body>
+</html>

@@ -1,5 +1,10 @@
 package com.seple.ThingsBoard_Bot.controller;
 
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import org.springframework.context.annotation.Profile;
 import com.seple.ThingsBoard_Bot.model.dto.ChatRequest;
@@ -22,6 +28,12 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatController {
 
     private final ChatService chatService;
+
+    /** Dedicated pool so SSE streams don't tie up the servlet request threads. */
+    private final ExecutorService streamExecutor = Executors.newCachedThreadPool();
+
+    /** SSE connection lifetime; long enough to cover slow LLM streams. */
+    private static final long SSE_TIMEOUT_MS = 120_000L;
 
     public ChatController(ChatService chatService) {
         this.chatService = chatService;
@@ -52,6 +64,44 @@ public class ChatController {
 
         ChatResponse response = chatService.answerQuestion(request, userToken);
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * POST /api/v1/chat/ask/stream
+     * Streaming variant of {@link #askQuestion}. Returns an SSE stream that emits
+     * {@code token} events (incremental text for LLM answers), a terminal
+     * {@code done} event (full answer + metadata), or an {@code error} event.
+     * Deterministic answers emit a single {@code done} event with no tokens.
+     */
+    @PostMapping("/ask/stream")
+    public SseEmitter askQuestionStream(
+            @RequestBody ChatRequest request,
+            @RequestHeader(value = "X-TB-Token", required = false) String userToken) {
+
+        log.info("Received streaming chat request: '{}' (user token: {})",
+                request.getQuestion(), userToken != null ? "present" : "absent");
+
+        SseEmitter emitter = new SseEmitter(SSE_TIMEOUT_MS);
+
+        if (request.getQuestion() == null || request.getQuestion().trim().isEmpty()) {
+            streamExecutor.execute(() -> {
+                try {
+                    emitter.send(SseEmitter.event()
+                            .name("error")
+                            .data(Map.of("errorMessage", "Question cannot be empty")));
+                    emitter.complete();
+                } catch (IOException e) {
+                    emitter.completeWithError(e);
+                }
+            });
+            return emitter;
+        }
+
+        emitter.onTimeout(emitter::complete);
+        emitter.onError(e -> log.warn("SSE stream error: {}", e.getMessage()));
+
+        streamExecutor.execute(() -> chatService.answerQuestionStreaming(request, userToken, emitter));
+        return emitter;
     }
 
     /**

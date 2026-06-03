@@ -5,6 +5,7 @@ export interface ChatMessage {
   tokensUsed?: number
   timestamp: number
   metadata?: Record<string, unknown>
+  streaming?: boolean
 }
 
 export interface ChatRequest {

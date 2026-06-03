@@ -1,9 +1,12 @@
 package com.seple.ThingsBoard_Bot.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.seple.ThingsBoard_Bot.client.OpenAIClient;
 import com.seple.ThingsBoard_Bot.config.ChatbotConfig;
@@ -79,16 +82,139 @@ public class ChatService {
         this.queryRouterService = queryRouterService;
     }
 
+    /**
+     * Blocking answer path. Resolves the answer plan and, for LLM-backed
+     * answers, performs a synchronous OpenAI call.
+     */
     public ChatResponse answerQuestion(ChatRequest request, String userToken) {
         try {
+            AnswerPlan plan = prepareAnswer(request, userToken);
+            if (!plan.isLlm()) {
+                return plan.deterministicResponse();
+            }
+
+            String answer = normalizeAnswerStyle(
+                    openAIClient.chat(plan.systemPrompt(), plan.history(), plan.userMessage()));
+            logDecision(plan.resolvedQuery(), false, plan.estimatedTokens());
+            chatMemoryService.recordInteraction(plan.sessionId(), request.getQuestion(), answer);
+
+            String answerWithSuggestions = appendSuggestedFollowups(answer, plan.resolvedQuery());
+            return ChatResponse.builder()
+                    .answer(answerWithSuggestions)
+                    .metadata(buildMetadata(plan.resolvedQuery(), false))
+                    .tokensUsed(plan.estimatedTokens())
+                    .timestamp(System.currentTimeMillis())
+                    .error(false)
+                    .build();
+
+        } catch (Exception e) {
+            log.error("Chat handling failed: {}", e.getMessage(), e);
+            return ChatResponse.builder()
+                    .answer("System error encountered.")
+                    .error(true)
+                    .build();
+        }
+    }
+
+    /**
+     * Streaming answer path. Resolves the same answer plan as the blocking path,
+     * then either emits a single {@code done} event (deterministic answers) or
+     * forwards each OpenAI token as a {@code token} event before the final
+     * {@code done} event (LLM answers).
+     */
+    public void answerQuestionStreaming(ChatRequest request, String userToken, SseEmitter emitter) {
+        try {
+            AnswerPlan plan = prepareAnswer(request, userToken);
+            if (!plan.isLlm()) {
+                sendEvent(emitter, "done", plan.deterministicResponse());
+                emitter.complete();
+                return;
+            }
+
+            String rawAnswer = openAIClient.chatStream(
+                    plan.systemPrompt(), plan.history(), plan.userMessage(),
+                    chunk -> sendEvent(emitter, "token", Map.of("content", chunk)));
+
+            String answer = normalizeAnswerStyle(rawAnswer);
+            logDecision(plan.resolvedQuery(), false, plan.estimatedTokens());
+            chatMemoryService.recordInteraction(plan.sessionId(), request.getQuestion(), answer);
+
+            String answerWithSuggestions = appendSuggestedFollowups(answer, plan.resolvedQuery());
+            ChatResponse finalResponse = ChatResponse.builder()
+                    .answer(answerWithSuggestions)
+                    .metadata(buildMetadata(plan.resolvedQuery(), false))
+                    .tokensUsed(plan.estimatedTokens())
+                    .timestamp(System.currentTimeMillis())
+                    .error(false)
+                    .build();
+            sendEvent(emitter, "done", finalResponse);
+            emitter.complete();
+
+        } catch (Exception e) {
+            log.error("Streaming chat handling failed: {}", e.getMessage(), e);
+            try {
+                sendEvent(emitter, "error", Map.of("errorMessage", "System error encountered."));
+                emitter.complete();
+            } catch (Exception sendError) {
+                emitter.completeWithError(e);
+            }
+        }
+    }
+
+    /** Sends a named SSE event, swallowing send failures into a runtime exception. */
+    private void sendEvent(SseEmitter emitter, String name, Object data) {
+        try {
+            emitter.send(SseEmitter.event()
+                    .name(name)
+                    .data(data, org.springframework.http.MediaType.APPLICATION_JSON));
+        } catch (IOException e) {
+            // Client disconnected mid-stream; abort the OpenAI read loop.
+            throw new RuntimeException("SSE send failed (client likely disconnected): " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Holds the outcome of answer resolution: either a fully-formed
+     * deterministic response, or the inputs required to perform an LLM call.
+     */
+    private record AnswerPlan(
+            ChatResponse deterministicResponse,
+            String systemPrompt,
+            List<ChatMessage> history,
+            String userMessage,
+            ResolvedQuery resolvedQuery,
+            String sessionId,
+            int estimatedTokens) {
+
+        static AnswerPlan deterministic(ChatResponse response) {
+            return new AnswerPlan(response, null, null, null, null, null, 0);
+        }
+
+        static AnswerPlan llm(String systemPrompt, List<ChatMessage> history, String userMessage,
+                ResolvedQuery resolvedQuery, String sessionId, int estimatedTokens) {
+            return new AnswerPlan(null, systemPrompt, history, userMessage, resolvedQuery, sessionId, estimatedTokens);
+        }
+
+        boolean isLlm() {
+            return deterministicResponse == null;
+        }
+    }
+
+    /**
+     * Runs intent resolution, authorization, and the deterministic-answer
+     * pipeline. Returns a deterministic {@link AnswerPlan} when the answer can
+     * be served without the LLM, otherwise an LLM plan carrying the prepared
+     * prompt inputs. Shared by the blocking and streaming entry points.
+     */
+    private AnswerPlan prepareAnswer(ChatRequest request, String userToken) throws Exception {
             String sessionId = (userToken != null) ? userToken : "default-session";
             List<ChatMessage> history = chatMemoryService.getHistory(sessionId);
 
             if (userToken == null || userToken.isBlank()) {
-                return ChatResponse.builder()
+                return AnswerPlan.deterministic(ChatResponse.builder()
                         .answer("Please log in first.")
                         .error(true)
-                        .build();
+                        .build());
             }
 
             String customerId = userDataService.resolveCustomerIdPrefix(userToken);
@@ -96,7 +222,7 @@ public class ChatService {
             if (unauthorizedBranch != null) {
                 String errorMsg = "**Branch " + unauthorizedBranch + " was not found, or you do not have permission to view it.**";
                 chatMemoryService.recordInteraction(sessionId, request.getQuestion(), errorMsg);
-                return ChatResponse.builder()
+                return AnswerPlan.deterministic(ChatResponse.builder()
                         .answer(errorMsg)
                         .metadata(AnswerMetadata.builder()
                                 .intent("UNAUTHORIZED")
@@ -107,14 +233,14 @@ public class ChatService {
                         .tokensUsed(0)
                         .timestamp(System.currentTimeMillis())
                         .error(false)
-                        .build();
+                        .build());
             }
             if (queryRouterService.classify(request.getQuestion()) == QueryRouterService.QueryComplexity.SIMPLE_REDIS) {
                 String simpleAnswer = queryRouterService.routeAndAnswerSimple(customerId, request.getQuestion());
                 if (simpleAnswer != null) {
                     log.info("[ROUTER] Answering query from local Redis cache (SIMPLE_REDIS): '{}'", request.getQuestion());
                     chatMemoryService.recordInteraction(sessionId, request.getQuestion(), simpleAnswer);
-                    return ChatResponse.builder()
+                    return AnswerPlan.deterministic(ChatResponse.builder()
                             .answer(simpleAnswer)
                             .metadata(AnswerMetadata.builder()
                                     .intent("SIMPLE_REDIS")
@@ -125,7 +251,7 @@ public class ChatService {
                             .tokensUsed(0)
                             .timestamp(System.currentTimeMillis())
                             .error(false)
-                            .build();
+                            .build());
                 }
             }
 
@@ -142,13 +268,13 @@ public class ChatService {
                 if (globalAnswer != null) {
                     logDecision(resolvedQuery, true, 0);
                     chatMemoryService.recordInteraction(sessionId, request.getQuestion(), globalAnswer);
-                    return ChatResponse.builder()
+                    return AnswerPlan.deterministic(ChatResponse.builder()
                             .answer(globalAnswer)
                             .metadata(buildMetadata(resolvedQuery, true))
                             .tokensUsed(0)
                             .timestamp(System.currentTimeMillis())
                             .error(false)
-                            .build();
+                            .build());
                 }
             }
 
@@ -168,13 +294,13 @@ public class ChatService {
                                 .toList());
                 
                 chatMemoryService.recordInteraction(sessionId, request.getQuestion(), clarification);
-                return ChatResponse.builder()
+                return AnswerPlan.deterministic(ChatResponse.builder()
                         .answer(clarification)
                         .metadata(buildMetadata(resolvedQuery, true))
                         .tokensUsed(0)
                         .timestamp(System.currentTimeMillis())
                         .error(false)
-                        .build();
+                        .build());
             }
 
             // TOPIC RETENTION: If we have a pending topic and the user just gave us a branch, apply the topic
@@ -218,13 +344,13 @@ public class ChatService {
                 logDecision(resolvedQuery, true, 0);
                 chatMemoryService.recordInteraction(sessionId, request.getQuestion(), deterministicAnswer);
                 String answerWithSuggestions = appendSuggestedFollowups(deterministicAnswer, resolvedQuery);
-                return ChatResponse.builder()
+                return AnswerPlan.deterministic(ChatResponse.builder()
                         .answer(answerWithSuggestions)
                         .metadata(buildMetadata(resolvedQuery, true))
                         .tokensUsed(0)
                         .timestamp(System.currentTimeMillis())
                         .error(false)
-                        .build();
+                        .build());
             }
 
             String contextJson = structuredContextBuilder.build(snapshots, targetBranch);
@@ -248,27 +374,9 @@ public class ChatService {
                         + "\nNOTE: Do NOT associate this answer with any branch from prior history or memory, as the user is explicitly asking about all branches."
                         + "\n\nUser Question: " + request.getQuestion();
             }
-            String answer = openAIClient.chat(SYSTEM_PROMPT, history, userMessage);
-            answer = normalizeAnswerStyle(answer);
-            logDecision(resolvedQuery, false, estimatedTokens);
-            chatMemoryService.recordInteraction(sessionId, request.getQuestion(), answer);
-
-            String answerWithSuggestions = appendSuggestedFollowups(answer, resolvedQuery);
-            return ChatResponse.builder()
-                    .answer(answerWithSuggestions)
-                    .metadata(buildMetadata(resolvedQuery, false))
-                    .tokensUsed(estimatedTokens)
-                    .timestamp(System.currentTimeMillis())
-                    .error(false)
-                    .build();
-
-        } catch (Exception e) {
-            log.error("Chat handling failed: {}", e.getMessage(), e);
-            return ChatResponse.builder()
-                    .answer("System error encountered.")
-                    .error(true)
-                    .build();
-        }
+            // LLM-backed answer: defer the OpenAI call to the caller so the
+            // blocking and streaming paths can invoke chat() vs chatStream().
+            return AnswerPlan.llm(SYSTEM_PROMPT, history, userMessage, resolvedQuery, sessionId, estimatedTokens);
     }
 
     public void initializeUserCache(String userToken) {

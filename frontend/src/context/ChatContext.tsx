@@ -55,6 +55,47 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setMessages(prev => [...prev, userMessage])
       setIsLoading(true)
 
+      const botId = (Date.now() + 1).toString()
+      // True until the first token arrives; while true the typing indicator
+      // shows. Once the bot bubble exists we stream into it instead.
+      let botCreated = false
+
+      // Lazily insert the streaming bot bubble on the first token (or on done
+      // for deterministic answers), then append/replace its content.
+      const ensureBotMessage = () => {
+        if (botCreated) return
+        botCreated = true
+        setIsLoading(false)
+        setMessages(prev => [
+          ...prev,
+          { id: botId, role: 'bot', content: '', timestamp: Date.now(), streaming: true }
+        ])
+      }
+
+      const appendToken = (chunk: string) => {
+        ensureBotMessage()
+        setMessages(prev =>
+          prev.map(m => (m.id === botId ? { ...m, content: m.content + chunk } : m))
+        )
+      }
+
+      const finalizeMessage = (data: ChatResponse) => {
+        ensureBotMessage()
+        setMessages(prev =>
+          prev.map(m =>
+            m.id === botId
+              ? {
+                  ...m,
+                  content: data.error ? (data.errorMessage || 'Something went wrong') : data.answer,
+                  tokensUsed: data.tokensUsed,
+                  timestamp: data.timestamp || Date.now(),
+                  streaming: false
+                }
+              : m
+          )
+        )
+      }
+
       try {
         const headers: Record<string, string> = {
           'Content-Type': 'application/json'
@@ -67,32 +108,79 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
           headers['X-TB-Host'] = tbHost
         }
 
-        const response = await fetch('/api/v1/chat/ask', {
+        const response = await fetch('/api/v1/chat/ask/stream', {
           method: 'POST',
           headers,
           body: JSON.stringify({ question })
         })
 
-        const data: ChatResponse = await response.json()
-
-        const botMessage: ChatMessage = {
-          id: (Date.now() + 1).toString(),
-          role: 'bot',
-          content: data.error ? (data.errorMessage || 'Something went wrong') : data.answer,
-          tokensUsed: data.tokensUsed,
-          timestamp: data.timestamp || Date.now()
+        if (!response.ok || !response.body) {
+          throw new Error(`Stream request failed: ${response.status}`)
         }
 
-        setMessages(prev => [...prev, botMessage])
+        const reader = response.body.getReader()
+        const decoder = new TextDecoder()
+        let buffer = ''
+
+        // SSE frames are separated by a blank line. Each frame has an
+        // "event:" line and one or more "data:" lines.
+        const processFrame = (frame: string) => {
+          let eventName = 'message'
+          const dataLines: string[] = []
+          for (const line of frame.split('\n')) {
+            if (line.startsWith('event:')) {
+              eventName = line.slice('event:'.length).trim()
+            } else if (line.startsWith('data:')) {
+              dataLines.push(line.slice('data:'.length).trimStart())
+            }
+          }
+          if (dataLines.length === 0) return
+
+          let payload: any
+          try {
+            payload = JSON.parse(dataLines.join('\n'))
+          } catch {
+            return
+          }
+
+          if (eventName === 'token') {
+            if (typeof payload.content === 'string') appendToken(payload.content)
+          } else if (eventName === 'done') {
+            finalizeMessage(payload as ChatResponse)
+          } else if (eventName === 'error') {
+            finalizeMessage({
+              answer: '',
+              error: true,
+              errorMessage: payload.errorMessage || 'Something went wrong',
+              timestamp: Date.now()
+            })
+          }
+        }
+
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          buffer += decoder.decode(value, { stream: true })
+
+          let sepIndex
+          while ((sepIndex = buffer.indexOf('\n\n')) !== -1) {
+            const frame = buffer.slice(0, sepIndex)
+            buffer = buffer.slice(sepIndex + 2)
+            if (frame.trim()) processFrame(frame)
+          }
+        }
+
+        // Flush any trailing frame without a terminating blank line.
+        if (buffer.trim()) processFrame(buffer)
       } catch (error) {
         console.error('Chat error:', error)
-        const errorMessage: ChatMessage = {
-          id: (Date.now() + 1).toString(),
-          role: 'bot',
-          content: 'Unable to reach the server. Please try again.',
+        finalizeMessage({
+          answer: '',
+          error: true,
+          errorMessage: 'Unable to reach the server. Please try again.',
           timestamp: Date.now()
-        }
-        setMessages(prev => [...prev, errorMessage])
+        })
       } finally {
         setIsLoading(false)
       }
