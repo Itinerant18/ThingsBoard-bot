@@ -72,21 +72,44 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         ])
       }
 
-      const appendToken = (chunk: string) => {
-        ensureBotMessage()
+      // Batch incoming tokens into one state update per animation frame.
+      // OpenAI can emit dozens of chunks per second; committing each one
+      // separately causes choppy re-renders. Coalescing per frame keeps the
+      // stream smooth and the scroll fluid.
+      let pending = ''
+      let frameScheduled = false
+      const flushPending = () => {
+        frameScheduled = false
+        if (!pending) return
+        const chunk = pending
+        pending = ''
         setMessages(prev =>
           prev.map(m => (m.id === botId ? { ...m, content: m.content + chunk } : m))
         )
       }
 
+      const appendToken = (chunk: string) => {
+        ensureBotMessage()
+        pending += chunk
+        if (!frameScheduled) {
+          frameScheduled = true
+          requestAnimationFrame(flushPending)
+        }
+      }
+
       const finalizeMessage = (data: ChatResponse) => {
         ensureBotMessage()
+        // Drop any unflushed tokens; `done` carries the full canonical answer,
+        // so a late animation-frame flush must not append a stale tail.
+        pending = ''
         setMessages(prev =>
           prev.map(m =>
             m.id === botId
               ? {
                   ...m,
-                  content: data.error ? (data.errorMessage || 'Something went wrong') : data.answer,
+                  content: data.error
+                    ? (data.errorMessage || data.answer || 'Something went wrong')
+                    : data.answer,
                   tokensUsed: data.tokensUsed,
                   timestamp: data.timestamp || Date.now(),
                   streaming: false

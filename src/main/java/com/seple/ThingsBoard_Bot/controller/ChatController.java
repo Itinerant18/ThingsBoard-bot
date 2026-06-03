@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,10 +78,17 @@ public class ChatController {
     @PostMapping("/ask/stream")
     public SseEmitter askQuestionStream(
             @RequestBody ChatRequest request,
-            @RequestHeader(value = "X-TB-Token", required = false) String userToken) {
+            @RequestHeader(value = "X-TB-Token", required = false) String userToken,
+            HttpServletResponse response) {
 
         log.info("Received streaming chat request: '{}' (user token: {})",
                 request.getQuestion(), userToken != null ? "present" : "absent");
+
+        // Defeat buffering anywhere between server and browser so tokens arrive
+        // immediately and the stream renders fluently rather than in one burst.
+        response.setHeader("Cache-Control", "no-cache, no-transform");
+        response.setHeader("X-Accel-Buffering", "no"); // nginx: disable proxy buffering
+        response.setHeader("Connection", "keep-alive");
 
         SseEmitter emitter = new SseEmitter(SSE_TIMEOUT_MS);
 
