@@ -137,6 +137,9 @@ public class OpenAIClient {
                     .url(OPENAI_CHAT_URL)
                     .addHeader("Authorization", "Bearer " + config.getApiKey())
                     .addHeader("Accept", "text/event-stream")
+                    // Disable gzip: OkHttp's transparent gzip buffers blocks of the
+                    // SSE body, delaying tokens and breaking incremental streaming.
+                    .addHeader("Accept-Encoding", "identity")
                     .post(RequestBody.create(jsonBody, okhttp3.MediaType.parse("application/json")))
                     .build();
 
