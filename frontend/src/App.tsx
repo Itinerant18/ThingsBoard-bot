@@ -1,12 +1,12 @@
 import { ChatProvider } from './context/ChatContext'
-import { ChatToggle } from './components/ChatToggle'
+import { ChatWindow } from './components/ChatWindow'
 
 function App() {
   return (
     <ChatProvider>
-      {/* No wrapper div — all ChatToggle elements are fixed-positioned.
-          Body/root have pointer-events:none so only the fixed elements intercept clicks. */}
-      <ChatToggle />
+      <div className="w-full h-screen flex flex-col bg-[#faf8f5]">
+        <ChatWindow />
+      </div>
     </ChatProvider>
   )
 }

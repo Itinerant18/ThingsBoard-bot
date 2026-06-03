@@ -104,7 +104,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, onSuggest
   const blocks = parseContentBlocks(mainContent)
 
   return (
-    <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} message-enter items-start max-w-[85%] ${isUser ? 'ml-auto' : 'mr-auto'}`}>
+    <div className={`flex gap-2 sm:gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} message-enter items-start w-full max-w-[96%] sm:max-w-[85%] ${isUser ? 'ml-auto' : 'mr-auto'}`}>
       {/* Avatar with vintage skeuomorphic border */}
       <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md border ${
         isUser 

@@ -139,11 +139,6 @@ The codebase is built around a **three-profile deployment** (chat / ingestion / 
 
 ```
 
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg style="fill:none;stroke:none;fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2460" height="1172" viewBox="0 0 2460 1172"><style class="text-font-style fontImports" data-font-family="Roboto">@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=block);</style><g id="items" style="isolation: isolate"><g id="blend" style="mix-blend-mode: normal"><g id="g-root-cp_1_lines-1_dgouerlqbl6v-fill" data-item-order="-2594052" transform="translate(1953.7421875, 128)"><g id="cp_1_lines-1_dgouerlqbl6v-fill-merged" stroke="none" fill="#3cc583" fill-opacity="0.2"><g><path d="M10 125.008C10 126.839 11.299 128.443 13.249 128.86C21.877 130.708 46.65 134.767 74.883 128.09C100.574 122.015 123.401 124.829 133.804 126.777C136.801 127.338 139.766 125.264 139.766 122.468 V14C139.766 11.791 137.975 10 135.766 10 H14C11.791 10 10 11.791 10 14 V125.008"></path></g></g></g><g id="g-root-cp_1_lines-1_dgouerlqbl6v-stroke" data-item-order="-2594052" transform="translate(1953.7421875, 128)"><g id="cp_1_lines-1_dgouerlqbl6v-stroke" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" stroke="#3cc583" stroke-width="2" stroke-opacity="1"><g><path d="M 16 10L 14 10C 11.7909 10 10 11.7909 10 14L 10 16M 10 16L 10 121.78125M 139.765625 16L 139.765625 121.78125M 16 10L 133.765625 10M 133.765625 10L 135.765625 10C 137.974725 10 139.765625 11.7909 139.765625 14L 139.765625 16M 139.765625 121.78125L 139.765625 122.467751C 139.765625 125.26445 136.800972 127.338455 133.804176 126.777145C 123.4011 124.82885 100.574448 122.014847 74.882813 128.090347C 46.650333 134.766647 21.877389 130.708252 13.248565 128.860245C 11.298639 128.44265 10 126.839447 10 125.008453L 10 121.78125"></path></g></g></g></g></g></svg>
-
-
 The chat path treats **Redis as the live source of truth**; TimescaleDB is the durable event store. On a Redis cold start, `ReconciliationService` and `ReplayService` rebuild the hashes from the event log.
 
 ---

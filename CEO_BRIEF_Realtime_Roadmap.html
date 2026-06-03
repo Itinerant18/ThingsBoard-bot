@@ -239,7 +239,8 @@ blockquote {
 <h2>4. Phase 3 — Webhook Implementation (Planned)</h2>
 <p><strong>Status: Code path exists, not yet wired to live TB.</strong></p>
 <p>Once Phase 2 is stable, we turn on the real-time pipeline. ThingsBoard rules will fire on every relevant event and POST to our <code>WebhookController</code>. The consumer JVM picks the event up from RabbitMQ, deduplicates it, persists it to TimescaleDB, and atomically updates the Redis state that the chat path reads.</p>
-<pre><code>┌─────────────────────────────────────────────────────────────────┐
+<pre><code>
+┌─────────────────────────────────────────────────────────────────┐
 │                  PHASE 3 — REAL-TIME PIPELINE                   │
 │                                                                 │
 │   ┌──────────────┐                                              │
@@ -278,7 +279,8 @@ blockquote {
 └─────────────────────────────────────────────────────────────────┘
 </code></pre>
 <p><strong>Component-level flow:</strong></p>
-<pre><code>                  ┌────────────────────────────────────────────────┐
+<pre><code>
+                  ┌────────────────────────────────────────────────┐
                   │  ThingsBoard Dashboard (iframe parent)         │
                   │  postMessage → TB_AUTH_TOKEN, TB_HOST          │
                   └────────────────────┬───────────────────────────┘

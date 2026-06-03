@@ -1,38 +1,32 @@
 <!doctype html>
-<html lang="en" style="background-color: rgba(0,0,0,0) !important; background: transparent !important;">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IoT Assistant</title>
+    <title>IoT Assistant — SAI Tech Support</title>
+    <meta name="description" content="SAI Tech Support — ThingsBoard IoT Network assistant for troubleshooting, telemetry, and active alarms." />
     <style>
-      /* Force complete transparency and non-blocking for ThingsBoard iframe embedding */
       html, body, #root {
-        background-color: rgba(0, 0, 0, 0) !important;
-        background: transparent !important;
+        background-color: #E8E0D4 !important;
+        background: #E8E0D4 !important;
         margin: 0 !important;
         padding: 0 !important;
-        pointer-events: none !important;
+        pointer-events: auto !important;
+        height: 100% !important;
+        width: 100% !important;
+        font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       body {
         overflow: hidden !important;
+        color: #1C1917;
       }
     </style>
-    <script>
-      // JS fallback: force transparent background immediately before any render
-      // Required for some browsers that ignore CSS transparency in cross-origin iframes
-      (function() {
-        document.documentElement.style.cssText = 'background-color: transparent !important; background: transparent !important;';
-        document.addEventListener('DOMContentLoaded', function() {
-          document.body.style.cssText = 'background-color: transparent !important; background: transparent !important; margin: 0; overflow: hidden;';
-          var root = document.getElementById('root');
-          if (root) root.style.cssText = 'background-color: transparent !important; background: transparent !important;';
-        });
-      })();
-    </script>
   </head>
-  <body style="background-color: rgba(0,0,0,0) !important; background: transparent !important; margin: 0; overflow: hidden;">
-    <div id="root" style="background-color: transparent !important; background: transparent !important;"></div>
+  <body>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

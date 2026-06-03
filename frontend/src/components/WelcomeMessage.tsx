@@ -20,41 +20,49 @@ export const WelcomeMessage: React.FC = () => {
   const { sendMessage } = useChat()
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center py-6 px-2">
-      {/* Bot Icon */}
-      <div className="w-12 h-12 rounded-2xl bg-[#cfe6de] border border-[#a2cebe] flex items-center justify-center mb-4 shadow-sm">
+    <div className="flex-1 flex flex-col items-center justify-center py-10 px-4">
+      {/* Embossed Bot Icon */}
+      <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+        style={{
+          background: 'linear-gradient(135deg, #5c3a2a 0%, #4b2e22 50%, #3d2519 100%)',
+          border: '1px solid #3d2519',
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 3px 8px rgba(75,46,34,0.25)'
+        }}
+      >
         <span className="text-2xl">🤖</span>
       </div>
 
-      {/* Main Headers */}
-      <h2 className="text-[#221d17] text-lg font-bold text-center mb-1">
-        Ask about ThingsBoard IoT Network
+      {/* Headers */}
+      <h2 className="text-[#1C1917] text-2xl font-bold text-center tracking-tight mb-2">
+        Ask about HMS Panel Troubleshooting
       </h2>
-      <p className="text-[#868078] text-xs text-center max-w-sm px-4 mb-6 leading-normal">
-        I am SAI, your ThingsBoard support assistant. Ask me anything — troubleshooting, telemetry, or active alarms.
+      <p className="text-[#44403C] text-xs text-center max-w-xl px-4 mb-9 leading-relaxed">
+        I am SAI, your HMS support assistant. Ask me anything — troubleshooting, configuration, or installation.
       </p>
 
-      {/* Quick Actions (Large Cards) */}
-      <div className="w-full max-w-sm space-y-2 mb-6">
+      {/* Quick Actions — Paper Cards in 2x2 Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 w-full max-w-3xl mb-8">
         {QUICK_ACTIONS.map((action) => (
           <button
             key={action.question}
             onClick={() => sendMessage(action.question)}
-            className="w-full text-left bg-[#faf8f5] hover:bg-white border border-[#d6cfc4] rounded-2xl p-3.5 flex items-start gap-3 transition-all hover:scale-[1.01] hover:border-[#ca8a04] shadow-[0_2px_4px_rgba(34,29,23,0.02)]"
+            className="paper-card text-left p-4 flex items-start gap-3 cursor-pointer"
           >
-            <span className="text-[#ca8a04] font-mono text-sm leading-none mt-0.5">➔</span>
-            <span className="text-xs text-[#221d17] font-medium leading-normal">{action.label}</span>
+            <span className="text-[#CA8A04] font-mono text-sm leading-none mt-0.5"
+              style={{ textShadow: '0 1px 0 rgba(255,255,255,0.6)' }}
+            >➔</span>
+            <span className="text-xs text-[#1C1917] font-semibold leading-normal">{action.label}</span>
           </button>
         ))}
       </div>
 
-      {/* Suggestion Tags */}
-      <div className="flex flex-wrap gap-1.5 justify-center max-w-sm">
+      {/* Suggestion Tags — Brass Pills */}
+      <div className="flex flex-wrap gap-2 justify-center max-w-3xl">
         {TAGS.map((tag) => (
           <button
             key={tag.label}
             onClick={() => sendMessage(tag.question)}
-            className="px-3 py-1.5 bg-[#faf8f5]/80 hover:bg-[#f4ebd0] border border-[#d6cfc4] hover:border-[#ca8a04] rounded-full text-[10px] font-semibold text-[#57534e] hover:text-[#ca8a04] transition-all"
+            className="brass-tag px-3.5 py-2 text-[11px] text-[#44403C]"
           >
             {tag.label}
           </button>
