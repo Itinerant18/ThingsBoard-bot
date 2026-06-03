@@ -23,7 +23,9 @@ export interface ChatResponse {
 export interface ChatContextType {
   messages: ChatMessage[]
   isLoading: boolean
+  isStreaming: boolean
   sendMessage: (question: string) => Promise<void>
+  stopStreaming: () => void
   clearHistory: () => void
   jwtToken: string | null
   tbHost?: string | null

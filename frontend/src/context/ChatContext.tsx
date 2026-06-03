@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react'
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react'
 import { ChatMessage, ChatResponse, ChatContextType } from '../types'
 
 const ChatContext = createContext<ChatContextType | null>(null)
@@ -6,8 +6,12 @@ const ChatContext = createContext<ChatContextType | null>(null)
 export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isStreaming, setIsStreaming] = useState(false)
   const [jwtToken, setJwtToken] = useState<string | null>(null)
   const [tbHost, setTbHost] = useState<string | null>(null)
+
+  // Controller for the in-flight stream so the user can cancel mid-generation.
+  const abortRef = useRef<AbortController | null>(null)
 
   // Get JWT token and TB Host from various sources
   useEffect(() => {
@@ -54,6 +58,10 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       setMessages(prev => [...prev, userMessage])
       setIsLoading(true)
+      setIsStreaming(true)
+
+      const controller = new AbortController()
+      abortRef.current = controller
 
       const botId = (Date.now() + 1).toString()
       // True until the first token arrives; while true the typing indicator
@@ -134,7 +142,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const response = await fetch('/api/v1/chat/ask/stream', {
           method: 'POST',
           headers,
-          body: JSON.stringify({ question })
+          body: JSON.stringify({ question }),
+          signal: controller.signal
         })
 
         if (!response.ok || !response.body) {
@@ -197,26 +206,48 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Flush any trailing frame without a terminating blank line.
         if (buffer.trim()) processFrame(buffer)
       } catch (error) {
-        console.error('Chat error:', error)
-        finalizeMessage({
-          answer: '',
-          error: true,
-          errorMessage: 'Unable to reach the server. Please try again.',
-          timestamp: Date.now()
-        })
+        if (controller.signal.aborted) {
+          // User cancelled: keep whatever streamed so far, drop the cursor.
+          if (botCreated) {
+            const tail = pending
+            pending = ''
+            setMessages(prev =>
+              prev.map(m => (m.id === botId ? { ...m, content: m.content + tail, streaming: false } : m))
+            )
+          }
+        } else {
+          console.error('Chat error:', error)
+          finalizeMessage({
+            answer: '',
+            error: true,
+            errorMessage: 'Unable to reach the server. Please try again.',
+            timestamp: Date.now()
+          })
+        }
       } finally {
         setIsLoading(false)
+        setIsStreaming(false)
+        abortRef.current = null
       }
     },
     [isLoading, jwtToken, tbHost]
   )
+
+  // Cancel the in-flight stream (Stop button). The fetch reader rejects with
+  // AbortError, which the sendMessage catch handles by keeping partial text;
+  // the server-side OpenAI read also aborts when the socket closes.
+  const stopStreaming = useCallback(() => {
+    abortRef.current?.abort()
+  }, [])
 
   const clearHistory = useCallback(() => {
     setMessages([])
   }, [])
 
   return (
-    <ChatContext.Provider value={{ messages, isLoading, sendMessage, clearHistory, jwtToken, tbHost }}>
+    <ChatContext.Provider
+      value={{ messages, isLoading, isStreaming, sendMessage, stopStreaming, clearHistory, jwtToken, tbHost }}
+    >
       {children}
     </ChatContext.Provider>
   )

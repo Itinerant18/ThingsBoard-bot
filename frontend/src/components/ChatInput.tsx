@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useChat } from '../context/ChatContext'
 
 export const ChatInput: React.FC = () => {
-  const { sendMessage, isLoading } = useChat()
+  const { sendMessage, isLoading, isStreaming, stopStreaming } = useChat()
   const [input, setInput] = useState('')
   const [isListening, setIsListening] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -99,17 +99,29 @@ export const ChatInput: React.FC = () => {
             </button>
           </div>
 
-          {/* Raised Brass Send Button */}
-          <button
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading}
-            className="brass-button w-10 h-10 flex items-center justify-center flex-shrink-0"
-          >
-            <svg className="w-4 h-4 transform rotate-45 -translate-x-0.5 translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </button>
+          {/* Stop button while streaming, otherwise Send */}
+          {isStreaming ? (
+            <button
+              onClick={stopStreaming}
+              title="Stop generating"
+              className="brass-button w-10 h-10 flex items-center justify-center flex-shrink-0"
+            >
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="5" y="5" width="14" height="14" rx="2.5" />
+              </svg>
+            </button>
+          ) : (
+            <button
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
+              className="brass-button w-10 h-10 flex items-center justify-center flex-shrink-0"
+            >
+              <svg className="w-4 h-4 transform rotate-45 -translate-x-0.5 translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </button>
+          )}
         </div>
 
         {/* Footer — Engraved Text */}

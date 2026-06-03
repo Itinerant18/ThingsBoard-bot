@@ -8,9 +8,21 @@ import { WelcomeMessage } from './WelcomeMessage'
 export const ChatWindow: React.FC = () => {
   const { messages, isLoading, sendMessage } = useChat()
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  // Follow the stream only while the user is parked near the bottom. If they
+  // scroll up to read, stop yanking them down (ChatGPT/Claude behaviour).
+  const stickToBottom = useRef(true)
+
+  const handleScroll = () => {
+    const el = scrollRef.current
+    if (!el) return
+    stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80
+  }
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (stickToBottom.current) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
   }, [messages, isLoading])
 
   return (
@@ -49,7 +61,11 @@ export const ChatWindow: React.FC = () => {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto chat-messages grid-bg px-3 py-4 sm:p-5">
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="flex-1 overflow-y-auto chat-messages grid-bg px-3 py-4 sm:p-5"
+      >
         <div className="max-w-3xl mx-auto w-full space-y-4">
           {messages.length === 0 && <WelcomeMessage />}
 
