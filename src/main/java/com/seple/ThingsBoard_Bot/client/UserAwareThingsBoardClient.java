@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
@@ -33,6 +34,18 @@ public class UserAwareThingsBoardClient {
     private final ThingsBoardConfig config;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+
+    /**
+     * Short-TTL cache of the per-user authorized device list. This list is the
+     * single biggest source of chat latency: getUserDevices() makes an auth
+     * call plus N paged calls (with retry/backoff), and prepareAnswer() hits it
+     * several times per question. The device->customer assignment is structural
+     * (changes rarely), so caching it for cacheTtlSeconds is safe and does NOT
+     * stale live telemetry (which is read separately from Redis).
+     */
+    private final Map<String, CachedDevices> deviceListCache = new ConcurrentHashMap<>();
+
+    private record CachedDevices(long fetchedAtMs, List<Map<String, String>> devices) {}
 
     private String getThingsBoardUrl() {
         String contextHost = ThingsBoardRequestContext.getHost();
@@ -79,8 +92,26 @@ public class UserAwareThingsBoardClient {
     }
 
     public List<Map<String, String>> getUserDevices(String userToken) {
+        if (userToken == null || userToken.isBlank()) {
+            return new ArrayList<>();
+        }
+
+        long ttlMs = Math.max(0, config.getCacheTtlSeconds()) * 1000L;
+        CachedDevices cached = deviceListCache.get(userToken);
+        if (cached != null && ttlMs > 0 && (System.currentTimeMillis() - cached.fetchedAtMs()) < ttlMs) {
+            log.debug("Device list cache HIT ({} devices)", cached.devices().size());
+            return cached.devices();
+        }
+
         int pageSize = config.getDevicePageSize() > 0 ? config.getDevicePageSize() : 100;
-        return getUserDevicesPaged(userToken, pageSize);
+        List<Map<String, String>> devices = getUserDevicesPaged(userToken, pageSize);
+
+        // Only cache a non-empty result so a transient failure/empty fetch isn't
+        // pinned for the whole TTL.
+        if (devices != null && !devices.isEmpty() && ttlMs > 0) {
+            deviceListCache.put(userToken, new CachedDevices(System.currentTimeMillis(), devices));
+        }
+        return devices != null ? devices : new ArrayList<>();
     }
 
     public List<Map<String, String>> getUserDevicesPaged(String userToken, int pageSize) {
