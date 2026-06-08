@@ -3,10 +3,13 @@ package com.seple.ThingsBoard_Bot.service;
 import com.seple.ThingsBoard_Bot.config.RabbitMQConfig;
 import com.seple.ThingsBoard_Bot.entity.Customer;
 import com.seple.ThingsBoard_Bot.repository.CustomerRepository;
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -23,10 +26,16 @@ public class RabbitMQQueueService {
     private final AmqpAdmin amqpAdmin;
     private final CustomerRepository customerRepository;
     private final RabbitListenerEndpointRegistry registry;
+    private final RabbitTemplate rabbitTemplate;
+    private final MeterRegistry meterRegistry;
 
     @PostConstruct
     public void initQueues() {
         log.info("[RABBITMQ] Initializing customer-specific queues...");
+        // Gauge: total messages queued across all customer queues, polled at scrape time.
+        Gauge.builder("rabbitmq.queue.depth", this, RabbitMQQueueService::currentTotalQueueDepth)
+                .description("Total messages across all iot.events.* customer queues")
+                .register(meterRegistry);
         try {
             List<Customer> customers = customerRepository.findAll();
             for (Customer customer : customers) {
@@ -35,6 +44,41 @@ public class RabbitMQQueueService {
         } catch (Exception e) {
             log.error("[RABBITMQ] Failed to initialize customer queues: {}", e.getMessage(), e);
         }
+    }
+
+    /**
+     * Publishes an event to the customer's routing key, recording success/failure under
+     * metric {@code rabbitmq.publish}. Rethrows so the caller can surface the failure.
+     */
+    public void publishEvent(String customerId, Object event) {
+        try {
+            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, "iot.event." + customerId, event);
+            meterRegistry.counter("rabbitmq.publish", "result", "success").increment();
+        } catch (RuntimeException e) {
+            meterRegistry.counter("rabbitmq.publish", "result", "failure").increment();
+            throw e;
+        }
+    }
+
+    /** Sums {@code QUEUE_MESSAGE_COUNT} across the known customer queues. Tolerant of broker errors. */
+    private double currentTotalQueueDepth() {
+        double total = 0;
+        try {
+            for (Customer customer : customerRepository.findAll()) {
+                String queueName = "iot.events." + customer.getCustomerId();
+                try {
+                    QueueInformation info = amqpAdmin.getQueueInfo(queueName);
+                    if (info != null) {
+                        total += info.getMessageCount();
+                    }
+                } catch (RuntimeException perQueue) {
+                    // queue may not exist yet or broker hiccup — skip it
+                }
+            }
+        } catch (RuntimeException e) {
+            log.debug("[RABBITMQ] queue-depth gauge could not enumerate customers: {}", e.getMessage());
+        }
+        return total;
     }
 
     public void declareQueueForCustomer(String customerId) {

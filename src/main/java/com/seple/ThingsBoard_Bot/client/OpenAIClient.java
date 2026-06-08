@@ -40,10 +40,23 @@ public class OpenAIClient {
     private final ObjectMapper objectMapper;
     private final OkHttpClient streamingHttpClient;
 
+    private final io.micrometer.core.instrument.MeterRegistry meterRegistry;
+    private final io.micrometer.core.instrument.Timer latencyTimer;
+    private final io.micrometer.core.instrument.DistributionSummary tokensSummary;
+
     private static final String OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions";
 
-    public OpenAIClient(OpenAIConfig config) {
+    public OpenAIClient(OpenAIConfig config, io.micrometer.core.instrument.MeterRegistry meterRegistry) {
         this.config = config;
+        this.meterRegistry = meterRegistry;
+        this.latencyTimer = io.micrometer.core.instrument.Timer.builder("openai.latency")
+                .description("OpenAI chat-completion call latency")
+                .publishPercentileHistogram()
+                .register(meterRegistry);
+        this.tokensSummary = io.micrometer.core.instrument.DistributionSummary.builder("openai.tokens.used")
+                .description("Total tokens reported by OpenAI per completion")
+                .publishPercentileHistogram()
+                .register(meterRegistry);
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(java.time.Duration.ofMillis(config.getTimeout()));
         factory.setReadTimeout(java.time.Duration.ofMillis(config.getTimeout()));
@@ -88,6 +101,7 @@ public class OpenAIClient {
             long startTime = System.currentTimeMillis();
             ResponseEntity<String> response = restTemplate.postForEntity(OPENAI_CHAT_URL, entity, String.class);
             long duration = System.currentTimeMillis() - startTime;
+            latencyTimer.record(duration, TimeUnit.MILLISECONDS);
 
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 JsonNode responseJson = objectMapper.readTree(response.getBody());
@@ -97,15 +111,21 @@ public class OpenAIClient {
                         .path("content").asText();
 
                 int totalTokens = responseJson.path("usage").path("total_tokens").asInt(0);
+                if (totalTokens > 0) {
+                    tokensSummary.record(totalTokens);
+                }
+                meterRegistry.counter("openai.requests", "result", "success").increment();
 
                 log.info("✅ OpenAI response received in {}ms ({} tokens used)", duration, totalTokens);
                 return reply;
             } else {
+                meterRegistry.counter("openai.requests", "result", "error").increment();
                 log.error("❌ OpenAI returned non-success: {}", response.getStatusCode());
                 return "I'm sorry, I encountered an error communicating with the AI service. Please try again.";
             }
 
         } catch (Exception e) {
+            meterRegistry.counter("openai.requests", "result", "error").increment();
             log.error("❌ Error calling OpenAI: {}", e.getMessage());
             return "I'm sorry, I couldn't process your question right now. Error: " + e.getMessage();
         }
@@ -177,10 +197,13 @@ public class OpenAIClient {
             }
 
             long duration = System.currentTimeMillis() - startTime;
+            latencyTimer.record(duration, TimeUnit.MILLISECONDS);
+            meterRegistry.counter("openai.requests", "result", "success").increment();
             log.info("✅ OpenAI stream completed in {}ms ({} chars)", duration, full.length());
             return full.toString();
 
         } catch (Exception e) {
+            meterRegistry.counter("openai.requests", "result", "error").increment();
             log.error("❌ Error streaming OpenAI: {}", e.getMessage());
             // If we got partial content before the failure, return what we have
             // so the user still sees a (possibly incomplete) answer.

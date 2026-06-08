@@ -21,6 +21,21 @@ public class RedisCacheService {
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final StringRedisTemplate stringRedisTemplate;
+    private final io.micrometer.core.instrument.MeterRegistry meterRegistry;
+
+    /** Counts a cache read as hit (non-empty) or miss (empty) under metric redis.operations. */
+    private void recordAccess(boolean hit) {
+        meterRegistry.counter("redis.operations", "result", hit ? "hit" : "miss").increment();
+    }
+
+    /** Times a Redis read under metric redis.latency and records hit/miss via {@link #recordAccess}. */
+    private <T> T timedRead(java.util.function.Supplier<T> op, java.util.function.Predicate<T> hit) {
+        io.micrometer.core.instrument.Timer.Sample sample = io.micrometer.core.instrument.Timer.start();
+        T result = op.get();
+        sample.stop(meterRegistry.timer("redis.latency"));
+        recordAccess(hit.test(result));
+        return result;
+    }
 
     private static final Duration DEFAULT_TTL = Duration.ofHours(24);
     private static final Duration COUNTER_TTL = Duration.ofHours(168); // 7 days
@@ -39,12 +54,12 @@ public class RedisCacheService {
 
     public Map<Object, Object> getDeviceState(String customerId, String deviceId) {
         String key = String.format(KEY_DEVICE_STATE, customerId, deviceId);
-        return redisTemplate.opsForHash().entries(key);
+        return timedRead(() -> redisTemplate.opsForHash().entries(key), r -> !r.isEmpty());
     }
 
     public String getDeviceStateField(String customerId, String deviceId, String field) {
         String key = String.format(KEY_DEVICE_STATE, customerId, deviceId);
-        Object val = redisTemplate.opsForHash().get(key, field);
+        Object val = timedRead(() -> redisTemplate.opsForHash().get(key, field), java.util.Objects::nonNull);
         return val != null ? val.toString() : "";
     }
 
@@ -61,7 +76,7 @@ public class RedisCacheService {
 
     public Map<Object, Object> getDeviceMeta(String customerId, String deviceId) {
         String key = String.format(KEY_DEVICE_META, customerId, deviceId);
-        return redisTemplate.opsForHash().entries(key);
+        return timedRead(() -> redisTemplate.opsForHash().entries(key), r -> !r.isEmpty());
     }
 
     public void updateGlobalCounters(String customerId, String field, long delta) {
@@ -73,7 +88,7 @@ public class RedisCacheService {
 
     public Map<Object, Object> getGlobalCounters(String customerId) {
         String key = String.format(KEY_GLOBAL_COUNTERS, customerId);
-        return redisTemplate.opsForHash().entries(key);
+        return timedRead(() -> redisTemplate.opsForHash().entries(key), r -> !r.isEmpty());
     }
 
     public void updateNodeCounters(String customerId, String nodeId, String field, long delta) {
@@ -85,7 +100,7 @@ public class RedisCacheService {
 
     public Map<Object, Object> getNodeCounters(String customerId, String nodeId) {
         String key = String.format(KEY_NODE_COUNTERS, customerId, nodeId);
-        return redisTemplate.opsForHash().entries(key);
+        return timedRead(() -> redisTemplate.opsForHash().entries(key), r -> !r.isEmpty());
     }
 
     public Set<String> getAllDeviceKeys(String customerId) {

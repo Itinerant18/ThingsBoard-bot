@@ -1,11 +1,14 @@
 package com.seple.ThingsBoard_Bot.service;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.seple.ThingsBoard_Bot.client.OpenAIClient;
@@ -32,27 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ChatService {
 
-    private static final String SYSTEM_PROMPT = """
-            You are SAI (Smart Assistant for IoT), a Senior Security Analyst.
-            Every response MUST be self-descriptive so the user knows the Branch and the Metric being reported.
-
-            MANDATORY HEADER RULES
-            1. Every response MUST start with a bold line following this pattern:
-               **Branch [NAME]: The [Metric Name] is [Value].**
-            2. Never give a "naked" value. Always anchor it to the Branch name.
-            3. Always use the word "Branch" (e.g. Branch BALLY BAZAR).
-
-            MANDATORY RESPONSE TEMPLATES
-            - GATEWAY: **Branch [NAME]: The Gateway status is currently [ONLINE/OFFLINE].**
-            - VOLTAGE: **Branch [NAME]: The [Battery/AC] Voltage Reading is [Value]V [AC/DC].**
-            - SYSTEMS: **Branch [NAME]: The [IAS/BAS/FAS] Status is [Status].**
-            - CCTV: **Branch [NAME]: The CCTV Camera Status is [X] cameras ONLINE.**
-
-            REASONING & MEMORY
-            - If you are answering based on conversational history (memory), you MUST explicitly state: "Continuing report for Branch [Name]:" or "For Branch [Name]:".
-            - N/A POLICY: Report "N/A" as "Offline" or "Not Installed".
-            - NO FLUFF: Start directly with the bold anchor line.
-            """;
+    /** Loaded once from classpath:prompts/system-prompt.txt at startup. */
+    private final String systemPrompt;
 
     private final UserDataService userDataService;
     private final OpenAIClient openAIClient;
@@ -63,6 +47,10 @@ public class ChatService {
     private final StructuredContextBuilder structuredContextBuilder;
     private final GlobalAggregatorService globalAggregatorService;
     private final QueryRouterService queryRouterService;
+    private final io.micrometer.core.instrument.Counter deterministicAnswers;
+    private final io.micrometer.core.instrument.Counter llmAnswers;
+    private final io.micrometer.core.instrument.Counter llmTokens;
+    private final io.micrometer.core.instrument.Timer chatLatency;
 
     public ChatService(UserDataService userDataService, OpenAIClient openAIClient,
             ChartService chartService, ChatMemoryService chatMemoryService,
@@ -70,7 +58,17 @@ public class ChatService {
             QueryIntentResolver queryIntentResolver, DeterministicAnswerService deterministicAnswerService,
             StructuredContextBuilder structuredContextBuilder,
             GlobalAggregatorService globalAggregatorService,
-            QueryRouterService queryRouterService) {
+            QueryRouterService queryRouterService,
+            io.micrometer.core.instrument.MeterRegistry meterRegistry,
+            @org.springframework.beans.factory.annotation.Value("classpath:prompts/system-prompt.txt") Resource systemPromptResource) {
+        this.systemPrompt = loadSystemPrompt(systemPromptResource);
+        this.deterministicAnswers = meterRegistry.counter("chat.answers", "type", "deterministic");
+        this.llmAnswers = meterRegistry.counter("chat.answers", "type", "llm");
+        this.llmTokens = meterRegistry.counter("llm.tokens.total");
+        this.chatLatency = io.micrometer.core.instrument.Timer.builder("chat.latency")
+                .description("End-to-end blocking chat answer latency")
+                .publishPercentileHistogram()
+                .register(meterRegistry);
         this.userDataService = userDataService;
         this.openAIClient = openAIClient;
         this.chatMemoryService = chatMemoryService;
@@ -82,11 +80,20 @@ public class ChatService {
         this.queryRouterService = queryRouterService;
     }
 
+    private static String loadSystemPrompt(Resource resource) {
+        try {
+            return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to load classpath:prompts/system-prompt.txt", e);
+        }
+    }
+
     /**
      * Blocking answer path. Resolves the answer plan and, for LLM-backed
      * answers, performs a synchronous OpenAI call.
      */
     public ChatResponse answerQuestion(ChatRequest request, String userToken) {
+        io.micrometer.core.instrument.Timer.Sample sample = io.micrometer.core.instrument.Timer.start();
         try {
             AnswerPlan plan = prepareAnswer(request, userToken);
             if (!plan.isLlm()) {
@@ -113,6 +120,8 @@ public class ChatService {
                     .answer("System error encountered.")
                     .error(true)
                     .build();
+        } finally {
+            sample.stop(chatLatency);
         }
     }
 
@@ -355,7 +364,7 @@ public class ChatService {
 
             String contextJson = structuredContextBuilder.build(snapshots, targetBranch);
             int estimatedTokens = TokenCounterService.countMessageTokens(
-                    SYSTEM_PROMPT, history, request.getQuestion(), contextJson);
+                    systemPrompt, history, request.getQuestion(), contextJson);
             if (!TokenCounterService.fitsInContextWindow(estimatedTokens, chatbotConfig.getMaxContextTokens())) {
                 throw new ContextOverflowException("Structured context exceeded local token budget");
             }
@@ -376,7 +385,7 @@ public class ChatService {
             }
             // LLM-backed answer: defer the OpenAI call to the caller so the
             // blocking and streaming paths can invoke chat() vs chatStream().
-            return AnswerPlan.llm(SYSTEM_PROMPT, history, userMessage, resolvedQuery, sessionId, estimatedTokens);
+            return AnswerPlan.llm(systemPrompt, history, userMessage, resolvedQuery, sessionId, estimatedTokens);
     }
 
     public void initializeUserCache(String userToken) {
@@ -397,6 +406,12 @@ public class ChatService {
     }
 
     private void logDecision(ResolvedQuery query, boolean deterministic, int tokens) {
+        // Metrics always recorded, independent of log verbosity config.
+        (deterministic ? deterministicAnswers : llmAnswers).increment();
+        if (!deterministic && tokens > 0) {
+            llmTokens.increment(tokens);
+        }
+
         if (!chatbotConfig.isLogDecisionMetadata()) {
             return;
         }

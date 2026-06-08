@@ -2,10 +2,11 @@ package com.seple.ThingsBoard_Bot.controller;
 
 import com.seple.ThingsBoard_Bot.model.dto.TbEventPayload;
 import com.seple.ThingsBoard_Bot.service.EventParseService;
-import com.seple.ThingsBoard_Bot.config.RabbitMQConfig;
+import com.seple.ThingsBoard_Bot.service.RabbitMQQueueService;
+import com.seple.ThingsBoard_Bot.config.SecurityProperties;
+import com.seple.ThingsBoard_Bot.util.HmacUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +22,28 @@ import java.util.Map;
 public class WebhookController {
 
     private final EventParseService eventParseService;
-    private final RabbitTemplate rabbitTemplate;
+    private final RabbitMQQueueService rabbitMQQueueService;
+    private final SecurityProperties securityProperties;
 
     @PostMapping("/thingsboard")
     public ResponseEntity<Void> receiveThingsBoardWebhook(
             @RequestHeader(value = "X-HMAC-SHA256", required = false) String hmac,
             @RequestBody String rawBody) {
-        
+
         log.info("📥 Received webhook from ThingsBoard (body size: {} bytes)", rawBody.length());
-        
+
+        // HMAC verification: enforced only when a shared secret is configured, so local
+        // development keeps working. Reject tampered/unsigned payloads when enabled.
+        if (securityProperties.isWebhookHmacEnabled()) {
+            if (!HmacUtil.isValid(securityProperties.getWebhookHmacSecret(), rawBody, hmac)) {
+                log.warn("🚫 Rejected webhook with invalid/missing HMAC signature");
+                return ResponseEntity.status(401).build();
+            }
+        } else {
+            log.warn("[SECURITY] Webhook received with NO HMAC secret configured — payload is UNVERIFIED. "
+                    + "Set iotchatbot.security.webhook-hmac-secret to enforce signing.");
+        }
+
         try {
             TbEventPayload event = eventParseService.parsePayload(rawBody);
             
@@ -45,8 +59,9 @@ public class WebhookController {
                     event.getPrevValue(),
                     event.getNewValue());
             
-            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, "iot.event." + event.getCustomerId(), event);
-            log.info("✅ Event sent to exchange: {} with routing key: {}", RabbitMQConfig.EXCHANGE_NAME, "iot.event." + event.getCustomerId());
+            rabbitMQQueueService.publishEvent(event.getCustomerId(), event);
+            log.info("✅ Event published for customer: {} (routing key: iot.event.{})",
+                    event.getCustomerId(), event.getCustomerId());
             
             return ResponseEntity.ok().build();
             
