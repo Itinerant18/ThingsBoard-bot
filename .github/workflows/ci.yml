@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      # Runs the full unit + integration suite, including GoldenQuestionAccuracyTest,
+      # which acts as the deterministic-brain accuracy gate. A regression fails the build.
+      - name: Build & test
+        run: ./mvnw -B --no-transfer-progress verify
+
+      # Explicit accuracy gate: parse the surefire report for GoldenQuestionAccuracyTest
+      # and fail if its pass rate drops below 95%. Runs even when the build failed so the
+      # accuracy is reported alongside the failure.
+      - name: Golden-question accuracy gate (>= 95%)
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import glob, sys, xml.etree.ElementTree as ET
+          files = glob.glob('**/target/surefire-reports/*GoldenQuestionAccuracyTest*.xml', recursive=True)
+          if not files:
+              print('::error::No GoldenQuestionAccuracyTest surefire report found')
+              sys.exit(1)
+          tests = failures = errors = 0
+          for f in files:
+              root = ET.parse(f).getroot()
+              tests += int(root.get('tests', 0))
+              failures += int(root.get('failures', 0))
+              errors += int(root.get('errors', 0))
+          if tests == 0:
+              print('::error::GoldenQuestionAccuracyTest reported 0 tests')
+              sys.exit(1)
+          passed = tests - failures - errors
+          rate = passed / tests * 100
+          print(f'GoldenQuestionAccuracyTest accuracy: {passed}/{tests} = {rate:.1f}%')
+          if rate < 95.0:
+              print(f'::error::Accuracy {rate:.1f}% is below the 95% gate')
+              sys.exit(1)
+          PY
+
+      - name: Publish test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: '**/target/surefire-reports/*.xml'
+          if-no-files-found: ignore
