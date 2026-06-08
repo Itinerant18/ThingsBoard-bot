@@ -34,6 +34,9 @@ build/
 
 ### Custom ###
 application-dev.properties
+.env
+.env.*
+!.env.example
 graphify-out/
 
 ### Local Data & Logs ###
