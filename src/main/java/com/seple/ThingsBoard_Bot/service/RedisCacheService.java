@@ -42,6 +42,12 @@ public class RedisCacheService {
         return redisTemplate.opsForHash().entries(key);
     }
 
+    public String getDeviceStateField(String customerId, String deviceId, String field) {
+        String key = String.format(KEY_DEVICE_STATE, customerId, deviceId);
+        Object val = redisTemplate.opsForHash().get(key, field);
+        return val != null ? val.toString() : "";
+    }
+
     public void setDeviceMeta(String customerId, String deviceId, String branchNodeId, String branchName) {
         String key = String.format(KEY_DEVICE_META, customerId, deviceId);
         Map<String, String> meta = new HashMap<>();

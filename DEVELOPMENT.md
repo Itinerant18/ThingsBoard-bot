@@ -275,3 +275,7 @@ powershell
 Run the JAR with the dev and chat profiles:
 powershell
 java -jar -Dspring.profiles.active=dev,chat target/ThingsBoard-Bot-0.0.1-SNAPSHOT.jar
+
+docker compose down
+docker compose up -d --build
+docker logs chatbot-demo -f

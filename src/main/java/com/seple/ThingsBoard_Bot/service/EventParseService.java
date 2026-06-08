@@ -20,6 +20,7 @@ import java.util.Map;
 public class EventParseService {
 
     private final ObjectMapper objectMapper;
+    private final RedisCacheService redisCacheService;
 
     @Value("${iotchatbot.customers.prefixes:BOI,BOB,SBI,CB,IB,PNB,UBI,CBI,IOB,UCO}")
     private String customerPrefixes;
@@ -28,8 +29,9 @@ public class EventParseService {
         "BOI", "BOB", "SBI", "CB", "IB", "PNB", "UBI", "CBI", "IOB", "UCO"
     };
 
-    public EventParseService(ObjectMapper objectMapper) {
+    public EventParseService(ObjectMapper objectMapper, RedisCacheService redisCacheService) {
         this.objectMapper = objectMapper;
+        this.redisCacheService = redisCacheService;
     }
 
     public TbEventPayload parsePayload(String rawBody) {
@@ -78,11 +80,15 @@ public class EventParseService {
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> entry = fields.next();
             String field = entry.getKey();
-            String newValue = entry.getValue().asText();
+            JsonNode valNode = entry.getValue();
+            String newValue = valNode.isContainerNode() ? valNode.toString() : valNode.asText();
             
             String prevValue = "";
             if (prevAttr != null && prevAttr.has(field)) {
-                prevValue = prevAttr.get(field).asText();
+                JsonNode prevValNode = prevAttr.get(field);
+                prevValue = prevValNode.isContainerNode() ? prevValNode.toString() : prevValNode.asText();
+            } else if (redisCacheService != null) {
+                prevValue = redisCacheService.getDeviceStateField(event.getCustomerId(), event.getDeviceId(), field);
             }
             
             if (!newValue.equals(prevValue)) {
@@ -111,11 +117,15 @@ public class EventParseService {
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> entry = fields.next();
             String field = entry.getKey();
-            String newValue = entry.getValue().asText();
+            JsonNode valNode = entry.getValue();
+            String newValue = valNode.isContainerNode() ? valNode.toString() : valNode.asText();
             
             String prevValue = "";
             if (prevTs != null && prevTs.has(field)) {
-                prevValue = prevTs.get(field).asText();
+                JsonNode prevValNode = prevTs.get(field);
+                prevValue = prevValNode.isContainerNode() ? prevValNode.toString() : prevValNode.asText();
+            } else if (redisCacheService != null) {
+                prevValue = redisCacheService.getDeviceStateField(event.getCustomerId(), event.getDeviceId(), field);
             }
             
             if (!newValue.equals(prevValue)) {
@@ -176,7 +186,8 @@ public class EventParseService {
         Iterator<Map.Entry<String, JsonNode>> fields = node.fields();
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> entry = fields.next();
-            result.put(entry.getKey(), entry.getValue().asText());
+            JsonNode valNode = entry.getValue();
+            result.put(entry.getKey(), valNode.isContainerNode() ? valNode.toString() : valNode.asText());
         }
         return result;
     }
