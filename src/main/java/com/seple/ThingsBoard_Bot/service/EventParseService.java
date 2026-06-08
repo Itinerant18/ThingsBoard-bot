@@ -25,9 +25,17 @@ public class EventParseService {
     @Value("${iotchatbot.customers.prefixes:BOI,BOB,SBI,CB,IB,PNB,UBI,CBI,IOB,UCO}")
     private String customerPrefixes;
 
-    private static final String[] CUSTOMER_PREFIX_ARRAY = {
-        "BOI", "BOB", "SBI", "CB", "IB", "PNB", "UBI", "CBI", "IOB", "UCO"
-    };
+    private String[] getCustomerPrefixes() {
+        if (customerPrefixes == null || customerPrefixes.isBlank()) {
+            return new String[]{"BOI", "BOB", "SBI", "CB", "IB", "PNB", "UBI", "CBI", "IOB", "UCO"};
+        }
+        String[] parts = customerPrefixes.split(",");
+        String[] trimmed = new String[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            trimmed[i] = parts[i].trim().toUpperCase();
+        }
+        return trimmed;
+    }
 
     public EventParseService(ObjectMapper objectMapper, RedisCacheService redisCacheService) {
         this.objectMapper = objectMapper;
@@ -147,7 +155,7 @@ public class EventParseService {
         }
         
         String upperName = deviceName.toUpperCase();
-        for (String prefix : CUSTOMER_PREFIX_ARRAY) {
+        for (String prefix : getCustomerPrefixes()) {
             if (upperName.startsWith(prefix + "-") || upperName.startsWith(prefix)) {
                 return prefix;
             }
@@ -163,7 +171,7 @@ public class EventParseService {
         }
         
         String upperName = deviceName.toUpperCase();
-        for (String prefix : CUSTOMER_PREFIX_ARRAY) {
+        for (String prefix : getCustomerPrefixes()) {
             if (upperName.startsWith(prefix + "-")) {
                 return deviceName.substring(prefix.length() + 1);
             }
