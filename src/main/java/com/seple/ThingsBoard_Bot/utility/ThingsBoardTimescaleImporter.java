@@ -223,9 +223,6 @@ public class ThingsBoardTimescaleImporter {
                         }
 
                         String dbValue = value;
-                        if (dbValue != null && dbValue.length() > 64) {
-                            dbValue = dbValue.substring(0, 61) + "...";
-                        }
 
                         pstmt.setString(1, customerId);
                         pstmt.setString(2, deviceName);
