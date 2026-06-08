@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.seple.ThingsBoard_Bot.model.dto.ChatMessage;
@@ -30,9 +31,15 @@ public class ChatMemoryService {
     private final Map<String, List<String>> activeDevices = new ConcurrentHashMap<>();
     private final Map<String, String> activeBranch = new ConcurrentHashMap<>();
     private final Map<String, String> pendingTopic = new ConcurrentHashMap<>();
-    
+
+    // Last-touched timestamp per session, used to evict idle sessions and bound memory growth.
+    private final Map<String, Long> lastAccess = new ConcurrentHashMap<>();
+
     // Maximum number of messages to remember per user (2 Q&A pairs = 4 messages)
     private static final int MAX_HISTORY_MESSAGES = 4;
+
+    // Idle sessions older than this are evicted by the scheduled sweep (30 minutes).
+    private static final long SESSION_TTL_MS = 30 * 60 * 1000L;
 
     /**
      * Add a single message to a user's chronological history.
@@ -42,19 +49,20 @@ public class ChatMemoryService {
             return;
         }
 
+        lastAccess.put(sessionId, System.currentTimeMillis());
         chatHistory.compute(sessionId, (key, deque) -> {
             if (deque == null) {
                 deque = new ConcurrentLinkedDeque<>();
             }
-            
+
             // Add to the end of the history
             deque.addLast(message);
-            
+
             // Enforce sliding window token protection
             while (deque.size() > MAX_HISTORY_MESSAGES) {
                 deque.removeFirst();
             }
-            
+
             return deque;
         });
         
@@ -104,7 +112,33 @@ public class ChatMemoryService {
             activeDevices.remove(sessionId);
             activeBranch.remove(sessionId);
             pendingTopic.remove(sessionId);
+            lastAccess.remove(sessionId);
             log.debug("Cleared history and active devices for session '{}'", sessionId);
+        }
+    }
+
+    /**
+     * Evict idle sessions to bound memory growth in long-running JVMs.
+     * Runs every 5 minutes; drops any session untouched for {@link #SESSION_TTL_MS}.
+     */
+    @Scheduled(fixedDelay = 5 * 60 * 1000L)
+    public void evictIdleSessions() {
+        long cutoff = System.currentTimeMillis() - SESSION_TTL_MS;
+        int before = lastAccess.size();
+        lastAccess.entrySet().removeIf(entry -> {
+            if (entry.getValue() < cutoff) {
+                String sessionId = entry.getKey();
+                chatHistory.remove(sessionId);
+                activeDevices.remove(sessionId);
+                activeBranch.remove(sessionId);
+                pendingTopic.remove(sessionId);
+                return true;
+            }
+            return false;
+        });
+        int evicted = before - lastAccess.size();
+        if (evicted > 0) {
+            log.info("[MEMORY] Evicted {} idle chat session(s); {} active.", evicted, lastAccess.size());
         }
     }
 
@@ -114,6 +148,7 @@ public class ChatMemoryService {
     public void setActiveDevices(String sessionId, List<String> deviceNames) {
         if (sessionId != null && deviceNames != null) {
             activeDevices.put(sessionId, new ArrayList<>(deviceNames));
+            lastAccess.put(sessionId, System.currentTimeMillis());
             log.debug("Set active devices for session '{}' to {}", sessionId, deviceNames);
         }
     }

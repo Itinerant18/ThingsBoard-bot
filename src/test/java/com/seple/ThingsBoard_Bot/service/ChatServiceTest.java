@@ -54,7 +54,9 @@ class ChatServiceTest {
             deterministicAnswerService,
             structuredContextBuilder,
             globalAggregatorService,
-            queryRouterService);
+            queryRouterService,
+            new io.micrometer.core.instrument.simple.SimpleMeterRegistry(),
+            new org.springframework.core.io.ClassPathResource("prompts/system-prompt.txt"));
 
     @Test
     void shouldApplyPendingTopicForBranchOnlyFollowUpAndUseDeterministicAnswer() {

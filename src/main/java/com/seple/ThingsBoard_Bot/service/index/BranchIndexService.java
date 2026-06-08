@@ -37,6 +37,10 @@ public class BranchIndexService {
     private final UserAwareThingsBoardClient userAwareThingsBoardClient;
     private final BranchAncestorPathRepository branchAncestorPathRepository;
     private final ConcurrentHashMap<String, List<DeviceIndexEntry>> indexByUser = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Long> lastAccess = new ConcurrentHashMap<>();
+
+    // Per-entry TTL: cached index untouched for this long is evicted (10 minutes).
+    private static final long INDEX_TTL_MS = 10 * 60 * 1000L;
 
     public BranchIndexService(ThingsBoardConfig thingsBoardConfig,
                               CustomerRepository customerRepository,
@@ -54,6 +58,7 @@ public class BranchIndexService {
         String key = cacheKey(userToken);
         List<DeviceIndexEntry> existing = indexByUser.get(key);
         if (existing != null && !existing.isEmpty()) {
+            lastAccess.put(key, System.currentTimeMillis());
             return new ArrayList<>(existing);
         }
         List<DeviceIndexEntry> refreshed = refreshIndex(userToken);
@@ -135,8 +140,10 @@ public class BranchIndexService {
                 })
                 .toList();
 
-        indexByUser.put(cacheKey(userToken), new ArrayList<>(entries));
-        log.info("Indexed {} devices from local DB for user cache {}", entries.size(), cacheKey(userToken));
+        String key = cacheKey(userToken);
+        indexByUser.put(key, new ArrayList<>(entries));
+        lastAccess.put(key, System.currentTimeMillis());
+        log.info("Indexed {} devices from local DB for user cache {}", entries.size(), key);
         return entries;
     }
 
@@ -162,14 +169,29 @@ public class BranchIndexService {
     }
 
     public void invalidate(String userToken) {
-        indexByUser.remove(cacheKey(userToken));
+        String key = cacheKey(userToken);
+        indexByUser.remove(key);
+        lastAccess.remove(key);
     }
 
+    /**
+     * Evict only stale entries (untouched beyond {@link #INDEX_TTL_MS}) instead of
+     * flushing the entire cache. Bounds memory without penalizing active users.
+     */
     @Scheduled(fixedDelayString = "${iotchatbot.thingsboard.sync-interval-seconds:60}000")
     public void periodicCleanup() {
-        if (indexByUser.size() > 5000) {
-            log.warn("Branch index cache is large ({}). Clearing inactive cache entries.", indexByUser.size());
-            indexByUser.clear();
+        long cutoff = System.currentTimeMillis() - INDEX_TTL_MS;
+        int before = indexByUser.size();
+        lastAccess.entrySet().removeIf(entry -> {
+            if (entry.getValue() < cutoff) {
+                indexByUser.remove(entry.getKey());
+                return true;
+            }
+            return false;
+        });
+        int evicted = before - indexByUser.size();
+        if (evicted > 0) {
+            log.info("[CACHE] Evicted {} stale branch-index entries; {} active.", evicted, indexByUser.size());
         }
     }
 
