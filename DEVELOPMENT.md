@@ -262,6 +262,7 @@ Run this command in the project root directory:
 
 powershell
 .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev,chat"
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev,ingestion,chat,consumer" "-Dspring-boot.run.arguments=--server.port=8083"
 Option 2: Using Global Maven (if installed)
 powershell
 mvn spring-boot:run -Dspring-boot.run.profiles=dev,chat
