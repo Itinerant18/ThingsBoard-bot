@@ -1,4 +1,4 @@
-package com.seple.ThingsBoard_Bot.utility;
+package com.seple.ThingsBoard_Bot.tools;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

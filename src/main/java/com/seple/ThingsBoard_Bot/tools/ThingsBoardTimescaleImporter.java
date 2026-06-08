@@ -1,4 +1,4 @@
-package com.seple.ThingsBoard_Bot.utility;
+package com.seple.ThingsBoard_Bot.tools;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
