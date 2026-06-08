@@ -107,8 +107,8 @@ public class ThingsBoardTimescaleImporter {
                     "tb_message_id UUID, " +
                     "log_type VARCHAR(64), " +
                     "field VARCHAR(64), " +
-                    "prev_value VARCHAR(64), " +
-                    "new_value VARCHAR(64), " +
+                    "prev_value TEXT, " +
+                    "new_value TEXT, " +
                     "event_time TIMESTAMP WITHOUT TIME ZONE NOT NULL, " +
                     "received_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, " +
                     "raw_payload JSONB, " +

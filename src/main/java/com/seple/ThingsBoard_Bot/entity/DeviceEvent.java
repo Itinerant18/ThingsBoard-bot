@@ -39,10 +39,10 @@ public class DeviceEvent {
     @Column(name = "field", length = 64)
     private String field;
 
-    @Column(name = "prev_value", length = 64)
+    @Column(name = "prev_value", columnDefinition = "TEXT")
     private String prevValue;
 
-    @Column(name = "new_value", length = 64)
+    @Column(name = "new_value", columnDefinition = "TEXT")
     private String newValue;
 
     @Column(name = "event_time", nullable = false)
