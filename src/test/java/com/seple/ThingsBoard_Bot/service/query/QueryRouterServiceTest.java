@@ -24,7 +24,8 @@ class QueryRouterServiceTest {
     void setUp() {
         redisQueryService = mock(RedisQueryService.class);
         nodeNameResolver = mock(NodeNameResolver.class);
-        queryRouterService = new QueryRouterService(redisQueryService, nodeNameResolver);
+        queryRouterService = new QueryRouterService(redisQueryService, nodeNameResolver,
+                new QueryRuleRegistry(), new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
     }
 
     @Test
