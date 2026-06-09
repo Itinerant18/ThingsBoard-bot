@@ -279,3 +279,31 @@ java -jar -Dspring.profiles.active=dev,chat target/ThingsBoard-Bot-0.0.1-SNAPSHO
 docker compose down
 docker compose up -d --build
 docker logs chatbot-demo -f
+
+Amazon Aurora PostgreSQL cluster | Timescale DB
+
+ ### 1. Zero Code Changes (Standard AMQP Protocol)
+
+  CloudAMQP is simply a managed host for standard RabbitMQ. Amazon MQ for RabbitMQ is also a fully managed host for standard RabbitMQ. Since both implement the
+  standard AMQP 0-9-1 protocol, your existing Spring AMQP setup (the listeners, exchanges, queues, and serialization logic in Java) will work out of the box.
+
+  ### 2. Migration Steps (Configuration Only)
+
+  You only need to update the credentials and endpoints in your application-dev.properties file:
+
+    # CloudAMQP endpoint swapped to Amazon MQ endpoint
+    spring.rabbitmq.host=b-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.mq.us-east-1.amazonaws.com
+    spring.rabbitmq.port=5671
+    spring.rabbitmq.username=your-amazon-mq-username
+    spring.rabbitmq.password=your-amazon-mq-password
+    spring.rabbitmq.virtual-host=/
+    spring.rabbitmq.ssl.enabled=true
+
+  ### 3. Queue Definitions Migration
+
+  To make sure you don't have to manually recreate your queues, exchanges, and bindings:
+
+  1. Go to your CloudAMQP Management Console.
+  2. Click Export Definitions (this downloads a JSON file containing all your queues, exchanges, bindings, and users).
+  3. Go to your new Amazon MQ RabbitMQ Management Console in AWS.
+  4. Click Import Definitions and upload the downloaded JSON file.

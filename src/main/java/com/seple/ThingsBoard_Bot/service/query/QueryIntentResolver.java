@@ -258,16 +258,17 @@ public class QueryIntentResolver {
         return question.contains("all")
                 || question.contains("list")
                 || question.contains("total")
-                || question.contains("what branches")
-                || question.contains("what devices")
-                || question.contains("which branches")
-                || question.contains("how many branches")
-                || question.contains("inactive branches")
-                || question.contains("active branches")
+                || question.contains("what branch")
+                || question.contains("what device")
+                || question.contains("which branch")
+                || question.contains("how many branch")
+                || question.contains("how many device")
+                || question.contains("inactive branch")
+                || question.contains("active branch")
                 || question.contains("any inactive")
                 || question.contains("any active")
-                || question.contains("any branches")
-                || question.contains("are there branches");
+                || question.contains("any branch")
+                || question.contains("are there branch");
     }
 
     private boolean containsSubsystemKeyword(String normalizedQuestion) {
