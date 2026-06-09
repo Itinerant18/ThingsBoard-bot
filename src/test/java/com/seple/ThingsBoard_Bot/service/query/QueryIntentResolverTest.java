@@ -196,4 +196,29 @@ class QueryIntentResolverTest {
         assertEquals(QueryIntent.SUBSYSTEM_ALARM_STATUS, resolved.getIntent());
         assertEquals("timeLock", resolved.getTargetSystem());
     }
+
+    @Test
+    void shouldResolveBatteryStatusToBatteryHealth() {
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni battery status right now?", snapshots, null);
+        assertEquals(QueryIntent.BATTERY_HEALTH, resolved.getIntent());
+    }
+
+    @Test
+    void shouldResolveGatewayPowerStatusToPowerStatus() {
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni Gateway power status right now?", snapshots, null);
+        assertEquals(QueryIntent.POWER_STATUS, resolved.getIntent());
+    }
+
+    @Test
+    void shouldResolveCctvPowerStatusToCctvStatus() {
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni CCTV power status right now?", snapshots, null);
+        assertEquals(QueryIntent.CCTV_STATUS, resolved.getIntent());
+    }
+
+    @Test
+    void shouldResolveIasPowerStatusToSubsystemStatus() {
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni IAS power status right now?", snapshots, null);
+        assertEquals(QueryIntent.SUBSYSTEM_STATUS, resolved.getIntent());
+        assertEquals("ias", resolved.getTargetSystem());
+    }
 }

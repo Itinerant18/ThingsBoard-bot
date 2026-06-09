@@ -182,6 +182,11 @@ public class QueryIntentResolver {
         if (question.contains("SYSTEM CURRENT")) {
             return QueryIntent.SYSTEM_CURRENT;
         }
+        if (question.contains("BATTERY")
+                && (question.contains("HEALTH") || question.contains("HEALTHY") || question.contains("CONDITION") || question.contains("STATUS"))
+                && !question.contains("VOLT") && !question.contains("LOW")) {
+            return QueryIntent.BATTERY_HEALTH;
+        }
         if (question.contains("CAMERA") || question.contains("CCTV")) {
             return QueryIntent.CCTV_STATUS;
         }
@@ -193,6 +198,10 @@ public class QueryIntentResolver {
         }
         if (containsSubsystemKeyword(question)) {
             return QueryIntent.SUBSYSTEM_STATUS;
+        }
+        if (question.contains("POWER") && (question.contains("STATUS") || question.contains("ON") || question.contains("OFF"))
+                && !question.contains("BATTERY") && !question.contains("AC") && !question.contains("VOLT")) {
+            return QueryIntent.POWER_STATUS;
         }
         // Keep branch/device global-status prompts global (e.g. "status of all devices in all branches"),
         // but metric prompts are already handled above and Option A forces clarification.
@@ -291,6 +300,8 @@ public class QueryIntentResolver {
         return switch (intent) {
             case BATTERY_VOLTAGE,
                     BATTERY_LOW_STATUS,
+                    BATTERY_HEALTH,
+                    POWER_STATUS,
                     AC_VOLTAGE,
                     SYSTEM_CURRENT,
                     NETWORK_STATUS,

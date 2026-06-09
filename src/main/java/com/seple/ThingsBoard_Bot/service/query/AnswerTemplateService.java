@@ -256,6 +256,7 @@ public class AnswerTemplateService {
         }
         String display = branch.getIdentity().getBranchName()
                 .replaceFirst("(?i)^BRANCH\\s+", "")
+                .replaceFirst("(?i)^BOI-\\s*", "")
                 .trim();
         String technicalId = branch.getIdentity().getTechnicalId();
         if ("TR".equalsIgnoreCase(display) && technicalId != null

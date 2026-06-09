@@ -12,6 +12,8 @@ public class IntentKeyProfileRegistry {
             case GATEWAY_STATUS -> List.of("gateway", "status", "gatewayStatus");
             case BATTERY_VOLTAGE -> List.of("battery_status_battery_voltage", "gatewayStatus_battery_voltage", "BATTERY LOW");
             case BATTERY_LOW_STATUS -> List.of("BATTERY LOW", "gatewayStatus_BATTERY LOW", "ticketStatus_BATTERY_LOW");
+            case BATTERY_HEALTH -> List.of("battery_status_battery_voltage", "gatewayStatus_battery_voltage", "BATTERY LOW");
+            case POWER_STATUS -> List.of("battery_status_battery_voltage", "gatewayStatus_battery_voltage", "BATTERY LOW", "gatewayStatus_ac_voltage", "ac_status_ac_voltage", "ac_result", "MAINS ON", "gatewayStatus_MAINS ON", "system_status_statusbox_mains_on");
             case AC_VOLTAGE -> List.of("gatewayStatus_ac_voltage", "ac_status_ac_voltage", "ac_result");
             case SYSTEM_CURRENT -> List.of("gatewayStatus_system_current", "current_status_system_current", "cur_result");
             case NETWORK_STATUS -> List.of("gatewayStatus_NETWORK", "system_status_statusbox_network", "networkOperator");

@@ -55,6 +55,19 @@ public class FieldPrecedenceResolver {
         return new ResolvedMetric(value, value != null ? "current_status_system_current" : null);
     }
 
+    public Boolean resolveMainsOn(Map<String, Object> raw) {
+        for (String key : List.of("MAINS ON", "gatewayStatus_MAINS ON", "system_status_statusbox_mains_on")) {
+            Object val = raw.get(key);
+            if (val != null) {
+                Boolean bool = valueNormalizer.toBoolean(String.valueOf(val));
+                if (bool != null) {
+                    return bool;
+                }
+            }
+        }
+        return null;
+    }
+
     private ResolvedField resolveFirstState(Map<String, Object> raw, List<String> candidates) {
         for (String key : candidates) {
             Object rawValue = raw.get(key);

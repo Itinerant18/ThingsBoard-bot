@@ -100,8 +100,7 @@ public class ChatService {
                 return plan.deterministicResponse();
             }
 
-            String answer = normalizeAnswerStyle(
-                    openAIClient.chat(plan.systemPrompt(), plan.history(), plan.userMessage()));
+            String answer = openAIClient.chat(plan.systemPrompt(), plan.history(), plan.userMessage());
             logDecision(plan.resolvedQuery(), false, plan.estimatedTokens());
             chatMemoryService.recordInteraction(plan.sessionId(), request.getQuestion(), answer);
 
@@ -144,7 +143,7 @@ public class ChatService {
                     plan.systemPrompt(), plan.history(), plan.userMessage(),
                     chunk -> sendEvent(emitter, "token", Map.of("content", chunk)));
 
-            String answer = normalizeAnswerStyle(rawAnswer);
+            String answer = rawAnswer;
             logDecision(plan.resolvedQuery(), false, plan.estimatedTokens());
             chatMemoryService.recordInteraction(plan.sessionId(), request.getQuestion(), answer);
 
@@ -349,7 +348,6 @@ public class ChatService {
                     ? deterministicAnswerService.answer(resolvedQuery, snapshots, customerId)
                     : null;
             if (deterministicAnswer != null) {
-                deterministicAnswer = normalizeAnswerStyle(deterministicAnswer);
                 logDecision(resolvedQuery, true, 0);
                 chatMemoryService.recordInteraction(sessionId, request.getQuestion(), deterministicAnswer);
                 String answerWithSuggestions = appendSuggestedFollowups(deterministicAnswer, resolvedQuery);
@@ -426,26 +424,6 @@ public class ChatService {
                 tokens);
     }
 
-    private String normalizeAnswerStyle(String answer) {
-        if (answer == null) {
-            return null;
-        }
-
-        String normalized = answer.trim();
-
-        // Normalize legacy heading style from the LLM fallback:
-        // "Branch XYZ: The <metric> ..."
-        normalized = normalized.replaceAll("(?i)^\\*\\*Branch\\s+([^:]+):\\s*The\\s+", "**For Branch $1, ");
-        normalized = normalized.replaceAll("(?i)^Branch\\s+([^:]+):\\s*The\\s+", "For Branch $1, ");
-
-        // Keep the canonical form consistent.
-        normalized = normalized.replaceAll("(?i)^\\*\\*For\\s+Branch\\s+", "**For Branch ");
-        normalized = normalized.replaceAll("(?i)^For\\s+Branch\\s+", "For Branch ");
-        normalized = normalized.replaceAll("(?i)^\\*\\*For\\s+Branch\\s+BRANCH\\s+", "**For Branch ");
-        normalized = normalized.replaceAll("(?i)^For\\s+Branch\\s+BRANCH\\s+", "For Branch ");
-
-        return normalized;
-    }
 
     private ResolvedQuery applyPendingTopic(ResolvedQuery base, String pendingTopic) {
         QueryIntent intent = mapPendingTopicToIntent(pendingTopic);

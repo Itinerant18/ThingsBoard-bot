@@ -90,7 +90,7 @@ class ChatServiceTest {
         when(queryIntentResolver.resolve(eq(question), eq(snapshots), eq(null))).thenReturn(initial);
         when(chatbotConfig.isDeterministicAnswersEnabled()).thenReturn(true);
         when(deterministicAnswerService.answer(any(ResolvedQuery.class), eq(snapshots), any()))
-                .thenReturn("For Branch BRANCH CHANDANNAGAR, Battery Voltage Reading is 0.0V DC.");
+                .thenReturn("For Branch CHANDANNAGAR, Battery Voltage Reading is 0.0V DC.");
 
         ChatResponse response = service.answerQuestion(new ChatRequest(question, null, null), token);
 

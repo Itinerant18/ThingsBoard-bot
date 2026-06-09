@@ -244,7 +244,7 @@ class DeterministicAnswerServiceTest {
 
         String answer = answerService.answer(query, snapshots);
 
-        assertTrue(answer.contains("Network Status: ON"));
+        assertTrue(answer.contains("the Network Status is ON"));
     }
 
     @Test
@@ -435,5 +435,47 @@ class DeterministicAnswerServiceTest {
         assertTrue(answer.contains("Channel 1: 24080129_003352-VMDS"));
         assertTrue(answer.contains("Channel 2: YZWLY9ZSBX6MYX5TMD-LQ"));
         assertTrue(answer.contains("CP-UNC-VC21L5C-VMD-LQ (3 units: Channels 5, 7-8)"));
+    }
+
+    @Test
+    void shouldGeneratePowerStatusFormat() {
+        BranchSnapshot target = snapshots.stream()
+                .filter(snapshot -> "BOI-TARAKESHWAR".equals(snapshot.getIdentity().getTechnicalId()))
+                .findFirst()
+                .orElseThrow();
+
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.POWER_STATUS)
+                .targetBranch(target)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+
+        String answer = answerService.answer(query, snapshots);
+
+        // Expected format: **For Branch TARAKESHWAR, the Power Status is ON. AC Mains: 220V AC, Battery Backup: 13.6V DC.**
+        assertTrue(answer.contains("For Branch TARAKESHWAR, the Power Status is"));
+        assertTrue(answer.contains("AC Mains:"));
+        assertTrue(answer.contains("Battery Backup:"));
+    }
+
+    @Test
+    void shouldGenerateBatteryHealthFormat() {
+        BranchSnapshot target = snapshots.stream()
+                .filter(snapshot -> "BOI-TARAKESHWAR".equals(snapshot.getIdentity().getTechnicalId()))
+                .findFirst()
+                .orElseThrow();
+
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.BATTERY_HEALTH)
+                .targetBranch(target)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+
+        String answer = answerService.answer(query, snapshots);
+
+        // Expected format: **For Branch TARAKESHWAR, the Battery Status is HEALTHY. Voltage: 14V DC.**
+        assertTrue(answer.contains("For Branch TARAKESHWAR, the Battery Status is HEALTHY. Voltage: 14V DC."));
     }
 }

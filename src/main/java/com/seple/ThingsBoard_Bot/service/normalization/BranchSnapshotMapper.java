@@ -123,7 +123,7 @@ public class BranchSnapshotMapper {
                 .acVoltage(ac.value())
                 .systemCurrent(current.value())
                 .batteryLow(valueNormalizer.toBoolean(stringValue(raw.get("BATTERY LOW"))))
-                .mainsOn(valueNormalizer.toBoolean(stringValue(raw.get("MAINS ON"))))
+                .mainsOn(precedenceResolver.resolveMainsOn(raw))
                 .build();
     }
 

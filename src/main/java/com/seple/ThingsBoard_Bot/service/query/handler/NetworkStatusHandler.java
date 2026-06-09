@@ -35,17 +35,17 @@ public class NetworkStatusHandler implements AnswerHandler {
         if (Boolean.TRUE.equals(network)) {
             if (operator != null) {
                 return "**For Branch " + support.branchName(branch)
-                        + ", Network Status: ON. Network Operator: " + operator + ".**";
+                        + ", the Network Status is ON. Network Operator: " + operator + ".**";
             }
-            return "**For Branch " + support.branchName(branch) + ", Network Status: ON.**";
+            return "**For Branch " + support.branchName(branch) + ", the Network Status is ON.**";
         }
         if (Boolean.FALSE.equals(network)) {
-            return "**For Branch " + support.branchName(branch) + ", Network Status: OFFLINE.**";
+            return "**For Branch " + support.branchName(branch) + ", the Network Status is OFFLINE.**";
         }
         if (operator != null) {
             return "**For Branch " + support.branchName(branch)
-                    + ", Network Status: ON. Network Operator: " + operator + ".**";
+                    + ", the Network Status is ON. Network Operator: " + operator + ".**";
         }
-        return "**For Branch " + support.branchName(branch) + ", Network Status: N/A.**";
+        return "**For Branch " + support.branchName(branch) + ", the Network Status is N/A.**";
     }
 }
