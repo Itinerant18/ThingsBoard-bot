@@ -124,8 +124,7 @@ public class QueryIntentResolver {
                 && (question.contains("INFO") || question.contains("DETAIL"))) {
             return QueryIntent.ACCESS_CONTROL_DEVICE_INFO;
         }
-        if (question.contains("DOOR")
-                && (question.contains("TIME LOCK") || question.contains("ACCESS CONTROL") || question.contains("ACS"))) {
+        if (question.contains("DOOR")) {
             return QueryIntent.DOOR_STATUS;
         }
         if ((question.contains("HISTORY") || question.contains("HISTORICAL")) && (question.contains("DISCONNECT") || question.contains("DISCONNECTS")) && question.contains("CAMERA")) {
@@ -200,8 +199,9 @@ public class QueryIntentResolver {
         if (isGlobalQuestion(question, hasTargetBranch)) {
             return QueryIntent.GLOBAL_OVERVIEW;
         }
-        if (question.contains("GATEWAY") || question.contains("STATUS") || question.contains("WORKING PROPERLY")
-                || question.contains("ONLINE") || question.contains("OFFLINE")) {
+        if ((question.contains("GATEWAY") || question.contains("STATUS") || question.contains("WORKING PROPERLY")
+                || question.contains("ONLINE") || question.contains("OFFLINE"))
+                && !question.contains("POWER") && !question.contains("UPS") && !question.contains("DOOR")) {
             return QueryIntent.GATEWAY_STATUS;
         }
         return QueryIntent.GENERAL_LLM;
