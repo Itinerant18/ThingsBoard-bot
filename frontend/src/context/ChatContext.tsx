@@ -133,10 +133,10 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
         if (jwtToken) {
-          headers['X-TB-Token'] = jwtToken
+          headers['X-TB-Token'] = jwtToken.trim()
         }
         if (tbHost) {
-          headers['X-TB-Host'] = tbHost
+          headers['X-TB-Host'] = tbHost.trim()
         }
 
         const response = await fetch('/api/v1/chat/ask/stream', {
