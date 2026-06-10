@@ -39,6 +39,7 @@ application-dev.properties
 !.env.example
 graphify-out/
 .playwright-mcp/
+DEVELOPMENT.md
 
 ### Local Data & Logs ###
 device_data.json
