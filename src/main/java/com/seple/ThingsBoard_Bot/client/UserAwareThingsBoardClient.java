@@ -50,12 +50,12 @@ public class UserAwareThingsBoardClient {
     private String getThingsBoardUrl() {
         String contextHost = ThingsBoardRequestContext.getHost();
         if (contextHost != null && !contextHost.trim().isEmpty()) {
-            // "thingsboard.io" is the default JWT issuer claim in ThingsBoard.
-            // If it is received, we must fall back to the configured server URL.
-            if (contextHost.contains("thingsboard.io")) {
-                return config.getUrl();
+            String host = contextHost.trim().toLowerCase();
+            // Whitelist: Only allow requests to Swatch360 and DexterHMS.
+            // Any other host (including default placeholder "thingsboard.io") falls back to Swatch360.
+            if (host.contains("app.swatch360.seple.in") || host.contains("www.dexterhms.com") || host.contains("dexterhms.com")) {
+                return contextHost;
             }
-            return contextHost;
         }
         return config.getUrl();
     }
