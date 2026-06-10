@@ -50,6 +50,11 @@ public class UserAwareThingsBoardClient {
     private String getThingsBoardUrl() {
         String contextHost = ThingsBoardRequestContext.getHost();
         if (contextHost != null && !contextHost.trim().isEmpty()) {
+            // "thingsboard.io" is the default JWT issuer claim in ThingsBoard.
+            // If it is received, we must fall back to the configured server URL.
+            if (contextHost.contains("thingsboard.io")) {
+                return config.getUrl();
+            }
             return contextHost;
         }
         return config.getUrl();
