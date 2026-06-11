@@ -21,8 +21,13 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const host = getTbHost()
     if (host) setTbHost(host)
 
-    // Listen for postMessage from ThingsBoard
+    // Listen for postMessage from ThingsBoard.
+    // SECURITY: only trust messages from a known ThingsBoard origin. Without this, any site
+    // embedding this widget (or any frame on the page) could inject a forged JWT/host.
     const handleMessage = (event: MessageEvent) => {
+      if (!isTrustedOrigin(event.origin)) {
+        return
+      }
       if (event.data?.type === 'TB_AUTH_TOKEN' && event.data?.token) {
         setJwtToken(event.data.token)
         localStorage.setItem('jwt_token', event.data.token)
@@ -259,6 +264,21 @@ export const useChat = () => {
     throw new Error('useChat must be used within ChatProvider')
   }
   return context
+}
+
+// Origins permitted to deliver the ThingsBoard auth token via postMessage. Configurable at
+// build time via VITE_TB_ALLOWED_ORIGINS (comma-separated); always includes the app's own
+// origin so same-origin embedding works without configuration.
+function allowedOrigins(): string[] {
+  const configured = (import.meta.env.VITE_TB_ALLOWED_ORIGINS as string | undefined) || ''
+  const fromEnv = configured.split(',').map(o => o.trim()).filter(Boolean)
+  const defaults = ['https://app.swatch360.seple.in']
+  return Array.from(new Set([window.location.origin, ...defaults, ...fromEnv]))
+}
+
+function isTrustedOrigin(origin: string): boolean {
+  if (!origin) return false
+  return allowedOrigins().includes(origin)
 }
 
 function getJwtToken(): string | null {
