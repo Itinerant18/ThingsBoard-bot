@@ -3,7 +3,10 @@ package com.seple.ThingsBoard_Bot.controller;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -31,8 +34,19 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    /** Dedicated pool so SSE streams don't tie up the servlet request threads. */
-    private final ExecutorService streamExecutor = Executors.newCachedThreadPool();
+    /**
+     * Dedicated, BOUNDED pool so SSE streams don't tie up servlet threads and can't exhaust the
+     * JVM under load (audit #14). When the pool + queue are full, new streams are rejected and the
+     * client gets a "server busy" error instead of the server thrashing. Sizes are env-tunable.
+     */
+    private static final int SSE_CORE_THREADS = Integer.getInteger("sse.core.threads", 8);
+    private static final int SSE_MAX_THREADS = Integer.getInteger("sse.max.threads", 64);
+    private static final int SSE_QUEUE_CAPACITY = Integer.getInteger("sse.queue.capacity", 128);
+
+    private final ExecutorService streamExecutor = new ThreadPoolExecutor(
+            SSE_CORE_THREADS, SSE_MAX_THREADS, 60L, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(SSE_QUEUE_CAPACITY),
+            new ThreadPoolExecutor.AbortPolicy());
 
     /** SSE connection lifetime; long enough to cover slow LLM streams. */
     private static final long SSE_TIMEOUT_MS = 120_000L;
@@ -109,7 +123,19 @@ public class ChatController {
         emitter.onTimeout(emitter::complete);
         emitter.onError(e -> log.warn("SSE stream error: {}", e.getMessage()));
 
-        streamExecutor.execute(() -> chatService.answerQuestionStreaming(request, userToken, emitter));
+        try {
+            streamExecutor.execute(() -> chatService.answerQuestionStreaming(request, userToken, emitter));
+        } catch (RejectedExecutionException rejected) {
+            log.warn("SSE stream rejected — pool saturated");
+            try {
+                emitter.send(SseEmitter.event()
+                        .name("error")
+                        .data(Map.of("errorMessage", "Server is busy. Please try again in a moment.")));
+                emitter.complete();
+            } catch (IOException e) {
+                emitter.completeWithError(e);
+            }
+        }
         return emitter;
     }
 
