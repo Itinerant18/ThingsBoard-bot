@@ -34,6 +34,40 @@ public class HierarchyAdminController {
         return node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
     }
 
+    /**
+     * Minimal RFC-4180-style CSV line parser (audit #24): honours double-quoted fields so commas
+     * and escaped quotes ("") inside a quoted value don't split the row, unlike a naive split(",").
+     */
+    static List<String> parseCsvLine(String line) {
+        List<String> fields = new ArrayList<>();
+        StringBuilder current = new StringBuilder();
+        boolean inQuotes = false;
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (inQuotes) {
+                if (c == '"') {
+                    if (i + 1 < line.length() && line.charAt(i + 1) == '"') {
+                        current.append('"');
+                        i++;
+                    } else {
+                        inQuotes = false;
+                    }
+                } else {
+                    current.append(c);
+                }
+            } else if (c == '"') {
+                inQuotes = true;
+            } else if (c == ',') {
+                fields.add(current.toString());
+                current.setLength(0);
+            } else {
+                current.append(c);
+            }
+        }
+        fields.add(current.toString());
+        return fields;
+    }
+
     @PostMapping("/import")
     @Transactional
     public ResponseEntity<Map<String, Object>> importHierarchyCsv(
@@ -60,26 +94,34 @@ public class HierarchyAdminController {
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-                String[] parts = line.split(",", -1);
-                if (parts.length < 7) {
+                List<String> parts = parseCsvLine(line);
+                if (parts.size() < 7) {
                     return ResponseEntity.badRequest().body(Map.of(
                             "error", "Invalid CSV format at line " + lineNumber + ". Expected at least 7 columns."
                     ));
                 }
 
-                String nodeId = parts[0].trim();
-                String custId = parts[1].trim();
-                String parentId = parts[2].trim().isEmpty() ? null : parts[2].trim();
-                String nodeType = parts[3].trim();
-                int nodeLevel = Integer.parseInt(parts[4].trim());
-                String displayName = parts[5].trim();
-                boolean isLeaf = Boolean.parseBoolean(parts[6].trim());
+                String nodeId = parts.get(0).trim();
+                String custId = parts.get(1).trim();
+                String parentId = parts.get(2).trim().isEmpty() ? null : parts.get(2).trim();
+                String nodeType = parts.get(3).trim();
+                int nodeLevel;
+                try {
+                    nodeLevel = Integer.parseInt(parts.get(4).trim());
+                } catch (NumberFormatException e) {
+                    return ResponseEntity.badRequest().body(Map.of(
+                            "error", "Invalid node level '" + parts.get(4).trim() + "' at line " + lineNumber
+                                    + " (expected an integer)."
+                    ));
+                }
+                String displayName = parts.get(5).trim();
+                boolean isLeaf = Boolean.parseBoolean(parts.get(6).trim());
                 UUID tbDeviceId = null;
-                if (parts.length > 7 && !parts[7].trim().isEmpty()) {
+                if (parts.size() > 7 && !parts.get(7).trim().isEmpty()) {
                     try {
-                        tbDeviceId = UUID.fromString(parts[7].trim());
+                        tbDeviceId = UUID.fromString(parts.get(7).trim());
                     } catch (IllegalArgumentException e) {
-                        log.warn("[HIERARCHY-API] Invalid UUID '{}' at line {}", parts[7], lineNumber);
+                        log.warn("[HIERARCHY-API] Invalid UUID '{}' at line {}", parts.get(7), lineNumber);
                     }
                 }
 
