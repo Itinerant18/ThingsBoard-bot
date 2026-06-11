@@ -45,12 +45,24 @@ public class SecurityProperties {
      */
     private boolean strictCustomerMapping = false;
 
+    /**
+     * When {@code true}, the application refuses to start unless a JWT signing key is configured,
+     * making signature verification mandatory. Default {@code false} preserves local-dev's
+     * unverified-decode mode; production MUST set this to {@code true}. Bound from
+     * {@code IOTCHATBOT_SECURITY_REQUIRE_JWT_VERIFICATION}.
+     */
+    private boolean requireJwtVerification = false;
+
     public boolean isWebhookHmacEnabled() {
         return webhookHmacSecret != null && !webhookHmacSecret.isBlank();
     }
 
     public boolean isStrictCustomerMappingEnabled() {
         return strictCustomerMapping;
+    }
+
+    public boolean isRequireJwtVerification() {
+        return requireJwtVerification;
     }
 
     public boolean isAdminGuardEnabled() {

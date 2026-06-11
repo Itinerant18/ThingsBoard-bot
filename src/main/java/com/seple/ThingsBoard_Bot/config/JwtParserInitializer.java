@@ -18,6 +18,12 @@ public class JwtParserInitializer {
 
     @PostConstruct
     void init() {
+        if (securityProperties.isRequireJwtVerification() && !securityProperties.isJwtVerificationEnabled()) {
+            throw new IllegalStateException(
+                    "IOTCHATBOT_SECURITY_REQUIRE_JWT_VERIFICATION is set but no IOTCHATBOT_JWT_SIGNING_KEY is "
+                    + "configured. Refusing to start with unverified JWTs in an environment that requires "
+                    + "signature verification. Set the signing key, or disable the requirement for local dev.");
+        }
         JwtParserUtil.configure(securityProperties.getJwtSigningKey());
     }
 }
