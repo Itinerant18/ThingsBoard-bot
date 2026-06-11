@@ -20,9 +20,9 @@ services:
       - "80:80"      # Required for Let's Encrypt verification
       - "443:443"    # HTTPS port
     volumes:
-      - caddy_data:/data
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro   # explicit config: SSE flush, timeouts, headers (audit #18)
+      - caddy_data:/data                        # persistent ACME certs (avoids LE rate limits on restart)
       - caddy_config:/config
-    command: caddy reverse-proxy --from 3.7.240.120.nip.io --to chatbot:8083
 
 volumes:
   caddy_data:
