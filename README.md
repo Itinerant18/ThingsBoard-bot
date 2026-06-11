@@ -1,4 +1,4 @@
-# 🤖 ThingsBoard AI IoT Assistant (SAI)
+# ThingsBoard AI IoT Assistant (SAI)
 
 <div align="center">
 
@@ -15,15 +15,15 @@ Real-time status reports, automated health checks, and intelligent security anal
 
 ---
 
-### 🚀 Quick Navigation
-- **[👥 I'm Not a Developer — Show me the overview](#part-1---for-everyone-)**
-- **[⚙️ I'm a Developer — Show me the setup](#part-2---for-developers-)**
+### Quick Navigation
+- **[For Everyone — Show me the overview](#part-1--for-everyone)**
+- **[For Developers — Show me the setup](#part-2--for-developers)**
 
 </div>
 
 ---
 
-# 👥 PART 1 — FOR EVERYONE 🌍
+# PART 1 — FOR EVERYONE
 
 *No coding knowledge required. Read this section in ~5 minutes.*
 
@@ -33,8 +33,7 @@ Real-time status reports, automated health checks, and intelligent security anal
 3. [How It Works](#how-it-works-simple-explanation)
 4. [Key Benefits](#key-benefits)
 5. [Who Is This For?](#who-is-this-for)
-6. [Live Demo & Screenshots](#live-demo--screenshots)
-7. [Frequently Asked Questions](#frequently-asked-questions-non-technical)
+6. [Frequently Asked Questions](#frequently-asked-questions-non-technical)
 
 ---
 
@@ -50,28 +49,22 @@ That's exactly what we built. **SAI (Smart Assistant for IoT)** connects directl
 
 ## The Problem We Solve
 
-### The Current Situation
-
 **For Security Managers:**
-- ❌ Manually checking 100+ branches every morning is slow.
-- ❌ Identifying "Offline" devices requires technical expertise.
-- ❌ Finding a specific camera fault takes too many clicks.
-- ❌ Historical data is hard to find and compare.
+- Manually checking 100+ branches every morning is slow.
+- Identifying offline devices requires technical expertise.
+- Finding a specific camera fault takes too many clicks.
+- Historical data is hard to find and compare.
 
-### Our Solution
-
-We created a **Senior Security Analyst AI** that:
-- ✅ Instantly identifies offline branches across your entire network.
-- ✅ Explains complex sensor data (like battery voltage) in simple terms.
-- ✅ Remembers your previous questions to provide detailed follow-ups.
-- ✅ Anchors every answer to a specific branch so there's never confusion.
-- ✅ Automatically suggests follow-up queries based on the current context.
+**Our Solution — a Senior Security Analyst AI that:**
+- Instantly identifies offline branches across your entire network.
+- Explains complex sensor data (like battery voltage) in simple terms.
+- Remembers your previous questions to provide detailed follow-ups.
+- Anchors every answer to a specific branch so there's never confusion.
+- Automatically suggests follow-up queries based on the current context.
 
 ---
 
 ## How It Works (Simple Explanation)
-
-### Step-by-Step: From Question to Answer
 
 ```
 1. YOU ASK A QUESTION
@@ -100,51 +93,38 @@ We created a **Senior Security Analyst AI** that:
 
 ## Key Benefits
 
-✅ **Save Time:** Get a full branch health report in 3 seconds instead of 10 minutes.  
-✅ **Zero Learning Curve:** If you can send a chat message, you can use SAI.  
-✅ **Strict Access Controls:** Scopes user data so users only see branches they are authorized to view (e.g., Regional/Zonal/Head Office users).  
-✅ **Advanced Formatting:** Automatically aggregates similar device configurations (like identical model numbers) and lists them neatly with channel range grouping.  
+- **Save Time:** Get a full branch health report in 3 seconds instead of 10 minutes.
+- **Zero Learning Curve:** If you can send a chat message, you can use SAI.
+- **Strict Access Controls:** Users only see branches they are authorized to view (Regional / Zonal / Head Office scoping).
+- **Always Fresh Data:** Events flow in real-time from ThingsBoard through RabbitMQ — Redis always reflects current device state.
+- **Crash-Safe Pipeline:** Every ingested event is deduplicated and can be safely retried; no data is silently dropped.
 
 ---
 
 ## Who Is This For?
 
-### 🏦 **Bank & Facility Managers**
-Monitor security and hardware health across hundreds of remote locations from one window.
+**Bank & Facility Managers** — Monitor security and hardware health across hundreds of remote locations from one window.
 
-### 🛡️ **Security Operations Centers (SOC)**
-Quickly identify which branch needs a physical maintenance visit without digging through logs.
+**Security Operations Centers (SOC)** — Quickly identify which branch needs a physical maintenance visit without digging through logs.
 
-### 👨‍🔧 **Maintenance Teams**
-Ask "What is the HDD status?" before driving to a branch so you know exactly which part to bring.
-
----
-
-## Live Demo & Screenshots
-
-### 📸 Screenshots
-
-**Screenshot 1: The Global Overview**
-![Home Screen Placeholder](https://via.placeholder.com/300x600?text=Total+Online/Offline)  
-*See your entire bank network status in one sentence, with collapsible list sections.*
-
-**Screenshot 2: Precision Reporting**
-![Report Screen Placeholder](https://via.placeholder.com/300x600?text=Branch+Metrics)  
-*Self-descriptive answers anchored to specific branch names with quick-reply recommendation chips.*
+**Maintenance Teams** — Ask "What is the HDD status?" before driving to a branch so you know exactly which part to bring.
 
 ---
 
 ## Frequently Asked Questions (Non-Technical)
 
-### 🔒 **Q: Is my data safe?**
-**A:** Yes. SAI acts as a "Read-Only" analyst. It cannot change your device settings, and it enforces strict scoping based on your ThingsBoard credentials.
+**Q: Is my data safe?**  
+A: Yes. SAI acts as a "Read-Only" analyst. It cannot change your device settings, and it enforces strict scoping based on your ThingsBoard credentials. An unrecognized account can never see another tenant's data.
 
-### 📱 **Q: Does it work on my phone?**
-**A:** Yes! The chat widget works in any modern web browser on desktop, tablet, or smartphone.
+**Q: Does it work on my phone?**  
+A: Yes. The chat widget works in any modern web browser on desktop, tablet, or smartphone.
+
+**Q: How old is the data?**  
+A: The bot shows a "data as of" timestamp with every answer. If the latest reading is older than 10 minutes it is marked stale so you always know how fresh the data is.
 
 ---
 
-# ⚙️ PART 2 — FOR DEVELOPERS 👨‍💻
+# PART 2 — FOR DEVELOPERS
 
 *Complete technical documentation, setup guides, and architecture details.*
 
@@ -152,24 +132,30 @@ Ask "What is the HDD status?" before driving to a branch so you know exactly whi
 1. [Technical Overview](#technical-overview)
 2. [Tech Stack](#tech-stack)
 3. [System Architecture](#system-architecture)
-4. [Scoping & Security](#scoping--security)
-5. [Caching Mechanisms](#caching-mechanisms)
-6. [CCTV Formatting & Channel-Range Grouping](#cctv-formatting--channel-range-grouping)
-7. [Getting Started](#getting-started)
-8. [Folder & File Structure](#folder--file-structure)
-9. [Testing & Validation](#testing--validation)
+4. [Spring Profiles](#spring-profiles)
+5. [Security Model](#security-model)
+6. [Event Ingestion Pipeline](#event-ingestion-pipeline)
+7. [Caching & State Management](#caching--state-management)
+8. [Customer & Hierarchy Sync](#customer--hierarchy-sync)
+9. [CCTV Formatting](#cctv-formatting--channel-range-grouping)
+10. [Getting Started](#getting-started)
+11. [Configuration Reference](#configuration-reference)
+12. [Data Refresh Runbook](#data-refresh-runbook)
+13. [Folder Structure](#folder--file-structure)
+14. [Testing](#testing--validation)
 
 ---
 
 ## Technical Overview
 
-### Architecture Pattern: **Truth-Injection Model (CAG)**
+### Architecture Pattern: Context-Augmented Generation (CAG)
 
-SAI is built as a **Context-Augmented Generation (CAG)** system. Unlike standard chatbots that "guess," SAI uses a deterministic backend to pre-calculate "Truth" before the AI ever sees it.
+SAI is a **Context-Augmented Generation** system. The backend deterministically fetches and validates "Truth" from Redis before the LLM ever sees it, so the AI can only reason about verified, scoped data — it cannot hallucinate device states.
 
-✅ **Ambiguity Filter:** Detects queries missing a target branch and requests clarification.  
-✅ **Topic Retention:** Stores "Pending Intent" in session memory to handle context-heavy follow-ups.  
-✅ **Scoping Enforcement:** Intercepts questions to prevent cross-customer or unauthorized branch access.  
+- **Ambiguity Filter:** Detects queries missing a target branch and requests clarification.
+- **Topic Retention:** Stores "Pending Intent" in session memory to handle context-heavy follow-ups.
+- **Scoping Enforcement:** Every request is filtered to the authenticated customer's authorized node set.
+- **Prompt Injection Guard:** User questions are wrapped in `<<<USER_QUESTION>>>` delimiters before being sent to the LLM.
 
 ---
 
@@ -177,112 +163,327 @@ SAI is built as a **Context-Augmented Generation (CAG)** system. Unlike standard
 
 | Category | Technology | Version | Purpose |
 |----------|-----------|---------|---------|
-| **Backend** | Java | 21 | Core Language |
-| **Framework** | Spring Boot | 4.0.3 | Application Framework |
-| **Database** | TimescaleDB / PostgreSQL | 15+ | Timeseries Event Database |
-| **Cache Store**| Redis (Upstash) | 6.x / 7.x | High-Speed Active State Mirroring |
-| **Queue Broker**| RabbitMQ | 3.x | Real-Time Events Ingestion Queue |
-| **Frontend** | React, TypeScript, Vite | 5.x / 18.x | Dynamic Chat UI |
-| **Build Tool** | Maven | 3.8+ | Dependency Management |
-| **LLM Engine** | OpenAI | GPT-4o | Natural Language Processing |
+| Backend | Java | 21 | Core language |
+| Framework | Spring Boot | 4.0.3 | Application framework |
+| Database | TimescaleDB / PostgreSQL | 15+ | Timeseries event store (hypertable + retention) |
+| Cache | Redis (Upstash) | 7.x | High-speed active-state mirror |
+| Message Broker | RabbitMQ (CloudAMQP) | 3.x | Real-time event ingestion |
+| Frontend | React + TypeScript + Vite | 18.x / 5.x | Chat UI |
+| Build | Maven | 3.8+ | Dependency management |
+| LLM | OpenAI | GPT-4o | Natural language generation |
+| Reverse Proxy | Caddy | 2.x | SSE flushing + TLS termination |
 
 ---
 
 ## System Architecture
 
-```mermaid
-graph TD
-    User((User Web App)) -->|1. Submit Question + JWT token| ChatController[ChatController]
-    ChatController -->|2. Validate Authorization Scoping| UserDataService[UserDataService]
-    UserDataService -->|Query Scoped Node IDs| Postgres[(PostgreSQL / TimescaleDB)]
-    ChatController -->|3. Route Query Intent| Intent[QueryIntentResolver]
-    Intent -->|4. Resolve Cached State| RedisCache[(Redis State Store)]
-    RedisCache -->|Extract Telemetry / Attributes| SnapshotMapper[BranchSnapshotMapper]
-    SnapshotMapper -->|Inject Verified Context| ChatService[ChatService]
-    ChatService -->|5. Truth-Injected Prompts| OpenAI[OpenAI GPT-4o]
-    OpenAI -->|6. Formatted Markdown + Suggestions| ControllerResponse[Response Handler]
-    ControllerResponse -->|7. Collapsible UI + Quick Chips| User
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│  ThingsBoard Dashboard                                                │
+│  ┌───────────────────────────────────────────────────────────────┐   │
+│  │  HTML Widget  (iframe → React Chat UI)                        │   │
+│  │  postMessage sends JWT + host on load (origin-validated)      │   │
+│  └────────────────────────┬──────────────────────────────────────┘   │
+└───────────────────────────│──────────────────────────────────────────┘
+                            │  HTTPS / SSE
+                     ┌──────▼──────────────────┐
+                     │   Caddy Reverse Proxy    │  flush_interval -1 (SSE)
+                     │   (TLS + security hdrs)  │
+                     └──────┬──────────────────┘
+                            │
+          ┌─────────────────▼──────────────────┐
+          │         Spring Boot App             │
+          │  ┌──────────────────────────────┐  │
+          │  │ ChatController               │  │  profile: chat
+          │  │  → JWT decode (+ optional    │  │
+          │  │    signature verify)         │  │
+          │  │  → customer mapping          │  │
+          │  │  → QueryIntentResolver       │  │
+          │  │  → BranchSnapshotMapper      │  │
+          │  │  → ChatService → OpenAI      │  │
+          │  └──────────────────────────────┘  │
+          │  ┌──────────────────────────────┐  │
+          │  │ EventConsumerService         │  │  profile: consumer
+          │  │  → idempotency check (Redis) │  │
+          │  │  → TimescaleDB write         │  │
+          │  │  → Redis state update        │  │
+          │  │  → idempotency mark AFTER    │  │
+          │  └──────────────────────────────┘  │
+          │  ┌──────────────────────────────┐  │
+          │  │ WebhookController            │  │  profile: ingestion
+          │  │  → HMAC verify               │  │
+          │  │  → timestamp skew check      │  │
+          │  │  → publish to RabbitMQ       │  │
+          │  └──────────────────────────────┘  │
+          └───────┬───────────────────┬─────────┘
+                  │                   │
+         ┌────────▼───────┐  ┌────────▼──────────────┐
+         │  Redis (Upstash)│  │  TimescaleDB (Cloud)  │
+         │  device state  │  │  device_events         │
+         │  + replay lock │  │  hierarchy_nodes       │
+         └────────────────┘  │  branch_ancestor_paths │
+                             └───────────────────────┘
+                  │
+         ┌────────▼──────────┐
+         │  RabbitMQ          │
+         │  iot.events        │
+         │  iot.dlx (DLX)     │
+         │  iot.events.dlq    │
+         └────────────────────┘
 ```
 
 ---
 
-## Scoping & Security
+## Spring Profiles
 
-SAI enforces strict multi-level tenancy scoping based on ThingsBoard user scopes (`HO`, `ZO`, `Regional`, `Branch` levels):
-1. **Token Parsing:** Decodes client JWT claims to retrieve authorized customer IDs and regional properties.
-2. **Access Intersection:** Filters all active branch snapshots against the user's scope nodes retrieved from TimescaleDB.
-3. **Question Interception:** If a user queries details about an unauthorized branch name, the request is blocked and returned immediately as:
-   `*Branch [Name] was not found, or you do not have permission to view it.*`
+The application is split into three runtime roles that can be deployed as separate containers or combined:
+
+| Profile | Role | Key beans activated |
+|---------|------|---------------------|
+| `chat` | Serves the chat API, reads Redis + TimescaleDB | ChatController, CustomerSyncRunner, ReplayService |
+| `ingestion` | Receives ThingsBoard webhook events, publishes to RabbitMQ | WebhookController, RabbitMQConfig |
+| `consumer` | Consumes RabbitMQ, writes to TimescaleDB + Redis | EventConsumerService, RabbitMQConfig |
+| `dev` | Local development overrides | Loads `application-dev.properties` |
+
+Run all roles together locally:
+```bash
+./mvnw spring-boot:run "-Dspring-boot.run.profiles=dev,chat,ingestion,consumer" \
+  "-Dspring-boot.run.arguments=--server.port=8083"
+```
+
+See `docs/deployment-topology.md` for multi-container production layout.
 
 ---
 
-## Caching Mechanisms
+## Security Model
 
-To achieve response latencies under **200ms**, SAI employs a dual-layer caching strategy:
-1. **Redis Cache Mirroring:** Telemetry and attribute changes from the RabbitMQ ingestion pipeline are mirrored directly into Redis hashes.
-2. **Concurrent In-Memory JVM Caching:** Node hierarchy mappings and path lookups in TimescaleDB are cached within JVM memory with a **5-minute TTL** self-expiring model, completely eliminating query overhead on database connection pools.
+### Tenant Isolation (fail-closed)
+Every JWT claim is decoded to extract the ThingsBoard `customerId`. That UUID is mapped to an internal customer prefix (`BOI`, `SEPL`, etc.) via the `customers` table. If no mapping is found:
+- **Production** (`IOTCHATBOT_SECURITY_STRICT_CUSTOMER_MAPPING=true`): throws `UnprovisionedCustomerException` → HTTP 403. No data is returned.
+- **Development** (default off): logs a warning and falls back to `BOI` so local testing works without a full DB.
+
+### JWT Signature Verification
+Set `IOTCHATBOT_SECURITY_REQUIRE_JWT_VERIFICATION=true` and supply the ThingsBoard signing key in `IOTCHATBOT_JWT_SIGNING_KEY`. At startup the app refuses to boot if the flag is on but the key is blank.
+
+### postMessage Origin Allowlisting
+`ChatContext.tsx` validates `event.origin` against an explicit allowlist before accepting any `TB_AUTH_TOKEN` message. Configure via `VITE_TB_ALLOWED_ORIGINS` (comma-separated). The token is held in React state only — never `localStorage` or URL params.
+
+### SSRF Protection (X-TB-Host)
+`UserAwareThingsBoardClient` validates the client-supplied `X-TB-Host` header via `ThingsBoardHostValidator`, which performs proper URI-based host extraction and exact/subdomain-suffix matching against `IOTCHATBOT_SECURITY_ALLOWED_THINGSBOARD_HOSTS`. Substring tricks like `app.swatch360.seple.in.evil.com` are rejected.
+
+### Webhook Security
+- HMAC-SHA256 signature required when `IOTCHATBOT_SECURITY_REQUIRE_WEBHOOK_HMAC=true`
+- `X-TB-Timestamp` replay-window check (default ±5 minutes, tunable via `IOTCHATBOT_SECURITY_WEBHOOK_MAX_SKEW_MS`)
+- Admin endpoints gated by bearer token when `IOTCHATBOT_SECURITY_REQUIRE_ADMIN_TOKEN=true`
+
+### Frame Embedding (CSP)
+`ContentSecurityPolicyFilter` adds `Content-Security-Policy: frame-ancestors <allowed-origins>` to every response. Configure with `IOTCHATBOT_SECURITY_FRAME_ANCESTORS`.
+
+### Actuator
+Only `health` and `info` endpoints are exposed. Health details are shown only when authorized.
+
+---
+
+## Event Ingestion Pipeline
+
+```
+ThingsBoard → WebhookController → RabbitMQ (iot.events)
+                                        │
+                               EventConsumerService
+                                1. Redis idempotency pre-check
+                                2. Write to TimescaleDB
+                                3. Write to Redis (device state + lastUpdatedAt)
+                                4. Mark idempotency key AFTER success
+                                        │
+                            on failure  ↓
+                               Dead-Letter Queue (iot.events.dlq)
+                               via DLX (iot.dlx)
+```
+
+Key guarantees:
+- **Exactly-once** delivery: `tb_message_id` has a DB-level `UNIQUE` constraint; duplicate delivery is caught and silently ignored.
+- **No silent drops**: exceptions propagate so RabbitMQ can retry; poison messages park in the DLQ instead of disappearing.
+- **Idempotency stamped after success**: a crash between DB write and Redis write will be safely retried — not double-counted.
+
+---
+
+## Caching & State Management
+
+**Redis** is the primary read path for all chat queries. Every device's current telemetry and attribute snapshot lives in a Redis hash keyed by `customer:branch:deviceId`.
+
+**Replay** (`POST /api/v1/admin/replay`) rebuilds Redis from TimescaleDB:
+- Acquires a per-customer `SET NX` distributed lock — concurrent replays return HTTP 409.
+- Optionally pauses the local consumer to prevent live-ingestion races.
+- Accepts `startTime` / `endTime` ISO-8601 params for narrow or wide windows.
+
+**TimescaleDB** stores all historical `device_events` as a hypertable partitioned by day with a 180-day retention policy. Three indexes cover the hot query paths: `(customer_id, event_time)`, `(customer_id, branch, event_time)`, and `(tb_message_id)` (unique).
+
+**In-memory JVM cache** stores node-hierarchy path lookups with a 5-minute TTL, eliminating repeated DB round-trips for hierarchy resolution.
+
+---
+
+## Customer & Hierarchy Sync
+
+On startup (profile `chat`, when `IOTCHATBOT_CUSTOMERS_SYNC_ENABLED=true`), `CustomerSyncRunner` pages through `GET /api/customers` on ThingsBoard and maps each customer UUID to an internal prefix using `CustomerMatcher`:
+
+1. Explicit override in `iotchatbot.customers.overrides.*` takes priority.
+2. Falls back to a single exact normalized match (uppercase, strip non-alphanumeric). Multi-match or zero-match customers are logged and skipped — no guessing.
+
+Hierarchy is derived from each device's `full_path` attribute in ThingsBoard. The `PREFIX-BRANCH` device-naming convention (`BOI-DX1`, `SEPL-DX2`) determines which customer a device belongs to.
 
 ---
 
 ## CCTV Formatting & Channel-Range Grouping
 
-Offline CCTV camera listings parse raw JSON entries (`rock_CAMERAdETAILS`, `CAMERAdETAILS`, `CAMERA_DETAILS`), formatting them dynamically:
-* **Channel Prefixing:** Renders entries as `Channel [No]: [Model/Name]`.
-* **Channel Range Grouping:** Merges identical camera models or hashes, and compiles their channel numbers into compact sorted ranges (e.g. `CP-UNC-VC21L5C-VMD-LQ (7 units: Channels 5, 7-9, 12-13, 15)`).
-* **Consistently Bulleted:** Lists offline cameras as bullet points below the status overview for superior readability.
+Offline CCTV camera listings parse raw JSON fields (`rock_CAMERAdETAILS`, `CAMERAdETAILS`, `CAMERA_DETAILS`):
+- **Channel Prefixing:** Renders entries as `Channel [No]: [Model/Name]`.
+- **Range Grouping:** Merges identical camera models and compiles their channel numbers into compact sorted ranges (e.g., `CP-UNC-VC21L5C-VMD-LQ (7 units: Channels 5, 7-9, 12-13, 15)`).
+- **Consistent Bullets:** Lists offline cameras as bullet points below the status overview.
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-*   **Java 21** installed and configured in `PATH`.
-*   **Node.js 18+** & **npm** (for compiling the frontend).
-*   **OpenAI API Key** with GPT-4 access.
-*   **ThingsBoard Credentials** or a running local setup.
+- Java 21 installed and on `PATH`
+- Node.js 18+ and npm
+- OpenAI API key with GPT-4o access
+- Running ThingsBoard instance (cloud or local)
+- PostgreSQL/TimescaleDB database
+- Redis instance (Upstash or local)
+- RabbitMQ instance (CloudAMQP or local) — only needed for ingestion/consumer profiles
 
-### 1. Installation
+### 1. Clone
 ```bash
 git clone https://github.com/singhaganesh/ThingsBoard-Bot.git
 cd ThingsBoard-Bot
 ```
 
-### 2. Compile Frontend Assets
-Build the React UI bundle and copy it directly to the Spring Boot static resource directory:
+### 2. Build the Frontend
 ```bash
 cd frontend
 npm install
 npm run build
 cd ..
 ```
+The build output is copied to `src/main/resources/static/` automatically.
 
-### 3. Configuration
-Edit `src/main/resources/application-dev.properties`:
+### 3. Configure
+Create `src/main/resources/application-dev.properties` (gitignored — do not commit credentials):
 ```properties
-# ThingsBoard API
-iotchatbot.thingsboard.url=https://seple.iot-private.cloud
-iotchatbot.thingsboard.username=your_admin_email
-iotchatbot.thingsboard.password=your_admin_password
+# ThingsBoard
+iotchatbot.thingsboard.url=https://your-tb-instance
+iotchatbot.thingsboard.username=admin@example.com
+iotchatbot.thingsboard.password=your_password
 
-# Database Settings
-spring.datasource.url=jdbc:postgresql://your-timescaledb-host:32311/tsdb
+# TimescaleDB
+spring.datasource.url=jdbc:postgresql://your-host:5432/tsdb
 spring.datasource.username=tsdbadmin
 spring.datasource.password=your_db_password
 
-# Redis Settings
-spring.data.redis.host=your-upstash-redis-host
+# Redis
+spring.data.redis.host=your-upstash-host
 spring.data.redis.port=6379
 spring.data.redis.password=your_redis_password
 spring.data.redis.ssl.enabled=true
 
-# OpenAI API Key
+# RabbitMQ
+spring.rabbitmq.host=your-cloudamqp-host
+spring.rabbitmq.port=5671
+spring.rabbitmq.username=your_user
+spring.rabbitmq.password=your_password
+spring.rabbitmq.virtual-host=your_vhost
+spring.rabbitmq.ssl.enabled=true
+
+# OpenAI
 iotchatbot.openai.api-key=sk-your-key
+
+# TimescaleDB hypertable init (run once on first deploy)
+iotchatbot.timescale.init-enabled=true
 ```
 
-### 4. Run the Bot (Dev & Chat Profiles)
+### 4. Run
 ```bash
-./mvnw spring-boot:run "-Dspring-boot.run.profiles=dev,chat" "-Dspring-boot.run.arguments=--server.port=8083"
+# All roles (local dev)
+./mvnw spring-boot:run "-Dspring-boot.run.profiles=dev,chat,ingestion,consumer" \
+  "-Dspring-boot.run.arguments=--server.port=8083"
+
+# Chat role only (no broker needed)
+./mvnw spring-boot:run "-Dspring-boot.run.profiles=dev,chat" \
+  "-Dspring-boot.run.arguments=--server.port=8083"
 ```
+
+### 5. Embed in ThingsBoard Dashboard
+Add an HTML widget with an iframe pointing to `https://your-bot-host`. On `iframe.onload` send the ThingsBoard JWT via `postMessage` with retries to handle the React listener registration race:
+
+```js
+function postAuthData(token) {
+    iframe.contentWindow.postMessage(
+        { type: 'TB_AUTH_DATA', payload: { token: token, host: window.location.origin } },
+        'https://your-bot-host'
+    );
+}
+
+iframe.onload = function () {
+    postAuthData(token);
+    setTimeout(function () { postAuthData(token); }, 400);
+    setTimeout(function () { postAuthData(token); }, 1200);
+    setTimeout(function () { postAuthData(token); }, 2500);
+};
+```
+
+---
+
+## Configuration Reference
+
+### Security flags (all default `false` / safe-off for local dev)
+
+| Environment variable | Property | Description |
+|---|---|---|
+| `IOTCHATBOT_SECURITY_STRICT_CUSTOMER_MAPPING` | `iotchatbot.security.strict-customer-mapping-enabled` | Fail-closed on unmapped customers (HTTP 403) |
+| `IOTCHATBOT_SECURITY_REQUIRE_JWT_VERIFICATION` | `iotchatbot.security.require-jwt-verification` | Verify JWT signature at startup |
+| `IOTCHATBOT_JWT_SIGNING_KEY` | `iotchatbot.jwt.signing-key` | ThingsBoard JWT signing key (base64) |
+| `IOTCHATBOT_SECURITY_REQUIRE_WEBHOOK_HMAC` | `iotchatbot.security.require-webhook-hmac` | Require HMAC-SHA256 on webhook |
+| `IOTCHATBOT_SECURITY_WEBHOOK_HMAC_SECRET` | `iotchatbot.security.webhook-hmac-secret` | HMAC secret |
+| `IOTCHATBOT_SECURITY_WEBHOOK_MAX_SKEW_MS` | `iotchatbot.security.webhook-max-skew-ms` | Replay window (default 300000 = 5 min) |
+| `IOTCHATBOT_SECURITY_REQUIRE_ADMIN_TOKEN` | `iotchatbot.security.require-admin-token` | Gate admin endpoints |
+| `IOTCHATBOT_SECURITY_ADMIN_TOKEN` | `iotchatbot.security.admin-token` | Admin bearer token |
+| `IOTCHATBOT_SECURITY_ALLOWED_THINGSBOARD_HOSTS` | `iotchatbot.security.allowed-thingsboard-hosts` | Comma-separated allowlist for X-TB-Host |
+| `IOTCHATBOT_SECURITY_FRAME_ANCESTORS` | `iotchatbot.security.frame-ancestors` | CSP frame-ancestors value |
+
+### Feature flags
+
+| Property | Default | Description |
+|---|---|---|
+| `iotchatbot.timescale.init-enabled` | `false` | Run hypertable + retention + index setup on startup |
+| `iotchatbot.customers.sync-enabled` | `false` | Auto-sync customer UUID→prefix mapping from ThingsBoard on startup |
+
+### Database pool (tunable via env)
+
+| Variable | Default | |
+|---|---|---|
+| `DB_POOL_MIN_IDLE` | `2` | HikariCP minimum idle connections |
+| `DB_POOL_SIZE` | `10` | HikariCP maximum pool size |
+
+---
+
+## Data Refresh Runbook
+
+Full wipe-and-rebuild from ThingsBoard (see `docs/data-refresh.md` for details):
+
+```bash
+# 1. Fetch 143 devices + current telemetry from ThingsBoard
+./mvnw -q exec:java@tb-backup
+
+# 2. Wipe and reimport TimescaleDB (device_events, hierarchy_nodes, branch_ancestor_paths)
+./mvnw -q exec:java@tb-import
+
+# 3. Rebuild Redis from the new device_events — use an EXPLICIT wide window
+#    (importer writes event_time in JVM local time; default replay window is UTC-based)
+curl -X POST "http://localhost:8083/api/v1/admin/replay?customerId=ALL&startTime=2020-01-01T00:00:00Z&endTime=2035-01-01T00:00:00Z"
+```
+
+> Snapshot files land in `Thingsboard-Data/` (gitignored).
 
 ---
 
@@ -290,36 +491,65 @@ iotchatbot.openai.api-key=sk-your-key
 
 ```
 ThingsBoard-Bot/
-├── frontend/                # React / TypeScript Vite Frontend UI
+├── frontend/                          # React / TypeScript Vite Chat UI
+│   └── src/
+│       ├── components/                # ChatWindow, ChatInput, ErrorBoundary, …
+│       ├── context/ChatContext.tsx    # postMessage auth, SSE streaming, token state
+│       └── types/index.ts             # Discriminated-union SSE frame types
+│
 ├── src/main/java/com/seple/ThingsBoard_Bot/
-│   ├── client/              # OpenAI & ThingsBoard API Wrappers
-│   ├── config/              # Security, Cache, RabbitMQ, and OpenAI Configs
-│   ├── model/domain/        # Structured IoT Domain Objects (Branch, Power, CCTV)
-│   ├── service/             # CORE SERVICES
-│   │   ├── ChatService.java # Orchestrator (Scoping & LLM Prompting)
-│   │   ├── UserDataService.java # Tenancy Scope Rules Engine
-│   │   ├── normalization/   # Key mapping and Data Cleanup
-│   │   └── query/           # Intent Resolution, Caching & Templates
-│   └── util/                # Token Counting & Context Filtering
-└── src/main/resources/static/ # Compiled static Frontend Assets
+│   ├── client/                        # OpenAI, ThingsBoard, UserAware TB clients
+│   ├── config/                        # Security, RabbitMQ, Redis, JWT, CORS, CSP, …
+│   ├── controller/                    # Chat, Webhook, Replay, Admin, Hierarchy
+│   ├── entity/                        # JPA entities (DeviceEvent, HierarchyNode, …)
+│   ├── exception/                     # UnprovisionedCustomerException, …
+│   ├── model/domain/                  # BranchSnapshot, PowerStatus, CctvStatus, …
+│   ├── service/                       # Core services
+│   │   ├── ChatService.java           # Orchestrator — scoping + LLM prompting
+│   │   ├── UserDataService.java       # Tenant scope resolution
+│   │   ├── EventConsumerService.java  # RabbitMQ consumer + idempotency
+│   │   ├── RedisCacheService.java     # Redis reads/writes + replay lock
+│   │   ├── ReplayService.java         # Replay with distributed lock
+│   │   ├── CustomerSyncRunner.java    # Auto-sync customer UUID→prefix
+│   │   ├── IdempotencyService.java    # Redis-based deduplication
+│   │   ├── normalization/             # Field normalization, alias resolution
+│   │   └── query/                     # QueryIntentResolver, handlers per domain
+│   ├── tools/                         # Standalone CLI: backup + importer
+│   └── util/                          # JWT, HMAC, StatusDelta, ThingsBoardHostValidator
+│
+├── src/main/resources/
+│   ├── application.properties         # Base config (committed, no secrets)
+│   ├── application-dev.properties     # Local secrets (gitignored)
+│   └── db/timescale/timescale_setup.sql  # Hypertable + retention + indexes
+│
+├── src/test/                          # Unit + integration tests (157 tests, 1 Docker-gated)
+├── docs/
+│   ├── deployment-topology.md         # Profile-per-container production layout
+│   └── data-refresh.md                # Wipe-and-rebuild runbook
+├── Caddyfile                          # Reverse-proxy config (SSE + security headers)
+└── docker-compose.yml                 # Local stack (app + Caddy)
 ```
 
 ---
 
 ## Testing & Validation
 
-SAI uses a **Golden Question** testing strategy to ensure 100% accuracy.
-
 ```bash
-# Run all unit and integration tests
+# Run all tests (Docker-gated Testcontainers test is skipped when Docker is absent)
 ./mvnw test
 ```
 
-**Key Test Areas:**
-*   `QueryIntentResolverTest`: Validates that user questions map to correct metrics.
-*   `DeterministicAnswerServiceTest`: Ensures "Truth-Injection" calculates correct counts and validates channel-range grouping layout rules.
-*   `ChatServiceTest`: Verifies scope verification intercepts and JWT-scoping compliance.
+**Key test areas:**
+
+| Test class | What it covers |
+|---|---|
+| `QueryIntentResolverTest` | Intent routing — questions map to correct metric handlers |
+| `DeterministicAnswerServiceTest` | Truth-injection counts + CCTV channel-range grouping |
+| `ChatServiceTest` | Scope verification, JWT-scoping compliance, UnprovisionedCustomer path |
+| `EventConsumerServiceTest` | Idempotency-after-success, duplicate handling |
+| `TimescaleIntegrationTest` | JSONB queries + `DISTINCT ON` against real PostgreSQL (Docker-gated) |
+| `ThingsBoardHostValidatorTest` | SSRF allowlist exact/subdomain matching, bypass rejection |
 
 ---
-*Developed by Ganesh Singha — Senior IoT Developer.*
 
+*Developed by Ganesh Singha — Senior IoT Developer, SEPL.*
