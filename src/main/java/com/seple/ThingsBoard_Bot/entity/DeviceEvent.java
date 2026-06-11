@@ -30,7 +30,7 @@ public class DeviceEvent {
     @Column(name = "branch_node_id", nullable = false, length = 128)
     private String branchNodeId;
 
-    @Column(name = "tb_message_id")
+    @Column(name = "tb_message_id", unique = true)
     private UUID tbMessageId;
 
     @Column(name = "log_type", length = 64)

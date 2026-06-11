@@ -34,14 +34,17 @@ public class EventWriteService {
             entity.setCustomerId(event.getCustomerId());
             entity.setBranchNodeId(event.getBranchName());
             
-            if (event.getTbMessageId() != null && !event.getTbMessageId().isBlank()) {
-                try {
-                    entity.setTbMessageId(UUID.fromString(event.getTbMessageId()));
-                } catch (Exception e) {
-                    entity.setTbMessageId(UUID.randomUUID());
-                }
-            } else {
-                entity.setTbMessageId(UUID.randomUUID());
+            // Idempotency requires a stable message id. Minting a random UUID for a missing id
+            // would make the event impossible to deduplicate, so reject it instead (audit #10).
+            if (event.getTbMessageId() == null || event.getTbMessageId().isBlank()) {
+                throw new IllegalArgumentException(
+                        "Event has no tbMessageId; refusing to persist a non-deduplicatable event");
+            }
+            try {
+                entity.setTbMessageId(UUID.fromString(event.getTbMessageId()));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(
+                        "Event tbMessageId is not a valid UUID: " + event.getTbMessageId(), e);
             }
             
             entity.setLogType(event.getLogType());
