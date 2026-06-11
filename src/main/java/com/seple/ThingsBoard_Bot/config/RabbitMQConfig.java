@@ -11,8 +11,16 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
+/**
+ * RabbitMQ topology (exchanges, queues, DLQ, template). Declared only on the nodes that actually
+ * use messaging — {@code ingestion} (publishes) and {@code consumer} (consumes) — so a
+ * {@code chat}-only deployment doesn't auto-declare queues and try to reach the broker at startup
+ * (audit #13).
+ */
 @Configuration
+@Profile({"ingestion", "consumer"})
 public class RabbitMQConfig {
 
     public static final String EXCHANGE_NAME = "iot.exchange";
