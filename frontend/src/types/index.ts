@@ -20,6 +20,15 @@ export interface ChatResponse {
   timestamp: number
 }
 
+/** SSE frame payloads emitted by the backend (audit #23). */
+export interface SseTokenPayload {
+  content: string
+}
+
+export interface SseErrorPayload {
+  errorMessage?: string
+}
+
 export interface ChatContextType {
   messages: ChatMessage[]
   isLoading: boolean

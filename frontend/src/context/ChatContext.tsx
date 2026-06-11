@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react'
-import { ChatMessage, ChatResponse, ChatContextType } from '../types'
+import { ChatMessage, ChatResponse, ChatContextType, SseTokenPayload, SseErrorPayload } from '../types'
 
 const ChatContext = createContext<ChatContextType | null>(null)
 
@@ -170,7 +170,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
           if (dataLines.length === 0) return
 
-          let payload: any
+          let payload: unknown
           try {
             payload = JSON.parse(dataLines.join('\n'))
           } catch {
@@ -178,14 +178,16 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
 
           if (eventName === 'token') {
-            if (typeof payload.content === 'string') appendToken(payload.content)
+            const { content } = payload as SseTokenPayload
+            if (typeof content === 'string') appendToken(content)
           } else if (eventName === 'done') {
             finalizeMessage(payload as ChatResponse)
           } else if (eventName === 'error') {
+            const { errorMessage } = payload as SseErrorPayload
             finalizeMessage({
               answer: '',
               error: true,
-              errorMessage: payload.errorMessage || 'Something went wrong',
+              errorMessage: errorMessage || 'Something went wrong',
               timestamp: Date.now()
             })
           }
