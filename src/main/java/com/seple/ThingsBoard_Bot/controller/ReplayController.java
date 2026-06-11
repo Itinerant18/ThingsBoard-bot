@@ -42,6 +42,13 @@ public class ReplayController {
                     "endTime", end.toString(),
                     "message", "Replay executed successfully"
             ));
+        } catch (IllegalStateException e) {
+            // Concurrent replay already running for this customer (audit #12).
+            log.warn("[REPLAY-API] Rejected concurrent replay for {}: {}", customerId, e.getMessage());
+            return ResponseEntity.status(409).body(Map.of(
+                    "status", "CONFLICT",
+                    "error", e.getMessage()
+            ));
         } catch (Exception e) {
             log.error("[REPLAY-API] Replay failed: {}", e.getMessage(), e);
             return ResponseEntity.status(500).body(Map.of(

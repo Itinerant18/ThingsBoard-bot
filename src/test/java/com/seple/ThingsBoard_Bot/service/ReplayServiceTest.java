@@ -63,6 +63,7 @@ class ReplayServiceTest {
         event.setPrevValue("offline");
         event.setEventTime(start.plusSeconds(10));
 
+        when(redisCacheService.tryAcquireReplayLock(customerId)).thenReturn(true);
         when(hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true)).thenReturn(List.of(branch));
         when(deviceEventRepository.streamByCustomerIdAndTimeRange(customerId, start, end)).thenReturn(List.of(event));
         when(ancestorPathCache.getAncestors(customerId, "BOI_BR042")).thenReturn(List.of("HO_BOI", "ZO_KOLKATA"));

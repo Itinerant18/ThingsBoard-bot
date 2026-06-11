@@ -25,6 +25,14 @@ public class ReplayService {
     private final LuaScriptService luaScriptService;
     private final AncestorPathCache ancestorPathCache;
 
+    /**
+     * Optional: only present in a JVM that hosts the consumer listener. Field-injected (not in the
+     * constructor) so existing wiring/tests are unchanged. Used to pause local ingestion during a
+     * replay so live events don't race the rebuild.
+     */
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry listenerRegistry;
+
     public void replayForCustomer(String customerId, Instant startTime, Instant endTime) {
         if ("ALL".equalsIgnoreCase(customerId)) {
             log.info("[REPLAY] Requested replay for ALL customers");
@@ -43,6 +51,24 @@ public class ReplayService {
     }
 
     private void replaySingleCustomer(String customerId, Instant startTime, Instant endTime) {
+        // Concurrency guard: refuse overlapping replays for the same customer, which would clear
+        // and rebuild the same Redis keys simultaneously and corrupt counters (audit #12).
+        if (!redisCacheService.tryAcquireReplayLock(customerId)) {
+            log.warn("[REPLAY] Replay already in progress for customer {} — skipping concurrent run", customerId);
+            throw new IllegalStateException("Replay already in progress for customer " + customerId);
+        }
+        boolean pausedConsumer = pauseConsumer();
+        try {
+            doReplaySingleCustomer(customerId, startTime, endTime);
+        } finally {
+            if (pausedConsumer) {
+                resumeConsumer();
+            }
+            redisCacheService.releaseReplayLock(customerId);
+        }
+    }
+
+    private void doReplaySingleCustomer(String customerId, Instant startTime, Instant endTime) {
         log.info("[REPLAY] Starting optimized in-memory replay for customer: {}, from: {}, to: {}", customerId, startTime, endTime);
 
         // Step 1: Clear Redis cache for this customer
@@ -133,8 +159,33 @@ public class ReplayService {
         log.info("[REPLAY] Replay complete for customer: {}", customerId);
     }
 
+    /** Stops the local event consumer during replay so live events don't race the rebuild. */
+    private boolean pauseConsumer() {
+        if (listenerRegistry == null) {
+            return false;
+        }
+        var container = listenerRegistry.getListenerContainer("eventListener");
+        if (container != null && container.isRunning()) {
+            container.stop();
+            log.info("[REPLAY] Paused event consumer for the duration of the replay");
+            return true;
+        }
+        return false;
+    }
+
+    private void resumeConsumer() {
+        if (listenerRegistry == null) {
+            return;
+        }
+        var container = listenerRegistry.getListenerContainer("eventListener");
+        if (container != null && !container.isRunning()) {
+            container.start();
+            log.info("[REPLAY] Resumed event consumer after replay");
+        }
+    }
+
     private boolean isStatusField(String field) {
-        return field != null && (field.contains("status") || field.contains("Status") || 
+        return field != null && (field.contains("status") || field.contains("Status") ||
                field.equals("gateway_status") || field.equals("online"));
     }
 

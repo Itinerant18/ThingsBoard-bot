@@ -39,6 +39,21 @@ public class RedisCacheService {
 
     private static final Duration DEFAULT_TTL = Duration.ofHours(24);
     private static final Duration COUNTER_TTL = Duration.ofHours(168); // 7 days
+    private static final Duration REPLAY_LOCK_TTL = Duration.ofMinutes(30);
+
+    /**
+     * Acquires a per-customer replay lock (SET NX). Returns false if a replay is already running
+     * for this customer, so concurrent replays can't corrupt the same counter keys (audit #12).
+     */
+    public boolean tryAcquireReplayLock(String customerId) {
+        Boolean acquired = stringRedisTemplate.opsForValue()
+                .setIfAbsent("replay:lock:" + customerId, "1", REPLAY_LOCK_TTL);
+        return Boolean.TRUE.equals(acquired);
+    }
+
+    public void releaseReplayLock(String customerId) {
+        stringRedisTemplate.delete("replay:lock:" + customerId);
+    }
 
     public static final String KEY_GLOBAL_COUNTERS = "%s:global:counters";
     public static final String KEY_NODE_COUNTERS = "%s:node:counters:%s";
