@@ -176,7 +176,8 @@ public class QueryIntentResolver {
         if (question.contains("BATTERY") && question.contains("VOLT")) {
             return QueryIntent.BATTERY_VOLTAGE;
         }
-        if (question.contains("AC") && question.contains("VOLT")) {
+        // "AC" must be a whole word — contains("AC") mis-fires on FACADE, HVAC, etc. (audit #20).
+        if (containsWord(question, "AC") && question.contains("VOLT")) {
             return QueryIntent.AC_VOLTAGE;
         }
         if (question.contains("SYSTEM CURRENT")) {
@@ -214,6 +215,16 @@ public class QueryIntentResolver {
             return QueryIntent.GATEWAY_STATUS;
         }
         return QueryIntent.GENERAL_LLM;
+    }
+
+    /**
+     * Whole-word containment, e.g. {@code containsWord("FACADE VOLT","AC")} is false but
+     * {@code containsWord("AC VOLT","AC")} is true. NOTE: intent detection is still first-match-wins,
+     * so a multi-metric question ("battery AND ac voltage") resolves to the first match only; full
+     * multi-intent handling is a deliberate future enhancement.
+     */
+    static boolean containsWord(String haystack, String word) {
+        return Pattern.compile("\\b" + Pattern.quote(word) + "\\b").matcher(haystack).find();
     }
 
     private boolean isBatteryLowQuestion(String question) {

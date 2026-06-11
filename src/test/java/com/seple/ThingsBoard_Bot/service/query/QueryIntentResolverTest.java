@@ -221,4 +221,27 @@ class QueryIntentResolverTest {
         assertEquals(QueryIntent.SUBSYSTEM_STATUS, resolved.getIntent());
         assertEquals("ias", resolved.getTargetSystem());
     }
+
+    // ---- audit #20: "AC" must match as a whole word, not a substring ----
+
+    @Test
+    void acVoltageMatchesWholeWord() {
+        ResolvedQuery resolved = resolver.resolve("What is the ac voltage of Tarakeshwar?", snapshots, null);
+        assertEquals(QueryIntent.AC_VOLTAGE, resolved.getIntent());
+    }
+
+    @Test
+    void acDoesNotMisfireOnEmbeddedSubstring() {
+        // "facade" contains "ac" but must not resolve to AC_VOLTAGE.
+        ResolvedQuery resolved = resolver.resolve("battery voltage near the facade", snapshots, null);
+        assertEquals(QueryIntent.BATTERY_VOLTAGE, resolved.getIntent());
+    }
+
+    @Test
+    void containsWordHelper() {
+        org.junit.jupiter.api.Assertions.assertTrue(QueryIntentResolver.containsWord("AC VOLT", "AC"));
+        org.junit.jupiter.api.Assertions.assertTrue(QueryIntentResolver.containsWord("AC-VOLT", "AC"));
+        org.junit.jupiter.api.Assertions.assertFalse(QueryIntentResolver.containsWord("FACADE VOLT", "AC"));
+        org.junit.jupiter.api.Assertions.assertFalse(QueryIntentResolver.containsWord("HVAC VOLT", "AC"));
+    }
 }
