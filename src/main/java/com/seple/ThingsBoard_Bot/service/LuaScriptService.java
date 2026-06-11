@@ -101,8 +101,8 @@ public class LuaScriptService {
         log.info("[LUA] Using fallback - updating counters for device={}, field={}, value={}->{}", 
                 deviceId, field, prevValue, newValue);
         
-        long delta = calculateDelta(field, prevValue, newValue);
-        
+        long delta = com.seple.ThingsBoard_Bot.util.StatusDeltaUtil.calculateDelta(field, prevValue, newValue);
+
         String globalKey = String.format(KEY_GLOBAL_COUNTERS, customerId);
         stringRedisTemplate.opsForHash().increment(globalKey, field, delta);
         
@@ -112,27 +112,5 @@ public class LuaScriptService {
         }
         
         log.info("[LUA] Fallback executed - updated {} ancestors", ancestorPath.size());
-    }
-
-    private long calculateDelta(String field, String prevValue, String newValue) {
-        if (isStatusField(field)) {
-            if (isOnlineState(newValue) && !isOnlineState(prevValue)) {
-                return 1;
-            } else if (!isOnlineState(newValue) && isOnlineState(prevValue)) {
-                return -1;
-            }
-        }
-        return 0;
-    }
-
-    private boolean isStatusField(String field) {
-        return field != null && (field.contains("status") || field.contains("Status") || 
-               field.equals("gateway_status") || field.equals("online"));
-    }
-
-    private boolean isOnlineState(String value) {
-        if (value == null) return false;
-        String lower = value.toLowerCase();
-        return lower.equals("online") || lower.equals("on") || lower.equals("1") || lower.equals("true");
     }
 }

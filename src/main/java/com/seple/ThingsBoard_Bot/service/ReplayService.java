@@ -138,7 +138,8 @@ public class ReplayService {
                 String field = fieldEntry.getKey();
                 String value = fieldEntry.getValue();
 
-                if (isStatusField(field) && isOnlineState(value)) {
+                if (com.seple.ThingsBoard_Bot.util.StatusDeltaUtil.isStatusField(field)
+                        && com.seple.ThingsBoard_Bot.util.StatusDeltaUtil.isOnlineState(value)) {
                     // Increment global counter
                     globalCounters.put(field, globalCounters.getOrDefault(field, 0) + 1);
 
@@ -184,14 +185,4 @@ public class ReplayService {
         }
     }
 
-    private boolean isStatusField(String field) {
-        return field != null && (field.contains("status") || field.contains("Status") ||
-               field.equals("gateway_status") || field.equals("online"));
-    }
-
-    private boolean isOnlineState(String value) {
-        if (value == null) return false;
-        String lower = value.toLowerCase();
-        return lower.equals("online") || lower.equals("on") || lower.equals("1") || lower.equals("true");
-    }
 }
