@@ -75,7 +75,8 @@ public class RedisCacheService {
     public void updateDeviceState(String customerId, String deviceId, String field, String value) {
         String key = String.format(KEY_DEVICE_STATE, customerId, deviceId);
         redisTemplate.opsForHash().put(key, field, value);
-        // redisTemplate.expire(key, DEFAULT_TTL);
+        // Stamp the freshness so the chatbot can show "as of ..." and flag stale data (audit #15).
+        redisTemplate.opsForHash().put(key, "lastUpdatedAt", String.valueOf(System.currentTimeMillis()));
         log.info("[REDIS] Updated device state: {}/{} -> {}={}", customerId, deviceId, field, value);
     }
 

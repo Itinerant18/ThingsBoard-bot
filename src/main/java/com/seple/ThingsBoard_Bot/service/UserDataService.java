@@ -106,6 +106,24 @@ public class UserDataService {
 
     private static final List<String> REGIONAL_PREFIXES = List.of("FGMO", "LHO", "ZO", "CO", "RO", "RBO", "NBG");
 
+    /** Data older than this is flagged stale. Override with -Diotchatbot.staleness.threshold.ms. */
+    private static final long STALENESS_THRESHOLD_MS = Long.getLong("iotchatbot.staleness.threshold.ms", 600_000L);
+
+    /** Adds {@code data_as_of} / {@code data_stale} from the device's lastUpdatedAt stamp (audit #15). */
+    private static void enrichStaleness(Map<String, Object> deviceMap) {
+        Object lastUpdated = deviceMap.get("lastUpdatedAt");
+        if (lastUpdated == null) {
+            return;
+        }
+        try {
+            long ts = Long.parseLong(String.valueOf(lastUpdated));
+            deviceMap.put("data_as_of", java.time.Instant.ofEpochMilli(ts).toString());
+            deviceMap.put("data_stale", (System.currentTimeMillis() - ts) > STALENESS_THRESHOLD_MS);
+        } catch (NumberFormatException ignored) {
+            // non-numeric stamp; leave unflagged
+        }
+    }
+
     private String normalizeName(String name) {
         if (name == null) return "";
         return name.replaceAll("[^a-zA-Z0-9]", "").toUpperCase();
@@ -223,7 +241,8 @@ public class UserDataService {
             if (redisState != null) {
                 redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
             }
-            
+            enrichStaleness(deviceMap);
+
             devicesData.add(deviceMap);
         }
         return devicesData;
@@ -262,7 +281,8 @@ public class UserDataService {
         if (redisState != null) {
             redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
         }
-        
+        enrichStaleness(deviceMap);
+
         log.info("✅ Found device {} in user local DB scope", deviceId);
         return deviceMap;
     }
@@ -368,6 +388,7 @@ public class UserDataService {
         if (redisState != null) {
             redisState.forEach((k, v) -> raw.put(String.valueOf(k), v));
         }
+        enrichStaleness(raw);
 
         return branchSnapshotMapper.map(raw);
     }
