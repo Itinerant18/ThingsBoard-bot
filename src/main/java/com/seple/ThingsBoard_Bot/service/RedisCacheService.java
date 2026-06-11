@@ -55,6 +55,18 @@ public class RedisCacheService {
         stringRedisTemplate.delete("replay:lock:" + customerId);
     }
 
+    /**
+     * Deletes a single device's cached state + metadata. Used to remove ghost keys for branches
+     * dropped from the hierarchy on re-import (audit #16), so they are no longer chatbot-queryable.
+     */
+    public void deleteDevice(String customerId, String deviceId) {
+        if (customerId == null || deviceId == null) {
+            return;
+        }
+        redisTemplate.delete(String.format(KEY_DEVICE_STATE, customerId, deviceId));
+        redisTemplate.delete(String.format(KEY_DEVICE_META, customerId, deviceId));
+    }
+
     public static final String KEY_GLOBAL_COUNTERS = "%s:global:counters";
     public static final String KEY_NODE_COUNTERS = "%s:node:counters:%s";
     public static final String KEY_DEVICE_STATE = "%s:device:state:%s";

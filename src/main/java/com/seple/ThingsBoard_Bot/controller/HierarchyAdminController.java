@@ -28,6 +28,11 @@ public class HierarchyAdminController {
     private final HierarchyNodeRepository hierarchyNodeRepository;
     private final AncestorPathService ancestorPathService;
     private final RabbitMQQueueService rabbitMQQueueService;
+    private final com.seple.ThingsBoard_Bot.service.RedisCacheService redisCacheService;
+
+    private static String deviceIdOf(HierarchyNode node) {
+        return node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
+    }
 
     @PostMapping("/import")
     @Transactional
@@ -100,10 +105,35 @@ public class HierarchyAdminController {
 
             // 1. Delete existing nodes for this customer
             List<HierarchyNode> existingNodes = hierarchyNodeRepository.findByCustomerId(customerId);
+
+            // Capture the device ids of branches being removed so their stale Redis keys can be
+            // purged (audit #16) — otherwise removed branches stay queryable in the chatbot.
+            java.util.Set<String> oldLeafDeviceIds = existingNodes.stream()
+                    .filter(n -> Boolean.TRUE.equals(n.getIsLeaf()))
+                    .map(HierarchyAdminController::deviceIdOf)
+                    .collect(java.util.stream.Collectors.toSet());
+
             hierarchyNodeRepository.deleteAll(existingNodes);
 
             // 2. Save all new nodes
             hierarchyNodeRepository.saveAll(nodesToSave);
+
+            // 2b. Purge Redis ghost keys for branches that no longer exist in the new hierarchy.
+            java.util.Set<String> newLeafDeviceIds = nodesToSave.stream()
+                    .filter(n -> Boolean.TRUE.equals(n.getIsLeaf()))
+                    .map(HierarchyAdminController::deviceIdOf)
+                    .collect(java.util.stream.Collectors.toSet());
+            int purged = 0;
+            for (String removedDeviceId : oldLeafDeviceIds) {
+                if (!newLeafDeviceIds.contains(removedDeviceId)) {
+                    redisCacheService.deleteDevice(customerId, removedDeviceId);
+                    purged++;
+                }
+            }
+            if (purged > 0) {
+                log.info("[HIERARCHY-API] Purged {} ghost device cache entries removed from hierarchy for {}. "
+                        + "Run a replay to rebuild aggregate counters.", purged, customerId);
+            }
 
             // 3. Trigger Ancestor Path computation
             ancestorPathService.computeForCustomer(customerId);
