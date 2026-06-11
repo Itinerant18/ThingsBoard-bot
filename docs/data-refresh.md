@@ -19,9 +19,16 @@ truth — any CSV-imported hierarchy is replaced).
 ./mvnw -q exec:java@tb-import
 
 # 3. Rebuild Redis from the new device_events (clears each customer's cache, recomputes counters).
-#    Requires the app running (e.g. on 8083):
-curl.exe -X POST "http://localhost:8083/api/v1/admin/replay?customerId=ALL"
+#    Requires the app running (e.g. on 8083). Use an EXPLICIT WIDE WINDOW — the importer writes
+#    event_time in the JVM's local zone while the default replay window (now-7d..now) is computed
+#    in UTC, so the default window misses the just-imported rows and leaves Redis empty.
+curl.exe -X POST "http://localhost:8083/api/v1/admin/replay?customerId=ALL&startTime=2020-01-01T00:00:00Z&endTime=2035-01-01T00:00:00Z"
 ```
+
+> Known issue: the standalone importer (`Timestamp.from(Instant.now())`) and the app's Hibernate
+> Instant binding disagree on timezone for the `TIMESTAMP WITHOUT TIME ZONE` column, which is why
+> the wide window is required after an import. A proper fix is to make the importer write UTC (or
+> switch the column to `timestamptz`). Until then, always replay with the explicit window above.
 
 ## Notes
 
