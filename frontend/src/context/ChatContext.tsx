@@ -28,20 +28,17 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!isTrustedOrigin(event.origin)) {
         return
       }
+      // Keep the token in memory (React state) only — do NOT persist to localStorage.
       if (event.data?.type === 'TB_AUTH_TOKEN' && event.data?.token) {
         setJwtToken(event.data.token)
-        localStorage.setItem('jwt_token', event.data.token)
       }
       if (event.data?.type === 'TB_HOST' && event.data?.host) {
         setTbHost(event.data.host)
-        localStorage.setItem('tb_host', event.data.host)
       }
       if (event.data?.type === 'TB_AUTH_DATA' && event.data?.token) {
         setJwtToken(event.data.token)
-        localStorage.setItem('jwt_token', event.data.token)
         if (event.data.host) {
           setTbHost(event.data.host)
-          localStorage.setItem('tb_host', event.data.host)
         }
       }
     }
@@ -282,22 +279,9 @@ function isTrustedOrigin(origin: string): boolean {
 }
 
 function getJwtToken(): string | null {
-  // Check URL parameters
-  const urlParams = new URLSearchParams(window.location.search)
-  let token = urlParams.get('token') || urlParams.get('jwt_token') || urlParams.get('tb_token') || urlParams.get('access_token')
-  if (token) {
-    localStorage.setItem('jwt_token', token)
-    return token
-  }
-
-  // Check localStorage
-  const keys = ['jwt_token', 'tb_token', 'token', 'access_token', 'authToken', 'thingsboard_token']
-  for (const key of keys) {
-    token = localStorage.getItem(key)
-    if (token) return token
-  }
-
-  // Try parent window (for iframe context)
+  // The token arrives via origin-checked postMessage (preferred). As a same-origin bootstrap for
+  // iframe embedding we may read it once from the parent window. It is intentionally NOT read from
+  // URL params (leaks into history/logs/referrer) and NOT persisted to localStorage (XSS-readable).
   try {
     if (window.parent !== window) {
       const parentToken = window.parent.localStorage?.getItem('jwt_token') || window.parent.localStorage?.getItem('tb_token')
@@ -311,19 +295,7 @@ function getJwtToken(): string | null {
 }
 
 function getTbHost(): string | null {
-  // Check URL parameters
-  const urlParams = new URLSearchParams(window.location.search)
-  let host = urlParams.get('host') || urlParams.get('tb_host') || urlParams.get('origin')
-  if (host) {
-    localStorage.setItem('tb_host', host)
-    return host
-  }
-
-  // Check localStorage
-  host = localStorage.getItem('tb_host')
-  if (host) return host
-
-  // Try parent window (for iframe context)
+  // Same-origin parent bootstrap only; not read from URL params or localStorage.
   try {
     if (window.parent !== window) {
       const parentHost = window.parent.location.origin
