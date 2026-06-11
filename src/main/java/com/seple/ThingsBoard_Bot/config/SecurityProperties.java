@@ -63,6 +63,12 @@ public class SecurityProperties {
     private long webhookMaxSkewMs = 300_000L;
 
     /**
+     * Value for the {@code Content-Security-Policy: frame-ancestors} directive, restricting which
+     * sites may embed the chat widget in an iframe. Bound from {@code IOTCHATBOT_SECURITY_FRAME_ANCESTORS}.
+     */
+    private String frameAncestors = "'self' https://app.swatch360.seple.in https://www.dexterhms.com";
+
+    /**
      * Comma-separated allowlist of ThingsBoard hosts the backend may issue outbound requests to.
      * A client-supplied {@code X-TB-Host} (or JWT {@code iss}) outside this list is ignored in
      * favour of the configured default URL. Bound from {@code IOTCHATBOT_SECURITY_ALLOWED_THINGSBOARD_HOSTS}.
@@ -91,6 +97,10 @@ public class SecurityProperties {
 
     public long getWebhookMaxSkewMs() {
         return webhookMaxSkewMs;
+    }
+
+    public String getFrameAncestors() {
+        return frameAncestors;
     }
 
     public java.util.List<String> allowedThingsboardHostList() {
