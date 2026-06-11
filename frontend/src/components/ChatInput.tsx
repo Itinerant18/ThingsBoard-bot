@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react'
 import { useChat } from '../context/ChatContext'
 
+/** Cap the question length client-side so a huge input can't bloat the prompt/context (audit #22). */
+const MAX_INPUT_LENGTH = 1000
+
 export const ChatInput: React.FC = () => {
   const { sendMessage, isLoading, isStreaming, stopStreaming } = useChat()
   const [input, setInput] = useState('')
@@ -74,12 +77,18 @@ export const ChatInput: React.FC = () => {
               ref={inputRef}
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
               onKeyDown={handleKeyDown}
               placeholder="Ask anything..."
               disabled={isLoading}
+              maxLength={MAX_INPUT_LENGTH}
               className="w-full bg-transparent text-sm text-[#1C1917] placeholder-[#78716c] outline-none py-2.5 pr-10 pl-1 disabled:opacity-50"
             />
+            {input.length > MAX_INPUT_LENGTH - 100 && (
+              <span className="absolute -top-4 right-2 text-[10px] text-[#78716c]">
+                {input.length}/{MAX_INPUT_LENGTH}
+              </span>
+            )}
 
             {/* Microphone Icon */}
             <button
