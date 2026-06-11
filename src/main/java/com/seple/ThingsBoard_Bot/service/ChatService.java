@@ -113,6 +113,14 @@ public class ChatService {
                     .error(false)
                     .build();
 
+        } catch (com.seple.ThingsBoard_Bot.exception.UnprovisionedCustomerException e) {
+            log.warn("[SECURITY] Rejected unprovisioned customer in chat: {}", e.getMessage());
+            return ChatResponse.builder()
+                    .answer("Your account is not provisioned for this chatbot. Please contact an administrator.")
+                    .error(true)
+                    .errorMessage("Account not provisioned")
+                    .timestamp(System.currentTimeMillis())
+                    .build();
         } catch (Exception e) {
             log.error("Chat handling failed: {}", e.getMessage(), e);
             return ChatResponse.builder()
@@ -158,6 +166,15 @@ public class ChatService {
             sendEvent(emitter, "done", finalResponse);
             emitter.complete();
 
+        } catch (com.seple.ThingsBoard_Bot.exception.UnprovisionedCustomerException e) {
+            log.warn("[SECURITY] Rejected unprovisioned customer in stream: {}", e.getMessage());
+            try {
+                sendEvent(emitter, "error", Map.of("errorMessage",
+                        "Your account is not provisioned for this chatbot. Please contact an administrator."));
+                emitter.complete();
+            } catch (Exception sendError) {
+                emitter.completeWithError(e);
+            }
         } catch (Exception e) {
             log.error("Streaming chat handling failed: {}", e.getMessage(), e);
             try {

@@ -46,6 +46,7 @@ public class UserDataService {
     private final RedisCacheService redisCacheService;
     private final UserAwareThingsBoardClient userAwareThingsBoardClient;
     private final BranchAncestorPathRepository branchAncestorPathRepository;
+    private final com.seple.ThingsBoard_Bot.config.SecurityProperties securityProperties;
 
     // Keep an empty cache map to avoid breaking any dailyCacheMemoryWipe references
     private final ConcurrentHashMap<String, Object> userCacheMap = new ConcurrentHashMap<>();
@@ -87,7 +88,8 @@ public class UserDataService {
                            HierarchyNodeRepository hierarchyNodeRepository,
                            RedisCacheService redisCacheService,
                            UserAwareThingsBoardClient userAwareThingsBoardClient,
-                           BranchAncestorPathRepository branchAncestorPathRepository) {
+                           BranchAncestorPathRepository branchAncestorPathRepository,
+                           com.seple.ThingsBoard_Bot.config.SecurityProperties securityProperties) {
         this.branchSnapshotMapper = branchSnapshotMapper;
         this.branchIndexService = branchIndexService;
         this.intentKeyProfileRegistry = intentKeyProfileRegistry;
@@ -97,6 +99,7 @@ public class UserDataService {
         this.redisCacheService = redisCacheService;
         this.userAwareThingsBoardClient = userAwareThingsBoardClient;
         this.branchAncestorPathRepository = branchAncestorPathRepository;
+        this.securityProperties = securityProperties;
     }
 
     // ==================== Public API ====================
@@ -453,15 +456,27 @@ public class UserDataService {
     public String resolveCustomerIdPrefix(String userToken) {
         String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);
         if (tbCustomerId == null) {
-            log.warn("Could not extract customer UUID from token. Defaulting to BOI.");
-            return "BOI";
+            return unmappedCustomer(null);
         }
         return customerRepository.findByTbCustomerId(tbCustomerId)
                 .map(com.seple.ThingsBoard_Bot.entity.Customer::getCustomerId)
-                .orElseGet(() -> {
-                    log.warn("Customer mapping not found for UUID: {}. Defaulting to BOI.", tbCustomerId);
-                    return "BOI";
-                });
+                .orElseGet(() -> unmappedCustomer(tbCustomerId));
+    }
+
+    /**
+     * Resolution failure handler. Fails closed (throws → HTTP 403) when strict customer mapping
+     * is enabled, otherwise preserves the legacy "BOI" fallback for local development with a loud
+     * warning. Defaulting an unmapped user to a real tenant is a cross-tenant data leak, so prod
+     * MUST run with strict mapping on.
+     */
+    private String unmappedCustomer(String tbCustomerId) {
+        if (securityProperties.isStrictCustomerMappingEnabled()) {
+            throw new com.seple.ThingsBoard_Bot.exception.UnprovisionedCustomerException(
+                    tbCustomerId == null ? "<no customerId claim>" : tbCustomerId);
+        }
+        log.warn("[SECURITY] No customer mapping for UUID: {} — defaulting to BOI. This is UNSAFE in "
+                + "production; set IOTCHATBOT_SECURITY_STRICT_CUSTOMER_MAPPING=true to fail closed.", tbCustomerId);
+        return "BOI";
     }
 
     private String normalizeKey(String value) {

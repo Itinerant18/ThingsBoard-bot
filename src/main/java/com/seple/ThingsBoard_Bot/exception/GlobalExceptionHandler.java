@@ -40,6 +40,13 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.BAD_GATEWAY, "OpenAI error", e.getMessage());
     }
 
+    @ExceptionHandler(UnprovisionedCustomerException.class)
+    public ResponseEntity<Map<String, Object>> handleUnprovisionedCustomer(UnprovisionedCustomerException e) {
+        log.warn("[SECURITY] Rejected unprovisioned customer: {}", e.getMessage());
+        return buildErrorResponse(HttpStatus.FORBIDDEN, "Account not provisioned",
+                "Your account is not provisioned for this chatbot. Please contact an administrator.");
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleBadRequest(IllegalArgumentException e) {
         log.error("Bad request: {}", e.getMessage());
