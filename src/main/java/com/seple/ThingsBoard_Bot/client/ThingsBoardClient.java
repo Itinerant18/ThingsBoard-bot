@@ -153,6 +153,49 @@ public class ThingsBoardClient {
         return result;
     }
 
+    // ==================== Customers ====================
+
+    /** Fetches all customers under the tenant ({id, title}), paging through the TB API. */
+    public List<Map<String, String>> getTenantCustomers() {
+        List<Map<String, String>> customers = new ArrayList<>();
+        int pageSize = config.getDevicePageSize() > 0 ? config.getDevicePageSize() : 100;
+        int page = 0;
+        boolean hasNext = true;
+
+        while (hasNext) {
+            String url = config.getUrl() + "/api/customers?pageSize=" + pageSize + "&page=" + page;
+            try {
+                HttpEntity<Void> entity = new HttpEntity<>(getAuthHeaders());
+                ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
+                if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                    JsonNode json = objectMapper.readTree(response.getBody());
+                    JsonNode dataArray = json.get("data");
+                    if (dataArray != null && dataArray.isArray()) {
+                        for (JsonNode node : dataArray) {
+                            Map<String, String> customerMap = new HashMap<>();
+                            if (node.has("id") && node.get("id").has("id")) {
+                                customerMap.put("id", node.get("id").get("id").asText());
+                            }
+                            if (node.has("title")) {
+                                customerMap.put("title", node.get("title").asText());
+                            }
+                            customers.add(customerMap);
+                        }
+                    }
+                    hasNext = json.path("hasNext").asBoolean(false);
+                    page++;
+                } else {
+                    hasNext = false;
+                }
+            } catch (Exception e) {
+                log.error("Error fetching tenant customers: {}", e.getMessage());
+                hasNext = false;
+            }
+        }
+        log.info("Fetched {} tenant customers", customers.size());
+        return customers;
+    }
+
     public JsonNode queryEntityData(JsonNode payload) {
         String url = config.getUrl() + "/api/queries/entityData";
 
