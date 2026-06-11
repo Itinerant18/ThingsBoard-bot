@@ -59,6 +59,13 @@ public class EventWriteService {
             log.info("✅ Event saved: customer={}, field={}, value={}",
                     event.getCustomerId(), event.getField(), event.getNewValue());
 
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            // Unique tb_message_id violation = a prior delivery already persisted this event.
+            // Propagate as-is so the consumer can treat it as a duplicate (audit #4 / #10).
+            throw e;
+        } catch (IllegalArgumentException e) {
+            // Bad/missing message id — not retryable; let it propagate to the DLQ path.
+            throw e;
         } catch (Exception e) {
             log.error("❌ Failed to write event: {}", e.getMessage());
             throw new RuntimeException("Failed to write event", e);

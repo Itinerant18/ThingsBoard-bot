@@ -30,26 +30,39 @@ public class EventConsumerService {
     public void consume(TbEventPayload event) {
         log.info("📥 Consumed event: device={}, field={}, value={}",
                 event.getDeviceName(), event.getField(), event.getNewValue());
-        
+
         if (event == null || event.getTbMessageId() == null) {
-            log.warn("⚠️ Invalid event payload, skipping");
+            // Unparseable / un-keyable: ack-and-drop (cannot dedupe or DLQ-route meaningfully).
+            log.warn("⚠️ Invalid event payload (no message id), dropping");
             return;
         }
-        
-        if (!idempotencyService.checkAndMark(event.getTbMessageId())) {
-            log.info("[IDEM] Duplicate message: {}", event.getTbMessageId());
+
+        String messageId = event.getTbMessageId();
+
+        // Skip if a prior delivery already completed successfully. The id is marked only AFTER
+        // both the DB write and Redis update succeed (below), so a mid-processing crash leaves it
+        // unmarked and the message eligible for redelivery instead of being lost (audit #4).
+        if (idempotencyService.exists(messageId)) {
+            log.info("[IDEM] Already processed, skipping: {}", messageId);
             return;
         }
-        
+
         try {
             eventWriteService.writeToDatabase(event);
             log.info("✅ Event written to database");
-            
             updateRedisCache(event);
-            
-        } catch (Exception e) {
-            log.error("❌ Failed to process event: {}", e.getMessage(), e);
+        } catch (org.springframework.dao.DataIntegrityViolationException dup) {
+            // A prior delivery already persisted this event (unique tb_message_id). Treat as done.
+            log.info("[IDEM] Duplicate detected at DB layer, skipping: {}", messageId);
+            idempotencyService.mark(messageId);
+            return;
         }
+        // Exceptions other than the duplicate case propagate on purpose: the listener's retry +
+        // dead-letter config (RabbitMQConfig / application.properties) handles them rather than
+        // silently dropping the event.
+
+        idempotencyService.mark(messageId);
+        log.info("✅ Event fully processed: {}", messageId);
     }
 
     private void updateRedisCache(TbEventPayload event) {

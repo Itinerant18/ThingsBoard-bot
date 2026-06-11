@@ -34,8 +34,20 @@ public class IdempotencyService {
         if (messageId == null || messageId.isBlank()) {
             return false;
         }
-        
+
         String key = "idem:" + messageId;
         return Boolean.TRUE.equals(redisTemplate.hasKey(key));
+    }
+
+    /**
+     * Records a message id as successfully processed. Call this only AFTER the DB write and Redis
+     * update both succeed, so a mid-processing failure leaves the id unmarked and the message
+     * eligible for redelivery (audit #4).
+     */
+    public void mark(String messageId) {
+        if (messageId == null || messageId.isBlank()) {
+            return;
+        }
+        redisTemplate.opsForValue().set("idem:" + messageId, "1", IDEM_TTL);
     }
 }
