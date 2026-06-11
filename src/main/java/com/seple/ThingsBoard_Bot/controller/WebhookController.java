@@ -28,9 +28,26 @@ public class WebhookController {
     @PostMapping("/thingsboard")
     public ResponseEntity<Void> receiveThingsBoardWebhook(
             @RequestHeader(value = "X-HMAC-SHA256", required = false) String hmac,
+            @RequestHeader(value = "X-TB-Timestamp", required = false) String timestamp,
             @RequestBody String rawBody) {
 
         log.info("📥 Received webhook from ThingsBoard (body size: {} bytes)", rawBody.length());
+
+        // Replay-window check: when a timestamp is supplied, reject payloads outside the allowed
+        // clock skew so a captured request can't be re-sent indefinitely (audit #6). Identical
+        // replays are also deduped downstream by tbMessageId (#4/#10).
+        if (timestamp != null && !timestamp.isBlank()) {
+            try {
+                long skew = Math.abs(System.currentTimeMillis() - Long.parseLong(timestamp.trim()));
+                if (skew > securityProperties.getWebhookMaxSkewMs()) {
+                    log.warn("🚫 Rejected webhook with stale timestamp (skew {} ms)", skew);
+                    return ResponseEntity.status(401).build();
+                }
+            } catch (NumberFormatException e) {
+                log.warn("🚫 Rejected webhook with unparseable X-TB-Timestamp: {}", timestamp);
+                return ResponseEntity.status(401).build();
+            }
+        }
 
         // HMAC verification: enforced only when a shared secret is configured, so local
         // development keeps working. Reject tampered/unsigned payloads when enabled.

@@ -53,6 +53,15 @@ public class SecurityProperties {
      */
     private boolean requireJwtVerification = false;
 
+    /** Fail startup unless a webhook HMAC secret is configured. Set true on the ingestion node in prod. */
+    private boolean requireWebhookHmac = false;
+
+    /** Fail startup unless an admin token is configured. Set true in prod. */
+    private boolean requireAdminToken = false;
+
+    /** Max allowed clock skew (ms) for the webhook X-TB-Timestamp replay check. */
+    private long webhookMaxSkewMs = 300_000L;
+
     /**
      * Comma-separated allowlist of ThingsBoard hosts the backend may issue outbound requests to.
      * A client-supplied {@code X-TB-Host} (or JWT {@code iss}) outside this list is ignored in
@@ -70,6 +79,18 @@ public class SecurityProperties {
 
     public boolean isRequireJwtVerification() {
         return requireJwtVerification;
+    }
+
+    public boolean isRequireWebhookHmac() {
+        return requireWebhookHmac;
+    }
+
+    public boolean isRequireAdminToken() {
+        return requireAdminToken;
+    }
+
+    public long getWebhookMaxSkewMs() {
+        return webhookMaxSkewMs;
     }
 
     public java.util.List<String> allowedThingsboardHostList() {
