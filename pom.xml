@@ -204,6 +204,32 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<!-- Standalone data-refresh utilities (audit / fresh-start tooling).
+			     Run with:  mvnw exec:java@tb-backup   then   mvnw exec:java@tb-import
+			     See docs/data-refresh.md. runtime classpathScope is required so the
+			     PostgreSQL driver (runtime scope) is available to the importer. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>tb-backup</id>
+						<configuration>
+							<mainClass>com.seple.ThingsBoard_Bot.tools.ThingsBoardBackupUtility</mainClass>
+							<classpathScope>runtime</classpathScope>
+						</configuration>
+					</execution>
+					<execution>
+						<id>tb-import</id>
+						<configuration>
+							<mainClass>com.seple.ThingsBoard_Bot.tools.ThingsBoardTimescaleImporter</mainClass>
+							<classpathScope>runtime</classpathScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
