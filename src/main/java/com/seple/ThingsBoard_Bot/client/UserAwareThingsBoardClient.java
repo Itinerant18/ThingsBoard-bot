@@ -34,6 +34,7 @@ public class UserAwareThingsBoardClient {
     private final ThingsBoardConfig config;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+    private final com.seple.ThingsBoard_Bot.config.SecurityProperties securityProperties;
 
     /**
      * Short-TTL cache of the per-user authorized device list. This list is the
@@ -49,22 +50,26 @@ public class UserAwareThingsBoardClient {
 
     private String getThingsBoardUrl() {
         String contextHost = ThingsBoardRequestContext.getHost();
-        if (contextHost != null && !contextHost.trim().isEmpty()) {
-            String host = contextHost.trim().toLowerCase();
-            // Whitelist: Only allow requests to Swatch360 and DexterHMS.
-            // Any other host (including default placeholder "thingsboard.io") falls back to Swatch360.
-            if (host.contains("app.swatch360.seple.in") || host.contains("www.dexterhms.com") || host.contains("dexterhms.com")) {
-                return contextHost;
-            }
+        // SSRF guard (audit #5): only honour a client-supplied host if it matches the allowlist by
+        // exact host or subdomain suffix. Anything else falls back to the configured default URL —
+        // the backend never issues outbound requests to an attacker-chosen host.
+        if (com.seple.ThingsBoard_Bot.util.ThingsBoardHostValidator.isAllowed(
+                contextHost, securityProperties.allowedThingsboardHostList())) {
+            return contextHost;
+        }
+        if (contextHost != null && !contextHost.isBlank()) {
+            log.warn("[SECURITY] Ignoring non-allowlisted ThingsBoard host '{}'; using configured default.", contextHost);
         }
         return config.getUrl();
     }
 
     public UserAwareThingsBoardClient(ThingsBoardConfig config,
-            @Qualifier("thingsBoardRestTemplate") RestTemplate restTemplate) {
+            @Qualifier("thingsBoardRestTemplate") RestTemplate restTemplate,
+            com.seple.ThingsBoard_Bot.config.SecurityProperties securityProperties) {
         this.config = config;
         this.restTemplate = restTemplate;
         this.objectMapper = new ObjectMapper();
+        this.securityProperties = securityProperties;
     }
 
     // ==================== Auth Headers ====================

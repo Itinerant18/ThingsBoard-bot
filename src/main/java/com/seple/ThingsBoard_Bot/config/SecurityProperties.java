@@ -53,6 +53,13 @@ public class SecurityProperties {
      */
     private boolean requireJwtVerification = false;
 
+    /**
+     * Comma-separated allowlist of ThingsBoard hosts the backend may issue outbound requests to.
+     * A client-supplied {@code X-TB-Host} (or JWT {@code iss}) outside this list is ignored in
+     * favour of the configured default URL. Bound from {@code IOTCHATBOT_SECURITY_ALLOWED_THINGSBOARD_HOSTS}.
+     */
+    private String allowedThingsboardHosts = "app.swatch360.seple.in,www.dexterhms.com,dexterhms.com";
+
     public boolean isWebhookHmacEnabled() {
         return webhookHmacSecret != null && !webhookHmacSecret.isBlank();
     }
@@ -63,6 +70,13 @@ public class SecurityProperties {
 
     public boolean isRequireJwtVerification() {
         return requireJwtVerification;
+    }
+
+    public java.util.List<String> allowedThingsboardHostList() {
+        return java.util.Arrays.stream(allowedThingsboardHosts.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
     }
 
     public boolean isAdminGuardEnabled() {
