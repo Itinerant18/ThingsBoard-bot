@@ -40,6 +40,7 @@ application-dev.properties
 graphify-out/
 .playwright-mcp/
 DEVELOPMENT.md
+plans/
 
 ### Local Data & Logs ###
 device_data.json
