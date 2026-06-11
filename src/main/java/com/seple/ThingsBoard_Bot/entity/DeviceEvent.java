@@ -13,7 +13,13 @@ import java.util.Map;
 import java.util.UUID;
 
 @Entity
-@Table(name = "device_events")
+@Table(name = "device_events", indexes = {
+        // Most common read pattern: latest telemetry for a customer (and per branch). Audit #7.3.
+        @Index(name = "idx_device_events_customer_time", columnList = "customer_id, event_time DESC"),
+        @Index(name = "idx_device_events_customer_branch_time",
+                columnList = "customer_id, branch_node_id, event_time DESC"),
+        @Index(name = "idx_device_events_time", columnList = "event_time DESC")
+})
 @Data
 @Builder
 @NoArgsConstructor
