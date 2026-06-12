@@ -32,8 +32,9 @@ public class Customer {
     @Column(name = "hierarchy_template", length = 32)
     private String hierarchyTemplate;
 
+    @Builder.Default
     @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
     @PrePersist
     public void prePersist() {

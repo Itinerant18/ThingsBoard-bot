@@ -75,6 +75,9 @@ public class CustomerSyncRunner {
                 }
 
                 Customer customer = customerRepository.findByTbCustomerId(tbUuid).orElseGet(Customer::new);
+                if (customer.getCreatedAt() == null) {
+                    customer.setCreatedAt(java.time.Instant.now());
+                }
                 customer.setCustomerId(prefix);
                 customer.setTbCustomerId(tbUuid);
                 customer.setName(tbTitle);
