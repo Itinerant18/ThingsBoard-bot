@@ -82,6 +82,7 @@ public class CustomerSyncRunner {
                 customer.setTbCustomerId(tbUuid);
                 customer.setName(tbTitle);
                 customer.setDisplayName(tbTitle);
+                customer.setHierarchyTemplate(prefix);
                 customerRepository.save(customer);
                 log.info("✅ [CUSTOMER-SYNC] Mapped '{}' -> {} (uuid {})", tbTitle, prefix, tbUuid);
                 mapped++;
