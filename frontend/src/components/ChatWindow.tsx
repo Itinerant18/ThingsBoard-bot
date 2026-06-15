@@ -20,6 +20,14 @@ export const ChatWindow: React.FC = () => {
   }
 
   useEffect(() => {
+    // When the user sends their own message, always snap back to the bottom —
+    // even if they had scrolled up to read history. They expect to see their
+    // question and the incoming reply. Streaming bot tokens still respect the
+    // "don't yank them down while reading" rule via stickToBottom.
+    const last = messages[messages.length - 1]
+    if (last?.role === 'user') {
+      stickToBottom.current = true
+    }
     if (stickToBottom.current) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     }
