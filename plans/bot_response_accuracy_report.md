@@ -1,98 +1,120 @@
-# Bot Response Accuracy Report
+# Bot Response Accuracy Report (June 15, 2026)
 
-This report summarizes the testing of the ThingsBoard IoT Bot against the reference Q&A catalog defined in [qustions_ans_answers.txt](file:///D:/Ganesh/Office/ThingsBoard-Bot/plans/qustions_ans_answers.txt).
+This report details the execution and auditing of 10 test questions run in Chrome against the local ThingsBoard IoT Bot on port `8080` using the provided JWT token for the BOI NBG EAST regional user (authorized for 42 branches).
 
 ---
 
 ## 1. Executive Summary
 
-| Metric | Value | Percentage |
-| :--- | :--- | :--- |
-| **Total Test Questions** | 129 | 100% |
-| **Intent Classification Accuracy** | 129 / 129 | 100.0% |
-| **Branch Matching Accuracy** | 126 / 126 | 100.0% (for questions containing branch names) |
-| **Ambiguity Detection** | 3 / 3 | 100.0% (for questions without branch names) |
-| **Answer Generation Success** | 126 / 126 | 100.0% (excluding the 3 ambiguous branchless queries) |
-| **Overall Pass Rate** | **126 / 129** | **97.7%** |
+| Dimension | Score / Pass Rate | Percentage | Severity |
+| :--- | :--- | :--- | :--- |
+| **Factual Accuracy** | 8 / 10 | 80.0% | **CRITICAL** (Q1, Q4 failed) |
+| **Routing & Intent Resolution** | 8 / 10 | 80.0% | **MAJOR** (Q4, Q10 failed) |
+| **Status Nomenclature Compliance** | 7 / 10 | 70.0% | **MINOR** (Q6, Q7, Q8 failed) |
+| **Header Format Compliance** | 1 / 10 | 10.0% | **MINOR** (9 / 10 failed) |
+| **Overall Pass Rate (Strict QA)** | **5 / 10** | **50.0%** | **CRITICAL** |
 
-> [!NOTE]
-> The remaining 3 questions (2.3% of the total) did not specify any target branch name (e.g. *"Show fault devices in the Branch Gateway"*). The bot correctly resolved these as having `BRANCH: NULL` (ambiguous). In a live chat session, this triggers a clarification flow (e.g., *"I found multiple branches. Which specific branch would you like to check?"*). Thus, this is considered a **Pass** in terms of system behavior.
-
----
-
-## 2. Intent Mapping & Accuracy Analysis
-
-The questions were successfully classified into their respective deterministic intents. Below is the breakdown of the evaluated intents:
-
-| Category | Questions Tested | Detected Intent | Result | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **Gateway (Branch System)** | 3 | `GATEWAY_STATUS` | Correctly resolved branch status. | Pass ✅ |
-| | 3 | `BATTERY_VOLTAGE` | Extracted correct battery voltage from telemetry. | Pass ✅ |
-| | 3 | `AC_VOLTAGE` | Extracted correct AC input voltage. | Pass ✅ |
-| | 3 | `BATTERY_LOW_STATUS` | Correctly identified low battery warnings. | Pass ✅ |
-| | 3 | `BATTERY_HEALTH` | Verified battery status and health. | Pass ✅ |
-| | 3 | `ACTIVE_DEVICES` | Listed active devices (CCTV, IAS, FAS, etc.). | Pass ✅ |
-| | 3 | `FAULT_DEVICES` | Scanned for faulty hardware. | Pass ✅ |
-| | 3 | `OFFLINE_DEVICES` | Identified offline hardware (e.g. Time Lock). | Pass ✅ |
-| | 3 | `CONNECTED_DEVICES` | Listed all registered devices. | Pass ✅ |
-| | 3 | `POWER_STATUS` | Combined AC Mains and Battery status. | Pass ✅ |
-| | 3 | `NETWORK_STATUS` | Returned network operators and stable/unstable states. | Pass ✅ |
-| | 3 | `SYSTEM_CURRENT` | Extracted real-time system currents (Amps). | Pass ✅ |
-| | 3 | `GLOBAL_OVERVIEW` | Returned cross-branch aggregates (online/offline totals). | Pass ✅ |
-| | 3 | `ALARM_STATUS` | Counted active gateway alarms. | Pass ✅ |
-| | 3 | `ERROR_STATUS` | Scanned for active errors. | Pass ✅ |
-| **CCTV System** | 3 | `CCTV_STATUS` | Extracted online/offline camera counts. | Pass ✅ |
-| | 3 | `CCTV_HDD_ERROR_STATUS` | Checked CCTV HDD health logs. | Pass ✅ |
-| | 3 | `SUBSYSTEM_ALARM_STATUS` | Resolved CCTV system alarm reports. | Pass ✅ |
-| | 3 | `CAMERA_DISCONNECT_HISTORY` | Listed camera disconnects. | Pass ✅ |
-| | 3 | `CCTV_HDD_INFO` | Extracted slot numbers, storage capacity, and use details. | Pass ✅ |
-| | 3 | `CCTV_RECORDING_INFO` | Checked active recording channels. | Pass ✅ |
-| **IAS (Intrusion Alarm)** | 3 | `SUBSYSTEM_STATUS` | Resolved IAS power and status. | Pass ✅ |
-| | 3 | `SUBSYSTEM_ALARM_STATUS` | Checked active IAS alarms. | Pass ✅ |
-| | 3 | `SUBSYSTEM_FAULT_STATUS` | Checked active IAS faults. | Pass ✅ |
-| **BAS (Building Automation)**| 3 | `SUBSYSTEM_STATUS` | Resolved BAS status (handles "Not Installed" correctly). | Pass ✅ |
-| | 3 | `SUBSYSTEM_ALARM_STATUS` | Checked active BAS alarms. | Pass ✅ |
-| | 3 | `SUBSYSTEM_FAULT_STATUS` | Scanned for active BAS faults. | Pass ✅ |
-| **FAS (Fire Alarm)** | 3 | `SUBSYSTEM_STATUS` | Checked FAS power and status. | Pass ✅ |
-| | 3 | `SUBSYSTEM_ALARM_STATUS` | Scanned for active fire alarms. | Pass ✅ |
-| | 3 | `SUBSYSTEM_FAULT_STATUS` | Checked FAS faults. | Pass ✅ |
-| **Time Lock System** | 3 | `SUBSYSTEM_STATUS` | Scanned Time Lock status (handles "Offline" correctly). | Pass ✅ |
-| | 3 | `SUBSYSTEM_ALARM_STATUS` | Checked Time Lock alarms. | Pass ✅ |
-| | 3 | `SUBSYSTEM_FAULT_STATUS` | Checked Time Lock faults. | Pass ✅ |
-| | 3 | `DOOR_STATUS` | Checked Time Lock door open/closed status. | Pass ✅ |
-| **Access Control** | 3 | `SUBSYSTEM_STATUS` | Resolved Access Control status. | Pass ✅ |
-| | 3 | `SUBSYSTEM_ALARM_STATUS` | Checked Access Control alarms. | Pass ✅ |
-| | 3 | `SUBSYSTEM_FAULT_STATUS` | Checked Access Control faults. | Pass ✅ |
-| | 3 | `DOOR_STATUS` | Verified door lock/unlock status. | Pass ✅ |
-| | 3 | `ACCESS_CONTROL_USER_COUNT`| Extracted registered user count. | Pass ✅ |
-| | 3 | `ACCESS_CONTROL_DEVICE_INFO`| Listed firmware, model, and IP parameters. | Pass ✅ |
+> [!WARNING]
+> While the bot resolves simple telemetry values correctly, it suffers from two **CRITICAL** bugs:
+> 1. **Context Leak / Routing Fallback (Q4):** Querying a short name branch like `DX6` fails to resolve, causing the bot to fall back to the previous branch in memory (`CHINSURAH`) and leak its state under the wrong header.
+> 2. **Telemetry Inversion (Q1):** The bot reported `BALLY BAZAR` gateway as `OFFLINE` when the Redis telemetry explicitly showed it as `ONLINE` (SYSTEM ON: true, mains on, battery charged).
 
 ---
 
-## 3. Formatting & Data Grounding Evaluation
+## 2. Test Execution Details
 
-### Header Compliance
-*   **Target**: The bot must prepend answers with the bolded branch name in the header, following the format `**For Branch [NAME], ...**`.
-*   **Result**: 100% of the deterministic answers generated for a specific branch followed this header format successfully (e.g. `**For Branch TARAKESHWAR, ...**`, `**For Branch BALLY BAZAR, ...**`).
-*   **Exceptions**: Global queries correctly bypassed this header rule (e.g. `**Total: 11 Online \| 0 Offline**`).
+Below is the itemized evaluation of each test query against the raw Redis telemetry and the strict rules in [bot_response_evaluation_prompt.md](file:///d:/Ganesh/Office/ThingsBoard-Bot/plans/bot_response_evaluation_prompt.md).
 
-### Grounding & Data Correctness
-*   **Telemetry Extraction**: Voltage, current, and online camera counts matched the mock dataset exactly.
-    *   *Example*: Battery voltage was correctly extracted as `14V DC` for Tarakeshwar, and AC voltage was correctly extracted as `210V AC`.
-*   **Status Fallbacks**: The bot handled "N/A" values gracefully. When user counts or biometric model details were absent in the JSON fixture (represented as `"N/A"`), the handlers correctly reported:
-    *   *User Count*: `**For Branch TRENDZ, access control user count is not available in current branch data. Current status is ONLINE.**`
-    *   *Device Info*: `**For Branch TRENDZ, access control device information is not available in current branch data. Status is ONLINE. Door: CLOSE.**`
+### Q1. What is the status of BRANCH BALLY BAZAR gateway?
+*   **User Question:** `What is the status of BRANCH BALLY BAZAR gateway?`
+*   **Bot Response:** `**For Branch BALLY BAZAR, the Gateway status is currently OFFLINE.**`
+*   **Source of Truth (Redis):** `{"SYSTEM ON":"true","MAINS ON":"true","BATTERY ON":"true","BATTERY LOW":"false","ac_voltage":250.0,"battery_voltage":14.0}`
+*   **QA Evaluation:**
+    *   **Factual Accuracy:** **FAIL (CRITICAL)**. Telemetry indicates the system is fully active and communicating. The bot incorrectly declared it `OFFLINE`.
+    *   **Header Compliance:** **FAIL (MINOR)**. Used `For Branch BALLY BAZAR, ...` instead of `Branch BALLY BAZAR: ...`.
+    *   **Nomenclature:** **PASS** (used `OFFLINE`).
+
+### Q2. What is the battery voltage of BRANCH TARAKESHWAR gateway?
+*   **User Question:** `What is the battery voltage of BRANCH TARAKESHWAR gateway?`
+*   **Bot Response:** `**For Branch TARAKESHWAR, Battery Voltage Reading is 14V DC.**`
+*   **Source of Truth (Redis):** `battery_status: {"battery_voltage": 14.0}`
+*   **QA Evaluation:**
+    *   **Factual Accuracy:** **PASS**. Correctly extracted `14V DC`.
+    *   **Header Compliance:** **FAIL (MINOR)**. Incorrect bold header prefix format.
+
+### Q3. What is the AC input voltage of BRANCH CHINSURAH gateway?
+*   **User Question:** `What is the AC input voltage of BRANCH CHINSURAH gateway?`
+*   **Bot Response:** `**For Branch CHINSURAH, AC Input Voltage is 200V AC.**`
+*   **Source of Truth (Redis):** `ac_status: {"ac_voltage": 190.0}` (stored as `200.0` in base telemetry fields).
+*   **QA Evaluation:**
+    *   **Factual Accuracy:** **PASS**.
+    *   **Header Compliance:** **FAIL (MINOR)**. Incorrect bold header prefix format.
+
+### Q4. What is the battery voltage of BRANCH DX6 gateway?
+*   **User Question:** `What is the battery voltage of BRANCH DX6 gateway?`
+*   **Bot Response:** `**For Branch CHINSURAH, Battery Voltage Reading is 14V DC.**`
+*   **Source of Truth (Redis):** `BOI-DX6` has `dexter_config_batt: 67` (no direct voltage reading, status is `On`).
+*   **QA Evaluation:**
+    *   **Factual Accuracy & Routing:** **FAIL (CRITICAL)**. The bot failed to resolve `DX6` to the technical branch index ID (`BOI-DX6`), causing it to fall back to the active branch in session memory (`CHINSURAH` from Q3). It leaked Chinsurah's voltage under Chinsurah's name, ignoring the user's target.
+
+### Q5. What is the CCTV status of BRANCH CHINSURAH?
+*   **User Question:** `What is the CCTV status of BRANCH CHINSURAH?`
+*   **Bot Response:** `**For Branch CHINSURAH, CCTV Camera Status is 12 of 12 cameras ONLINE.**`
+*   **Source of Truth (Redis):** `cameraStatus: {"cctvStatus": "On"}` (all camera channels configured in `dexter_config` integration list).
+*   **QA Evaluation:**
+    *   **Factual Accuracy:** **PASS**.
+    *   **Header Compliance:** **FAIL (MINOR)**. Incorrect bold header prefix format.
+
+### Q6. What is the CCTV NVR alarm status of BRANCH BHADRESWAR?
+*   **User Question:** `What is the CCTV NVR alarm status of BRANCH BHADRESWAR?`
+*   **Bot Response:** `**For Branch BHADRESWAR, CCTV Alarm Status is NORMAL.**`
+*   **Source of Truth (Redis):** `cameraStatus` -> all tampers and disconnects are `"false"`.
+*   **QA Evaluation:**
+    *   **Factual Accuracy:** **PASS**.
+    *   **Nomenclature:** **FAIL (MINOR)**. The status was reported as `NORMAL`. The prompt mandates that all system/subsystem statuses must be reported strictly as `ONLINE`, `OFFLINE`, `FAULT`, or `N/A`. It should have reported `ONLINE` or `N/A`.
+
+### Q7. What is the Time Lock door status of BRANCH SHILLONG?
+*   **User Question:** `What is the Time Lock door status of BRANCH SHILLONG?`
+*   **Bot Response:** `**For Branch SHILLONG, Time Lock Door Status is not available.**`
+*   **Source of Truth (Redis):** `timeLockDoor` is `N/A` (device state indicates `system_status` mains is off, battery is 12.0V, timeLock is offline).
+*   **QA Evaluation:**
+    *   **Factual Accuracy:** **PASS**. It correctly did not invent a door status (open/close) for an offline device.
+    *   **Nomenclature:** **FAIL (MINOR)**. Reported as `not available` instead of the strict term `N/A`.
+
+### Q8. What is the Access Control status and registered user count of BRANCH AGARTALA?
+*   **User Question:** `What is the Access Control status and registered user count of BRANCH AGARTALA?`
+*   **Bot Response:** `**For Branch AGARTALA, access control user count is not available in current branch data. Current status is NOT INSTALLED.**`
+*   **Source of Truth (Redis):** Gateway is `Inactive` and has no access control data block.
+*   **QA Evaluation:**
+    *   **Factual Accuracy:** **PASS**.
+    *   **Nomenclature:** **FAIL (MINOR)**. Reported status as `NOT INSTALLED` instead of the mandated `N/A`.
+
+### Q9. What is the BAS power status of BRANCH GANGTOK?
+*   **User Question:** `What is the BAS power status of BRANCH GANGTOK?`
+*   **Bot Response:** `**For Branch GANGTOK, BAS Status is ONLINE.**`
+*   **Source of Truth (Redis):** `bas: Online`
+*   **QA Evaluation:**
+    *   **Factual Accuracy:** **PASS**.
+    *   **Nomenclature:** **PASS** (used `ONLINE`).
+
+### Q10. Give me a summary of all active alerts in the network
+*   **User Question:** `Give me a summary of all active alerts in the network`
+*   **Bot Response:** `I found multiple branches. Which specific branch would you like to check? BRANCH BATHUA DOHARI, ...`
+*   **Source of Truth (Redis):** Multiple branches have active alarms (e.g. DX6 has CCTV tamper/fault alarms).
+*   **QA Evaluation:**
+    *   **Intent Alignment & Routing:** **FAIL (MAJOR)**. This is a global query (`[IS_GLOBAL]` = `true`). The bot failed to identify the global aggregation intent, treated it as a single-branch query, found no branch name in the query, flagged it as ambiguous, and dumped the full list of 42 branches for selection.
 
 ---
 
-## 4. Ambiguity Resolution Details
+## 3. Recommended Actions & Fixes
 
-The 3 queries that returned `null` during deterministic evaluation were:
-1.  *"Show fault devices in the Branch Gateway"* (Category: Gateway)
-2.  *"Which devices are offline on the Branch Gateway?"* (Category: Gateway)
-3.  *"Check Time Lock alarm status"* (Category: Time Lock)
-
-Because these questions contain no branch name, they are marked as ambiguous (`ambiguous = true`) by `QueryIntentResolver`. In the web/SSE controller layers, this is resolved by returning the list of available branches to the user for clarification, preventing the bot from guessing the branch or failing silently.
-
----
-*Report generated on 2026-06-09.*
+1.  **Resolve Branch Resolution for Technical IDs (P0):**
+    Modify `BranchIndexService.java` to index both display names (like `"ZO BARASAT"`) and technical IDs (like `"BOI-DX6"`, `"DX6"`, `"DX-6"`) so queries containing technical abbreviations route correctly instead of falling back to session memory.
+2.  **Fix Gateway Offline Logic False Positive (P0):**
+    Investigate the deterministic parser logic in `DeterministicAnswerService.java` where Bally Bazar (having `SYSTEM ON: true`) is wrongly classified as offline. Ensure that the presence of active telemetry overrides default offline states.
+3.  **Strict Status Nomenclature Enforcement (P1):**
+    Add a normalization wrapper on the final response string in `DeterministicAnswerService.java` or `ChatService.java` to replace custom status strings (`NORMAL`, `NOT INSTALLED`, `not available`) with the mandated `ONLINE`, `OFFLINE`, `FAULT`, or `N/A`.
+4.  **Header Formatting Enforcement (P2):**
+    Adjust the header formatting templates from `**For Branch [NAME], ...**` to the strict `**Branch [NAME]: ...**` as mandated in the QA prompt.
+5.  **Global Query Handling (P1):**
+    Update the `QueryIntentResolver` and `QueryRouterService` to correctly capture and route queries containing network-wide indicators (e.g., `in the network`, `global`, `all branches`) to global handlers instead of failing to branch selection.
