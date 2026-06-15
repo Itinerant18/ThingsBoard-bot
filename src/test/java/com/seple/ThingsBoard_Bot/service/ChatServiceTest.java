@@ -43,6 +43,7 @@ class ChatServiceTest {
     private final StructuredContextBuilder structuredContextBuilder = mock(StructuredContextBuilder.class);
     private final GlobalAggregatorService globalAggregatorService = mock(GlobalAggregatorService.class);
     private final QueryRouterService queryRouterService = mock(QueryRouterService.class);
+    private final ResponseEvaluationService responseEvaluationService = mock(ResponseEvaluationService.class);
 
     private final ChatService service = new ChatService(
             userDataService,
@@ -55,6 +56,7 @@ class ChatServiceTest {
             structuredContextBuilder,
             globalAggregatorService,
             queryRouterService,
+            responseEvaluationService,
             new io.micrometer.core.instrument.simple.SimpleMeterRegistry(),
             new org.springframework.core.io.ClassPathResource("prompts/system-prompt.txt"));
 

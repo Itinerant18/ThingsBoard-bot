@@ -132,6 +132,48 @@ public class OpenAIClient {
     }
 
     /**
+     * Deterministic JSON-mode completion used by the LLM-judge QA guardrail
+     * ({@code ResponseEvaluationService}). Forces temperature 0 and
+     * {@code response_format=json_object} so the judge returns a single parseable JSON object.
+     *
+     * @param systemPrompt The filled evaluation prompt (role + criteria + input data)
+     * @param userMessage  A short trigger instructing the model to emit the report
+     * @return the raw JSON content string, or {@code null} on any error (best-effort: never throws)
+     */
+    public String evaluateJson(String systemPrompt, String userMessage) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + config.getApiKey());
+
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("model", config.getModel());
+            requestBody.put("max_tokens", config.getMaxTokens());
+            requestBody.put("temperature", 0.0);
+            requestBody.put("response_format", Map.of("type", "json_object"));
+
+            List<Map<String, String>> messages = new ArrayList<>();
+            messages.add(Map.of("role", "system", "content", systemPrompt));
+            messages.add(Map.of("role", "user", "content", userMessage));
+            requestBody.put("messages", messages);
+
+            String jsonBody = objectMapper.writeValueAsString(requestBody);
+            HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
+
+            ResponseEntity<String> response = restTemplate.postForEntity(OPENAI_CHAT_URL, entity, String.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                JsonNode responseJson = objectMapper.readTree(response.getBody());
+                return responseJson.path("choices").get(0).path("message").path("content").asText();
+            }
+            log.error("❌ OpenAI evaluation returned non-success: {}", response.getStatusCode());
+            return null;
+        } catch (Exception e) {
+            log.error("❌ Error calling OpenAI for evaluation: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Streaming variant of {@link #chat}. Sends {@code "stream": true} to OpenAI,
      * reads the SSE {@code data:} lines, and invokes {@code onToken} for each
      * delta content chunk as it arrives. Returns the full concatenated answer.

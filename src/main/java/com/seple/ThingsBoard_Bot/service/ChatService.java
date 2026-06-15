@@ -20,6 +20,7 @@ import com.seple.ThingsBoard_Bot.model.dto.AnswerMetadata;
 import com.seple.ThingsBoard_Bot.model.dto.ChatMessage;
 import com.seple.ThingsBoard_Bot.model.dto.ChatRequest;
 import com.seple.ThingsBoard_Bot.model.dto.ChatResponse;
+import com.seple.ThingsBoard_Bot.model.dto.EvaluationInput;
 import com.seple.ThingsBoard_Bot.service.query.DeterministicAnswerService;
 import com.seple.ThingsBoard_Bot.service.index.GlobalAggregatorService;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
@@ -59,6 +60,7 @@ public class ChatService {
     private final StructuredContextBuilder structuredContextBuilder;
     private final GlobalAggregatorService globalAggregatorService;
     private final QueryRouterService queryRouterService;
+    private final ResponseEvaluationService responseEvaluationService;
     private final io.micrometer.core.instrument.Counter deterministicAnswers;
     private final io.micrometer.core.instrument.Counter llmAnswers;
     private final io.micrometer.core.instrument.Counter llmTokens;
@@ -71,6 +73,7 @@ public class ChatService {
             StructuredContextBuilder structuredContextBuilder,
             GlobalAggregatorService globalAggregatorService,
             QueryRouterService queryRouterService,
+            ResponseEvaluationService responseEvaluationService,
             io.micrometer.core.instrument.MeterRegistry meterRegistry,
             @org.springframework.beans.factory.annotation.Value("classpath:prompts/system-prompt.txt") Resource systemPromptResource) {
         this.systemPrompt = loadSystemPrompt(systemPromptResource) + PROMPT_INJECTION_GUARD;
@@ -90,6 +93,7 @@ public class ChatService {
         this.structuredContextBuilder = structuredContextBuilder;
         this.globalAggregatorService = globalAggregatorService;
         this.queryRouterService = queryRouterService;
+        this.responseEvaluationService = responseEvaluationService;
     }
 
     private static String loadSystemPrompt(Resource resource) {
@@ -117,6 +121,7 @@ public class ChatService {
             chatMemoryService.recordInteraction(plan.sessionId(), request.getQuestion(), answer);
 
             String answerWithSuggestions = appendSuggestedFollowups(answer, plan.resolvedQuery());
+            maybeEvaluate(plan, answerWithSuggestions);
             return ChatResponse.builder()
                     .answer(answerWithSuggestions)
                     .metadata(buildMetadata(plan.resolvedQuery(), false))
@@ -168,6 +173,7 @@ public class ChatService {
             chatMemoryService.recordInteraction(plan.sessionId(), request.getQuestion(), answer);
 
             String answerWithSuggestions = appendSuggestedFollowups(answer, plan.resolvedQuery());
+            maybeEvaluate(plan, answerWithSuggestions);
             ChatResponse finalResponse = ChatResponse.builder()
                     .answer(answerWithSuggestions)
                     .metadata(buildMetadata(plan.resolvedQuery(), false))
@@ -221,15 +227,19 @@ public class ChatService {
             String userMessage,
             ResolvedQuery resolvedQuery,
             String sessionId,
-            int estimatedTokens) {
+            int estimatedTokens,
+            String customerId,
+            String contextJson) {
 
         static AnswerPlan deterministic(ChatResponse response) {
-            return new AnswerPlan(response, null, null, null, null, null, 0);
+            return new AnswerPlan(response, null, null, null, null, null, 0, null, null);
         }
 
         static AnswerPlan llm(String systemPrompt, List<ChatMessage> history, String userMessage,
-                ResolvedQuery resolvedQuery, String sessionId, int estimatedTokens) {
-            return new AnswerPlan(null, systemPrompt, history, userMessage, resolvedQuery, sessionId, estimatedTokens);
+                ResolvedQuery resolvedQuery, String sessionId, int estimatedTokens,
+                String customerId, String contextJson) {
+            return new AnswerPlan(null, systemPrompt, history, userMessage, resolvedQuery, sessionId,
+                    estimatedTokens, customerId, contextJson);
         }
 
         boolean isLlm() {
@@ -412,13 +422,42 @@ public class ChatService {
             }
             // LLM-backed answer: defer the OpenAI call to the caller so the
             // blocking and streaming paths can invoke chat() vs chatStream().
-            return AnswerPlan.llm(systemPrompt, history, userMessage, resolvedQuery, sessionId, estimatedTokens);
+            return AnswerPlan.llm(systemPrompt, history, userMessage, resolvedQuery, sessionId, estimatedTokens,
+                    customerId, contextJson);
     }
 
     public void initializeUserCache(String userToken) {
         if (userToken != null) {
             userDataService.getUserDevicesData(userToken);
         }
+    }
+
+    /**
+     * Submits the just-produced LLM answer to the async QA judge (audit guardrail). No-op unless
+     * {@code iotchatbot.evaluation.enabled=true}. Wired only into the LLM paths — that's where the
+     * structured context exists and where hallucination risk is highest. Never blocks the caller.
+     */
+    private void maybeEvaluate(AnswerPlan plan, String finalAnswer) {
+        if (!responseEvaluationService.isEnabled() || plan == null || plan.resolvedQuery() == null) {
+            return;
+        }
+        ResolvedQuery rq = plan.resolvedQuery();
+        String branchName = (rq.getTargetBranch() != null && rq.getTargetBranch().getIdentity() != null)
+                ? rq.getTargetBranch().getIdentity().getBranchName()
+                : null;
+        EvaluationInput input = EvaluationInput.builder()
+                .customerPrefix(plan.customerId())
+                .activeBranchId(chatMemoryService.getActiveBranch(plan.sessionId()))
+                .userQuestion(rq.getOriginalQuestion())
+                .structuredContextJson(plan.contextJson())
+                .intent(rq.getIntent() != null ? rq.getIntent().name() : null)
+                .targetBranch(branchName)
+                .targetSystem(rq.getTargetSystem())
+                .global(rq.isGlobal())
+                .executionPath("LLM_FALLBACK")
+                .botAnswer(finalAnswer)
+                .build();
+        responseEvaluationService.evaluateAsync(input);
     }
 
     private AnswerMetadata buildMetadata(ResolvedQuery query, boolean deterministic) {
