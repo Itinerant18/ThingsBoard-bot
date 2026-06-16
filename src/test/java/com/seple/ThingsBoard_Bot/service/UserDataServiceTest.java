@@ -43,4 +43,21 @@ class UserDataServiceTest {
 
         assertEquals("BOI", service.resolveCustomerIdPrefix(null));
     }
+
+    @Test
+    void tenantAdminToken_resolvesToAll() {
+        CustomerRepository repo = mock(CustomerRepository.class);
+        SecurityProperties security = mock(SecurityProperties.class);
+        UserDataService service = newService(repo, security);
+
+        byte[] keyBytes = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+                .getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        javax.crypto.SecretKey key = io.jsonwebtoken.security.Keys.hmacShaKeyFor(keyBytes);
+        String token = io.jsonwebtoken.Jwts.builder()
+                .claim("scopes", java.util.List.of("TENANT_ADMIN"))
+                .signWith(key)
+                .compact();
+
+        assertEquals("ALL", service.resolveCustomerIdPrefix(token));
+    }
 }

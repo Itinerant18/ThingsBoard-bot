@@ -72,8 +72,15 @@ public class UserDataService {
     private CachedHierarchy getCachedHierarchy(String customerId) {
         CachedHierarchy cached = hierarchyCache.get(customerId);
         if (cached == null || cached.isExpired()) {
-            List<HierarchyNode> allNodes = hierarchyNodeRepository.findByCustomerId(customerId);
-            List<BranchAncestorPath> ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+            List<HierarchyNode> allNodes;
+            List<BranchAncestorPath> ancestorPaths;
+            if ("ALL".equals(customerId)) {
+                allNodes = hierarchyNodeRepository.findAll();
+                ancestorPaths = branchAncestorPathRepository.findAll();
+            } else {
+                allNodes = hierarchyNodeRepository.findByCustomerId(customerId);
+                ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+            }
             cached = new CachedHierarchy(allNodes, ancestorPaths);
             hierarchyCache.put(customerId, cached);
         }
@@ -130,12 +137,17 @@ public class UserDataService {
     }
 
     private List<HierarchyNode> getFilteredUserNodes(String userToken) {
+        boolean isTenantAdmin = JwtParserUtil.hasScope(userToken, "TENANT_ADMIN");
         String customerId = resolveCustomerIdPrefix(userToken);
         CachedHierarchy cached = getCachedHierarchy(customerId);
         
         List<HierarchyNode> nodes = cached.allNodes.stream()
                 .filter(n -> Boolean.TRUE.equals(n.getIsLeaf()))
                 .collect(Collectors.toList());
+        
+        if (isTenantAdmin) {
+            return nodes; // Bypass ThingsBoard filter and regional filtering for tenant admin!
+        }
         
         try {
             List<Map<String, String>> userDevices = userAwareThingsBoardClient.getUserDevices(userToken);
@@ -237,7 +249,7 @@ public class UserDataService {
             deviceMap.put("device_type", "default");
             
             // Enrich with state from Redis
-            Map<Object, Object> redisState = redisCacheService.getDeviceState(customerId, deviceId);
+            Map<Object, Object> redisState = redisCacheService.getDeviceState(node.getCustomerId(), deviceId);
             if (redisState != null) {
                 redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
             }
@@ -277,7 +289,7 @@ public class UserDataService {
         deviceMap.put("branchName", matchedNode.getDisplayName());
         deviceMap.put("device_type", "default");
         
-        Map<Object, Object> redisState = redisCacheService.getDeviceState(customerId, deviceId);
+        Map<Object, Object> redisState = redisCacheService.getDeviceState(matchedNode.getCustomerId(), deviceId);
         if (redisState != null) {
             redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
         }
@@ -375,6 +387,9 @@ public class UserDataService {
         }
 
         String customerId = resolveCustomerIdPrefix(userToken);
+        if ("ALL".equals(customerId)) {
+            customerId = matched.getCustomerId();
+        }
         Map<String, Object> raw = new HashMap<>();
         raw.put("device_id", matched.getDeviceId());
         raw.put("device_name", matched.getBranchName());
@@ -456,11 +471,17 @@ public class UserDataService {
 
     public Object getRawAttributes(String userToken, String scope, String deviceId) {
         String customerId = resolveCustomerIdPrefix(userToken);
+        if ("ALL".equals(customerId)) {
+            customerId = findCustomerIdForDevice(deviceId);
+        }
         return redisCacheService.getDeviceState(customerId, deviceId);
     }
 
     public Object getRawTelemetry(String userToken, String deviceId) {
         String customerId = resolveCustomerIdPrefix(userToken);
+        if ("ALL".equals(customerId)) {
+            customerId = findCustomerIdForDevice(deviceId);
+        }
         return redisCacheService.getDeviceState(customerId, deviceId);
     }
 
@@ -475,6 +496,9 @@ public class UserDataService {
     // ==================== Helpers ====================
 
     public String resolveCustomerIdPrefix(String userToken) {
+        if (JwtParserUtil.hasScope(userToken, "TENANT_ADMIN")) {
+            return "ALL";
+        }
         String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);
         if (tbCustomerId == null) {
             return unmappedCustomer(null);
@@ -482,6 +506,22 @@ public class UserDataService {
         return customerRepository.findByTbCustomerId(tbCustomerId)
                 .map(com.seple.ThingsBoard_Bot.entity.Customer::getCustomerId)
                 .orElseGet(() -> unmappedCustomer(tbCustomerId));
+    }
+
+    private String findCustomerIdForDevice(String deviceId) {
+        Optional<HierarchyNode> nodeOpt = hierarchyNodeRepository.findById(deviceId);
+        if (nodeOpt.isPresent()) {
+            return nodeOpt.get().getCustomerId();
+        }
+        try {
+            java.util.UUID uuid = java.util.UUID.fromString(deviceId);
+            Optional<HierarchyNode> nodeUuidOpt = hierarchyNodeRepository.findByTbDeviceId(uuid);
+            if (nodeUuidOpt.isPresent()) {
+                return nodeUuidOpt.get().getCustomerId();
+            }
+        } catch (IllegalArgumentException ignored) {
+        }
+        return "BOI"; // Fallback
     }
 
     /**

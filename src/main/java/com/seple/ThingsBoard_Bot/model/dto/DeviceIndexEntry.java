@@ -16,6 +16,7 @@ public class DeviceIndexEntry {
     private String deviceId;
     private String branchName;
     private String deviceType;
+    private String customerId;
     private long indexedAt;
 
     @Builder.Default

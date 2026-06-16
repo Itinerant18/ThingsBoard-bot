@@ -66,63 +66,76 @@ public class BranchIndexService {
     }
 
     public List<DeviceIndexEntry> refreshIndex(String userToken) {
-        String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);
+        boolean isTenantAdmin = JwtParserUtil.hasScope(userToken, "TENANT_ADMIN");
         String customerId = "BOI";
-        if (tbCustomerId != null) {
-            customerId = customerRepository.findByTbCustomerId(tbCustomerId)
-                    .map(com.seple.ThingsBoard_Bot.entity.Customer::getCustomerId)
-                    .orElse("BOI");
-        }
+        List<HierarchyNode> nodes;
 
-        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
-        boolean filtered = false;
-        
-        try {
-            List<Map<String, String>> userDevices = userAwareThingsBoardClient.getUserDevices(userToken);
-            if (userDevices != null && !userDevices.isEmpty()) {
-                Set<String> authDeviceIds = userDevices.stream()
-                        .map(d -> d.get("id"))
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toSet());
-                
-                nodes = nodes.stream()
-                        .filter(node -> {
-                            String devId = node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
-                            return authDeviceIds.contains(devId);
-                        })
-                        .toList();
-                log.info("Filtered branch index to {} authorized devices for token", nodes.size());
-                filtered = true;
+        if (isTenantAdmin) {
+            customerId = "ALL";
+            nodes = hierarchyNodeRepository.findAll().stream()
+                    .filter(n -> Boolean.TRUE.equals(n.getIsLeaf()))
+                    .collect(Collectors.toList());
+        } else {
+            String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);
+            if (tbCustomerId != null) {
+                customerId = customerRepository.findByTbCustomerId(tbCustomerId)
+                        .map(com.seple.ThingsBoard_Bot.entity.Customer::getCustomerId)
+                        .orElse("BOI");
             }
-        } catch (Exception e) {
-            log.error("Failed to filter branch index via ThingsBoard API: {}", e.getMessage());
+            nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
         }
 
-        // Fallback: local zone-based ancestor path filtering
-        if (!filtered) {
-            String zoneName = resolveZoneName(userToken);
-            if (zoneName != null) {
-                log.info("Attempting local fallback filtering for zone: {}", zoneName);
-                Optional<HierarchyNode> zoNodeOpt = hierarchyNodeRepository.findAll().stream()
-                        .filter(node -> "ZO".equalsIgnoreCase(node.getNodeType()) && 
-                                        (node.getDisplayName().equalsIgnoreCase(zoneName) || 
-                                         node.getNodeId().toUpperCase().contains(zoneName.replace(" ", "_"))))
-                        .findFirst();
-                
-                if (zoNodeOpt.isPresent()) {
-                    String zoNodeId = zoNodeOpt.get().getNodeId();
-                    List<BranchAncestorPath> ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
-                    Set<String> branchIdsInZone = ancestorPaths.stream()
-                            .filter(path -> path.getAncestorList().contains(zoNodeId))
-                            .map(BranchAncestorPath::getBranchNodeId)
+        if (!isTenantAdmin) {
+            boolean filtered = false;
+            
+            try {
+                List<Map<String, String>> userDevices = userAwareThingsBoardClient.getUserDevices(userToken);
+                if (userDevices != null && !userDevices.isEmpty()) {
+                    Set<String> authDeviceIds = userDevices.stream()
+                            .map(d -> d.get("id"))
+                            .filter(Objects::nonNull)
                             .collect(Collectors.toSet());
                     
                     nodes = nodes.stream()
-                            .filter(node -> branchIdsInZone.contains(node.getNodeId()))
+                            .filter(node -> {
+                                String devId = node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
+                                return authDeviceIds.contains(devId);
+                            })
                             .toList();
-                    log.info("Successfully filtered branch index to {} branches for zone: {}", nodes.size(), zoneName);
-                } else {
-                    log.warn("Could not find ZO node for zone: {} in database.", zoneName);
+                    log.info("Filtered branch index to {} authorized devices for token", nodes.size());
+                    filtered = true;
+                }
+            } catch (Exception e) {
+                log.error("Failed to filter branch index via ThingsBoard API: {}", e.getMessage());
+            }
+
+            // Fallback: local zone-based ancestor path filtering
+            if (!filtered) {
+                String zoneName = resolveZoneName(userToken);
+                if (zoneName != null) {
+                    log.info("Attempting local fallback filtering for zone: {}", zoneName);
+                    String upperZone = zoneName.toUpperCase();
+                    Optional<HierarchyNode> zoNodeOpt = hierarchyNodeRepository.findAll().stream()
+                            .filter(node -> "ZO".equalsIgnoreCase(node.getNodeType()) && 
+                                            (node.getDisplayName().equalsIgnoreCase(zoneName) || 
+                                             node.getNodeId().toUpperCase().contains(upperZone.replace(" ", "_"))))
+                            .findFirst();
+                    
+                    if (zoNodeOpt.isPresent()) {
+                        String zoNodeId = zoNodeOpt.get().getNodeId();
+                        List<BranchAncestorPath> ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+                        Set<String> branchIdsInZone = ancestorPaths.stream()
+                                .filter(path -> path.getAncestorList().contains(zoNodeId))
+                                .map(BranchAncestorPath::getBranchNodeId)
+                                .collect(Collectors.toSet());
+                        
+                        nodes = nodes.stream()
+                                .filter(node -> branchIdsInZone.contains(node.getNodeId()))
+                                .toList();
+                        log.info("Successfully filtered branch index to {} branches for zone: {}", nodes.size(), zoneName);
+                    } else {
+                        log.warn("Could not find ZO node for zone: {} in database.", zoneName);
+                    }
                 }
             }
         }
@@ -136,6 +149,7 @@ public class BranchIndexService {
                             .deviceType("default")
                             .aliases(aliases(node.getDisplayName()))
                             .indexedAt(System.currentTimeMillis())
+                            .customerId(node.getCustomerId())
                             .build();
                 })
                 .toList();

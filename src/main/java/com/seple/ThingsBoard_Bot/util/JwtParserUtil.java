@@ -124,6 +124,26 @@ public final class JwtParserUtil {
         return claimNode != null ? claimNode.asText(null) : null;
     }
 
+    public static boolean hasScope(String token, String scope) {
+        if (token == null || token.isBlank()) {
+            return false;
+        }
+        JsonNode json = payload(token);
+        if (json == null) {
+            return false;
+        }
+        JsonNode scopesNode = json.get("scopes");
+        if (scopesNode != null && scopesNode.isArray()) {
+            for (JsonNode s : scopesNode) {
+                if (scope.equals(s.asText())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
     public static String extractHost(String token) {
         String iss = extractClaim(token, "iss");
         if (iss != null && !iss.isBlank()) {

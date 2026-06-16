@@ -19,7 +19,12 @@ public class NodeNameResolver {
             return Optional.empty();
         }
         String upperQuestion = question.toUpperCase();
-        List<HierarchyNode> nodes = hierarchyNodeRepository.findByCustomerId(customerId);
+        List<HierarchyNode> nodes;
+        if ("ALL".equals(customerId)) {
+            nodes = hierarchyNodeRepository.findAll();
+        } else {
+            nodes = hierarchyNodeRepository.findByCustomerId(customerId);
+        }
         
         // Filter out leaf nodes (branches) and sort by display name length descending
         // to match longer names first (e.g. "Kolkata Zone" before "Kolkata")

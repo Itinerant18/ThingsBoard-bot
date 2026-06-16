@@ -88,4 +88,25 @@ class JwtParserUtilTest {
         JwtParserUtil.configure("");
         assertFalse(JwtParserUtil.isExpired(signedToken(KEY)));
     }
+
+    @Test
+    void hasScopeReturnsTrueIfScopeExists() {
+        JwtParserUtil.configure("");
+        String token = Jwts.builder()
+                .claim("scopes", java.util.List.of("TENANT_ADMIN", "CUSTOMER_USER"))
+                .signWith(KEY)
+                .compact();
+        assertTrue(JwtParserUtil.hasScope(token, "TENANT_ADMIN"));
+        assertTrue(JwtParserUtil.hasScope(token, "CUSTOMER_USER"));
+        assertFalse(JwtParserUtil.hasScope(token, "SYS_ADMIN"));
+    }
+
+    @Test
+    void hasScopeReturnsFalseIfNoScopesClaimOrEmpty() {
+        JwtParserUtil.configure("");
+        String token = signedToken(KEY);
+        assertFalse(JwtParserUtil.hasScope(token, "TENANT_ADMIN"));
+        assertFalse(JwtParserUtil.hasScope(null, "TENANT_ADMIN"));
+        assertFalse(JwtParserUtil.hasScope("", "TENANT_ADMIN"));
+    }
 }
