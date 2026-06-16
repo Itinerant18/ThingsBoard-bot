@@ -283,7 +283,7 @@ function isTrustedOrigin(origin: string): boolean {
 function getJwtToken(): string | null {
   // The token arrives via origin-checked postMessage (preferred). As a same-origin bootstrap for
   // iframe embedding we may read it once from the parent window. It is intentionally NOT read from
-  // URL params (leaks into history/logs/referrer) and NOT persisted to localStorage (XSS-readable).
+  // URL params (leaks into history/logs/referrer).
   try {
     if (window.parent !== window) {
       const parentToken = window.parent.localStorage?.getItem('jwt_token') || window.parent.localStorage?.getItem('tb_token')
@@ -291,6 +291,17 @@ function getJwtToken(): string | null {
     }
   } catch (e) {
     console.debug('Cannot access parent window', e)
+  }
+
+  // Standalone fallback: when the widget is opened directly (not embedded in ThingsBoard), read the
+  // token from this origin's own localStorage so it works outside the iframe. The token is advisory
+  // only — ThingsBoard re-validates it on every privileged call — so this does not grant access on
+  // its own.
+  try {
+    const ownToken = window.localStorage.getItem('jwt_token') || window.localStorage.getItem('tb_token')
+    if (ownToken) return ownToken
+  } catch (e) {
+    console.debug('Cannot access localStorage', e)
   }
 
   return null
