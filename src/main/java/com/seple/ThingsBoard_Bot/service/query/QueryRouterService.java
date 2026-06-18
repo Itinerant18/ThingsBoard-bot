@@ -75,17 +75,11 @@ public class QueryRouterService {
             }
         }
 
-        // 2. Global counts
-        if (clean.contains("how many") || clean.contains("list") || clean.contains("show")) {
-            if (clean.contains("offline") || clean.contains("inactive") || clean.contains("disconnected")) {
-                long count = redisQueryService.getGlobalCounter(customerId, "total_offline");
-                return String.format("**%d branches are currently OFFLINE across all branches.**", count);
-            } else if (clean.contains("online") || clean.contains("active") || clean.contains("connected")) {
-                long count = redisQueryService.getGlobalCounter(customerId, "total_online");
-                return String.format("**%d branches are currently ONLINE across all branches.**", count);
-            }
-        }
-
+        // 2. Global (non-node) counts are intentionally NOT answered here. The global total_online /
+        // total_offline Redis counters are never populated by replay, so reading them returned 0 and
+        // contradicted the global overview. Returning null lets the query fall through to the
+        // snapshot-based GLOBAL_OVERVIEW handler, which counts live branch snapshots — keeping
+        // "how many offline" consistent with "list all branches".
         log.warn("[ROUTER] Query fell through simple classification: '{}'", question);
         return null;
     }

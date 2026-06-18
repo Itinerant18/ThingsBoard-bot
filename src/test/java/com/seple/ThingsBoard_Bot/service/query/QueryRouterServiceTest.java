@@ -54,19 +54,16 @@ class QueryRouterServiceTest {
     }
 
     @Test
-    void shouldRouteAndAnswerGlobalOnlineCounts() {
-        when(redisQueryService.getGlobalCounter("BOI", "total_online")).thenReturn(15L);
-
-        String answer = queryRouterService.routeAndAnswerSimple("BOI", "how many active branches");
-        assertEquals("**15 branches are currently ONLINE across all branches.**", answer);
+    void shouldReturnNullForGlobalOnlineCountsSoTheyFallThroughToSnapshotOverview() {
+        // Global online/offline counts are no longer answered from the (never-populated) Redis
+        // counters; the router returns null so the query falls through to the snapshot-based
+        // GLOBAL_OVERVIEW handler, keeping counts consistent with "list all branches".
+        assertNull(queryRouterService.routeAndAnswerSimple("BOI", "how many active branches"));
     }
 
     @Test
-    void shouldRouteAndAnswerGlobalOfflineCounts() {
-        when(redisQueryService.getGlobalCounter("BOI", "total_offline")).thenReturn(3L);
-
-        String answer = queryRouterService.routeAndAnswerSimple("BOI", "how many branches are offline");
-        assertEquals("**3 branches are currently OFFLINE across all branches.**", answer);
+    void shouldReturnNullForGlobalOfflineCountsSoTheyFallThroughToSnapshotOverview() {
+        assertNull(queryRouterService.routeAndAnswerSimple("BOI", "how many branches are offline"));
     }
 
     @Test

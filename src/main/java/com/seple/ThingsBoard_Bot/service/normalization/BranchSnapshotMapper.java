@@ -39,13 +39,16 @@ public class BranchSnapshotMapper {
         BranchIdentity identity = buildIdentity(raw);
         GatewayStatus gateway = buildGateway(raw, warnings);
         PowerStatus power = buildPower(raw, warnings);
+        // The <system>_sts serverAttributes (cctv_sts, ias_sts, ...) are the ONLY authoritative
+        // subsystem status. A device that does not carry the _sts key reports UNKNOWN — we do not
+        // guess from operational flags. A present _sts value (Online/Offline/Fault/N/A) is shown as-is.
         BranchSubsystems subsystems = BranchSubsystems.builder()
-                .cctv(buildSubsystem("CCTV", raw, "cctv", "cctvStatus", "cameraLinkStatus"))
-                .ias(buildSubsystem("IAS", raw, "ias", "iasStatus", "ias_status"))
-                .bas(buildSubsystem("BAS", raw, "bas", "basStatus"))
-                .fas(buildSubsystem("FAS", raw, "fas", "fasStatus", "fireAlarmStatus"))
-                .timeLock(buildSubsystem("Time Lock", raw, "timeLock", "tlStatus", "timeLockHealth"))
-                .accessControl(buildSubsystem("Access Control", raw, "accessControl", "accessControlStatus"))
+                .cctv(buildSubsystem("CCTV", raw, "cctv_sts"))
+                .ias(buildSubsystem("IAS", raw, "ias_sts"))
+                .bas(buildSubsystem("BAS", raw, "bas_sts"))
+                .fas(buildSubsystem("FAS", raw, "fas_sts"))
+                .timeLock(buildSubsystem("Time Lock", raw, "timeLock_sts"))
+                .accessControl(buildSubsystem("Access Control", raw, "accessControl_sts"))
                 .build();
 
         return BranchSnapshot.builder()
@@ -139,20 +142,16 @@ public class BranchSnapshotMapper {
             }
         }
 
-        String health = null;
-        if ("timeLock".equals(primaryField)) {
-            health = stringValue(raw.get("timeLockHealth"));
-        } else if ("accessControl".equals(primaryField)) {
-            health = stringValue(raw.get("accessControlStatus"));
-        } else if ("fas".equals(primaryField)) {
-            health = choose(raw, "fasStatus", "fireAlarmStatus");
-        } else if ("ias".equals(primaryField)) {
-            health = choose(raw, "iasStatus", "ias_status");
-        } else if ("cctv".equals(primaryField)) {
-            health = choose(raw, "cctvStatus", "cameraLinkStatus");
-        } else if ("bas".equals(primaryField)) {
-            health = stringValue(raw.get("basStatus"));
-        }
+        // Keyed off systemName (stable) rather than primaryField, since primaryField is now the _sts key.
+        String health = switch (systemName) {
+            case "Time Lock" -> stringValue(raw.get("timeLockHealth"));
+            case "Access Control" -> stringValue(raw.get("accessControlStatus"));
+            case "FAS" -> choose(raw, "fasStatus", "fireAlarmStatus");
+            case "IAS" -> choose(raw, "iasStatus", "ias_status");
+            case "CCTV" -> choose(raw, "cctvStatus", "cameraLinkStatus");
+            case "BAS" -> stringValue(raw.get("basStatus"));
+            default -> null;
+        };
 
         return SubsystemStatus.builder()
                 .systemName(systemName)

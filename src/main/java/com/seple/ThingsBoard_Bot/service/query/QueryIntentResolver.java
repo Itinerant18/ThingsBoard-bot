@@ -23,17 +23,15 @@ public class QueryIntentResolver {
         String normalizedQuestion = branchAliasIndex.normalize(question);
         String compactQuestion = branchAliasIndex.compact(question);
         Map<String, BranchSnapshot> aliasIndex = branchAliasIndex.build(snapshots);
-        boolean explicitGlobalQuestion = hasGlobalMarkers(normalizedQuestion);
-        
+
         // Find if branch is in the question
         BranchSnapshot targetBranch = findBranchInQuestion(normalizedQuestion, compactQuestion, aliasIndex);
         boolean branchFromMemory = false;
-        
-        // If not in question, try memory
-        if (targetBranch == null && !explicitGlobalQuestion && activeBranchAlias != null && !activeBranchAlias.isBlank()) {
-            targetBranch = findBranchInMemory(activeBranchAlias, aliasIndex);
-            branchFromMemory = (targetBranch != null);
-        }
+
+        // NOTE: We deliberately do NOT fall back to the last active branch from memory. Silently
+        // reusing the previous branch for an unknown/ambiguous branch name produced wrong-branch and
+        // cross-branch answers. When the question names no resolvable branch and is not global, the
+        // query is flagged ambiguous below so the caller asks the user to clarify which branch.
 
         QueryIntent intent = detectIntent(normalizedQuestion, targetBranch != null);
         boolean global = isGlobalQuestion(normalizedQuestion, targetBranch != null);
@@ -72,15 +70,6 @@ public class QueryIntentResolver {
         for (String alias : aliases) {
             if (!alias.isBlank() && !isWeakAlias(alias) && matchesExplicitAlias(normalizedQuestion, compactQuestion, alias)) {
                 return aliasIndex.get(alias);
-            }
-        }
-        return null;
-    }
-
-    private BranchSnapshot findBranchInMemory(String activeBranchAlias, Map<String, BranchSnapshot> aliasIndex) {
-        for (String variant : branchAliasIndex.aliasVariants(activeBranchAlias)) {
-            if (aliasIndex.containsKey(variant)) {
-                return aliasIndex.get(variant);
             }
         }
         return null;
@@ -279,7 +268,22 @@ public class QueryIntentResolver {
                 || question.contains("any inactive")
                 || question.contains("any active")
                 || question.contains("any branch")
-                || question.contains("are there branch");
+                || question.contains("are there branch")
+                || isGlobalCountWithStatus(question);
+    }
+
+    /**
+     * A fleet-wide count/list combined with a connectivity word, e.g. "how many of my branches are
+     * offline" or "count of online branches". These are global overview questions; they must be
+     * answered by counting live snapshots (consistent with the global overview), not from a
+     * single-branch context. Mirrors the router's classification of the same shape.
+     */
+    private boolean isGlobalCountWithStatus(String question) {
+        boolean countOrList = question.contains("how many") || question.contains("count");
+        boolean statusWord = question.contains("offline") || question.contains("online")
+                || question.contains("inactive") || question.contains("active")
+                || question.contains("connected") || question.contains("disconnected");
+        return countOrList && statusWord;
     }
 
     private boolean containsSubsystemKeyword(String normalizedQuestion) {
