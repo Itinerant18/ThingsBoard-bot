@@ -1,0 +1,1382 @@
+{
+  "id" : "01c61bb0-ab4c-11f0-91df-7ffa16af2ee9",
+  "name" : "BOI-MALDATOWN",
+  "type" : "BOI Device Profile",
+  "telemetry" : {
+    "cameraStatus" : "{\"cctvStatus\":\"On\",\"CAMERA TAMPER\":\"false\",\"CAMERA DISCONNECT\":\"false\",\"HDD ERROR\":\"false\",\"CAMERA TAMPER CH 1\":\"N/A\",\"CAMERA DISCONNECT CH 1\":\"N/A\",\"CAMERA TAMPER CH 2\":\"N/A\",\"CAMERA DISCONNECT CH 2\":\"N/A\",\"CAMERA TAMPER CH 3\":\"N/A\",\"CAMERA DISCONNECT CH 3\":\"N/A\",\"CAMERA TAMPER CH 4\":\"N/A\",\"CAMERA DISCONNECT CH 4\":\"N/A\",\"CAMERA TAMPER CH 5\":\"N/A\",\"CAMERA DISCONNECT CH 5\":\"N/A\",\"CAMERA TAMPER CH 6\":\"N/A\",\"CAMERA DISCONNECT CH 6\":\"N/A\",\"CAMERA TAMPER CH 7\":\"N/A\",\"CAMERA DISCONNECT CH 7\":\"N/A\",\"CAMERA TAMPER CH 8\":\"N/A\",\"CAMERA DISCONNECT CH 8\":\"N/A\",\"CAMERA TAMPER CH 9\":\"N/A\",\"CAMERA DISCONNECT CH 9\":\"N/A\",\"CAMERA TAMPER CH 10\":\"N/A\",\"CAMERA DISCONNECT CH 10\":\"N/A\",\"CAMERA TAMPER CH 11\":\"N/A\",\"CAMERA DISCONNECT CH 11\":\"N/A\",\"CAMERA TAMPER CH 12\":\"N/A\",\"CAMERA DISCONNECT CH 12\":\"N/A\",\"CAMERA TAMPER CH 13\":\"N/A\",\"CAMERA DISCONNECT CH 13\":\"N/A\",\"CAMERA TAMPER CH 14\":\"N/A\",\"CAMERA DISCONNECT CH 14\":\"N/A\",\"CAMERA TAMPER CH 15\":\"N/A\",\"CAMERA DISCONNECT CH 15\":\"N/A\",\"CAMERA TAMPER CH 16\":\"N/A\",\"CAMERA DISCONNECT CH 16\":\"N/A\"}",
+    "cameraStatus_cctvStatus" : "On",
+    "cameraStatus_CAMERA TAMPER" : "false",
+    "cameraStatus_CAMERA DISCONNECT" : "false",
+    "cameraStatus_HDD ERROR" : "false",
+    "cameraStatus_CAMERA TAMPER CH 1" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 1" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 2" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 2" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 3" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 3" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 4" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 4" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 5" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 5" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 6" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 6" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 7" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 7" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 8" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 8" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 9" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 9" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 10" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 10" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 11" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 11" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 12" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 12" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 13" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 13" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 14" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 14" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 15" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 15" : "N/A",
+    "cameraStatus_CAMERA TAMPER CH 16" : "N/A",
+    "cameraStatus_CAMERA DISCONNECT CH 16" : "N/A",
+    "imei_id" : "{\"dev_id\":358773400033916}",
+    "imei_id_dev_id" : 358773400033916,
+    "alarm" : "null1",
+    "usage_daily" : "0",
+    "usage_last_7_days" : "0",
+    "usage_last_15_days" : "0",
+    "error" : "Invalid or missing Device_Issue or id",
+    "log_type" : "heartbeat_FAS",
+    "timestamp" : "2026-03-27T11:48:06.294477",
+    "gatewayStatus" : "{\"SYSTEM ON\":\"true\",\"MAINS ON\":\"false\",\"BATTERY ON\":\"N/A\",\"BATTERY LOW\":\"true\",\"BATTERY REVERSE\":\"N/A\",\"NETWORK\":\"true\",\"system_current\":1.0,\"ac_voltage\":210.0,\"battery_voltage\":14.0}",
+    "gatewayStatus_SYSTEM ON" : "true",
+    "gatewayStatus_MAINS ON" : "false",
+    "gatewayStatus_BATTERY ON" : "N/A",
+    "gatewayStatus_BATTERY LOW" : "true",
+    "gatewayStatus_BATTERY REVERSE" : "N/A",
+    "gatewayStatus_NETWORK" : "true",
+    "gatewayStatus_system_current" : 1.0,
+    "gatewayStatus_ac_voltage" : 210.0,
+    "gatewayStatus_battery_voltage" : 14.0,
+    "Hikvision_NVR_CameraRecInfo" : "[{\"camera_id\":\"101\",\"total_duration\":491,\"start_time\":\"2024-10-18 14:28:43\",\"end_time\":\"2026-04-29 17:29:07\"},{\"camera_id\":\"201\",\"total_duration\":156,\"start_time\":\"2025-09-15 12:16:55\",\"end_time\":\"2026-04-29 17:27:01\"},{\"camera_id\":\"301\",\"total_duration\":239,\"start_time\":\"2025-07-01 16:08:08\",\"end_time\":\"2026-04-29 17:41:27\"},{\"camera_id\":\"401\",\"total_duration\":208,\"start_time\":\"2025-09-15 13:19:28\",\"end_time\":\"2026-04-29 17:27:04\"},{\"camera_id\":\"501\",\"total_duration\":215,\"start_time\":\"2024-12-23 19:23:21\",\"end_time\":\"2026-04-29 17:34:02\"},{\"camera_id\":\"601\",\"total_duration\":226,\"start_time\":\"2025-09-15 11:45:01\",\"end_time\":\"2026-04-29 17:41:27\"},{\"camera_id\":\"701\",\"total_duration\":193,\"start_time\":\"2025-09-15 13:22:57\",\"end_time\":\"2026-04-29 17:43:05\"},{\"camera_id\":\"801\",\"total_duration\":206,\"start_time\":\"2025-09-15 13:35:11\",\"end_time\":\"2026-04-29 17:27:55\"},{\"camera_id\":\"901\",\"total_duration\":204,\"start_time\":\"2025-09-15 13:05:03\",\"end_time\":\"2026-04-29 17:49:46\"},{\"camera_id\":\"1001\",\"total_duration\":227,\"start_time\":\"2025-09-14 12:16:01\",\"end_time\":\"2026-04-29 17:50:46\"},{\"camera_id\":\"1101\",\"total_duration\":224,\"start_time\":\"2025-09-15 12:51:51\",\"end_time\":\"2026-04-29 17:59:21\"},{\"camera_id\":\"1201\",\"total_duration\":122,\"start_time\":\"2025-09-15 12:29:49\",\"end_time\":\"2026-04-18 14:19:37\"},{\"camera_id\":\"1301\",\"total_duration\":213,\"start_time\":\"2025-09-15 12:56:04\",\"end_time\":\"2026-04-29 18:00:45\"},{\"camera_id\":\"1401\",\"total_duration\":197,\"start_time\":\"2025-09-11 16:50:22\",\"end_time\":\"2026-04-29 17:21:44\"},{\"camera_id\":\"1501\",\"total_duration\":194,\"start_time\":\"2025-09-09 10:17:30\",\"end_time\":\"2026-04-29 17:13:56\"},{\"camera_id\":\"1601\",\"total_duration\":220,\"start_time\":\"2025-09-15 12:21:59\",\"end_time\":\"2026-04-29 17:50:44\"}]",
+    "branch_id" : "4320",
+    "cctvLastHour" : "1",
+    "fasLastHour" : "1",
+    "basLastHour" : "1",
+    "accessControlLastHour" : "0",
+    "timeLockLastHour" : "0",
+    "uptimeTotal" : "1",
+    "gatewayLastHour" : "1",
+    "iasLastHour" : "0",
+    "alerts" : "[]",
+    "ticketStatus" : "{\"H_ERROR\":\"false\",\"CAM_DIS\":\"false\",\"CAM_TAMPER\":\"false\",\"NVR_OFF\":\"false\",\"FAS_OFF\":\"false\",\"IAS_OFF\":\"false\",\"IAS_FAULT\":\"false\",\"IAS_ACTIVATE\":\"false\",\"FAS_FAULT\":\"false\",\"FAS_ACTIVATE\":\"false\",\"TLS_TAMPER\":\"false\",\"ACS_TAMPER\":\"false\",\"POWER_OFF\":\"true\",\"BATTERY_LOW\":\"true\",\"TLS_OFF\":\"false\",\"ACS_OFF\":\"false\",\"TLS_DOOR_OPEN\":\"false\",\"ACS_DOOR_OPEN\":\"false\",\"IAS_INT_OFF\":\"false\",\"IAS_INT_FAULT\":\"false\",\"IAS_INT_ACTIVATE\":\"false\"}",
+    "ticketStatus_H_ERROR" : "false",
+    "ticketStatus_CAM_DIS" : "false",
+    "ticketStatus_CAM_TAMPER" : "false",
+    "ticketStatus_NVR_OFF" : "false",
+    "ticketStatus_FAS_OFF" : "false",
+    "ticketStatus_IAS_OFF" : "false",
+    "ticketStatus_IAS_FAULT" : "false",
+    "ticketStatus_IAS_ACTIVATE" : "false",
+    "ticketStatus_FAS_FAULT" : "false",
+    "ticketStatus_FAS_ACTIVATE" : "false",
+    "ticketStatus_TLS_TAMPER" : "false",
+    "ticketStatus_ACS_TAMPER" : "false",
+    "ticketStatus_POWER_OFF" : "true",
+    "ticketStatus_BATTERY_LOW" : "true",
+    "ticketStatus_TLS_OFF" : "false",
+    "ticketStatus_ACS_OFF" : "false",
+    "ticketStatus_TLS_DOOR_OPEN" : "false",
+    "ticketStatus_ACS_DOOR_OPEN" : "false",
+    "ticketStatus_IAS_INT_OFF" : "false",
+    "ticketStatus_IAS_INT_FAULT" : "false",
+    "ticketStatus_IAS_INT_ACTIVATE" : "false",
+    "rockAI" : "{\"camera\":\"N/A\",\"fingerPrintModule\":\"N/A\",\"MCUVersion\":\"N/A\",\"macAddress\":\"N/A\",\"manufacturer\":\"N/A\",\"subDeviceType\":\"N/A\",\"Heartbeat\":\"N/A\",\"totalNumOfUsers\":\"N/A\",\"totalNumOfCards\":\"N/A\",\"deviceName\":\"N/A\",\"deviceID\":\"N/A\",\"model\":\"N/A\",\"serialNumber\":\"N/A\",\"firmwareVersion\":\"N/A\",\"deviceType\":\"N/A\",\"RS485Num\":\"N/A\",\"DoorLockStatus\":\"N/A\",\"hostAntiDismantleStatus\":\"N/A\",\"MagneticStatus\":\"N/A\",\"originatorName\":\"N/A\",\"originatorId\":\"N/A\",\"originatorType\":\"N/A\",\"deviceDate\":\"N/A\",\"deviceTime\":\"N/A\",\"syncTimeDate\":\"N/A\"}",
+    "rockAI_camera" : "N/A",
+    "rockAI_fingerPrintModule" : "N/A",
+    "rockAI_MCUVersion" : "N/A",
+    "rockAI_macAddress" : "N/A",
+    "rockAI_manufacturer" : "N/A",
+    "rockAI_subDeviceType" : "N/A",
+    "rockAI_Heartbeat" : "N/A",
+    "rockAI_totalNumOfUsers" : "N/A",
+    "rockAI_totalNumOfCards" : "N/A",
+    "rockAI_deviceName" : "N/A",
+    "rockAI_deviceID" : "N/A",
+    "rockAI_model" : "N/A",
+    "rockAI_serialNumber" : "N/A",
+    "rockAI_firmwareVersion" : "N/A",
+    "rockAI_deviceType" : "N/A",
+    "rockAI_RS485Num" : "N/A",
+    "rockAI_DoorLockStatus" : "N/A",
+    "rockAI_hostAntiDismantleStatus" : "N/A",
+    "rockAI_MagneticStatus" : "N/A",
+    "rockAI_originatorName" : "N/A",
+    "rockAI_originatorId" : "N/A",
+    "rockAI_originatorType" : "N/A",
+    "rockAI_deviceDate" : "N/A",
+    "rockAI_deviceTime" : "N/A",
+    "rockAI_syncTimeDate" : "N/A",
+    "Nvr_DVR_last" : "{}",
+    "intrusion_alarm_activate_last" : "{\"IActL\":\"2026-04-06T18:12:42.279Z\",\"ts\":1775479362279,\"log_status\":\"intrusion_alarm_system_activate\",\"deviceType\":\"BAS\",\"Device_Type1\":\"INTRUSION ALARM\"}",
+    "intrusion_alarm_activate_last_IActL" : "2026-04-06T18:12:42.279Z",
+    "intrusion_alarm_activate_last_ts" : 1775479362279,
+    "intrusion_alarm_activate_last_log_status" : "intrusion_alarm_system_activate",
+    "intrusion_alarm_activate_last_deviceType" : "BAS",
+    "intrusion_alarm_activate_last_Device_Type1" : "INTRUSION ALARM",
+    "iasBasFasStatus" : "{\"INTEGRATED ALARM SYSTEM ON\":true,\"INTEGRATED ALARM SYSTEM ACTIVATE\":false,\"INTEGRATED ALARM SYSTEM FAULT\":false,\"INTRUSION ALARM SYSTEM ON\":false,\"INTRUSION ALARM SYSTEM ACTIVATE\":true,\"INTRUSION ALARM SYSTEM FAULT\":false,\"FIRE ALARM SYSTEM ON\":false,\"FIRE ALARM SYSTEM ACTIVATE\":false,\"FIRE ALARM SYSTEM FAULT\":false}",
+    "iasBasFasStatus_INTEGRATED ALARM SYSTEM ON" : true,
+    "iasBasFasStatus_INTEGRATED ALARM SYSTEM ACTIVATE" : false,
+    "iasBasFasStatus_INTEGRATED ALARM SYSTEM FAULT" : false,
+    "iasBasFasStatus_INTRUSION ALARM SYSTEM ON" : false,
+    "iasBasFasStatus_INTRUSION ALARM SYSTEM ACTIVATE" : true,
+    "iasBasFasStatus_INTRUSION ALARM SYSTEM FAULT" : false,
+    "iasBasFasStatus_FIRE ALARM SYSTEM ON" : false,
+    "iasBasFasStatus_FIRE ALARM SYSTEM ACTIVATE" : false,
+    "iasBasFasStatus_FIRE ALARM SYSTEM FAULT" : false,
+    "tlsAcsStatus" : "{\"TIME LOCK SYSTEM ON\":true,\"TIME LOCK SYSTEM TAMPER\":false,\"TIME LOCK DOOR OPEN\":false}",
+    "tlsAcsStatus_TIME LOCK SYSTEM ON" : true,
+    "tlsAcsStatus_TIME LOCK SYSTEM TAMPER" : false,
+    "tlsAcsStatus_TIME LOCK DOOR OPEN" : false,
+    "time_lock_off_last" : "{}",
+    "status_device" : "{\"cctv_status\":\"Online\",\"bas_status\":\"Online\",\"fas_status\":\"Online\",\"tl_status\":\"Online\",\"ac_status\":\"N/A\",\"gateway_status\":\"Fault\",\"ias_status\":\"Online\"}",
+    "status_device_cctv_status" : "Online",
+    "status_device_bas_status" : "Online",
+    "status_device_fas_status" : "Online",
+    "status_device_tl_status" : "Online",
+    "status_device_ac_status" : "N/A",
+    "status_device_gateway_status" : "Fault",
+    "status_device_ias_status" : "Online",
+    "integrated_alarm_activate_last" : "{}",
+    "fire_alarm_activate_last" : "{}",
+    "fire_alarm_fault_last" : "{}",
+    "integrated_alarm_off_last" : "{}",
+    "camera_tampered_last" : "{}",
+    "camera_disconnect_last" : "{}",
+    "battery_low_last" : "{\"BLL\":\"2026-03-20T15:43:10.403Z\",\"ts\":1774001590403,\"log_status\":\"battery_low\",\"deviceType\":\"GATEWAY\",\"Device_Type1\":\"GATEWAY\"}",
+    "battery_low_last_BLL" : "2026-03-20T15:43:10.403Z",
+    "battery_low_last_ts" : 1774001590403,
+    "battery_low_last_log_status" : "battery_low",
+    "battery_low_last_deviceType" : "GATEWAY",
+    "battery_low_last_Device_Type1" : "GATEWAY",
+    "Device_Issue" : "intrusion_alarm_system_activate",
+    "integrated_alarm_fault_last" : "{}",
+    "intrusion_alarm_fault_last" : "{}",
+    "power_off_last" : "{\"POL\":\"2026-04-10T06:28:20.253Z\",\"ts\":1775782700253,\"log_status\":\"power_off\",\"deviceType\":\"GATEWAY\",\"Device_Type1\":\"GATEWAY\"}",
+    "power_off_last_POL" : "2026-04-10T06:28:20.253Z",
+    "power_off_last_ts" : 1775782700253,
+    "power_off_last_log_status" : "power_off",
+    "power_off_last_deviceType" : "GATEWAY",
+    "power_off_last_Device_Type1" : "GATEWAY",
+    "hdd_error_last" : "{}",
+    "rock" : "{\"Date\":\"2026-04-30\",\"Time\":\"14:22:39\",\"dexter_time\":\"14:21\",\"syncTimeDate\":\"30/4/2026, 2:28:32 pm\",\"healthyStatus\":\"Healthy\",\"Hikvision_NVR_Heartbeat\":\"hikvision_nvr_on\",\"dexter_date\":\"30:4:26\",\"deviceType\":\"Hikvision NVR\",\"manufacturer\":\"Hikvision\",\"serialNumber\":\"DS-7716NXI-K41620240902CCRRFM9105863WCVU\",\"mfDate\":\"2024-09-02\",\"SdCardINFO\":[],\"SdRecINFO\":[],\"HddINFO\":[{\"HDDSlots\":\"1\",\"HDDStatus\":\"idle\",\"HDDcapacity\":\"5.46\",\"HDDfreeSpace\":\"0.00\"},{\"HDDSlots\":\"2\",\"HDDStatus\":\"ok\",\"HDDcapacity\":\"5.46\",\"HDDfreeSpace\":\"3.43\"},{\"HDDSlots\":\"3\",\"HDDStatus\":\"idle\",\"HDDcapacity\":\"5.46\",\"HDDfreeSpace\":\"0.00\"},{\"HDDSlots\":\"4\",\"HDDStatus\":\"ok\",\"HDDcapacity\":\"5.46\",\"HDDfreeSpace\":\"0.00\"}],\"NoOfHDDSlots\":4,\"capacity\":21.84,\"deviceID\":\"48464d39-3130-3538-3633-24b10557c0f9\",\"deviceName\":\"Network Video Recorder\",\"macAddress\":\"24:b1:05:57:c0:f9\",\"CAMERAdETAILS\":[{\"IP Address\":\"192.168.1.109\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"fbfa5291-aac5-45ef-8aed-06f2c8d6999b\",\"Active Status\":\"Inactive\",\"channel_name\":\"101\",\"fps\":\"2500\",\"resolution\":\"1280x720\",\"id\":\"1\",\"id1\":\"101\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.20\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"1956a651-ebd9-4439-84cb-093066a81bc9\",\"Active Status\":\"Inactive\",\"channel_name\":\"201\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"2\",\"id1\":\"201\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.101\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"58b9a0c2-ee8e-4220-952a-8ed7aefa13ee\",\"Active Status\":\"Inactive\",\"channel_name\":\"301\",\"fps\":\"1500\",\"resolution\":\"1920x1080\",\"id\":\"3\",\"id1\":\"301\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.14\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"e043f5c2-a101-468f-a3f3-09e0509c6595\",\"Active Status\":\"Inactive\",\"channel_name\":\"401\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"4\",\"id1\":\"401\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.11\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"00964c35-8bd8-4b3f-8a3f-b37c48cce7c6\",\"Active Status\":\"Inactive\",\"channel_name\":\"501\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"5\",\"id1\":\"501\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.25\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"0c121155-3fd0-4393-9aff-a6e49a1ffef2\",\"Active Status\":\"Inactive\",\"channel_name\":\"601\",\"fps\":\"1500\",\"resolution\":\"1920x1080\",\"id\":\"6\",\"id1\":\"601\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.13\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"ba3b0ccf-b7c8-46f3-ba29-5ce5dcf752fc\",\"Active Status\":\"Inactive\",\"channel_name\":\"701\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"7\",\"id1\":\"701\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.64\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"9043e2f1-6548-4630-9b09-1481e8875835\",\"Active Status\":\"Inactive\",\"channel_name\":\"801\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"8\",\"id1\":\"801\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.22\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"b4502af8-85cc-4049-8797-24664bd2f3e6\",\"Active Status\":\"Inactive\",\"channel_name\":\"901\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"9\",\"id1\":\"901\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.17\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"4efb2cee-e902-4671-aaa2-ab82749003e4\",\"Active Status\":\"Inactive\",\"channel_name\":\"1001\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"10\",\"id1\":\"1001\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.16\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"95d97487-942e-4fea-ae69-efb796739a41\",\"Active Status\":\"Inactive\",\"channel_name\":\"1101\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"11\",\"id1\":\"1101\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.100\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"0b5fef62-ed90-416a-8785-107fb47d41b7\",\"Active Status\":\"Inactive\",\"channel_name\":\"1201\",\"fps\":\"1500\",\"resolution\":\"1920x1080\",\"id\":\"12\",\"id1\":\"1201\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.15\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"2f01c107-c974-497c-afb7-ea4279e1c1f0\",\"Active Status\":\"Inactive\",\"channel_name\":\"1301\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"13\",\"id1\":\"1301\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.21\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"5a865e6b-59db-452f-98f8-fbf82e0d85db\",\"Active Status\":\"Inactive\",\"channel_name\":\"1401\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"14\",\"id1\":\"1401\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.12\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"55263318-e0d0-4ad0-9834-7094bc005380\",\"Active Status\":\"Inactive\",\"channel_name\":\"1501\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"15\",\"id1\":\"1501\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.24\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"0b8b5166-6381-48ea-aa0b-7bf90b46b13c\",\"Active Status\":\"Inactive\",\"channel_name\":\"1601\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"16\",\"id1\":\"1601\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"}],\"VIDEOdETAILS\":[{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.109\",\"channel_no\":\"1\",\"total_duration\":491,\"start_time\":\"Oct 18, 2024, 14:28:43\",\"end_time\":\"Apr 29, 2026, 17:29:07\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.20\",\"channel_no\":\"2\",\"total_duration\":156,\"start_time\":\"Sep 15, 2025, 12:16:55\",\"end_time\":\"Apr 29, 2026, 17:27:01\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.101\",\"channel_no\":\"3\",\"total_duration\":239,\"start_time\":\"Jul 01, 2025, 16:08:08\",\"end_time\":\"Apr 29, 2026, 17:41:27\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.14\",\"channel_no\":\"4\",\"total_duration\":208,\"start_time\":\"Sep 15, 2025, 13:19:28\",\"end_time\":\"Apr 29, 2026, 17:27:04\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.11\",\"channel_no\":\"5\",\"total_duration\":215,\"start_time\":\"Dec 23, 2024, 19:23:21\",\"end_time\":\"Apr 29, 2026, 17:34:02\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.25\",\"channel_no\":\"6\",\"total_duration\":226,\"start_time\":\"Sep 15, 2025, 11:45:01\",\"end_time\":\"Apr 29, 2026, 17:41:27\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.13\",\"channel_no\":\"7\",\"total_duration\":193,\"start_time\":\"Sep 15, 2025, 13:22:57\",\"end_time\":\"Apr 29, 2026, 17:43:05\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.64\",\"channel_no\":\"8\",\"total_duration\":206,\"start_time\":\"Sep 15, 2025, 13:35:11\",\"end_time\":\"Apr 29, 2026, 17:27:55\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.22\",\"channel_no\":\"9\",\"total_duration\":204,\"start_time\":\"Sep 15, 2025, 13:05:03\",\"end_time\":\"Apr 29, 2026, 17:49:46\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.17\",\"channel_no\":\"10\",\"total_duration\":227,\"start_time\":\"Sep 14, 2025, 12:16:01\",\"end_time\":\"Apr 29, 2026, 17:50:46\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.16\",\"channel_no\":\"11\",\"total_duration\":224,\"start_time\":\"Sep 15, 2025, 12:51:51\",\"end_time\":\"Apr 29, 2026, 17:59:21\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.100\",\"channel_no\":\"12\",\"total_duration\":122,\"start_time\":\"Sep 15, 2025, 12:29:49\",\"end_time\":\"Apr 18, 2026, 14:19:37\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.15\",\"channel_no\":\"13\",\"total_duration\":213,\"start_time\":\"Sep 15, 2025, 12:56:04\",\"end_time\":\"Apr 29, 2026, 18:00:45\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.21\",\"channel_no\":\"14\",\"total_duration\":197,\"start_time\":\"Sep 11, 2025, 16:50:22\",\"end_time\":\"Apr 29, 2026, 17:21:44\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.12\",\"channel_no\":\"15\",\"total_duration\":194,\"start_time\":\"Sep 09, 2025, 10:17:30\",\"end_time\":\"Apr 29, 2026, 17:13:56\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.24\",\"channel_no\":\"16\",\"total_duration\":220,\"start_time\":\"Sep 15, 2025, 12:21:59\",\"end_time\":\"Apr 29, 2026, 17:50:44\"}],\"model\":\"DS-7716NXI-K4\",\"hardwareVersion\":\"B-R-K20A9_K20A9-00\",\"firmwareVersion\":\"V4.82.100\",\"originatorName\":\"BRANCH MALDA TOWN\",\"originatorId\":\"01c61bb0-ab4c-11f0-91df-7ffa16af2ee9\",\"originatorType\":\"BOI Device Profile\",\"freeSpace\":\"NA\",\"zo\":\"ZO SILIGURI\",\"nbg\":\"NBG EAST\"}",
+    "rock_Date" : "2026-04-30",
+    "rock_Time" : "14:22:39",
+    "rock_dexter_time" : "14:21",
+    "rock_syncTimeDate" : "30/4/2026, 2:28:32 pm",
+    "rock_healthyStatus" : "Healthy",
+    "rock_Hikvision_NVR_Heartbeat" : "hikvision_nvr_on",
+    "rock_dexter_date" : "30:4:26",
+    "rock_deviceType" : "Hikvision NVR",
+    "rock_manufacturer" : "Hikvision",
+    "rock_serialNumber" : "DS-7716NXI-K41620240902CCRRFM9105863WCVU",
+    "rock_mfDate" : "2024-09-02",
+    "rock_SdCardINFO" : "[]",
+    "rock_SdRecINFO" : "[]",
+    "rock_HddINFO" : "[{\"HDDSlots\":\"1\",\"HDDStatus\":\"idle\",\"HDDcapacity\":\"5.46\",\"HDDfreeSpace\":\"0.00\"},{\"HDDSlots\":\"2\",\"HDDStatus\":\"ok\",\"HDDcapacity\":\"5.46\",\"HDDfreeSpace\":\"3.43\"},{\"HDDSlots\":\"3\",\"HDDStatus\":\"idle\",\"HDDcapacity\":\"5.46\",\"HDDfreeSpace\":\"0.00\"},{\"HDDSlots\":\"4\",\"HDDStatus\":\"ok\",\"HDDcapacity\":\"5.46\",\"HDDfreeSpace\":\"0.00\"}]",
+    "rock_NoOfHDDSlots" : 4,
+    "rock_capacity" : 21.84,
+    "rock_deviceID" : "48464d39-3130-3538-3633-24b10557c0f9",
+    "rock_deviceName" : "Network Video Recorder",
+    "rock_macAddress" : "24:b1:05:57:c0:f9",
+    "rock_CAMERAdETAILS" : "[{\"IP Address\":\"192.168.1.109\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"fbfa5291-aac5-45ef-8aed-06f2c8d6999b\",\"Active Status\":\"Inactive\",\"channel_name\":\"101\",\"fps\":\"2500\",\"resolution\":\"1280x720\",\"id\":\"1\",\"id1\":\"101\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.20\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"1956a651-ebd9-4439-84cb-093066a81bc9\",\"Active Status\":\"Inactive\",\"channel_name\":\"201\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"2\",\"id1\":\"201\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.101\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"58b9a0c2-ee8e-4220-952a-8ed7aefa13ee\",\"Active Status\":\"Inactive\",\"channel_name\":\"301\",\"fps\":\"1500\",\"resolution\":\"1920x1080\",\"id\":\"3\",\"id1\":\"301\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.14\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"e043f5c2-a101-468f-a3f3-09e0509c6595\",\"Active Status\":\"Inactive\",\"channel_name\":\"401\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"4\",\"id1\":\"401\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.11\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"00964c35-8bd8-4b3f-8a3f-b37c48cce7c6\",\"Active Status\":\"Inactive\",\"channel_name\":\"501\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"5\",\"id1\":\"501\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.25\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"0c121155-3fd0-4393-9aff-a6e49a1ffef2\",\"Active Status\":\"Inactive\",\"channel_name\":\"601\",\"fps\":\"1500\",\"resolution\":\"1920x1080\",\"id\":\"6\",\"id1\":\"601\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.13\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"ba3b0ccf-b7c8-46f3-ba29-5ce5dcf752fc\",\"Active Status\":\"Inactive\",\"channel_name\":\"701\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"7\",\"id1\":\"701\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.64\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"9043e2f1-6548-4630-9b09-1481e8875835\",\"Active Status\":\"Inactive\",\"channel_name\":\"801\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"8\",\"id1\":\"801\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.22\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"b4502af8-85cc-4049-8797-24664bd2f3e6\",\"Active Status\":\"Inactive\",\"channel_name\":\"901\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"9\",\"id1\":\"901\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.17\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"4efb2cee-e902-4671-aaa2-ab82749003e4\",\"Active Status\":\"Inactive\",\"channel_name\":\"1001\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"10\",\"id1\":\"1001\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.16\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"95d97487-942e-4fea-ae69-efb796739a41\",\"Active Status\":\"Inactive\",\"channel_name\":\"1101\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"11\",\"id1\":\"1101\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.100\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"0b5fef62-ed90-416a-8785-107fb47d41b7\",\"Active Status\":\"Inactive\",\"channel_name\":\"1201\",\"fps\":\"1500\",\"resolution\":\"1920x1080\",\"id\":\"12\",\"id1\":\"1201\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.15\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"2f01c107-c974-497c-afb7-ea4279e1c1f0\",\"Active Status\":\"Inactive\",\"channel_name\":\"1301\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"13\",\"id1\":\"1301\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.21\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"5a865e6b-59db-452f-98f8-fbf82e0d85db\",\"Active Status\":\"Inactive\",\"channel_name\":\"1401\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"14\",\"id1\":\"1401\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.12\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"55263318-e0d0-4ad0-9834-7094bc005380\",\"Active Status\":\"Inactive\",\"channel_name\":\"1501\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"15\",\"id1\":\"1501\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"},{\"IP Address\":\"192.168.1.24\",\"Channel Name\":\"Camera 01\",\"Device Index\":\"0b8b5166-6381-48ea-aa0b-7bf90b46b13c\",\"Active Status\":\"Inactive\",\"channel_name\":\"1601\",\"fps\":\"2000\",\"resolution\":\"1920x1080\",\"id\":\"16\",\"id1\":\"1601\",\"serialNumber\":\"-\",\"model\":\"-\",\"manufacturer\":\"Hikvision\",\"TotalBytes\":\"-\",\"UsedBytes\":\"-\"}]",
+    "rock_VIDEOdETAILS" : "[{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.109\",\"channel_no\":\"1\",\"total_duration\":491,\"start_time\":\"Oct 18, 2024, 14:28:43\",\"end_time\":\"Apr 29, 2026, 17:29:07\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.20\",\"channel_no\":\"2\",\"total_duration\":156,\"start_time\":\"Sep 15, 2025, 12:16:55\",\"end_time\":\"Apr 29, 2026, 17:27:01\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.101\",\"channel_no\":\"3\",\"total_duration\":239,\"start_time\":\"Jul 01, 2025, 16:08:08\",\"end_time\":\"Apr 29, 2026, 17:41:27\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.14\",\"channel_no\":\"4\",\"total_duration\":208,\"start_time\":\"Sep 15, 2025, 13:19:28\",\"end_time\":\"Apr 29, 2026, 17:27:04\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.11\",\"channel_no\":\"5\",\"total_duration\":215,\"start_time\":\"Dec 23, 2024, 19:23:21\",\"end_time\":\"Apr 29, 2026, 17:34:02\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.25\",\"channel_no\":\"6\",\"total_duration\":226,\"start_time\":\"Sep 15, 2025, 11:45:01\",\"end_time\":\"Apr 29, 2026, 17:41:27\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.13\",\"channel_no\":\"7\",\"total_duration\":193,\"start_time\":\"Sep 15, 2025, 13:22:57\",\"end_time\":\"Apr 29, 2026, 17:43:05\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.64\",\"channel_no\":\"8\",\"total_duration\":206,\"start_time\":\"Sep 15, 2025, 13:35:11\",\"end_time\":\"Apr 29, 2026, 17:27:55\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.22\",\"channel_no\":\"9\",\"total_duration\":204,\"start_time\":\"Sep 15, 2025, 13:05:03\",\"end_time\":\"Apr 29, 2026, 17:49:46\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.17\",\"channel_no\":\"10\",\"total_duration\":227,\"start_time\":\"Sep 14, 2025, 12:16:01\",\"end_time\":\"Apr 29, 2026, 17:50:46\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.16\",\"channel_no\":\"11\",\"total_duration\":224,\"start_time\":\"Sep 15, 2025, 12:51:51\",\"end_time\":\"Apr 29, 2026, 17:59:21\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.100\",\"channel_no\":\"12\",\"total_duration\":122,\"start_time\":\"Sep 15, 2025, 12:29:49\",\"end_time\":\"Apr 18, 2026, 14:19:37\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.15\",\"channel_no\":\"13\",\"total_duration\":213,\"start_time\":\"Sep 15, 2025, 12:56:04\",\"end_time\":\"Apr 29, 2026, 18:00:45\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.21\",\"channel_no\":\"14\",\"total_duration\":197,\"start_time\":\"Sep 11, 2025, 16:50:22\",\"end_time\":\"Apr 29, 2026, 17:21:44\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.12\",\"channel_no\":\"15\",\"total_duration\":194,\"start_time\":\"Sep 09, 2025, 10:17:30\",\"end_time\":\"Apr 29, 2026, 17:13:56\"},{\"channel_name\":\"Camera 01\",\"cameraIP\":\"192.168.1.24\",\"channel_no\":\"16\",\"total_duration\":220,\"start_time\":\"Sep 15, 2025, 12:21:59\",\"end_time\":\"Apr 29, 2026, 17:50:44\"}]",
+    "rock_model" : "DS-7716NXI-K4",
+    "rock_hardwareVersion" : "B-R-K20A9_K20A9-00",
+    "rock_firmwareVersion" : "V4.82.100",
+    "rock_originatorName" : "BRANCH MALDA TOWN",
+    "rock_originatorId" : "01c61bb0-ab4c-11f0-91df-7ffa16af2ee9",
+    "rock_originatorType" : "BOI Device Profile",
+    "rock_freeSpace" : "NA",
+    "rock_zo" : "ZO SILIGURI",
+    "rock_nbg" : "NBG EAST",
+    "temperature" : "57.452",
+    "date" : "30:4:26",
+    "lat" : "25.0045",
+    "lon" : "88.1361",
+    "time" : "14:21",
+    "id" : "not_found",
+    "mail" : "{\"intrusion_alarm_system_fault\":null,\"fire_alarm_system_fault\":null,\"camera_tampered\":null,\"camera_disconnect\":null,\"hdd_error\":null,\"time_lock_door_open\":null,\"time_lock_tamper\":null,\"access_control_door_open\":null,\"access_control_system_tamper\":null}",
+    "mail_intrusion_alarm_system_fault" : null,
+    "mail_fire_alarm_system_fault" : null,
+    "mail_camera_tampered" : null,
+    "mail_camera_disconnect" : null,
+    "mail_hdd_error" : null,
+    "mail_time_lock_door_open" : null,
+    "mail_time_lock_tamper" : null,
+    "mail_access_control_door_open" : null,
+    "mail_access_control_system_tamper" : null,
+    "frequency" : "1800",
+    "memory" : "17.1",
+    "cpu" : "7.8",
+    "disk" : "77.4",
+    "target_sw_title" : "TLChronosProMAIN_391",
+    "target_sw_version" : "7",
+    "target_sw_tag" : "TLChronosProMAIN_391 7",
+    "target_sw_ts" : "1760700338430",
+    "sw_state" : "INITIATED",
+    "system_status" : "{\"statusbox_system_on\":true,\"statusbox_system_healthy\":true,\"statusbox_mains_on\":true,\"statusbox_battery_reverse\":false,\"statusbox_battery_low\":false,\"statusbox_sos_status\":true,\"statusbox_network\":\"AirTel\",\"statusbox_no_of_connected_device\":3}",
+    "system_status_statusbox_system_on" : true,
+    "system_status_statusbox_system_healthy" : true,
+    "system_status_statusbox_mains_on" : true,
+    "system_status_statusbox_battery_reverse" : false,
+    "system_status_statusbox_battery_low" : false,
+    "system_status_statusbox_sos_status" : true,
+    "system_status_statusbox_network" : "AirTel",
+    "system_status_statusbox_no_of_connected_device" : 3,
+    "battery_status" : "{\"battery_voltage\":14.0}",
+    "battery_status_battery_voltage" : 14.0,
+    "lat1" : "25.0045",
+    "alarmCount" : "0",
+    "lon1" : "88.1363",
+    "current_status" : "{\"system_current\":1.0}",
+    "current_status_system_current" : 1.0,
+    "basUptime" : "true",
+    "fasUptime" : "true",
+    "cctvUptime" : "true",
+    "timeLockUptime" : "true",
+    "errorCount" : "0",
+    "ac_status" : "{\"ac_voltage\":220.0}",
+    "ac_status_ac_voltage" : 220.0,
+    "uptimeHeartbeat" : "true",
+    "attribute" : "{\"lat\":25.0045,\"lon\":88.1363,\"deviceName\":\"BOI-MALDATOWN\"}",
+    "attribute_lat" : 25.0045,
+    "attribute_lon" : 88.1363,
+    "attribute_deviceName" : "BOI-MALDATOWN",
+    "iasUptime" : "true",
+    "power_off" : "{\"Device_Issue\":\"power_off\",\"code\":\"POWER_OFF\",\"label\":\"POL\",\"id\":\"73272000010347014\"}",
+    "power_off_Device_Issue" : "power_off",
+    "power_off_code" : "POWER_OFF",
+    "power_off_label" : "POL",
+    "power_off_id" : "73272000010347014",
+    "arrLat" : "[25.0046]",
+    "TotalLat" : "[25.0045,25.0045,25.0045,25.0045,25.0045,25.0045,25.0045]",
+    "arrLon" : "[88.1363]",
+    "TotalLon" : "[88.1363,88.1363,88.1363,88.1363,88.1363,88.1363,88.1363]",
+    "Hikvision_NVR_Heartbeat" : "hikvision_nvr_on",
+    "Hikvision_NVR_Date" : "2026-04-30",
+    "Hikvision_NVR_Time" : "14:22:39",
+    "cameraTamper" : "0",
+    "hddError" : "0",
+    "cameraDisconnect" : "0",
+    "HiksyncTimeDate" : "30/4/2026, 2:28:32 pm",
+    "intrusionAlarmSystemFault" : "0",
+    "fireAlarmSystemFault" : "0",
+    "timeLockDoorOpen" : "0",
+    "timeLockTamper" : "0",
+    "gatewayUptime" : "true",
+    "IASFault" : "0",
+    "camera_tampered_count" : "0",
+    "hdd_error_count" : "0",
+    "access_control_system_tamper_count" : "0",
+    "camera_disconnect_count" : "0",
+    "time_lock_door_open_count" : "0",
+    "time_lock_tamper_count" : "0",
+    "access_control_door_open_count" : "0",
+    "intrusion_alarm_system_fault_count" : "0",
+    "fire_alarm_system_fault_count" : "0",
+    "ac_result" : "220",
+    "bat_result" : "14",
+    "cur_result" : "3",
+    "watchdog_log" : "[{\"Module Reboot\":\"Power Status\",\"timestamp\":\"20-03-26 16:11:06\"}]",
+    "time_lock_tamper_last" : "{}",
+    "time_lock_door_open_last" : "{}",
+    "rpi_usage" : "[{\"timestamp\":\"2026-04-30T14:11:23.835044\",\"CPU\":8.1,\"Memory\":17.0,\"Disk\":76.6,\"Frequency\":600.0,\"Temperature\":59.4,\"Net_Sent_MB\":1069.565266609192,\"Net_Recv_MB\":4422.965615272522}]",
+    "rpi_alert" : "{\"timestamp\":\"2026-04-25T16:58:22.105414\",\"CPU\":2.8,\"Memory\":17.0,\"Disk\":76.7,\"Frequency\":1800.0,\"Temperature\":70.114,\"Net_Sent_MB\":944.9356622695923,\"Net_Recv_MB\":3497.856216430664}",
+    "rpi_alert_timestamp" : "2026-04-25T16:58:22.105414",
+    "rpi_alert_CPU" : 2.8,
+    "rpi_alert_Memory" : 17.0,
+    "rpi_alert_Disk" : 76.7,
+    "rpi_alert_Frequency" : 1800.0,
+    "rpi_alert_Temperature" : 70.114,
+    "rpi_alert_Net_Sent_MB" : 944.9356622695923,
+    "rpi_alert_Net_Recv_MB" : 3497.856216430664,
+    "hikvision_ntp" : "updated",
+    "dvr_nvr_off" : "{\"Device_Issue\":\"dvr_nvr_off\",\"code\":\"NVR_OFF\",\"label\":\"NvL\",\"id\":\"73272000009383069\"}",
+    "dvr_nvr_off_Device_Issue" : "dvr_nvr_off",
+    "dvr_nvr_off_code" : "NVR_OFF",
+    "dvr_nvr_off_label" : "NvL",
+    "dvr_nvr_off_id" : "73272000009383069",
+    "time_lock_system_off" : "{\"Device_Issue\":\"time_lock_system_off\",\"code\":\"TLS_OFF\",\"label\":\"TLOffL\",\"id\":\"73272000008123950\"}",
+    "time_lock_system_off_Device_Issue" : "time_lock_system_off",
+    "time_lock_system_off_code" : "TLS_OFF",
+    "time_lock_system_off_label" : "TLOffL",
+    "time_lock_system_off_id" : "73272000008123950",
+    "intrusion_alarm_system_activate" : "{\"Device_Issue\":\"intrusion_alarm_system_activate\",\"code\":\"IAS_ACTIVATE\",\"label\":\"IActL\",\"id\":\"73272000011050014\"}",
+    "intrusion_alarm_system_activate_Device_Issue" : "intrusion_alarm_system_activate",
+    "intrusion_alarm_system_activate_code" : "IAS_ACTIVATE",
+    "intrusion_alarm_system_activate_label" : "IActL",
+    "intrusion_alarm_system_activate_id" : "73272000011050014",
+    "net_sent_mb" : "943.0357570648193",
+    "net_recv_mb" : "2213.127360343933",
+    "Total_Data_Usage" : "[{\"Date\":\"2025-05-06\",\"usage\":\"0.49 MB\"},{\"Date\":\"2025-05-07\",\"usage\":\"1.455 MB\"},{\"Date\":\"2025-05-08\",\"usage\":\"1.528 MB\"},{\"Date\":\"2025-05-09\",\"usage\":\"1.669 MB\"},{\"Date\":\"2025-05-10\",\"usage\":\"2.053 MB\"},{\"Date\":\"2025-05-11\",\"usage\":\"2.104 MB\"},{\"Date\":\"2025-05-12\",\"usage\":\"2.103 MB\"},{\"Date\":\"2025-05-13\",\"usage\":\"0.932 MB\"},{\"Date\":\"2025-05-23\",\"usage\":\"0.199 MB\"},{\"Date\":\"2025-05-24\",\"usage\":\"0.671 MB\"},{\"Date\":\"2025-05-25\",\"usage\":\"0.725 MB\"},{\"Date\":\"2025-05-26\",\"usage\":\"0.505 MB\"},{\"Date\":\"2025-05-27\",\"usage\":\"0.542 MB\"},{\"Date\":\"2025-05-29\",\"usage\":\"0.008 MB\"},{\"Date\":\"2025-06-11\",\"usage\":\"0.001 MB\"},{\"Date\":\"2025-06-12\",\"usage\":\"0.349 MB\"},{\"Date\":\"2025-06-13\",\"usage\":\"0.696 MB\"},{\"Date\":\"2025-06-14\",\"usage\":\"2.427 MB\"},{\"Date\":\"2025-06-15\",\"usage\":\"2.714 MB\"},{\"Date\":\"2025-06-16\",\"usage\":\"2.454 MB\"},{\"Date\":\"2025-06-17\",\"usage\":\"2.648 MB\"},{\"Date\":\"2025-06-18\",\"usage\":\"2.588 MB\"},{\"Date\":\"2025-06-19\",\"usage\":\"2.613 MB\"},{\"Date\":\"2025-06-20\",\"usage\":\"2.722 MB\"},{\"Date\":\"2025-06-21\",\"usage\":\"2.696 MB\"},{\"Date\":\"2025-06-22\",\"usage\":\"2.702 MB\"},{\"Date\":\"2025-06-23\",\"usage\":\"2.263 MB\"},{\"Date\":\"2025-06-24\",\"usage\":\"2.511 MB\"},{\"Date\":\"2025-06-25\",\"usage\":\"2.802 MB\"},{\"Date\":\"2025-06-26\",\"usage\":\"1.672 MB\"},{\"Date\":\"2025-07-10\",\"usage\":\"0.058 MB\"},{\"Date\":\"2025-07-22\",\"usage\":\"0.366 MB\"},{\"Date\":\"2025-07-23\",\"usage\":\"0.226 MB\"},{\"Date\":\"2025-07-24\",\"usage\":\"1.569 MB\"},{\"Date\":\"2025-07-25\",\"usage\":\"1.293 MB\"},{\"Date\":\"2025-07-28\",\"usage\":\"0.025 MB\"},{\"Date\":\"2019-02-05\",\"usage\":\"0.004 MB\"},{\"Date\":\"2025-08-11\",\"usage\":\"0.811 MB\"},{\"Date\":\"2025-08-12\",\"usage\":\"2.78 MB\"},{\"Date\":\"2025-08-13\",\"usage\":\"2.781 MB\"},{\"Date\":\"2025-08-14\",\"usage\":\"2.624 MB\"},{\"Date\":\"2025-08-15\",\"usage\":\"1.821 MB\"},{\"Date\":\"2025-08-16\",\"usage\":\"0.004 MB\"},{\"Date\":\"2025-08-17\",\"usage\":\"0.004 MB\"},{\"Date\":\"2025-08-18\",\"usage\":\"1.635 MB\"},{\"Date\":\"2025-08-19\",\"usage\":\"1.672 MB\"},{\"Date\":\"2018-01-19\",\"usage\":\"0.987 MB\"},{\"Date\":\"2018-01-20\",\"usage\":\"1.673 MB\"},{\"Date\":\"2025-08-20\",\"usage\":\"1.011 MB\"},{\"Date\":\"2025-08-21\",\"usage\":\"2.841 MB\"},{\"Date\":\"2025-08-22\",\"usage\":\"2.807 MB\"},{\"Date\":\"2025-08-23\",\"usage\":\"1.533 MB\"},{\"Date\":\"2025-08-25\",\"usage\":\"0.652 MB\"},{\"Date\":\"2025-08-26\",\"usage\":\"0.975 MB\"},{\"Date\":\"2025-08-27\",\"usage\":\"2.372 MB\"},{\"Date\":\"2025-08-28\",\"usage\":\"1.782 MB\"},{\"Date\":\"2025-08-29\",\"usage\":\"1.578 MB\"},{\"Date\":\"2025-08-30\",\"usage\":\"1.851 MB\"},{\"Date\":\"2025-09-01\",\"usage\":\"1.182 MB\"},{\"Date\":\"2025-09-02\",\"usage\":\"2.1 MB\"},{\"Date\":\"2025-09-03\",\"usage\":\"1.36 MB\"},{\"Date\":\"2025-09-04\",\"usage\":\"1.166 MB\"},{\"Date\":\"2025-09-05\",\"usage\":\"1.774 MB\"},{\"Date\":\"2025-09-09\",\"usage\":\"0.289 MB\"},{\"Date\":\"2018-01-18\",\"usage\":\"0.0 MB\"},{\"Date\":\"2025-09-22\",\"usage\":\"0.0 MB\"},{\"Date\":\"2025-09-25\",\"usage\":\"0.001 MB\"},{\"Date\":\"2025-09-26\",\"usage\":\"0.107 MB\"},{\"Date\":\"2025-10-06\",\"usage\":\"0.025 MB\"},{\"Date\":\"2025-10-17\",\"usage\":\"1.116 MB\"},{\"Date\":\"2025-10-18\",\"usage\":\"3.267 MB\"},{\"Date\":\"2025-10-19\",\"usage\":\"3.267 MB\"},{\"Date\":\"2025-10-20\",\"usage\":\"3.265 MB\"},{\"Date\":\"2025-10-21\",\"usage\":\"3.265 MB\"},{\"Date\":\"2025-10-22\",\"usage\":\"3.266 MB\"},{\"Date\":\"2025-10-23\",\"usage\":\"3.264 MB\"},{\"Date\":\"2025-10-24\",\"usage\":\"3.261 MB\"},{\"Date\":\"2025-10-25\",\"usage\":\"3.256 MB\"},{\"Date\":\"2025-10-26\",\"usage\":\"3.258 MB\"},{\"Date\":\"2025-10-27\",\"usage\":\"2.103 MB\"},{\"Date\":\"2025-10-28\",\"usage\":\"2.044 MB\"},{\"Date\":\"2025-10-29\",\"usage\":\"3.261 MB\"},{\"Date\":\"2025-10-30\",\"usage\":\"3.263 MB\"},{\"Date\":\"2025-10-31\",\"usage\":\"3.257 MB\"},{\"Date\":\"2025-11-01\",\"usage\":\"3.257 MB\"},{\"Date\":\"2025-11-02\",\"usage\":\"3.264 MB\"},{\"Date\":\"2025-11-03\",\"usage\":\"3.263 MB\"},{\"Date\":\"2025-11-04\",\"usage\":\"3.261 MB\"},{\"Date\":\"2025-11-05\",\"usage\":\"3.265 MB\"},{\"Date\":\"2025-11-06\",\"usage\":\"3.17 MB\"}]",
+    "cavlidata_ontime" : "2025-10-17T16:58:51",
+    "integrated_alarm_system_off" : "{\"Device_Issue\":\"integrated_alarm_system_off\",\"code\":\"IAS_INT_OFF\",\"label\":\"IAOffL\",\"id\":\"73272000008123942\"}",
+    "integrated_alarm_system_off_Device_Issue" : "integrated_alarm_system_off",
+    "integrated_alarm_system_off_code" : "IAS_INT_OFF",
+    "integrated_alarm_system_off_label" : "IAOffL",
+    "integrated_alarm_system_off_id" : "73272000008123942",
+    "heartBeatCCTV" : "1",
+    "heartBeatTL" : "1",
+    "cameraDisconnect_CHID12_duration" : "0",
+    "cameraDisconnect_CHID9_duration" : "0",
+    "cameraDisconnect_CHID1_duration" : "0",
+    "cameraDisconnect_CHID15_duration" : "0",
+    "cameraDisconnect_CHID7_duration" : "0",
+    "cameraDisconnect_CHID2_duration" : "0",
+    "cameraDisconnect_CHID8_duration" : "0",
+    "cameraDisconnect_CHID10_duration" : "0",
+    "cameraDisconnect_CHID3_duration" : "0",
+    "cameraDisconnect_CHID13_duration" : "0",
+    "cameraDisconnect_CHID14_duration" : "0",
+    "cameraDisconnect_CHID5_duration" : "0",
+    "cameraDisconnect_CHID6_duration" : "0",
+    "cameraDisconnect_CHID4_duration" : "0",
+    "cameraDisconnect_CHID11_duration" : "0",
+    "cameraDisconnect_CHID16_duration" : "0",
+    "BAS_Uptime_Minutes" : "0.0",
+    "BAS_Downtime_Minutes" : "0.0",
+    "all_ch_disconnect_scoreSum" : "10",
+    "calculatedMonth" : "3"
+  },
+  "serverAttributes" : {
+    "inactivityAlarmTime" : 1780996515892,
+    "bas_downtime_min" : 0.0,
+    "hierarchy_depth" : 4,
+    "provisionState" : "provisioned",
+    "HDD ERROR" : false,
+    "HDD ERROR RESTORED" : true,
+    "cameraTamperCH1_history" : [ ],
+    "cameraTamperCH2_history" : [ ],
+    "cameraTamperCH3_history" : [ ],
+    "cameraTamperCH4_history" : [ ],
+    "cameraTamperCH5_history" : [ ],
+    "cameraTamperCH6_history" : [ ],
+    "cameraTamperCH7_history" : [ ],
+    "cameraTamperCH8_history" : [ ],
+    "cameraTamperCH9_history" : [ ],
+    "cameraTamperCH10_history" : [ ],
+    "cameraTamperCH11_history" : [ ],
+    "cameraTamperCH12_history" : [ ],
+    "cameraTamperCH13_history" : [ ],
+    "cameraTamperCH14_history" : [ ],
+    "cameraTamperCH15_history" : [ ],
+    "cameraTamperCH16_history" : [ ],
+    "cameraDisconnectCH1_history" : [ ],
+    "cameraDisconnectCH2_history" : [ ],
+    "cameraDisconnectCH3_history" : [ ],
+    "cameraDisconnectCH4_history" : [ ],
+    "cameraDisconnectCH5_history" : [ ],
+    "cameraDisconnectCH6_history" : [ ],
+    "cameraDisconnectCH7_history" : [ ],
+    "cameraDisconnectCH8_history" : [ ],
+    "cameraDisconnectCH9_history" : [ ],
+    "cameraDisconnectCH10_history" : [ ],
+    "cameraDisconnectCH11_history" : [ ],
+    "cameraDisconnectCH12_history" : [ ],
+    "cameraDisconnectCH13_history" : [ ],
+    "cameraDisconnectCH14_history" : [ ],
+    "cameraDisconnectCH15_history" : [ ],
+    "cameraDisconnectCH16_history" : [ ],
+    "hddError_history" : [ ],
+    "basOff_history" : [ ],
+    "basFault_history" : [ ],
+    "fasOff_history" : [ ],
+    "fasFault_history" : [ ],
+    "tlsTamper_history" : [ ],
+    "tlsDoorOpen_history" : [ ],
+    "acsOff_history" : [ ],
+    "acsTamper_history" : [ ],
+    "acsDoorOpen_history" : [ ],
+    "iasFault_history" : [ ],
+    "accessControlHealth" : "N/A",
+    "accessControlStatus" : "N/A",
+    "accessControlDoor" : "N/A",
+    "CAMERA DISCONNECT" : false,
+    "CAMERA CONNECTION ESTABLISHED" : true,
+    "CAMERA TAMPERED RESTORED" : true,
+    "CAMERA TAMPER" : false,
+    "FIRE ALARM SYSTEM FAULT" : false,
+    "FIRE ALARM SYSTEM FAULT CONDITION RESTORED" : true,
+    "FIRE ALARM SYSTEM ACTIVATION RESTORED" : true,
+    "FIRE ALARM SYSTEM ACTIVE" : false,
+    "INTRUSION ALARM FAULT CONDITION RESTORED" : true,
+    "INTRUSION ALARM SYSTEM FAULT" : false,
+    "INTRUSION ALARM SYSTEM ACTIVE" : false,
+    "INTRUSION ALARM SYSTEM ACTIVATION RESTORED" : true,
+    "TIME LOCK SYSTEM OFF" : false,
+    "TIME LOCK SYSTEM ON" : true,
+    "NETWORK" : true,
+    "usage_daily" : 0,
+    "usage_last_7_days" : 0,
+    "usage_last_15_days" : 0,
+    "lowDurationCameras" : [ ],
+    "customer_title" : "BRANCH MALDA TOWN",
+    "INTRUSION ALARM SYSTEM ACTIVATE" : true,
+    "intrusionStatus" : "Healthy",
+    "branchName" : "BRANCH MALDA TOWN",
+    "fireAlarmStatus" : "Healthy",
+    "tlStatus" : "Healthy",
+    "imei_id" : {  
+      "dev_id" : 358773400033916
+    },
+    "imei_id_dev_id" : 358773400033916,
+    "INTEGRATED ALARM SYSTEM ON" : true,
+    "INTEGRATED ALARM SYSTEM OFF" : false,
+    "integratedStatus" : "Healthy",
+    "INTEGRATED ALARM SYSTEM FAULT CONDITION RESTORED" : true,
+    "INTEGRATED ALARM SYSTEM ACTIVATION RESTORED" : true,
+    "INTEGRATED ALARM SYSTEM ACTIVE" : false,
+    "TIME LOCK TAMPER RESTORED" : true,
+    "TIME LOCK SYSTEM TAMPER" : false,
+    "TIME LOCK DOOR CLOSE" : true,
+    "TIME LOCK DOOR OPEN" : false,
+    "DVR/NVR ON" : true,
+    "DVR/NVR OFF" : false,
+    "nvrStatus" : "Healthy",
+    "dvrNvrOff_history" : [ ],
+    "iasSystem" : "N/A",
+    "cctvMiliTime" : 1774022702211,
+    "timeLockMiliTime" : 1774022757208,
+    "fasMiliTime" : 1774022784207,
+    "iasMiliTime" : 1774022811360,
+    "integratedType" : "INTEGRATED ALARM SYSTEM ON",
+    "gateMiliTime" : 1774038798366,
+    "BATTERY LOW" : true,
+    "MAINS ON" : false,
+    "POWER OFF" : true,
+    "SYSTEM ON" : false,
+    "basMiliTime" : 1774380621404,
+    "undefined" : true,
+    "usage_history" : [ {
+      "Date" : "2025-10-17",
+      "usage" : 10.285
+    }, {
+      "Date" : "2025-10-18",
+      "usage" : 55.452
+    }, {
+      "Date" : "2025-10-19",
+      "usage" : 55.637
+    }, {
+      "Date" : "2025-10-20",
+      "usage" : 55.766
+    }, {
+      "Date" : "2025-10-21",
+      "usage" : 55.961
+    }, {
+      "Date" : "2025-10-22",
+      "usage" : 56.145
+    }, {
+      "Date" : "2025-10-23",
+      "usage" : 53.045
+    }, {
+      "Date" : "2025-10-24",
+      "usage" : 53.906
+    }, {
+      "Date" : "2025-10-25",
+      "usage" : 54.03
+    }, {
+      "Date" : "2025-10-26",
+      "usage" : 54.233
+    }, {
+      "Date" : "2025-10-27",
+      "usage" : 5.268
+    }, {
+      "Date" : "2025-10-28",
+      "usage" : 25.261
+    }, {
+      "Date" : "2025-10-29",
+      "usage" : 54.268
+    }, {
+      "Date" : "2025-10-30",
+      "usage" : 54.496
+    }, {
+      "Date" : "2025-10-31",
+      "usage" : 54.58
+    }, {
+      "Date" : "2025-11-01",
+      "usage" : 54.76
+    }, {
+      "Date" : "2025-11-02",
+      "usage" : 55.021
+    }, {
+      "Date" : "2025-11-03",
+      "usage" : 55.18
+    }, {
+      "Date" : "2025-11-04",
+      "usage" : 45.537
+    }, {
+      "Date" : "2025-11-28",
+      "usage" : 0
+    }, {
+      "Date" : "2025-11-29",
+      "usage" : 0
+    }, {
+      "Date" : "2025-11-30",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-01",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-02",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-03",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-04",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-05",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-06",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-07",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-08",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-09",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-10",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-11",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-12",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-13",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-14",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-15",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-16",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-17",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-18",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-19",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-20",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-21",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-22",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-23",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-24",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-25",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-26",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-27",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-28",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-29",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-30",
+      "usage" : 0
+    }, {
+      "Date" : "2025-12-31",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-01",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-02",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-03",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-04",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-05",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-06",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-07",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-08",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-09",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-10",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-11",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-12",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-13",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-14",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-15",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-16",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-17",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-18",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-19",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-20",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-21",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-22",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-23",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-24",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-25",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-26",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-27",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-28",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-29",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-30",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-31",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-01",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-02",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-03",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-04",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-05",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-06",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-07",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-08",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-09",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-10",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-11",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-12",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-13",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-14",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-15",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-16",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-17",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-18",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-19",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-20",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-21",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-22",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-23",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-24",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-25",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-26",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-27",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-28",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-01",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-02",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-03",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-04",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-05",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-06",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-07",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-08",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-09",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-10",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-11",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-12",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-13",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-14",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-15",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-16",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-17",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-18",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-19",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-20",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-21",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-22",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-23",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-24",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-25",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-26",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-27",
+      "usage" : 0
+    } ],
+    "deviceName" : "BOI-MALDATOWN",
+    "zoName" : "ZO SILIGURI",
+    "nbgName" : "NBG EAST",
+    "Healthy Device(Intrusion)" : 0,
+    "Faulty Device(Time Lock)" : 0,
+    "Faulty Device(Intrusion)" : 0,
+    "Inactive Device(Intrusion)" : 0,
+    "Healthy Device(Time Lock)" : 0,
+    "Total System(Time Lock)" : 0,
+    "Total System(Intrusion)" : 0,
+    "Inactive Device(Time Lock)" : 0,
+    "tlsOff_history" : [ ],
+    "iasOff_history" : [ ],
+    "formattedBranchName" : "BOI-MALDATOWN",
+    "alarm" : 0,
+    "severity" : "CRITICAL",
+    "count_HDD" : 16,
+    "count_CH" : 16,
+    "iasAlarmCreatedTime" : "2026-04-08T07:25:51.138Z",
+    "iasHealth" : "N/A",
+    "iasStatus" : "N/A",
+    "timeLockStatus" : "N/A",
+    "care" : "done",
+    "active" : false,
+    "accessControl" : "N/A",
+    "ias" : "N/A",
+    "cctv" : "Online",
+    "hddStatus" : "Healthy",
+    "cameraLinkStatus" : "Online",
+    "gwStatus" : "On",
+    "gwHealth" : "Healthy",
+    "gatewayStatus" : "Healthy",
+    "cameraStatus" : "Healthy",
+    "timeLock" : "Online",
+    "timeLockHealth" : "Healthy",
+    "timeLockDoor" : "Close",
+    "timeLockAlarmCreatedTime" : "2026-04-10T08:56:35.997Z",
+    "tlType" : "TIME LOCK DOOR CLOSE",
+    "cctvStatus" : "On",
+    "cctvAlarmCreatedTime" : "2026-04-10T08:57:03.157Z",
+    "nvrType" : "DVR/NVR ON",
+    "status" : "Healthy",
+    "fas" : "Online",
+    "fasHealth" : "Healthy",
+    "fasStatus" : "On",
+    "fasSystem" : "Normal",
+    "fasAlarmCreatedTime" : "2026-04-10T08:58:24.169Z",
+    "fireAlarmType" : "FIRE ALARM SYSTEM ACTIVATION RESTORED",
+    "basStatus" : "On",
+    "basHealth" : "Healthy",
+    "basSystem" : "Normal",
+    "basAlarmCreatedTime" : "2026-04-10T08:59:47.207Z",
+    "intrusionType" : "INTRUSION ALARM SYSTEM ACTIVATION RESTORED",
+    "deviceType" : "gateway",
+    "gatewayType" : "SYSTEM ON",
+    "alarmFlag" : true,
+    "type" : "NETWORK",
+    "gatewayAlarmCreatedTime" : "2026-04-10T09:07:30.169Z",
+    "notification" : false,
+    "lastDisconnectTime" : 1776840700724,
+    "lastConnectTime" : 1776894433210,
+    "unknown_status" : "Unknown Event",
+    "subsystems" : {
+      "cctv" : { },
+      "ias" : { },
+      "bas" : { },
+      "fas" : { },
+      "timeLock" : { },
+      "accessControl" : {
+        "details" : { }
+      }
+    },
+    "subsystems_cctv" : "{}",
+    "subsystems_ias" : "{}",
+    "subsystems_bas" : "{}",
+    "subsystems_fas" : "{}",
+    "subsystems_timeLock" : "{}",
+    "subsystems_accessControl" : "{\"details\":{}}",
+    "eventMetadata" : {
+      "alarmFlag" : true,
+      "notification" : false
+    },
+    "eventMetadata_alarmFlag" : true,
+    "eventMetadata_notification" : false,
+    "systemHealth" : {
+      "alarmCount" : 0,
+      "timestamp" : "2026-04-24T10:20:39.201Z"
+    },
+    "systemHealth_alarmCount" : 0,
+    "systemHealth_timestamp" : "2026-04-24T10:20:39.201Z",
+    "gateway" : "Online",
+    "unknown" : {
+      "logStatus" : "Unknown Event",
+      "logFullName" : "Unknown",
+      "logStatusMode" : "Unknown",
+      "powerStatus" : "On",
+      "systemStatus" : "Normal",
+      "healthStatus" : "Active",
+      "notification" : "false",
+      "alarmFlag" : false,
+      "severity" : "",
+      "activeAlarm" : [ ],
+      "timestamp" : "2026-04-27T11:22:08.425Z"
+    },
+    "unknown_logStatus" : "Unknown Event",
+    "unknown_logFullName" : "Unknown",
+    "unknown_logStatusMode" : "Unknown",
+    "unknown_powerStatus" : "On",
+    "unknown_systemStatus" : "Normal",
+    "unknown_healthStatus" : "Active",
+    "unknown_notification" : "false",
+    "unknown_alarmFlag" : false,
+    "unknown_severity" : "",
+    "unknown_activeAlarm" : "[]",
+    "unknown_timestamp" : "2026-04-27T11:22:08.425Z",
+    "lastUpdate" : "2026-04-27T11:24:49.170Z",
+    "log_type" : "intrusion_alarm_system_activation_restored",
+    "bas" : "N/A",
+    "cameraTamperCount" : { },
+    "cameraDisconnectCount" : { },
+    "hddandDvrNvr" : { },
+    "warning" : 0,
+    "critical" : 0,
+    "major" : 0,
+    "ts" : 1777539512994,
+    "lastActivityTime" : 1777539576181,
+    "zone_name" : "ZO SILIGURI",
+    "nbg_name" : "NBG EAST",
+    "zo_name" : "ZO SILIGURI",
+    "total_data_mb" : 0.0,
+    "nvr_brand" : "Hikvision",
+    "integrated_status" : "Healthy",
+    "branch_name" : "BRANCH MALDA TOWN",
+    "fault_severity" : "CRITICAL",
+    "full_path" : "BANK OF INDIA → NBG EAST → ZO SILIGURI → BRANCH MALDA TOWN",
+    "Total_Data_Usage" : 0.0,
+    "BAS_Downtime_Minutes" : 0.0,
+    "fault_score" : 93.0,
+    "bank_name" : "BANK OF INDIA",
+    "fault_reasons" : "ZERO_DATA(+15) | PWR_OFF(+20) | IAS_FAULT(+15) | ACS_FAULT(+15) | TLS_FAULT(+10) | BATT_LOW(+10)",
+    "gap_days" : 0,
+    "audit_ts" : "2026-06-10 17:38"
+  },
+  "clientAttributes" : {
+    "tailscale_hostname" : "BOI-MALDATOWN",
+    "tailscale_ip" : "100.87.19.10",
+    "Hikvision_NVR_model" : "DS-7716NXI-K4",
+    "Hikvision_NVR_serialNumber" : "DS-7716NXI-K41620240902CCRRFM9105863WCVU",
+    "Hikvision_NVR_macAddress" : "24:b1:05:57:c0:f9",
+    "Hikvision_NVR_firmwareVersion" : "V4.82.100",
+    "Hikvision_NVR_deviceType" : "NVR",
+    "Hikvision_NVR_Processor" : "NA",
+    "Hikvision_NVR_hardwareVersion" : "B-R-K20A9_K20A9-00",
+    "dexter_config" : {
+      "powerzone" : "{1 1 1 1 1 2 1 1 5 0 0 4 0 0 5 0 0 6 0 0 1 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}",
+      "zone" : "{1 1 1 1 1 2 1 1 3 0 1 4 0 1 6 0 1 3 1 1 5 0 1 5 0 1 1 0 1 4 0 1 2 0 1 6 0 1 1 0 1 4 0 0 5 0 0 5}",
+      "brand" : "TRISIM",
+      "branch" : "BOI Malda Town",
+      "modem_parameter" : {
+        "access_token" : "",
+        "client_id" : "M-TOWN-CL-ID",
+        "user_name" : "M-TOWN-UN-ID",
+        "password" : "M-TOWN-PWO",
+        "gsm_modem_mode" : "esim",
+        "network_type" : "gsm",
+        "device_name" : "BOI-MALDATOWN"
+      },
+      "integration" : [ {
+        "id" : 1,
+        "device_type" : "HikvisionNVR1",
+        "ip_address" : "192.168.1.168",
+        "username" : "admin",
+        "password" : "sepl1984",
+        "port" : 8080,
+        "camera_ip" : [ ]
+      }, {
+        "id" : 2,
+        "device_type" : "DahuaNVR1",
+        "ip_address" : "192.168.1.12",
+        "username" : "seple",
+        "password" : "dahua",
+        "port" : 8081
+      }, {
+        "id" : 3,
+        "device_type" : "HikvisionBioMetric1",
+        "ip_address" : "192.168.0.27",
+        "username" : "sepl",
+        "password" : "sepl1984",
+        "port" : 8082
+      } ],
+      "active_device_parameter" : {
+        "active_integration_hikvision_nvr" : 1,
+        "active_integration_hikvision_biometric" : 0,
+        "active_integration_dahua_nvr" : 0
+      },
+      "active_parameter" : {
+        "active_integration_on_off_bit" : 1
+      },
+      "network_parameter" : {
+        "e-SIM Enable/Disable" : "True",
+        "Network Selection for e-SIM" : "LTE",
+        "Enable/Disable GNSS" : "True",
+        "Alert Types (SMS)" : "Vibrate",
+        "Notification Schedule" : "Every hour",
+        "Enable/Disable for Network LED Status" : "True",
+        "Enable/Disable for Wireless LAN" : "False",
+        "APN Settings" : "internet",
+        "Enable/Disable GSM" : "True",
+        "DNS Setup" : "Automatic",
+        "Enable/Disable Static/dynamic" : "Static",
+        "IPv4/IPv6 Selection" : "IPv4",
+        "reset_to_dhcp" : "True",
+        "Set Port Number" : "8.8.8.8",
+        "preferred_dns_server" : "8.8.4.4",
+        "alternate_dns_server" : "192.168.1.1",
+        "Gateway" : "192.168.1.1",
+        "Subnet mask" : "255.255.255.0",
+        "Set IP Address" : "192.168.1.169",
+        "Network Test" : "True",
+        "Enable/Disable IP Module" : "True"
+      },
+      "batt" : "67",
+      "timestamp" : "2026-04-10T14:23:09"
+    },
+    "dexter_config_powerzone" : "{1 1 1 1 1 2 1 1 5 0 0 4 0 0 5 0 0 6 0 0 1 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}",
+    "dexter_config_zone" : "{1 1 1 1 1 2 1 1 3 0 1 4 0 1 6 0 1 3 1 1 5 0 1 5 0 1 1 0 1 4 0 1 2 0 1 6 0 1 1 0 1 4 0 0 5 0 0 5}",
+    "dexter_config_brand" : "TRISIM",
+    "dexter_config_branch" : "BOI Malda Town",
+    "dexter_config_modem_parameter" : "{\"access_token\":\"\",\"client_id\":\"M-TOWN-CL-ID\",\"user_name\":\"M-TOWN-UN-ID\",\"password\":\"M-TOWN-PWO\",\"gsm_modem_mode\":\"esim\",\"network_type\":\"gsm\",\"device_name\":\"BOI-MALDATOWN\"}",
+    "dexter_config_integration" : "[{\"id\":1,\"device_type\":\"HikvisionNVR1\",\"ip_address\":\"192.168.1.168\",\"username\":\"admin\",\"password\":\"sepl1984\",\"port\":8080,\"camera_ip\":[]},{\"id\":2,\"device_type\":\"DahuaNVR1\",\"ip_address\":\"192.168.1.12\",\"username\":\"seple\",\"password\":\"dahua\",\"port\":8081},{\"id\":3,\"device_type\":\"HikvisionBioMetric1\",\"ip_address\":\"192.168.0.27\",\"username\":\"sepl\",\"password\":\"sepl1984\",\"port\":8082}]",
+    "dexter_config_active_device_parameter" : "{\"active_integration_hikvision_nvr\":1,\"active_integration_hikvision_biometric\":0,\"active_integration_dahua_nvr\":0}",
+    "dexter_config_active_parameter" : "{\"active_integration_on_off_bit\":1}",
+    "dexter_config_network_parameter" : "{\"e-SIM Enable/Disable\":\"True\",\"Network Selection for e-SIM\":\"LTE\",\"Enable/Disable GNSS\":\"True\",\"Alert Types (SMS)\":\"Vibrate\",\"Notification Schedule\":\"Every hour\",\"Enable/Disable for Network LED Status\":\"True\",\"Enable/Disable for Wireless LAN\":\"False\",\"APN Settings\":\"internet\",\"Enable/Disable GSM\":\"True\",\"DNS Setup\":\"Automatic\",\"Enable/Disable Static/dynamic\":\"Static\",\"IPv4/IPv6 Selection\":\"IPv4\",\"reset_to_dhcp\":\"True\",\"Set Port Number\":\"8.8.8.8\",\"preferred_dns_server\":\"8.8.4.4\",\"alternate_dns_server\":\"192.168.1.1\",\"Gateway\":\"192.168.1.1\",\"Subnet mask\":\"255.255.255.0\",\"Set IP Address\":\"192.168.1.169\",\"Network Test\":\"True\",\"Enable/Disable IP Module\":\"True\"}",
+    "dexter_config_batt" : "67",
+    "dexter_config_timestamp" : "2026-04-10T14:23:09",
+    "unknown" : {
+      "logStatus" : "Unknown Event",
+      "logFullName" : "Unknown",
+      "logStatusMode" : "Unknown",
+      "powerStatus" : "On",
+      "systemStatus" : "Normal",
+      "healthStatus" : "Active",
+      "notification" : "false",
+      "alarmFlag" : false,
+      "severity" : "",
+      "activeAlarm" : [ ],
+      "timestamp" : "2026-04-27T11:22:08.425Z"
+    },
+    "unknown_logStatus" : "Unknown Event",
+    "unknown_logFullName" : "Unknown",
+    "unknown_logStatusMode" : "Unknown",
+    "unknown_powerStatus" : "On",
+    "unknown_systemStatus" : "Normal",
+    "unknown_healthStatus" : "Active",
+    "unknown_notification" : "false",
+    "unknown_alarmFlag" : false,
+    "unknown_severity" : "",
+    "unknown_activeAlarm" : "[]",
+    "unknown_timestamp" : "2026-04-27T11:22:08.425Z",
+    "lastUpdate" : "2026-04-27T11:24:49.170Z",
+    "log_type" : "intrusion_alarm_system_activation_restored",
+    "bas" : {
+      "logStatus" : "Intrusion Alarm Cleared",
+      "logFullName" : "Intrusion Alarm System",
+      "logStatusMode" : "Restored",
+      "powerStatus" : "On",
+      "systemStatus" : "Normal",
+      "healthStatus" : "Active",
+      "notification" : "true",
+      "alarmFlag" : false,
+      "severity" : "",
+      "activeAlarm" : [ ],
+      "timestamp" : "2026-04-27T11:24:49.170Z"
+    },
+    "bas_logStatus" : "Intrusion Alarm Cleared",
+    "bas_logFullName" : "Intrusion Alarm System",
+    "bas_logStatusMode" : "Restored",
+    "bas_powerStatus" : "On",
+    "bas_systemStatus" : "Normal",
+    "bas_healthStatus" : "Active",
+    "bas_notification" : "true",
+    "bas_alarmFlag" : false,
+    "bas_severity" : "",
+    "bas_activeAlarm" : "[]",
+    "bas_timestamp" : "2026-04-27T11:24:49.170Z",
+    "Hikvision_NVR_deviceName" : "Network Video Recorder",
+    "Hikvision_NVR_deviceID" : "48464d39-3130-3538-3633-24b10557c0f9",
+    "Hikvision_NVR_Manufacturer" : "hikvision",
+    "Hikvision_NVR_HDDInfo" : {
+      "Hikvision_NVR_NoOfHDDSlots1" : "1",
+      "Hikvision_NVR_Status1" : "idle",
+      "Hikvision_NVR_capacity1" : "5723166",
+      "Hikvision_NVR_freeSpace1" : "0",
+      "Hikvision_NVR_NoOfHDDSlots2" : "2",
+      "Hikvision_NVR_Status2" : "ok",
+      "Hikvision_NVR_capacity2" : "5723166",
+      "Hikvision_NVR_freeSpace2" : "3599360",
+      "Hikvision_NVR_NoOfHDDSlots3" : "3",
+      "Hikvision_NVR_Status3" : "idle",
+      "Hikvision_NVR_capacity3" : "5723166",
+      "Hikvision_NVR_freeSpace3" : "0",
+      "Hikvision_NVR_NoOfHDDSlots4" : "4",
+      "Hikvision_NVR_Status4" : "ok",
+      "Hikvision_NVR_capacity4" : "5723166",
+      "Hikvision_NVR_freeSpace4" : "0"
+    },
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_NoOfHDDSlots1" : "1",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_Status1" : "idle",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_capacity1" : "5723166",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_freeSpace1" : "0",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_NoOfHDDSlots2" : "2",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_Status2" : "ok",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_capacity2" : "5723166",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_freeSpace2" : "3599360",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_NoOfHDDSlots3" : "3",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_Status3" : "idle",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_capacity3" : "5723166",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_freeSpace3" : "0",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_NoOfHDDSlots4" : "4",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_Status4" : "ok",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_capacity4" : "5723166",
+    "Hikvision_NVR_HDDInfo_Hikvision_NVR_freeSpace4" : "0",
+    "Hikvision_NVR_cameraInfo" : {
+      "1" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "fbfa5291-aac5-45ef-8aed-06f2c8d6999b",
+        "IP Address" : "192.168.1.109",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "101",
+        "Video Resolution" : "1280x720",
+        "Max Frame Rate" : "2500"
+      },
+      "2" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "1956a651-ebd9-4439-84cb-093066a81bc9",
+        "IP Address" : "192.168.1.20",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "201",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "3" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "58b9a0c2-ee8e-4220-952a-8ed7aefa13ee",
+        "IP Address" : "192.168.1.101",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "301",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "1500"
+      },
+      "4" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "e043f5c2-a101-468f-a3f3-09e0509c6595",
+        "IP Address" : "192.168.1.14",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "401",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "5" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "00964c35-8bd8-4b3f-8a3f-b37c48cce7c6",
+        "IP Address" : "192.168.1.11",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "501",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "6" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "0c121155-3fd0-4393-9aff-a6e49a1ffef2",
+        "IP Address" : "192.168.1.25",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "601",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "1500"
+      },
+      "7" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "ba3b0ccf-b7c8-46f3-ba29-5ce5dcf752fc",
+        "IP Address" : "192.168.1.13",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "701",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "8" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "9043e2f1-6548-4630-9b09-1481e8875835",
+        "IP Address" : "192.168.1.64",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "801",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "9" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "b4502af8-85cc-4049-8797-24664bd2f3e6",
+        "IP Address" : "192.168.1.22",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "901",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "10" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "4efb2cee-e902-4671-aaa2-ab82749003e4",
+        "IP Address" : "192.168.1.17",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "1001",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "11" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "95d97487-942e-4fea-ae69-efb796739a41",
+        "IP Address" : "192.168.1.16",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "1101",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "12" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "0b5fef62-ed90-416a-8785-107fb47d41b7",
+        "IP Address" : "192.168.1.100",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "1201",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "1500"
+      },
+      "13" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "2f01c107-c974-497c-afb7-ea4279e1c1f0",
+        "IP Address" : "192.168.1.15",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "1301",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "14" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "5a865e6b-59db-452f-98f8-fbf82e0d85db",
+        "IP Address" : "192.168.1.21",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "1401",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "15" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "55263318-e0d0-4ad0-9834-7094bc005380",
+        "IP Address" : "192.168.1.12",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "1501",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      },
+      "16" : {
+        "Channel Name" : "Camera 01",
+        "Device Index" : "0b8b5166-6381-48ea-aa0b-7bf90b46b13c",
+        "IP Address" : "192.168.1.24",
+        "Proxy Protocol" : "HIKVISION",
+        "Streaming Channel Name" : "1601",
+        "Video Resolution" : "1920x1080",
+        "Max Frame Rate" : "2000"
+      }
+    },
+    "Hikvision_NVR_cameraInfo_1" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"fbfa5291-aac5-45ef-8aed-06f2c8d6999b\",\"IP Address\":\"192.168.1.109\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"101\",\"Video Resolution\":\"1280x720\",\"Max Frame Rate\":\"2500\"}",
+    "Hikvision_NVR_cameraInfo_2" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"1956a651-ebd9-4439-84cb-093066a81bc9\",\"IP Address\":\"192.168.1.20\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"201\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_3" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"58b9a0c2-ee8e-4220-952a-8ed7aefa13ee\",\"IP Address\":\"192.168.1.101\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"301\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"1500\"}",
+    "Hikvision_NVR_cameraInfo_4" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"e043f5c2-a101-468f-a3f3-09e0509c6595\",\"IP Address\":\"192.168.1.14\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"401\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_5" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"00964c35-8bd8-4b3f-8a3f-b37c48cce7c6\",\"IP Address\":\"192.168.1.11\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"501\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_6" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"0c121155-3fd0-4393-9aff-a6e49a1ffef2\",\"IP Address\":\"192.168.1.25\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"601\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"1500\"}",
+    "Hikvision_NVR_cameraInfo_7" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"ba3b0ccf-b7c8-46f3-ba29-5ce5dcf752fc\",\"IP Address\":\"192.168.1.13\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"701\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_8" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"9043e2f1-6548-4630-9b09-1481e8875835\",\"IP Address\":\"192.168.1.64\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"801\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_9" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"b4502af8-85cc-4049-8797-24664bd2f3e6\",\"IP Address\":\"192.168.1.22\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"901\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_10" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"4efb2cee-e902-4671-aaa2-ab82749003e4\",\"IP Address\":\"192.168.1.17\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"1001\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_11" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"95d97487-942e-4fea-ae69-efb796739a41\",\"IP Address\":\"192.168.1.16\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"1101\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_12" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"0b5fef62-ed90-416a-8785-107fb47d41b7\",\"IP Address\":\"192.168.1.100\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"1201\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"1500\"}",
+    "Hikvision_NVR_cameraInfo_13" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"2f01c107-c974-497c-afb7-ea4279e1c1f0\",\"IP Address\":\"192.168.1.15\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"1301\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_14" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"5a865e6b-59db-452f-98f8-fbf82e0d85db\",\"IP Address\":\"192.168.1.21\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"1401\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_15" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"55263318-e0d0-4ad0-9834-7094bc005380\",\"IP Address\":\"192.168.1.12\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"1501\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}",
+    "Hikvision_NVR_cameraInfo_16" : "{\"Channel Name\":\"Camera 01\",\"Device Index\":\"0b8b5166-6381-48ea-aa0b-7bf90b46b13c\",\"IP Address\":\"192.168.1.24\",\"Proxy Protocol\":\"HIKVISION\",\"Streaming Channel Name\":\"1601\",\"Video Resolution\":\"1920x1080\",\"Max Frame Rate\":\"2000\"}"
+  },
+  "sharedAttributes" : {
+    "alarmFlag" : true,
+    "customer_title" : "BRANCH MALDA TOWN",
+    "res" : "ok",
+    "dexter_config" : "{\"powerzone\":\"{1 1 1 1 1 2 1 1 5 0 0 4 0 0 5 0 0 6 0 0 1 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}\",\"zone\":\"{1 1 1 1 1 2 1 1 3 0 1 4 0 1 6 0 1 3 1 1 5 0 1 5 0 1 1 0 1 4 0 1 2 0 1 6 0 1 1 0 1 4 0 0 5 0 0 5}\",\"brand\":\"TRISIM\",\"branch\":\"BOI Malda Town\",\"modem_parameter\":{\"client_id\":\"M-TOWN-CL-ID\",\"user_name\":\"M-TOWN-UN-ID\",\"password\":\"M-TOWN-PWO\",\"gsm_modem_mode\":\"esim\",\"network_type\":\"gsm\",\"device_name\":\"BOI-MALDATOWN\"},\"integration\":[{\"id\":1,\"device_type\":\"HikvisionNVR1\",\"ip_address\":\"192.168.1.168\",\"username\":\"admin\",\"password\":\"sepl1984\",\"port\":8080,\"camera_ip\":[]},{\"id\":2,\"device_type\":\"DahuaNVR1\",\"ip_address\":\"192.168.1.12\",\"username\":\"seple\",\"password\":\"dahua\",\"port\":8081},{\"id\":3,\"device_type\":\"HikvisionBioMetric1\",\"ip_address\":\"192.168.0.27\",\"username\":\"sepl\",\"password\":\"sepl1984\",\"port\":8082}],\"active_device_parameter\":{\"active_integration_hikvision_nvr\":1,\"active_integration_hikvision_biometric\":0,\"active_integration_dahua_nvr\":0},\"active_parameter\":{\"active_integration_on_off_bit\":1},\"network_parameter\":{\"e-SIM Enable/Disable\":\"True\",\"Network Selection for e-SIM\":\"LTE\",\"Enable/Disable GNSS\":\"True\",\"Alert Types (SMS)\":\"Vibrate\",\"Notification Schedule\":\"Every hour\",\"Enable/Disable for Network LED Status\":\"True\",\"Enable/Disable for Wireless LAN\":\"False\",\"APN Settings\":\"internet\",\"Enable/Disable GSM\":\"True\",\"DNS Setup\":\"Automatic\",\"Enable/Disable Static/dynamic\":\"Static\",\"IPv4/IPv6 Selection\":\"IPv4\",\"reset_to_dhcp\":\"True\",\"Set Port Number\":\"8.8.8.8\",\"preferred_dns_server\":\"8.8.4.4\",\"alternate_dns_server\":\"192.168.1.1\",\"Gateway\":\"192.168.1.1\",\"Subnet mask\":\"255.255.255.0\",\"Set IP Address\":\"192.168.1.169\",\"Network Test\":\"True\",\"Enable/Disable IP Module\":\"True\"},\"batt\":\"67\",\"timestamp\":\"2026-04-08T13:06:50Z\"}",
+    "dexter_config_powerzone" : "{1 1 1 1 1 2 1 1 5 0 0 4 0 0 5 0 0 6 0 0 1 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}",
+    "dexter_config_zone" : "{1 1 1 1 1 2 1 1 3 0 1 4 0 1 6 0 1 3 1 1 5 0 1 5 0 1 1 0 1 4 0 1 2 0 1 6 0 1 1 0 1 4 0 0 5 0 0 5}",
+    "dexter_config_brand" : "TRISIM",
+    "dexter_config_branch" : "BOI Malda Town",
+    "dexter_config_modem_parameter" : "{\"client_id\":\"M-TOWN-CL-ID\",\"user_name\":\"M-TOWN-UN-ID\",\"password\":\"M-TOWN-PWO\",\"gsm_modem_mode\":\"esim\",\"network_type\":\"gsm\",\"device_name\":\"BOI-MALDATOWN\"}",
+    "dexter_config_integration" : "[{\"id\":1,\"device_type\":\"HikvisionNVR1\",\"ip_address\":\"192.168.1.168\",\"username\":\"admin\",\"password\":\"sepl1984\",\"port\":8080,\"camera_ip\":[]},{\"id\":2,\"device_type\":\"DahuaNVR1\",\"ip_address\":\"192.168.1.12\",\"username\":\"seple\",\"password\":\"dahua\",\"port\":8081},{\"id\":3,\"device_type\":\"HikvisionBioMetric1\",\"ip_address\":\"192.168.0.27\",\"username\":\"sepl\",\"password\":\"sepl1984\",\"port\":8082}]",
+    "dexter_config_active_device_parameter" : "{\"active_integration_hikvision_nvr\":1,\"active_integration_hikvision_biometric\":0,\"active_integration_dahua_nvr\":0}",
+    "dexter_config_active_parameter" : "{\"active_integration_on_off_bit\":1}",
+    "dexter_config_network_parameter" : "{\"e-SIM Enable/Disable\":\"True\",\"Network Selection for e-SIM\":\"LTE\",\"Enable/Disable GNSS\":\"True\",\"Alert Types (SMS)\":\"Vibrate\",\"Notification Schedule\":\"Every hour\",\"Enable/Disable for Network LED Status\":\"True\",\"Enable/Disable for Wireless LAN\":\"False\",\"APN Settings\":\"internet\",\"Enable/Disable GSM\":\"True\",\"DNS Setup\":\"Automatic\",\"Enable/Disable Static/dynamic\":\"Static\",\"IPv4/IPv6 Selection\":\"IPv4\",\"reset_to_dhcp\":\"True\",\"Set Port Number\":\"8.8.8.8\",\"preferred_dns_server\":\"8.8.4.4\",\"alternate_dns_server\":\"192.168.1.1\",\"Gateway\":\"192.168.1.1\",\"Subnet mask\":\"255.255.255.0\",\"Set IP Address\":\"192.168.1.169\",\"Network Test\":\"True\",\"Enable/Disable IP Module\":\"True\"}",
+    "dexter_config_batt" : "67",
+    "dexter_config_timestamp" : "2026-04-08T13:06:50Z"
+  }
+}
