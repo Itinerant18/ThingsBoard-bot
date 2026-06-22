@@ -13,11 +13,18 @@ import com.seple.ThingsBoard_Bot.model.domain.BranchSnapshot;
 @Component
 public class AnswerTemplateService {
 
-    public String renderGlobalOverview(List<String> onlineBranches, List<String> offlineBranches) {
+    public String renderGlobalOverview(List<String> onlineBranches, List<String> offlineBranches,
+                                       List<String> unknownBranches) {
         StringBuilder builder = new StringBuilder();
         builder.append("**Total: ")
                 .append(onlineBranches.size()).append(" Online | ")
-                .append(offlineBranches.size()).append(" Offline**");
+                .append(offlineBranches.size()).append(" Offline");
+        // A branch whose status attribute (gateway_sts) is absent is Unknown, not Offline. Only
+        // surface the bucket when it is non-empty so clean data keeps the familiar two-part total.
+        if (!unknownBranches.isEmpty()) {
+            builder.append(" | ").append(unknownBranches.size()).append(" Unknown");
+        }
+        builder.append("**");
         builder.append("\nFor your question about all branches, here is the current branch-level status.");
 
         if (!onlineBranches.isEmpty()) {
@@ -30,6 +37,13 @@ public class AnswerTemplateService {
         if (!offlineBranches.isEmpty()) {
             builder.append("\n\nOffline:");
             for (String branch : offlineBranches) {
+                builder.append("\n- ").append(branch);
+            }
+        }
+
+        if (!unknownBranches.isEmpty()) {
+            builder.append("\n\nUnknown:");
+            for (String branch : unknownBranches) {
                 builder.append("\n- ").append(branch);
             }
         }

@@ -67,21 +67,26 @@ public class GlobalOverviewHandler implements AnswerHandler {
 
     private String answerGlobalOverview(List<BranchSnapshot> snapshots, String customerId) {
         if (snapshots == null || snapshots.isEmpty()) {
-            return answerTemplateService.renderGlobalOverview(List.of(), List.of());
+            return answerTemplateService.renderGlobalOverview(List.of(), List.of(), List.of());
         }
 
         if (hierarchyNodeRepository == null || branchAncestorPathRepository == null) {
             // Fall back to old behavior (flat list)
             List<String> online = new ArrayList<>();
             List<String> offline = new ArrayList<>();
+            List<String> unknown = new ArrayList<>();
             for (BranchSnapshot snapshot : snapshots) {
-                if (snapshot.getGateway().getState() == NormalizedState.ONLINE) {
-                    online.add(snapshot.getIdentity().getBranchName());
+                NormalizedState state = snapshot.getGateway().getState();
+                String branchName = snapshot.getIdentity().getBranchName();
+                if (state == NormalizedState.ONLINE) {
+                    online.add(branchName);
+                } else if (state == NormalizedState.UNKNOWN) {
+                    unknown.add(branchName);
                 } else {
-                    offline.add(snapshot.getIdentity().getBranchName());
+                    offline.add(branchName);
                 }
             }
-            return answerTemplateService.renderGlobalOverview(online, offline);
+            return answerTemplateService.renderGlobalOverview(online, offline, unknown);
         }
 
         // Load all hierarchy nodes and paths for this customer (cached).
@@ -119,22 +124,20 @@ public class GlobalOverviewHandler implements AnswerHandler {
         // Group the branches by their ancestor path display name.
         Map<String, List<String>> groupedOnline = new java.util.TreeMap<>();
         Map<String, List<String>> groupedOffline = new java.util.TreeMap<>();
+        Map<String, List<String>> groupedUnknown = new java.util.TreeMap<>();
 
         int onlineCount = 0;
         int offlineCount = 0;
+        int unknownCount = 0;
 
         for (BranchSnapshot snapshot : snapshots) {
             if (snapshot.getIdentity() == null) continue;
             String branchName = snapshot.getIdentity().getBranchName();
             if (branchName == null) continue;
 
+            // A branch with no gateway_sts attribute resolves to UNKNOWN; it is reported in its own
+            // bucket rather than silently counted as Offline (consistent with the strict _sts read).
             NormalizedState state = snapshot.getGateway().getState();
-            boolean isOnline = (state == NormalizedState.ONLINE);
-            if (isOnline) {
-                onlineCount++;
-            } else {
-                offlineCount++;
-            }
 
             // Find hierarchy path for this branch
             String normName = normalizeKey(branchName);
@@ -174,15 +177,21 @@ public class GlobalOverviewHandler implements AnswerHandler {
                 }
             }
 
-            if (isOnline) {
+            if (state == NormalizedState.ONLINE) {
+                onlineCount++;
                 groupedOnline.computeIfAbsent(groupHeader, k -> new ArrayList<>()).add(branchName);
+            } else if (state == NormalizedState.UNKNOWN) {
+                unknownCount++;
+                groupedUnknown.computeIfAbsent(groupHeader, k -> new ArrayList<>()).add(branchName);
             } else {
+                offlineCount++;
                 groupedOffline.computeIfAbsent(groupHeader, k -> new ArrayList<>()).add(branchName);
             }
         }
 
         // Now build the markdown response using our grouped lists.
-        return renderGroupedGlobalOverview(onlineCount, offlineCount, groupedOnline, groupedOffline);
+        return renderGroupedGlobalOverview(onlineCount, offlineCount, unknownCount,
+                groupedOnline, groupedOffline, groupedUnknown);
     }
 
     private String normalizeKey(String value) {
@@ -199,14 +208,20 @@ public class GlobalOverviewHandler implements AnswerHandler {
     }
 
     private String renderGroupedGlobalOverview(
-            int onlineCount, int offlineCount,
+            int onlineCount, int offlineCount, int unknownCount,
             Map<String, List<String>> groupedOnline,
-            Map<String, List<String>> groupedOffline) {
+            Map<String, List<String>> groupedOffline,
+            Map<String, List<String>> groupedUnknown) {
 
         StringBuilder builder = new StringBuilder();
         builder.append("**Total: ")
                 .append(onlineCount).append(" Online | ")
-                .append(offlineCount).append(" Offline**");
+                .append(offlineCount).append(" Offline");
+        // Only surface the Unknown bucket when it is non-empty so clean data keeps the two-part total.
+        if (unknownCount > 0) {
+            builder.append(" | ").append(unknownCount).append(" Unknown");
+        }
+        builder.append("**");
         builder.append("\nFor your question about all branches, here is the current branch-level status.");
 
         if (!groupedOnline.isEmpty()) {
@@ -235,6 +250,25 @@ public class GlobalOverviewHandler implements AnswerHandler {
                 builder.append("<details open>\n<summary><b>Show/Hide Offline Branches (").append(offlineCount).append(")</b></summary>\n\n");
             }
             for (Map.Entry<String, List<String>> entry : groupedOffline.entrySet()) {
+                builder.append("- **").append(entry.getKey()).append("**\n");
+                List<String> sortedBranches = new ArrayList<>(entry.getValue());
+                java.util.Collections.sort(sortedBranches);
+                for (String branch : sortedBranches) {
+                    builder.append("  - ").append(branch).append("\n");
+                }
+            }
+            if (useCollapsible) {
+                builder.append("</details>\n");
+            }
+        }
+
+        if (!groupedUnknown.isEmpty()) {
+            builder.append("\nUnknown:\n");
+            boolean useCollapsible = unknownCount > 10;
+            if (useCollapsible) {
+                builder.append("<details>\n<summary><b>Show/Hide Unknown Branches (").append(unknownCount).append(")</b></summary>\n\n");
+            }
+            for (Map.Entry<String, List<String>> entry : groupedUnknown.entrySet()) {
                 builder.append("- **").append(entry.getKey()).append("**\n");
                 List<String> sortedBranches = new ArrayList<>(entry.getValue());
                 java.util.Collections.sort(sortedBranches);
