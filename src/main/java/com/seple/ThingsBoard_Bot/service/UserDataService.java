@@ -24,6 +24,7 @@ import com.seple.ThingsBoard_Bot.repository.CustomerRepository;
 import com.seple.ThingsBoard_Bot.repository.HierarchyNodeRepository;
 import com.seple.ThingsBoard_Bot.entity.HierarchyNode;
 import com.seple.ThingsBoard_Bot.util.JwtParserUtil;
+import com.seple.ThingsBoard_Bot.util.RegionalScopeUtil;
 
 import com.seple.ThingsBoard_Bot.client.UserAwareThingsBoardClient;
 import com.seple.ThingsBoard_Bot.repository.BranchAncestorPathRepository;
@@ -111,8 +112,6 @@ public class UserDataService {
 
     // ==================== Public API ====================
 
-    private static final List<String> REGIONAL_PREFIXES = List.of("FGMO", "LHO", "ZO", "CO", "RO", "RBO", "NBG");
-
     /** Data older than this is flagged stale. Override with -Diotchatbot.staleness.threshold.ms. */
     private static final long STALENESS_THRESHOLD_MS = Long.getLong("iotchatbot.staleness.threshold.ms", 600_000L);
 
@@ -131,10 +130,6 @@ public class UserDataService {
         }
     }
 
-    private String normalizeName(String name) {
-        if (name == null) return "";
-        return name.replaceAll("[^a-zA-Z0-9]", "").toUpperCase();
-    }
 
     private List<HierarchyNode> getFilteredUserNodes(String userToken) {
         boolean isTenantAdmin = JwtParserUtil.hasScope(userToken, "TENANT_ADMIN");
@@ -169,64 +164,13 @@ public class UserDataService {
             log.error("Failed to filter nodes via ThingsBoard API (e.g. token expired): {}", e.getMessage());
         }
         
-        // ALWAYS apply local regional ancestor path filtering if the token resolves to a specific region/zone
-        String regionName = resolveRegionName(userToken);
-        if (regionName != null) {
-            log.info("Applying regional filtering for region: {}", regionName);
-            String normalizedRegion = normalizeName(regionName);
-            
-            Optional<HierarchyNode> regionNodeOpt = cached.allNodes.stream()
-                    .filter(node -> !Boolean.TRUE.equals(node.getIsLeaf()) && 
-                                    (normalizeName(node.getDisplayName()).equals(normalizedRegion) || 
-                                     normalizeName(node.getNodeId()).contains(normalizedRegion)))
-                    .findFirst();
-            
-            if (regionNodeOpt.isPresent()) {
-                String regionNodeId = regionNodeOpt.get().getNodeId();
-                List<BranchAncestorPath> ancestorPaths = cached.ancestorPaths;
-                Set<String> branchIdsInRegion = ancestorPaths.stream()
-                        .filter(path -> path.getAncestorList().contains(regionNodeId))
-                        .map(BranchAncestorPath::getBranchNodeId)
-                        .collect(Collectors.toSet());
-                
-                nodes = nodes.stream()
-                        .filter(node -> branchIdsInRegion.contains(node.getNodeId()))
-                        .toList();
-                log.info("Successfully filtered nodes to {} branches for region: {}", nodes.size(), regionName);
-            } else {
-                log.warn("Could not find matching hierarchy node for region: {} (normalized: {}) in database.", regionName, normalizedRegion);
-            }
-        }
-        
-        return nodes;
-    }
+        // ALWAYS apply regional ancestor-path scoping after the device ACL. The ThingsBoard
+        // customer ACL returns the whole inventory, so a region-scoped user (e.g. NBG JH) must be
+        // narrowed here. Shared with BranchIndexService via RegionalScopeUtil so the two retrieval
+        // paths cannot diverge and leak.
+        nodes = RegionalScopeUtil.filterByRegion(userToken, nodes, cached.allNodes, cached.ancestorPaths);
 
-    private String resolveRegionName(String userToken) {
-        String firstName = JwtParserUtil.extractClaim(userToken, "firstName");
-        String lastName = JwtParserUtil.extractClaim(userToken, "lastName");
-        if (firstName != null && lastName != null) {
-            String combined = (firstName + " " + lastName).toUpperCase();
-            for (String prefix : REGIONAL_PREFIXES) {
-                if (combined.contains(prefix + " ")) {
-                    return combined.substring(combined.indexOf(prefix + " ")).trim();
-                }
-            }
-        }
-        String sub = JwtParserUtil.extractClaim(userToken, "sub");
-        if (sub != null && sub.contains("@")) {
-            String prefix = sub.split("@")[0].toUpperCase();
-            if (prefix.contains(".")) {
-                String firstPart = prefix.split("\\.")[0];
-                for (String p : REGIONAL_PREFIXES) {
-                    if (prefix.startsWith(p + ".")) {
-                        return prefix.replace(".", " ");
-                    }
-                }
-                return "ZO " + firstPart;
-            }
-            return "ZO " + prefix;
-        }
-        return null;
+        return nodes;
     }
 
     /**

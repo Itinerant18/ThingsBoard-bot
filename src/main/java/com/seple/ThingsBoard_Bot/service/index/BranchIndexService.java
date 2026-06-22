@@ -16,6 +16,7 @@ import com.seple.ThingsBoard_Bot.repository.CustomerRepository;
 import com.seple.ThingsBoard_Bot.repository.HierarchyNodeRepository;
 import com.seple.ThingsBoard_Bot.entity.HierarchyNode;
 import com.seple.ThingsBoard_Bot.util.JwtParserUtil;
+import com.seple.ThingsBoard_Bot.util.RegionalScopeUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +26,6 @@ import com.seple.ThingsBoard_Bot.entity.BranchAncestorPath;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -86,8 +86,6 @@ public class BranchIndexService {
         }
 
         if (!isTenantAdmin) {
-            boolean filtered = false;
-            
             try {
                 List<Map<String, String>> userDevices = userAwareThingsBoardClient.getUserDevices(userToken);
                 if (userDevices != null && !userDevices.isEmpty()) {
@@ -95,7 +93,7 @@ public class BranchIndexService {
                             .map(d -> d.get("id"))
                             .filter(Objects::nonNull)
                             .collect(Collectors.toSet());
-                    
+
                     nodes = nodes.stream()
                             .filter(node -> {
                                 String devId = node.getTbDeviceId() != null ? node.getTbDeviceId().toString() : node.getNodeId();
@@ -103,41 +101,19 @@ public class BranchIndexService {
                             })
                             .toList();
                     log.info("Filtered branch index to {} authorized devices for token", nodes.size());
-                    filtered = true;
                 }
             } catch (Exception e) {
                 log.error("Failed to filter branch index via ThingsBoard API: {}", e.getMessage());
             }
 
-            // Fallback: local zone-based ancestor path filtering
-            if (!filtered) {
-                String zoneName = resolveZoneName(userToken);
-                if (zoneName != null) {
-                    log.info("Attempting local fallback filtering for zone: {}", zoneName);
-                    String upperZone = zoneName.toUpperCase();
-                    Optional<HierarchyNode> zoNodeOpt = hierarchyNodeRepository.findAll().stream()
-                            .filter(node -> "ZO".equalsIgnoreCase(node.getNodeType()) && 
-                                            (node.getDisplayName().equalsIgnoreCase(zoneName) || 
-                                             node.getNodeId().toUpperCase().contains(upperZone.replace(" ", "_"))))
-                            .findFirst();
-                    
-                    if (zoNodeOpt.isPresent()) {
-                        String zoNodeId = zoNodeOpt.get().getNodeId();
-                        List<BranchAncestorPath> ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
-                        Set<String> branchIdsInZone = ancestorPaths.stream()
-                                .filter(path -> path.getAncestorList().contains(zoNodeId))
-                                .map(BranchAncestorPath::getBranchNodeId)
-                                .collect(Collectors.toSet());
-                        
-                        nodes = nodes.stream()
-                                .filter(node -> branchIdsInZone.contains(node.getNodeId()))
-                                .toList();
-                        log.info("Successfully filtered branch index to {} branches for zone: {}", nodes.size(), zoneName);
-                    } else {
-                        log.warn("Could not find ZO node for zone: {} in database.", zoneName);
-                    }
-                }
-            }
+            // ALWAYS apply regional ancestor-path scoping after the device ACL. The ThingsBoard
+            // customer ACL returns the whole inventory, so a region-scoped user (e.g. NBG JH) must
+            // be narrowed here. Shared with UserDataService via RegionalScopeUtil so the two
+            // retrieval paths cannot diverge and leak (this path previously skipped regional
+            // scoping entirely, leaking all branches to a region-scoped user).
+            List<HierarchyNode> allNodes = hierarchyNodeRepository.findByCustomerId(customerId);
+            List<BranchAncestorPath> ancestorPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+            nodes = RegionalScopeUtil.filterByRegion(userToken, nodes, allNodes, ancestorPaths);
         }
 
         List<DeviceIndexEntry> entries = nodes.stream()
@@ -159,27 +135,6 @@ public class BranchIndexService {
         lastAccess.put(key, System.currentTimeMillis());
         log.info("Indexed {} devices from local DB for user cache {}", entries.size(), key);
         return entries;
-    }
-
-    private String resolveZoneName(String userToken) {
-        String firstName = JwtParserUtil.extractClaim(userToken, "firstName");
-        String lastName = JwtParserUtil.extractClaim(userToken, "lastName");
-        if (firstName != null && lastName != null) {
-            String combined = (firstName + " " + lastName).toUpperCase();
-            if (combined.contains("ZO ")) {
-                return combined.substring(combined.indexOf("ZO ")).trim(); // e.g., "ZO HOWRAH"
-            }
-        }
-        String sub = JwtParserUtil.extractClaim(userToken, "sub");
-        if (sub != null && sub.contains("@")) {
-            String prefix = sub.split("@")[0].toUpperCase();
-            if (prefix.contains(".")) {
-                String firstPart = prefix.split("\\.")[0];
-                return "ZO " + firstPart; // e.g. "ZO HOWRAH"
-            }
-            return "ZO " + prefix;
-        }
-        return null;
     }
 
     public void invalidate(String userToken) {
