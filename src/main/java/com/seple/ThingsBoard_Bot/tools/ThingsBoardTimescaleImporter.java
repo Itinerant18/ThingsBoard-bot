@@ -255,6 +255,43 @@ public class ThingsBoardTimescaleImporter {
         }
     }
 
+    /**
+     * Classifies a middle (non-root, non-leaf) hierarchy node from the leading code token of its
+     * name. Returns the canonical level type (FGMO/NBG/LHO/ZO/RO/RBO/CO/HO) or {@code null} when
+     * the segment does not start with a recognized level code, letting the caller fall back.
+     *
+     * <p>Examples: "RO KOLKATA - I" -> RO, "ZO(Kolkata)" -> ZO, "LHO Mumbai" -> LHO, "NBG JH" ->
+     * NBG, "CO South" -> CO, "RBO 3" -> RBO. Bank-agnostic: each level self-declares via its name.
+     */
+    static String classifyMiddleNodeType(String segmentName) {
+        if (segmentName == null) {
+            return null;
+        }
+        String s = segmentName.trim().toUpperCase();
+        int j = 0;
+        while (j < s.length() && Character.isLetter(s.charAt(j))) {
+            j++;
+        }
+        String code = s.substring(0, j);
+        switch (code) {
+            case "FGMO":
+            case "NBG":
+            case "LHO":
+            case "ZO":
+            case "RO":
+            case "RBO":
+            case "CO":
+            case "HO":
+                return code;
+            case "ZONE":
+                return "ZO";
+            case "REGION":
+                return "RO";
+            default:
+                return null;
+        }
+    }
+
     private static class Node {
         String nodeId;
         String customerId;
@@ -334,17 +371,23 @@ public class ThingsBoardTimescaleImporter {
                     nodeId = deviceName;
                 } else {
                     String upper = segmentName.toUpperCase();
-                    if (upper.contains("NBG")) {
+                    // Derive the level from the segment's own leading code token (e.g. "RO KOLKATA"
+                    // -> RO, "LHO Mumbai" -> LHO, "NBG JH" -> NBG, "CO South" -> CO). This is
+                    // bank-agnostic and works for every customer hierarchy (BOI/BOB/SBI/Canara/...)
+                    // as long as the level code prefixes the segment name. Falls back to the legacy
+                    // NBG/ZO heuristic only when a segment does not self-declare its level.
+                    String classified = classifyMiddleNodeType(segmentName);
+                    if (classified != null) {
+                        nodeType = classified;
+                    } else if (upper.contains("NBG")) {
                         nodeType = "NBG";
-                    } else if (upper.contains("ZO") || upper.contains("ZONE") || upper.contains("RO") || upper.contains("REGION")) {
+                    } else if (upper.contains("ZONE") || upper.contains("REGION")
+                            || upper.contains("ZO") || upper.contains("RO")) {
                         nodeType = "ZO";
+                    } else if (i == 1 && pathSegments.size() == 4) {
+                        nodeType = "NBG";
                     } else {
-                        // Fallback based on relative position
-                        if (i == 1 && pathSegments.size() == 4) {
-                            nodeType = "NBG";
-                        } else {
-                            nodeType = "ZO";
-                        }
+                        nodeType = "ZO";
                     }
                     nodeId = customerId + "_" + nodeType + "_" + upper;
                 }
