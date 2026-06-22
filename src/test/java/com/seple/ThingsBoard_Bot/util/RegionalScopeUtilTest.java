@@ -104,6 +104,28 @@ class RegionalScopeUtilTest {
     }
 
     @Test
+    void abbreviatedHierarchyName_matchesFullWordInToken() {
+        // JWT carries the full word (lastName "JHARKHAND" => region "NBG JHARKHAND") while the
+        // hierarchy uses the abbreviation "NBG JH". The branch must still scope to NBG JH, and must
+        // NOT bleed into a sibling region such as NBG EAST.
+        HierarchyNode jh = region("nbg-jh", "NBG JH");
+        HierarchyNode east = region("nbg-east", "NBG EAST");
+        HierarchyNode b1 = leaf("b1", "BRANCH ONE");   // under NBG JH
+        HierarchyNode b2 = leaf("b2", "BRANCH TWO");   // under NBG EAST
+        List<HierarchyNode> allNodes = List.of(jh, east, b1, b2);
+        List<HierarchyNode> leaves = List.of(b1, b2);
+        List<BranchAncestorPath> paths = List.of(
+                path("b1", "nbg-jh"),
+                path("b2", "nbg-east"));
+
+        List<HierarchyNode> result = RegionalScopeUtil.filterByRegion(
+                token("BOI NBG", "JHARKHAND", null), leaves, allNodes, paths);
+
+        assertEquals(1, result.size());
+        assertTrue(result.stream().anyMatch(n -> n.getNodeId().equals("b1")));
+    }
+
+    @Test
     void resolveExplicitRegionName_picksRegionalPrefixFromName() {
         assertEquals("NBG JH", RegionalScopeUtil.resolveExplicitRegionName(token("BOI NBG", "Jh", null)));
         assertNull(RegionalScopeUtil.resolveExplicitRegionName(token("Some", "User", null)));

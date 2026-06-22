@@ -59,9 +59,7 @@ public final class RegionalScopeUtil {
 
         String normalizedRegion = normalizeName(regionName);
         Optional<HierarchyNode> regionNodeOpt = allNodes.stream()
-                .filter(node -> !Boolean.TRUE.equals(node.getIsLeaf())
-                        && (normalizeName(node.getDisplayName()).equals(normalizedRegion)
-                            || normalizeName(node.getNodeId()).contains(normalizedRegion)))
+                .filter(node -> !Boolean.TRUE.equals(node.getIsLeaf()) && regionMatches(node, normalizedRegion))
                 .findFirst();
 
         if (regionNodeOpt.isEmpty()) {
@@ -134,6 +132,36 @@ public final class RegionalScopeUtil {
             }
         }
         return null;
+    }
+
+    /**
+     * Matches a hierarchy node against the normalized region name from the token.
+     *
+     * <p>Beyond exact display-name and node-id containment, this tolerates abbreviation mismatches
+     * between the JWT and the hierarchy: the token may carry the full word (e.g. {@code NBG
+     * JHARKHAND}) while the hierarchy uses an abbreviation (e.g. {@code NBG JH}), or vice-versa.
+     * A prefix match in either direction is accepted, guarded by a minimum length so a bare prefix
+     * such as {@code NBG} cannot match every NBG region.
+     */
+    private static boolean regionMatches(HierarchyNode node, String normalizedRegion) {
+        if (normalizedRegion.isEmpty()) {
+            return false;
+        }
+        String nameNorm = normalizeName(node.getDisplayName());
+        String idNorm = normalizeName(node.getNodeId());
+        if (nameNorm.equals(normalizedRegion) || idNorm.equals(normalizedRegion)) {
+            return true;
+        }
+        // The node id often embeds the region token (e.g. "BOI_NBG_JH_..."); keep the substring match.
+        if (idNorm.contains(normalizedRegion)) {
+            return true;
+        }
+        // Abbreviation tolerance: "NBGJHARKHAND" (token) vs "NBGJH" (data). Require >= 5 chars on the
+        // shorter side so "NBG" alone cannot prefix-match unrelated NBG regions.
+        if (nameNorm.length() >= 5 && (normalizedRegion.startsWith(nameNorm) || nameNorm.startsWith(normalizedRegion))) {
+            return true;
+        }
+        return false;
     }
 
     private static String normalizeName(String name) {
