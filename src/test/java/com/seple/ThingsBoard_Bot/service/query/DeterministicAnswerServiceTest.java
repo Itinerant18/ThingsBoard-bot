@@ -523,6 +523,49 @@ class DeterministicAnswerServiceTest {
         assertTrue(answer.contains("not reported (missing)"));
     }
 
+    @Test
+    void shouldReturnLastReportedTimeWhenPresent() {
+        BranchSnapshot branch = lastReportedBranch("2026-06-23T10:15:00Z", false);
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.LAST_REPORTED).targetBranch(branch).deterministic(true).confidence(1.0).build();
+        String answer = answerService.answer(query, List.of(branch));
+        assertTrue(answer.contains("last reported at 2026-06-23T10:15:00Z"));
+        assertTrue(!answer.contains("stale"));
+    }
+
+    @Test
+    void shouldFlagStaleLastReportedTime() {
+        BranchSnapshot branch = lastReportedBranch("2026-06-10T08:00:00Z", true);
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.LAST_REPORTED).targetBranch(branch).deterministic(true).confidence(1.0).build();
+        String answer = answerService.answer(query, List.of(branch));
+        assertTrue(answer.contains("data is stale"));
+    }
+
+    @Test
+    void shouldReportLastReportedUnavailableWhenAbsent() {
+        BranchSnapshot branch = lastReportedBranch(null, false);
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.LAST_REPORTED).targetBranch(branch).deterministic(true).confidence(1.0).build();
+        String answer = answerService.answer(query, List.of(branch));
+        assertTrue(answer.contains("last-reported time is not available"));
+    }
+
+    private BranchSnapshot lastReportedBranch(String dataAsOf, boolean stale) {
+        BranchSnapshot branch = new BranchSnapshot();
+        com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =
+                new com.seple.ThingsBoard_Bot.model.domain.BranchIdentity();
+        identity.setBranchName("BRANCH CHINSURAH");
+        branch.setIdentity(identity);
+        java.util.Map<String, Object> raw = new java.util.HashMap<>();
+        if (dataAsOf != null) {
+            raw.put("data_as_of", dataAsOf);
+            raw.put("data_stale", stale);
+        }
+        branch.setRawData(raw);
+        return branch;
+    }
+
     private String gpsAnswer(String lat, String lon, String latLonDefault) {
         BranchSnapshot branch = new BranchSnapshot();
         com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =

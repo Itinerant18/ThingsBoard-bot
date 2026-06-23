@@ -25,7 +25,8 @@ public class DeviceIdentityHandler implements AnswerHandler {
 
     @Override
     public boolean supports(QueryIntent intent) {
-        return intent == QueryIntent.DEVICE_IMEI || intent == QueryIntent.GPS_LOCATION;
+        return intent == QueryIntent.DEVICE_IMEI || intent == QueryIntent.GPS_LOCATION
+                || intent == QueryIntent.LAST_REPORTED;
     }
 
     @Override
@@ -37,8 +38,22 @@ public class DeviceIdentityHandler implements AnswerHandler {
         return switch (query.getIntent()) {
             case DEVICE_IMEI -> answerImei(branch);
             case GPS_LOCATION -> answerGpsLocation(branch);
+            case LAST_REPORTED -> answerLastReported(branch);
             default -> null;
         };
+    }
+
+    private String answerLastReported(BranchSnapshot branch) {
+        Map<String, Object> raw = branch.getRawData();
+        // data_as_of is the ISO stamp derived from the device's lastUpdatedAt (UserDataService);
+        // audit_ts is the device-reported fallback.
+        String asOf = support.firstNonBlank(raw, "data_as_of", "audit_ts");
+        if (asOf == null) {
+            return "**For Branch " + support.branchName(branch) + ", the last-reported time is not available.**";
+        }
+        boolean stale = support.isTrue(raw.get("data_stale"));
+        return "**For Branch " + support.branchName(branch) + ", the device last reported at " + asOf
+                + (stale ? " (data is stale)" : "") + ".**";
     }
 
     private String answerImei(BranchSnapshot branch) {

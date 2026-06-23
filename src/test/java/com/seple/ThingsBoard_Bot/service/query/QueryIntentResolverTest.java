@@ -311,6 +311,14 @@ class QueryIntentResolverTest {
     }
 
     @Test
+    void shouldResolveLastReportedQuestion() {
+        ResolvedQuery resolved = resolver.resolve("When was the last update from Bally Bazar?", snapshots, null);
+        assertEquals(QueryIntent.LAST_REPORTED, resolved.getIntent());
+        assertNotNull(resolved.getTargetBranch());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
     void shouldResolveNvrHddSlotsQuestionToDeviceInfo() {
         ResolvedQuery resolved = resolver.resolve("How many HDD slots does the NVR in Bally Bazar have?", snapshots, null);
         assertEquals(QueryIntent.CCTV_DEVICE_INFO, resolved.getIntent());

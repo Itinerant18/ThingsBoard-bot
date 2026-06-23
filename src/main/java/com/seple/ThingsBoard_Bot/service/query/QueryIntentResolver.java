@@ -139,6 +139,13 @@ public class QueryIntentResolver {
                 || question.contains("WHERE IS")) {
             return QueryIntent.GPS_LOCATION;
         }
+        // Last-reported / staleness ("when was the last update", "last reported", "stale"). Uses
+        // specific phrases so it doesn't collide with report-generation or alarm-recency questions.
+        if (question.contains("LAST UPDATE") || question.contains("LAST UPDATED")
+                || question.contains("LAST REPORT") || question.contains("LAST SEEN")
+                || question.contains("LAST ACTIVITY") || question.contains("STALE")) {
+            return QueryIntent.LAST_REPORTED;
+        }
         if (question.contains("DOOR")) {
             return QueryIntent.DOOR_STATUS;
         }
@@ -395,7 +402,8 @@ public class QueryIntentResolver {
                     ACCESS_CONTROL_DEVICE_INFO,
                     DEVICE_IMEI,
                     CCTV_DEVICE_INFO,
-                    GPS_LOCATION -> true;
+                    GPS_LOCATION,
+                    LAST_REPORTED -> true;
             default -> false;
         };
     }
