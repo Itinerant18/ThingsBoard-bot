@@ -505,6 +505,52 @@ class DeterministicAnswerServiceTest {
     }
 
     @Test
+    void shouldReturnGpsCoordinatesWhenReported() {
+        String answer = gpsAnswer("22.5726", "88.3639", null);
+        assertTrue(answer.contains("22.5726, 88.3639"));
+        assertTrue(answer.contains("latitude, longitude"));
+    }
+
+    @Test
+    void shouldReportGpsDefaultWhenLatLonDefaultTrue() {
+        String answer = gpsAnswer("20.5937", "78.9629", "true");
+        assertTrue(answer.contains("default location"));
+    }
+
+    @Test
+    void shouldReportGpsMissingWhenNoCoordinates() {
+        String answer = gpsAnswer(null, null, null);
+        assertTrue(answer.contains("not reported (missing)"));
+    }
+
+    private String gpsAnswer(String lat, String lon, String latLonDefault) {
+        BranchSnapshot branch = new BranchSnapshot();
+        com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =
+                new com.seple.ThingsBoard_Bot.model.domain.BranchIdentity();
+        identity.setBranchName("BRANCH CHINSURAH");
+        branch.setIdentity(identity);
+        java.util.Map<String, Object> raw = new java.util.HashMap<>();
+        if (lat != null) {
+            raw.put("lat", lat);
+        }
+        if (lon != null) {
+            raw.put("lon", lon);
+        }
+        if (latLonDefault != null) {
+            raw.put("lat_lon_default", latLonDefault);
+        }
+        branch.setRawData(raw);
+
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.GPS_LOCATION)
+                .targetBranch(branch)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        return answerService.answer(query, List.of(branch));
+    }
+
+    @Test
     void shouldReturnCctvDeviceInfoModel() {
         BranchSnapshot target = snapshots.stream()
                 .filter(snapshot -> "BOI-BALLYBAZAR".equals(snapshot.getIdentity().getTechnicalId()))

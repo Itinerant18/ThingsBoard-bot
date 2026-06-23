@@ -30,5 +30,6 @@ public enum QueryIntent {
     POWER_STATUS,
     DEVICE_IMEI,
     CCTV_DEVICE_INFO,
+    GPS_LOCATION,
     GENERAL_LLM
 }

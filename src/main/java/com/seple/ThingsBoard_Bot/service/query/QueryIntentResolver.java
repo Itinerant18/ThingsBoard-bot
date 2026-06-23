@@ -132,6 +132,13 @@ public class QueryIntentResolver {
                         || question.contains("CAPACITY") || question.contains("SLOT")))) {
             return QueryIntent.CCTV_DEVICE_INFO;
         }
+        // GPS / location lookup. Uses full words (LATITUDE/LONGITUDE, not bare LAT/LONG) and specific
+        // phrases so it doesn't misfire on substrings like "related" or "location" inside other words.
+        if (question.contains("GPS") || question.contains("COORDINATE") || question.contains("LOCATION")
+                || question.contains("LATITUDE") || question.contains("LONGITUDE")
+                || question.contains("WHERE IS")) {
+            return QueryIntent.GPS_LOCATION;
+        }
         if (question.contains("DOOR")) {
             return QueryIntent.DOOR_STATUS;
         }
@@ -387,7 +394,8 @@ public class QueryIntentResolver {
                     ACCESS_CONTROL_USER_COUNT,
                     ACCESS_CONTROL_DEVICE_INFO,
                     DEVICE_IMEI,
-                    CCTV_DEVICE_INFO -> true;
+                    CCTV_DEVICE_INFO,
+                    GPS_LOCATION -> true;
             default -> false;
         };
     }

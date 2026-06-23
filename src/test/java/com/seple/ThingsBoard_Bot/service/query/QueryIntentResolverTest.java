@@ -303,6 +303,14 @@ class QueryIntentResolverTest {
     }
 
     @Test
+    void shouldResolveGpsLocationQuestion() {
+        ResolvedQuery resolved = resolver.resolve("What is the GPS location of Bally Bazar?", snapshots, null);
+        assertEquals(QueryIntent.GPS_LOCATION, resolved.getIntent());
+        assertNotNull(resolved.getTargetBranch());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
     void shouldResolveNvrHddSlotsQuestionToDeviceInfo() {
         ResolvedQuery resolved = resolver.resolve("How many HDD slots does the NVR in Bally Bazar have?", snapshots, null);
         assertEquals(QueryIntent.CCTV_DEVICE_INFO, resolved.getIntent());
