@@ -71,7 +71,7 @@ public class DeterministicAnswerService {
                 new FaultReasonHandler(support),
                 new DeviceIdentityHandler(support),
                 new HierarchyHandler(support),
-                new FleetAnalyticsHandler());
+                new FleetAnalyticsHandler(support));
     }
 
     public String answer(ResolvedQuery query, List<BranchSnapshot> snapshots) {

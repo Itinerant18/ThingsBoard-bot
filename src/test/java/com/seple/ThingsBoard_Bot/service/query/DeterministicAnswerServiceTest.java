@@ -1,5 +1,6 @@
 package com.seple.ThingsBoard_Bot.service.query;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -657,6 +658,46 @@ class DeterministicAnswerServiceTest {
         assertTrue(answer.contains("Category-wise health"));
         assertTrue(answer.contains("Gateway:"));
         assertTrue(answer.contains("CCTV:"));
+    }
+
+    @Test
+    void shouldRankBranchesByAlarmCount() {
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.BRANCH_RANKING)
+                .originalQuestion("Show the top 5 branches by alarm count")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        assertTrue(answer.contains("branches by alarm count"));
+        assertTrue(answer.contains("1. "));
+    }
+
+    @Test
+    void shouldReturnNullForRankingByUnsupportedMetric() {
+        // "health score" is not a computable metric -> defer to the honest-decline LLM path.
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.BRANCH_RANKING)
+                .originalQuestion("Rank branches by health score")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        assertNull(answerService.answer(query, snapshots));
+    }
+
+    @Test
+    void shouldCompareTwoBranches() {
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.BRANCH_COMPARE)
+                .originalQuestion("Compare Bally Bazar and Chandannagar")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        assertTrue(answer.contains("Comparing"));
+        assertTrue(answer.contains("BALLY BAZAR"));
+        assertTrue(answer.contains("CHANDANNAGAR"));
+        assertTrue(answer.contains("Gateway:"));
     }
 
     private String networkOperatorAnswer(java.util.Map<String, Object> raw) {

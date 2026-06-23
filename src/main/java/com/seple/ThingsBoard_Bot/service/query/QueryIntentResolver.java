@@ -124,6 +124,13 @@ public class QueryIntentResolver {
         if (!hasTargetBranch && isCategoryHealthQuestion(question)) {
             return QueryIntent.CATEGORY_HEALTH;
         }
+        // Cross-branch comparison ("compare A and B") and ranking ("top 5 branches by alarms").
+        if (isCompareQuestion(question)) {
+            return QueryIntent.BRANCH_COMPARE;
+        }
+        if (isRankingQuestion(question)) {
+            return QueryIntent.BRANCH_RANKING;
+        }
         if (isBatteryLowQuestion(question)) {
             return QueryIntent.BATTERY_LOW_STATUS;
         }
@@ -361,7 +368,31 @@ public class QueryIntentResolver {
 
     /** Intents that operate on the whole scoped snapshot set rather than one branch or the global overview. */
     private boolean isFleetScopedIntent(QueryIntent intent) {
-        return isHierarchyIntent(intent) || intent == QueryIntent.CATEGORY_HEALTH;
+        return isHierarchyIntent(intent) || intent == QueryIntent.CATEGORY_HEALTH
+                || intent == QueryIntent.BRANCH_RANKING || intent == QueryIntent.BRANCH_COMPARE;
+    }
+
+    /**
+     * Cross-branch ranking ("top 5 branches by alarms", "which branch has the most cameras"). Requires
+     * a recognizable rank metric; the handler still returns null (-> honest decline) if the metric
+     * isn't one it can compute, so e.g. "rank NBGs by health score" is not falsely answered.
+     */
+    private boolean isRankingQuestion(String question) {
+        // Hierarchy-level ranking (NBG/zone, typically by health score) isn't computable from the
+        // device snapshot -> leave it to the honest-decline path, not branch ranking.
+        if (question.contains("NBG") || question.contains("ZONE") || containsWord(question, "ZO")) {
+            return false;
+        }
+        // NOTE: the alias normalizer strips the singular word "branch", so don't gate on it here.
+        boolean rankVerb = question.contains("TOP ") || question.contains("BOTTOM ") || question.contains("RANK");
+        boolean superlative = (question.contains("WHICH") || question.contains("WHAT"))
+                && (question.contains("MOST") || question.contains("HIGHEST")
+                        || question.contains("LEAST") || question.contains("LOWEST"));
+        return rankVerb || superlative;
+    }
+
+    private boolean isCompareQuestion(String question) {
+        return question.contains("COMPARE") || question.contains(" VS ") || question.contains("VERSUS");
     }
 
     /**

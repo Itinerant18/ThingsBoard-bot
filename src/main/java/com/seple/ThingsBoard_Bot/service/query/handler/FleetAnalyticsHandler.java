@@ -23,6 +23,12 @@ import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
 @Component
 public class FleetAnalyticsHandler implements AnswerHandler {
 
+    private final AnswerSupport support;
+
+    public FleetAnalyticsHandler(AnswerSupport support) {
+        this.support = support;
+    }
+
     /** A device category and how to read its normalized state from a branch snapshot. */
     private record Category(String label, Function<BranchSnapshot, NormalizedState> stateOf) {
     }
@@ -38,7 +44,9 @@ public class FleetAnalyticsHandler implements AnswerHandler {
 
     @Override
     public boolean supports(QueryIntent intent) {
-        return intent == QueryIntent.CATEGORY_HEALTH;
+        return intent == QueryIntent.CATEGORY_HEALTH
+                || intent == QueryIntent.BRANCH_RANKING
+                || intent == QueryIntent.BRANCH_COMPARE;
     }
 
     @Override
@@ -46,6 +54,15 @@ public class FleetAnalyticsHandler implements AnswerHandler {
         if (snapshots == null || snapshots.isEmpty()) {
             return "**No devices are available in your scope.**";
         }
+        return switch (query.getIntent()) {
+            case CATEGORY_HEALTH -> answerCategoryHealth(query, snapshots);
+            case BRANCH_RANKING -> answerRanking(query, snapshots);
+            case BRANCH_COMPARE -> answerCompare(query, snapshots);
+            default -> null;
+        };
+    }
+
+    private String answerCategoryHealth(ResolvedQuery query, List<BranchSnapshot> snapshots) {
         String question = upper(query.getOriginalQuestion());
         Map<String, Counts> counts = countByCategory(snapshots);
 
@@ -83,6 +100,135 @@ public class FleetAnalyticsHandler implements AnswerHandler {
             return "**No category has any inactive devices in your scope.**";
         }
         return "**The category with the most inactive devices is " + worst + " (" + maxOffline + " offline).**";
+    }
+
+    // ---- Ranking ----
+
+    /** A rankable metric: how to read it, its label, and how to format a value. */
+    private record Metric(String label, Function<BranchSnapshot, Double> valueOf, Function<Double, String> format) {
+    }
+
+    private Metric matchMetric(String question) {
+        if (question.contains("ALARM")) {
+            return new Metric("alarm count", s -> (double) s.getAlerts().getAlarmCount(), v -> String.valueOf(v.longValue()));
+        }
+        if (question.contains("ERROR")) {
+            return new Metric("error count", s -> (double) s.getAlerts().getErrorCount(), v -> String.valueOf(v.longValue()));
+        }
+        if (question.contains("CAMERA") || question.contains("CCTV")) {
+            return new Metric("online cameras",
+                    s -> s.getCctv().getOnlineCameraCount() == null ? null : (double) s.getCctv().getOnlineCameraCount(),
+                    v -> String.valueOf(v.longValue()));
+        }
+        if (question.contains("BATTERY")) {
+            return new Metric("battery voltage", s -> s.getPower().getBatteryVoltage(), v -> v + "V");
+        }
+        return null;
+    }
+
+    private String answerRanking(ResolvedQuery query, List<BranchSnapshot> snapshots) {
+        String question = upper(query.getOriginalQuestion());
+        Metric metric = matchMetric(question);
+        if (metric == null) {
+            // Not a metric we can compute (e.g. "rank by health score") -> defer to the honest-decline LLM path.
+            return null;
+        }
+        boolean ascending = question.contains("BOTTOM") || question.contains("LEAST") || question.contains("LOWEST");
+        int limit = parseLimit(question, 5);
+
+        List<Ranked> ranked = new ArrayList<>();
+        for (BranchSnapshot snapshot : snapshots) {
+            Double value = metric.valueOf().apply(snapshot);
+            if (value != null) {
+                ranked.add(new Ranked(support.branchName(snapshot), value));
+            }
+        }
+        if (ranked.isEmpty()) {
+            return "**No branches have " + metric.label() + " data in your scope.**";
+        }
+        ranked.sort((a, b) -> ascending ? Double.compare(a.value(), b.value()) : Double.compare(b.value(), a.value()));
+
+        int shown = Math.min(limit, ranked.size());
+        StringBuilder builder = new StringBuilder("**").append(ascending ? "Bottom " : "Top ").append(shown)
+                .append(" branches by ").append(metric.label()).append(":**\n");
+        for (int i = 0; i < shown; i++) {
+            Ranked r = ranked.get(i);
+            builder.append(i + 1).append(". ").append(r.name()).append(" — ").append(metric.format().apply(r.value())).append("\n");
+        }
+        return builder.toString();
+    }
+
+    private int parseLimit(String question, int fallback) {
+        java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\b(\\d{1,3})\\b").matcher(question);
+        if (matcher.find()) {
+            int n = Integer.parseInt(matcher.group(1));
+            if (n > 0) {
+                return n;
+            }
+        }
+        return fallback;
+    }
+
+    // ---- Compare ----
+
+    private String answerCompare(ResolvedQuery query, List<BranchSnapshot> snapshots) {
+        String question = upper(query.getOriginalQuestion());
+        List<BranchSnapshot> matched = new ArrayList<>();
+        for (BranchSnapshot snapshot : snapshots) {
+            String norm = normalizeName(support.branchName(snapshot));
+            if (norm.length() >= 4 && question.contains(norm) && !matched.contains(snapshot)) {
+                matched.add(snapshot);
+            }
+            if (matched.size() == 2) {
+                break;
+            }
+        }
+        if (matched.size() < 2) {
+            return "**Please name two branches to compare.**";
+        }
+        BranchSnapshot a = matched.get(0);
+        BranchSnapshot b = matched.get(1);
+        String nameA = support.branchName(a);
+        String nameB = support.branchName(b);
+
+        StringBuilder builder = new StringBuilder("**Comparing ").append(nameA).append(" and ").append(nameB).append(":**\n");
+        builder.append("- Gateway: ").append(support.formatState(a.getGateway().getState()))
+                .append(" vs ").append(support.formatState(b.getGateway().getState())).append("\n");
+        builder.append("- Alarms: ").append(a.getAlerts().getAlarmCount())
+                .append(" vs ").append(b.getAlerts().getAlarmCount()).append("\n");
+        builder.append("- Online cameras: ").append(cameras(a)).append(" vs ").append(cameras(b)).append("\n");
+        builder.append("- Battery: ").append(voltage(a)).append(" vs ").append(voltage(b));
+        return builder.toString();
+    }
+
+    private String cameras(BranchSnapshot s) {
+        Integer online = s.getCctv().getOnlineCameraCount();
+        Integer total = s.getCctv().getCameraCount();
+        if (online == null || total == null) {
+            return "N/A";
+        }
+        return online + "/" + total;
+    }
+
+    private String voltage(BranchSnapshot s) {
+        Double v = s.getPower().getBatteryVoltage();
+        return v == null ? "N/A" : v + "V";
+    }
+
+    private String normalizeName(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toUpperCase(Locale.ROOT)
+                .replace("BOI-", "")
+                .replace("BRANCH ", "")
+                .replace('-', ' ')
+                .replace('_', ' ')
+                .replaceAll("\\s+", " ")
+                .trim();
+    }
+
+    private record Ranked(String name, double value) {
     }
 
     private Map<String, Counts> countByCategory(List<BranchSnapshot> snapshots) {

@@ -1,6 +1,7 @@
 package com.seple.ThingsBoard_Bot.service.query;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
@@ -406,6 +407,34 @@ class QueryIntentResolverTest {
         // A branch-scoped health question must stay BATTERY_HEALTH, not the fleet category breakdown.
         ResolvedQuery resolved = resolver.resolve("What is the battery health of Tarakeshwar?", snapshots, null);
         assertEquals(QueryIntent.BATTERY_HEALTH, resolved.getIntent());
+    }
+
+    // ---- Phase 4 (F): ranking & compare ----
+
+    @Test
+    void shouldResolveTopBranchesToRanking() {
+        ResolvedQuery resolved = resolver.resolve("Show the top 5 branches by alarm count", snapshots, null);
+        assertEquals(QueryIntent.BRANCH_RANKING, resolved.getIntent());
+        assertEquals(false, resolved.isAmbiguous());
+    }
+
+    @Test
+    void shouldResolveWhichBranchMostCamerasToRanking() {
+        ResolvedQuery resolved = resolver.resolve("Which branch has the most online cameras?", snapshots, null);
+        assertEquals(QueryIntent.BRANCH_RANKING, resolved.getIntent());
+    }
+
+    @Test
+    void shouldResolveCompareToBranchCompare() {
+        ResolvedQuery resolved = resolver.resolve("Compare Bally Bazar and Chandannagar", snapshots, null);
+        assertEquals(QueryIntent.BRANCH_COMPARE, resolved.getIntent());
+    }
+
+    @Test
+    void shouldNotRouteNbgHealthScoreRankingToBranchRanking() {
+        // No "branch" + an unavailable metric -> not branch ranking; leaves the honest-decline path.
+        ResolvedQuery resolved = resolver.resolve("Rank NBGs by health score", snapshots, null);
+        assertNotEquals(QueryIntent.BRANCH_RANKING, resolved.getIntent());
     }
 
     // ---- audit #20: "AC" must match as a whole word, not a substring ----
