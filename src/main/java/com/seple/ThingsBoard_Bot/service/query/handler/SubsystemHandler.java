@@ -37,20 +37,47 @@ public class SubsystemHandler implements AnswerHandler {
         }
         String targetSystem = query.getTargetSystem();
         return switch (query.getIntent()) {
-            case SUBSYSTEM_STATUS -> answerSubsystemStatus(branch, targetSystem);
+            case SUBSYSTEM_STATUS -> answerSubsystemStatus(branch, targetSystem, query.getTargetAttribute());
             case SUBSYSTEM_FAULT_STATUS -> answerSubsystemFaultStatus(branch, targetSystem);
             case SUBSYSTEM_ALARM_STATUS -> answerSubsystemAlarmStatus(branch, targetSystem);
             default -> null;
         };
     }
 
-    private String answerSubsystemStatus(BranchSnapshot branch, String targetSystem) {
+    private String answerSubsystemStatus(BranchSnapshot branch, String targetSystem, String targetAttribute) {
         SubsystemStatus subsystem = support.subsystemByTarget(branch, targetSystem);
         if (subsystem == null) {
             return null;
         }
+        // A specific field was named (power/system/log/health status) -> answer from that field's
+        // value verbatim, including "N/A". Otherwise report the subsystem roll-up state.
+        if (targetAttribute != null) {
+            return answerTemplateService.renderSubsystemAttribute(branch, subsystem.getSystemName(),
+                    attributeLabel(targetAttribute), attributeValue(subsystem, targetAttribute));
+        }
         return answerTemplateService.renderSubsystemStatus(branch, subsystem.getSystemName(),
                 support.formatState(subsystem.getState()));
+    }
+
+    private String attributeLabel(String targetAttribute) {
+        return switch (targetAttribute) {
+            case "powerStatus" -> "Power Status";
+            case "systemStatus" -> "System Status";
+            case "logStatus" -> "Log Status";
+            case "healthStatus" -> "Health Status";
+            default -> "Status";
+        };
+    }
+
+    private String attributeValue(SubsystemStatus subsystem, String targetAttribute) {
+        String value = switch (targetAttribute) {
+            case "powerStatus" -> subsystem.getPowerStatus();
+            case "systemStatus" -> subsystem.getSystemStatus();
+            case "logStatus" -> subsystem.getLogStatus();
+            case "healthStatus" -> subsystem.getHealthStatus();
+            default -> null;
+        };
+        return (value == null || value.isBlank() || "null".equalsIgnoreCase(value)) ? "N/A" : value;
     }
 
     private String answerSubsystemFaultStatus(BranchSnapshot branch, String targetSystem) {

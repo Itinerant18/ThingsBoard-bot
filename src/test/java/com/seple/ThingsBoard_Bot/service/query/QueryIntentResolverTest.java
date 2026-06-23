@@ -210,16 +210,59 @@ class QueryIntentResolverTest {
     }
 
     @Test
-    void shouldResolveCctvPowerStatusToCctvStatus() {
+    void shouldResolveCctvPowerStatusToSubsystemFieldQuery() {
         ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni CCTV power status right now?", snapshots, null);
-        assertEquals(QueryIntent.CCTV_STATUS, resolved.getIntent());
+        assertEquals(QueryIntent.SUBSYSTEM_STATUS, resolved.getIntent());
+        assertEquals("cctv", resolved.getTargetSystem());
+        assertEquals("powerStatus", resolved.getTargetAttribute());
     }
 
     @Test
-    void shouldResolveIasPowerStatusToSubsystemStatus() {
+    void shouldResolveCctvSystemStatusToSubsystemFieldQuery() {
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni CCTV system status right now?", snapshots, null);
+        assertEquals(QueryIntent.SUBSYSTEM_STATUS, resolved.getIntent());
+        assertEquals("cctv", resolved.getTargetSystem());
+        assertEquals("systemStatus", resolved.getTargetAttribute());
+    }
+
+    @Test
+    void shouldResolveCctvLogStatusToSubsystemFieldQuery() {
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni CCTV log status right now?", snapshots, null);
+        assertEquals(QueryIntent.SUBSYSTEM_STATUS, resolved.getIntent());
+        assertEquals("cctv", resolved.getTargetSystem());
+        assertEquals("logStatus", resolved.getTargetAttribute());
+    }
+
+    @Test
+    void shouldResolveIasPowerStatusToSubsystemFieldQuery() {
         ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni IAS power status right now?", snapshots, null);
         assertEquals(QueryIntent.SUBSYSTEM_STATUS, resolved.getIntent());
         assertEquals("ias", resolved.getTargetSystem());
+        assertEquals("powerStatus", resolved.getTargetAttribute());
+    }
+
+    @Test
+    void shouldResolveIasSystemStatusToSubsystemFieldQuery() {
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni IAS system status right now?", snapshots, null);
+        assertEquals(QueryIntent.SUBSYSTEM_STATUS, resolved.getIntent());
+        assertEquals("ias", resolved.getTargetSystem());
+        assertEquals("systemStatus", resolved.getTargetAttribute());
+    }
+
+    @Test
+    void shouldKeepGatewayPowerStatusOutOfSubsystemFieldQuery() {
+        // "Gateway" is not a subsystem keyword, so the gateway keeps its dedicated POWER_STATUS answer.
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni Gateway power status right now?", snapshots, null);
+        assertEquals(QueryIntent.POWER_STATUS, resolved.getIntent());
+    }
+
+    @Test
+    void shouldReportSubsystemRollupWhenNoFieldNamed() {
+        // No power/system/log/health word -> roll-up status, not a field-level query.
+        ResolvedQuery resolved = resolver.resolve("What is the Branch dankuni IAS status right now?", snapshots, null);
+        assertEquals(QueryIntent.SUBSYSTEM_STATUS, resolved.getIntent());
+        assertEquals("ias", resolved.getTargetSystem());
+        assertEquals(null, resolved.getTargetAttribute());
     }
 
     @Test

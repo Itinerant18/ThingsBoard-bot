@@ -153,6 +153,13 @@ public class BranchSnapshotMapper {
             default -> null;
         };
 
+        // The device prefix (cctv, ias, bas, fas, timeLock, accessControl) is the _sts key minus "_sts".
+        // The per-field detail attributes are stored flattened as <prefix>_powerStatus, etc. We show them
+        // verbatim (including "N/A") so a field-level question answers from the actual data.
+        String prefix = primaryField.endsWith("_sts")
+                ? primaryField.substring(0, primaryField.length() - "_sts".length())
+                : primaryField;
+
         return SubsystemStatus.builder()
                 .systemName(systemName)
                 .state(state)
@@ -160,6 +167,10 @@ public class BranchSnapshotMapper {
                 .rawValue(resolved.rawValue())
                 .health(health)
                 .sourceFieldUsed(resolved.sourceField())
+                .powerStatus(stringValue(raw.get(prefix + "_powerStatus")))
+                .systemStatus(stringValue(raw.get(prefix + "_systemStatus")))
+                .logStatus(stringValue(raw.get(prefix + "_logStatus")))
+                .healthStatus(stringValue(raw.get(prefix + "_healthStatus")))
                 .build();
     }
 

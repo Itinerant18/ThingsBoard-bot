@@ -252,6 +252,10 @@ public class AnswerTemplateService {
         return "**For Branch " + branchName(branch) + ", " + displayName + " Status is " + stateText + ".**";
     }
 
+    public String renderSubsystemAttribute(BranchSnapshot branch, String displayName, String attributeLabel, String value) {
+        return "**For Branch " + branchName(branch) + ", " + displayName + " " + attributeLabel + " is " + value + ".**";
+    }
+
     public String renderSubsystemFaultStatus(BranchSnapshot branch, String displayName, String stateText) {
         return "**For Branch " + branchName(branch) + ", " + displayName + " Fault Status is " + stateText + ".**";
     }

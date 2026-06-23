@@ -12,6 +12,7 @@ public class ResolvedQuery {
     String originalQuestion;
     BranchSnapshot targetBranch;
     String targetSystem;
+    String targetAttribute;
     boolean global;
     boolean ambiguous;
     boolean branchFromMemory;

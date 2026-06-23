@@ -54,6 +54,7 @@ public class QueryIntentResolver {
                 .originalQuestion(question)
                 .targetBranch(targetBranch)
                 .targetSystem(detectSubsystem(normalizedQuestion))
+                .targetAttribute(detectSubsystemAttribute(normalizedQuestion))
                 .global(global)
                 .ambiguous(ambiguous)
                 .branchFromMemory(branchFromMemory)
@@ -162,6 +163,12 @@ public class QueryIntentResolver {
         }
         if (isSubsystemAlarmQuestion(question)) {
             return QueryIntent.SUBSYSTEM_ALARM_STATUS;
+        }
+        // A sub-device named together with a specific field (power/system/log/health status) is a
+        // field-level subsystem query — answer it from that field's value (e.g. cctv_powerStatus),
+        // not from the gateway-level CCTV/IAS roll-up. Must precede the CCTV branch below.
+        if (detectSubsystemAttribute(question) != null && containsSubsystemKeyword(question)) {
+            return QueryIntent.SUBSYSTEM_STATUS;
         }
         if ((question.contains("CCTV") || question.contains("CAMERA")) && question.contains("HDD")
                 && (question.contains("INFO") || question.contains("DETAIL"))) {
@@ -319,6 +326,29 @@ public class QueryIntentResolver {
         }
         if (normalizedQuestion.contains("CCTV") || normalizedQuestion.contains("CAMERA")) {
             return "cctv";
+        }
+        return null;
+    }
+
+    /**
+     * The specific sub-device field a question asks about — power / system / log / health status.
+     * Returns the SubsystemStatus field key (powerStatus|systemStatus|logStatus|healthStatus) or null
+     * when no specific field is named (in which case the subsystem roll-up status is reported instead).
+     */
+    private String detectSubsystemAttribute(String normalizedQuestion) {
+        String question = normalizedQuestion.toUpperCase(Locale.ROOT);
+        if (question.contains("LOG STATUS") || (question.contains("LOG") && question.contains("STATUS"))) {
+            return "logStatus";
+        }
+        if (question.contains("POWER STATUS") || (question.contains("POWER") && question.contains("STATUS"))) {
+            return "powerStatus";
+        }
+        if (question.contains("SYSTEM STATUS") || (question.contains("SYSTEM") && question.contains("STATUS"))) {
+            return "systemStatus";
+        }
+        if (question.contains("HEALTH STATUS")
+                || ((question.contains("HEALTH") || question.contains("HEALTHY")) && question.contains("STATUS"))) {
+            return "healthStatus";
         }
         return null;
     }
