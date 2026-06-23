@@ -130,6 +130,16 @@ public class CctvHandler implements AnswerHandler {
         return value % 1 == 0 ? String.valueOf((long) value) : String.valueOf(value);
     }
 
+    /** First present field's text among alternative key spellings (e.g. Hikvision vs Dahua HDD keys). */
+    private static String firstText(JsonNode node, String... fields) {
+        for (String field : fields) {
+            if (node.has(field)) {
+                return node.path(field).asText("N/A");
+            }
+        }
+        return "N/A";
+    }
+
     private String answerCctvHddErrorStatus(BranchSnapshot branch) {
         Boolean hddError = support.resolveBoolean(branch.getRawData(),
                 "HDD ERROR", "ticketStatus_HDD_ERROR", "cameraStatus_HDD ERROR");
@@ -167,10 +177,12 @@ public class CctvHandler implements AnswerHandler {
                 if (!entry.isObject()) {
                     continue;
                 }
-                String slot = entry.path("HDDSlots").asText("N/A");
+                // Two NVR schemas: Hikvision uses HDDSlots/HDDcapacity/HDDfreeSpace; Dahua/XVR uses
+                // HDDSlot/HDDCapacity/HDDFreeSpace. Read either so Dahua devices don't all show N/A.
+                String slot = firstText(entry, "HDDSlots", "HDDSlot");
                 String status = entry.path("HDDStatus").asText("N/A");
-                String capacity = entry.path("HDDcapacity").asText("N/A");
-                String free = entry.path("HDDfreeSpace").asText("N/A");
+                String capacity = firstText(entry, "HDDcapacity", "HDDCapacity");
+                String free = firstText(entry, "HDDfreeSpace", "HDDFreeSpace");
                 slots.add("Slot " + slot + ": " + status + ", Capacity " + capacity + " TB, Free " + free + " TB");
             }
 

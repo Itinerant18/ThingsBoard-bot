@@ -522,6 +522,35 @@ class DeterministicAnswerServiceTest {
     }
 
     @Test
+    void shouldParseDahuaHddSchemaInHddInfo() {
+        // Dahua/XVR uses HDDSlot/HDDCapacity/HDDFreeSpace (vs Hikvision HDDSlots/HDDcapacity/HDDfreeSpace).
+        BranchSnapshot branch = new BranchSnapshot();
+        com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =
+                new com.seple.ThingsBoard_Bot.model.domain.BranchIdentity();
+        identity.setBranchName("BRANCH IMPHAL");
+        branch.setIdentity(identity);
+
+        java.util.Map<String, Object> raw = new java.util.HashMap<>();
+        raw.put("rock_HddINFO",
+                "[{\"HDDSlot\":\"1\",\"HDDStatus\":\"Idle\",\"HDDCapacity\":\"3.64\",\"HDDFreeSpace\":\"1.20\"}]");
+        branch.setRawData(raw);
+
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.CCTV_HDD_INFO)
+                .targetBranch(branch)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+
+        String answer = answerService.answer(query, List.of(branch));
+
+        assertTrue(answer.contains("CCTV HDD Information"));
+        assertTrue(answer.contains("Slot 1"));
+        assertTrue(answer.contains("Capacity 3.64 TB"));
+        assertTrue(answer.contains("Free 1.20 TB"));
+    }
+
+    @Test
     void shouldGenerateBatteryHealthFormat() {
         BranchSnapshot target = snapshots.stream()
                 .filter(snapshot -> "BOI-TARAKESHWAR".equals(snapshot.getIdentity().getTechnicalId()))
