@@ -52,7 +52,6 @@ push_error.txt
 *.log
 new_architecture/
 nul
-Thingsboard-Data/
 
 ### Frontend Build ###
 node_modules/

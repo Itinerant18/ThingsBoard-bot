@@ -1,0 +1,1830 @@
+                                                                                     Home
+Perfect. Looking at this Home Dashboard, if I were a real bank/customer user interacting with SAI, these are the kinds of questions I would naturally ask.
+General Dashboard Questions
+1. How many total systems are currently monitored?
+2. How many devices are healthy?
+3. How many devices are inactive?
+4. How many faulty devices are there?
+5. Are there any open alerts right now?
+6. What percentage of devices are healthy?
+7. What percentage of devices are inactive?
+8. Which regions are currently active?
+9. How many active regions do we have?
+10. What is the overall system health status?
+
+Device Health Questions
+11. Show me all healthy devices.
+12. Show me all inactive devices.
+13. Which devices are currently offline?
+14. Which devices became inactive today?
+15. Are there any critical devices?
+16. Which devices require immediate attention?
+17. How many devices are operational right now?
+18. Give me a health summary of all devices.
+19. Which category has the highest number of inactive devices?
+20. What is the health percentage of the Gateway category?
+
+Category-Specific Questions
+Gateway
+21. How many Gateway systems are deployed?
+22. How many Gateway systems are healthy?
+23. How many Gateway systems are inactive?
+24. Show me inactive Gateway devices.
+25. Which Gateway devices are currently down?
+CCTV
+26. How many CCTV systems are installed?
+27. Are all CCTV systems healthy?
+28. Show CCTV device status.
+29. Which branches have CCTV systems?
+30. Is any CCTV device inactive?
+IAS
+31. How many IAS systems are available?
+32. Show IAS system status.
+33. Are all IAS devices healthy?
+BAS
+34. How many BAS systems are installed?
+35. Show BAS device health.
+36. Which branches have BAS systems?
+37. Are there any BAS alarms?
+FAS
+38. Show all FAS systems.
+39. What is the status of FAS devices?
+40. Are any fire alarm systems inactive?
+TLS
+41. Show TLS device status.
+42. How many TLS systems are healthy?
+ACS
+43. Show ACS device status.
+44. Are all ACS systems operational?
+
+Map Related Questions
+45. Show branches on the map.
+46. Which location has the highest number of devices?
+47. Show all active locations.
+48. Show inactive locations on the map.
+49. Which city has the most healthy devices?
+50. Which branch is located near Kolkata?
+51. Zoom to Ranchi branch.
+52. Show all branches in Jharkhand.
+53. Which branch has inactive devices?
+54. Show branch locations with alerts.
+
+Alarm Questions
+55. Show current alarms.
+56. Show major alarms.
+57. Show critical alarms.
+58. Which branch generated the latest alarm?
+59. What was the most recent alarm?
+60. Show today's alarms.
+61. Show alarms from the last 24 hours.
+62. Which branch has the most alarms?
+63. Show all fire alarm faults.
+64. Show all intrusion alarm faults.
+65. Show all door access alarms.
+66. How many alarms were generated this month?
+67. Which alarms are still active?
+68. What is the average alarm resolution time?
+
+Branch-Specific Questions
+69. Show device status for Ranchi branch.
+70. Is Ranchi branch healthy?
+71. How many devices are active in Ranchi?
+72. Show all alarms for Ranchi branch.
+73. Which branch has the best health score?
+74. Which branch has the worst health score?
+75. Show unhealthy branches.
+76. Which branches have inactive devices?
+77. Show branch-wise device count.
+78. Compare Ranchi and Kolkata branch health.
+
+Trend & Analytics Questions
+79. What is the current system uptime?
+80. What is the overall health percentage?
+81. Which category has the best performance?
+82. Which category has the most inactive devices?
+83. Which category generates the most alarms?
+84. What percentage of Gateway devices are inactive?
+85. How many devices became inactive this week?
+86. Show device availability trends.
+87. Show alarm trends for the last 30 days.
+88. Which system type is most reliable?
+
+Follow-Up Questions (Important for SAI Training)
+89. Why are 40 devices inactive?
+90. Which inactive devices belong to Gateway?
+91. Show details of those Gateway devices.
+92. Which branch owns those devices?
+93. Since when have they been inactive?
+94. Are any inactive devices affecting security?
+95. What actions should I take?
+96. Can you generate a report for inactive devices?
+97. Export inactive device details.
+98. Notify me when inactive devices become active.
+99. Show only major alarms from Ranchi.
+100. Show affected devices for those alarms.
+
+Natural Language Questions
+101. Is everything working properly?
+102. Do I need to worry about any branch?
+103. Which location needs attention today?
+104. Are there any security issues right now?
+105. What should I investigate first?
+106. Give me a quick summary of system health.
+107. What's the biggest issue in the network right now?
+108. Which devices have been down the longest?
+109. Are all fire alarm systems operational?
+110. Give me today's dashboard summary.
+These questions are excellent for training SAI because they cover:
+* KPI cards
+* Device categories
+* Maps
+* Alarms
+* Branch hierarchy
+* Analytics
+* Follow-up conversations
+* Context retention
+* Report generation
+* Real-world operator usage patterns
+Upload the next dashboard screenshot and I'll generate another 100+ dashboard-specific training questions.
+                                                                Hierarchy Health Command Center
+This dashboard is much richer because it contains hierarchy, rankings, drill-downs, trends, health scores, NBG, ZO, Branch analysis, critical attention lists, and month-wise comparisons.
+If I were a real BOI user, these are the questions I would ask SAI:
+Overall Dashboard Questions
+1. Give me the overall hierarchy health summary.
+2. How many NBGs are being monitored?
+3. How many Zonal Offices are present?
+4. How many branches have been assessed?
+5. What is the average health score across all branches?
+6. How many poor-performing branches are there?
+7. What month's data am I currently viewing?
+8. Show me the health score report for June 2026.
+9. Compare this month with the previous month.
+10. Give me a dashboard summary.
+
+NBG Related Questions
+11. List all NBGs.
+12. Show NBG East health score.
+13. Show NBG JH health score.
+14. Show NBG MP health score.
+15. Show NBG Odisha health score.
+16. Show NBG West II health score.
+17. Which NBG has the highest health score?
+18. Which NBG has the lowest health score?
+19. Rank all NBGs by health score.
+20. Show top 3 performing NBGs.
+21. Show bottom 3 performing NBGs.
+22. Compare NBG East and NBG JH.
+23. Which NBG needs attention?
+24. Which NBG improved most this month?
+25. Which NBG declined this month?
+
+Zonal Office Questions
+26. List all Zonal Offices.
+27. Show ZO Barasat score.
+28. Show ZO Guwahati score.
+29. Show ZO Howrah score.
+30. Show ZO Bhubaneswar score.
+31. Show ZO Baripada score.
+32. Which ZO has the best score?
+33. Which ZO has the worst score?
+34. Rank all ZOs by health score.
+35. Compare ZO Barasat and ZO Howrah.
+36. Show unhealthy Zonal Offices.
+37. Show ZOs with score below 70.
+38. Which ZO improved this month?
+39. Which ZO declined this month?
+40. Show all ZOs under NBG East.
+
+Branch Related Questions
+41. Which branches were assessed?
+42. Show all branch health scores.
+43. Which branch has the highest score?
+44. Which branch has the lowest score?
+45. Show top 10 branches.
+46. Show bottom 10 branches.
+47. Which branches are performing poorly?
+48. Which branches scored below 50?
+49. Which branches scored above 90?
+50. Show all healthy branches.
+51. Show average branches.
+52. Show poor branches.
+53. Show branch ranking.
+54. Which branch improved most this month?
+55. Which branch declined most this month?
+
+Health Score Distribution Questions
+56. How many branches are in the Good category?
+57. How many branches are in the Average category?
+58. How many branches are in the Poor category?
+59. How many branches are not assessed?
+60. What percentage of branches are healthy?
+61. What percentage of branches are poor?
+62. Show health score distribution.
+63. Why are so many branches marked N/A?
+64. Which branches are not assessed?
+65. Show branches with missing health scores.
+
+Drill-Down Questions
+66. Show ZOs under NBG East.
+67. Show ZOs under NBG JH.
+68. Show branches under ZO Barasat.
+69. Show branches under ZO Guwahati.
+70. Expand NBG East hierarchy.
+71. Drill down into ZO Barasat.
+72. Show branch details under ZO Howrah.
+73. Show complete hierarchy for NBG Odisha.
+74. Show branch health under NBG MP.
+75. Which branch belongs to ZO Baripada?
+
+Trend Questions
+76. Show month-wise health score trend.
+77. Show average health score trend.
+78. Which ZO improved over time?
+79. Which ZO declined over time?
+80. Show health trend for ZO Barasat.
+81. Show health trend for ZO Guwahati.
+82. Compare January and June health scores.
+83. Show six-month trend analysis.
+84. Which month had the best health score?
+85. Which month had the worst health score?
+
+Critical Attention Questions
+86. Which entities require immediate attention?
+87. Show critical attention list.
+88. Show entities with health score below 30.
+89. Show entities with health score below 50.
+90. Why is a branch in the critical attention list?
+91. What should I investigate first?
+92. Which NBG has the highest risk?
+93. Which ZO requires urgent intervention?
+94. Which branch should be prioritized?
+95. Generate critical action recommendations.
+
+Missing Score Questions
+96. Why are branches showing N/A?
+97. Which NBGs have missing scores?
+98. Which ZOs have missing scores?
+99. Show all unassessed branches.
+100. Why was a branch not assessed?
+101. How can I calculate missing scores?
+102. Which data is missing?
+103. Show entities waiting for assessment.
+
+Improvement Analysis Questions
+104. Which unit improved the most month-over-month?
+105. Which branch showed maximum improvement?
+106. Which ZO showed maximum improvement?
+107. Show top improving entities.
+108. Show worst declining entities.
+109. What caused the improvement?
+110. Show month-over-month comparison.
+
+Report Generation Questions
+111. Generate NBG health report.
+112. Generate ZO health report.
+113. Generate branch health report.
+114. Export health score report.
+115. Generate June 2026 assessment report.
+116. Generate poor branch report.
+117. Generate N/A branch report.
+118. Generate critical attention report.
+119. Generate ranking report.
+120. Generate management summary.
+
+Follow-Up Questions (Conversation Memory Testing)
+121. Which NBG has the lowest score?
+122. Show its ZOs.
+123. Which of those ZOs performs worst?
+124. Show branches under that ZO.
+125. Which branch is causing the low score?
+126. Why is that branch unhealthy?
+127. What alarms are affecting it?
+128. Show devices in that branch.
+129. Show inactive devices there.
+130. What actions should be taken?
+These follow-up chain questions (121-130) are particularly valuable for SAI because they test whether the chatbot can maintain context across multiple turns and navigate the hierarchy:
+NBG ? ZO ? Branch ? Device ? Alarm ? Recommendation.
+                                                                             Branch List
+This Branch List Dashboard is extremely useful for testing SAI because users will naturally ask branch-wise, zone-wise, NBG-wise, and system-status-related questions.
+
+Branch Lookup Questions
+1. Show all branches.
+2. How many branches are available?
+3. Show branch DX-9 details.
+4. Show branch CHIMTHANA details.
+5. Show branch NANDURBAR details.
+6. Show branch AMALNER details.
+7. Show branch CHOPDA details.
+8. Show branch SAVEDI details.
+9. Show branch PATHARDHI PHATA details.
+10. Search for branch DX-9.
+
+NBG Related Questions
+11. Show all branches under NBG West II.
+12. How many branches belong to NBG West II?
+13. List branches under NBG East.
+14. List branches under NBG JH.
+15. Which NBG has the most branches?
+16. Show branch count by NBG.
+17. Which branches belong to NBG West II and Zone NASIK?
+18. Compare branch counts across NBGs.
+
+Zone Related Questions
+19. Show all branches in NASIK zone.
+20. How many branches are in NASIK?
+21. Show branches grouped by zone.
+22. Which zone has the most branches?
+23. Show all zones.
+24. Show branches under ZO NASIK.
+25. Compare NASIK with another zone.
+26. Which zone has the most offline branches?
+
+Gateway Questions
+27. Which branches have Gateway online?
+28. Which branches have Gateway offline?
+29. Show all offline Gateway devices.
+30. Is Gateway online in DX-9?
+31. Is Gateway online in CHOPDA?
+32. Which branch Gateway has been offline longest?
+33. Show Gateway status for all branches.
+34. Count online Gateways.
+35. Count offline Gateways.
+36. Show branches where Gateway status is unavailable.
+
+CCTV Questions
+37. Is CCTV available in DX-9?
+38. Which branches have CCTV online?
+39. Which branches have CCTV offline?
+40. Show CCTV status branch-wise.
+41. Which branches do not have CCTV installed?
+42. Show branches where CCTV status is N/A.
+43. List branches with operational CCTV systems.
+
+IAS Questions
+44. Is IAS online in DX-9?
+45. Show IAS status for all branches.
+46. Which branches have IAS online?
+47. Which branches have IAS offline?
+48. Which branches do not have IAS installed?
+49. Show IAS availability report.
+
+BAS Questions
+50. Is BAS online in DX-9?
+51. Show BAS status for all branches.
+52. Which branches have BAS online?
+53. Which branches have BAS offline?
+54. Which branches have no BAS system?
+55. Generate BAS availability report.
+
+FAS Questions
+56. Which branches have FAS installed?
+57. Show FAS status.
+58. Which branches have FAS online?
+59. Which branches have FAS offline?
+60. Which branches have no FAS system?
+61. Show Fire Alarm System availability.
+
+TLS Questions
+62. Show TLS status.
+63. Which branches have TLS online?
+64. Which branches have TLS offline?
+65. Is TLS active in DX-9?
+66. Which branches are missing TLS?
+
+ACS Questions
+67. Show ACS status.
+68. Which branches have ACS online?
+69. Which branches have ACS offline?
+70. Is ACS installed in DX-9?
+71. Which branches are missing ACS?
+
+Availability Questions
+72. Which branch has the maximum online systems?
+73. Which branch has the minimum online systems?
+74. Which branches are fully operational?
+75. Which branches have all systems online?
+76. Which branches have no active systems?
+77. Show branch-wise availability report.
+78. Which branch has the highest uptime?
+79. Which branch requires immediate attention?
+
+Health Assessment Questions
+80. Is DX-9 healthy?
+81. Is CHOPDA healthy?
+82. Which branches are unhealthy?
+83. Show branches with offline Gateway.
+84. Show branches with multiple unavailable systems.
+85. Which branch has the most issues?
+86. Which branch is performing best?
+
+Search & Filter Testing
+87. Show branches in NBG West II.
+88. Show branches in NASIK zone.
+89. Search for branch code 692.
+90. Search for branch code 694.
+91. Search branch AMALNER.
+92. Filter branches with Gateway online.
+93. Filter branches with Gateway offline.
+94. Filter branches with IAS online.
+95. Filter branches with BAS online.
+96. Filter branches having TLS online.
+
+Comparison Questions
+97. Compare DX-9 and CHOPDA.
+98. Compare CHIMTHANA and NANDURBAR.
+99. Which branch has more active systems, DX-9 or CHOPDA?
+100. Compare all NASIK branches.
+101. Which branch is healthiest in NASIK?
+
+Follow-up Conversation Questions (Context Testing)
+102. Show offline branches.
+103. Which systems are offline in those branches?
+104. Show branch details of the first offline branch.
+105. Which zone does it belong to?
+106. Which NBG owns it?
+107. How long has it been offline?
+108. Are there any alarms for that branch?
+109. Show all devices in that branch.
+110. Generate a report for that branch.
+
+Natural User Questions
+111. Which branch needs attention today?
+112. Are all branches operational?
+113. Which branch is currently down?
+114. What is the status of DX-9?
+115. Show me the healthiest branch.
+116. Which branch has the most unavailable systems?
+117. Give me a summary of NASIK branches.
+118. What systems are available in DX-9?
+119. Which branch has all security systems active?
+120. Give me a branch-wise operational summary.
+
+Advanced SAI Testing Questions
+121. Show branches where Gateway is offline but IAS is online.
+122. Show branches where all systems are N/A.
+123. Show branches with at least 3 active systems.
+124. Show branches missing CCTV and ACS.
+125. Show branches having Gateway but no FAS.
+126. Rank branches by number of active systems.
+127. Which zone has the highest system availability?
+128. Which NBG has the healthiest branches?
+129. Predict which branches may need maintenance.
+130. Recommend priority branches for inspection.
+These advanced filtering and comparison questions are excellent for testing whether SAI can understand multi-condition queries and perform branch-level analytics.
+                                                             Device List Dashboard
+This Device List Dashboard is one of the most important screens for SAI training because it contains:
+* Device inventory
+* GPS tracking
+* IMEI information
+* Network providers
+* Last update timestamps
+* Missing GPS detection
+* Missing IMEI detection
+* NBG/Zone/Branch issue summaries
+* Device health monitoring
+As a real user, these are the questions I would ask:
+
+Device Inventory Questions
+1. How many devices are registered?
+2. Show all devices.
+3. Show device inventory.
+4. List all active devices.
+5. List all inactive devices.
+6. Show healthy devices.
+7. Show devices with issues.
+8. Show device details.
+9. Which devices are currently online?
+10. Which devices require attention?
+
+Health Summary Questions
+11. What percentage of devices are healthy?
+12. How many devices are healthy?
+13. How many devices have network issues?
+14. How many devices have missing IMEI?
+15. Show unhealthy devices.
+16. Show device health statistics.
+17. Which issue is most common?
+18. Show health distribution.
+19. How many devices are affected by network issues?
+20. Give me a device health summary.
+
+GPS Questions
+21. Do any devices have missing GPS?
+22. Show devices with missing GPS.
+23. Which branches are missing GPS data?
+24. Show GPS status of all devices.
+25. Which device last reported GPS data?
+26. Show GPS coordinates of Mallaguri branch.
+27. Show GPS coordinates of Chinsurah branch.
+28. Show GPS coordinates of Serampore branch.
+29. Which devices have valid GPS?
+30. Which devices are not reporting location?
+
+IMEI Questions
+31. Which devices have missing IMEI?
+32. Show all devices missing IMEI.
+33. Why is IMEI missing for SAVEDI?
+34. Show IMEI details of Mallaguri device.
+35. Show IMEI details of Chinsurah device.
+36. How many devices have missing IMEI?
+37. Which zones have missing IMEI issues?
+38. Which NBG has the most IMEI issues?
+39. Show all IMEI issue branches.
+40. Generate IMEI issue report.
+
+Network Questions
+41. Which devices have network issues?
+42. Show network issue summary.
+43. Which branches have network problems?
+44. Which SIM operator is used most?
+45. Show Airtel devices.
+46. Show Jio devices.
+47. Show Vodafone devices.
+48. Which devices are not mapped to a network?
+49. Show devices with unmapped networks.
+50. Why is a device marked "Not Mapped"?
+
+Branch Issue Summary Questions
+51. Which branch has the most issues?
+52. Show branch issue ranking.
+53. Why is SAVEDI showing an issue?
+54. Why is CHANDEKASARE showing an issue?
+55. Why is TATISILWAL showing an issue?
+56. Why is SITHIO showing an issue?
+57. Show all affected branches.
+58. Which branch requires immediate attention?
+59. Show issue count by branch.
+60. Generate branch issue report.
+
+Zone Issue Summary Questions
+61. Which zone has the highest issue count?
+62. Show issue summary for Ranchi.
+63. Show issue summary for Howrah.
+64. Show issue summary for Nasik.
+65. Show issue summary for Siliguri.
+66. Which zone is healthiest?
+67. Which zone needs attention?
+68. Rank zones by issue count.
+69. Show zones with network issues.
+70. Generate zone issue report.
+
+NBG Issue Summary Questions
+71. Which NBG has the most issues?
+72. Show issue summary for NBG JH.
+73. Show issue summary for NBG East.
+74. Show issue summary for NBG West II.
+75. Show issue summary for NBG Odisha.
+76. Show issue summary for NBG MP.
+77. Rank NBGs by issue count.
+78. Which NBG is healthiest?
+79. Which NBG needs immediate attention?
+80. Generate NBG issue report.
+
+Device Search Questions
+81. Search device IMEI 358773400037891.
+82. Search device IMEI 358773400032116.
+83. Find device in Chinsurah branch.
+84. Find device in Arambagh branch.
+85. Find device in Dankuni branch.
+86. Find device in Ballybazar branch.
+87. Find device in Liluah branch.
+88. Show device details for Serampore.
+89. Search by branch name.
+90. Search by IMEI number.
+
+Last Update Questions
+91. Which device reported most recently?
+92. Which device has not reported today?
+93. Show devices inactive for more than 24 hours.
+94. Show oldest device update.
+95. Which branches have stale devices?
+96. Show devices last updated on 03 Apr 2026.
+97. Which devices have not reported for a week?
+98. Show device communication status.
+99. When was the last update from Chinsurah?
+100. Show devices with delayed updates.
+
+GPS Location Questions
+101. Where is the Arambagh device located?
+102. Where is the Dankuni device located?
+103. Show current location of Ballybazar device.
+104. Which devices are located in Howrah zone?
+105. Show all device locations.
+106. Plot device locations.
+107. Which device is closest to Kolkata?
+108. Show branches in West Bengal.
+109. Which devices are outside expected locations?
+110. Show location history of a device.
+
+Advanced Analytics Questions
+111. Which network provider has the most issues?
+112. Which zone has the most missing IMEI cases?
+113. Which NBG has the most missing IMEI cases?
+114. Which branch has multiple issues?
+115. Show branches with both network and IMEI issues.
+116. Show branches missing GPS and IMEI.
+117. Rank branches by device health.
+118. Predict branches likely to fail soon.
+119. Recommend branches for maintenance.
+120. Show recurring issue branches.
+
+Context Retention Testing (Very Important)
+121. Which branch has a missing IMEI?
+122. Show details of that branch.
+123. Which zone does it belong to?
+124. Which NBG owns that zone?
+125. Show the device IMEI.
+126. When did it last report?
+127. What network is it using?
+128. Show its GPS location.
+129. Are there any alarms related to it?
+130. Generate a maintenance report for that branch.
+
+Natural User Questions
+131. Which devices need my attention today?
+132. Is everything working properly?
+133. Which branch has the most device problems?
+134. What is the biggest issue right now?
+135. Are all GPS locations available?
+136. Are all devices reporting correctly?
+137. Which branches have communication issues?
+138. Which devices are not mapped?
+139. Give me a quick device health summary.
+140. What should I investigate first?
+These questions are particularly valuable because they test inventory management, GPS lookup, IMEI tracking, network analysis, branch hierarchy understanding, issue diagnostics, and multi-turn conversations-all common real-world use cases for a ThingsBoard operations chatbot like SAI.
+                                                    Alarm Summary Questions
+This Alarm Command Center Dashboard is probably the most important dashboard for training SAI because alarm investigation is what operators, managers, and support teams use most often.
+A real user would ask questions like these:
+
+Alarm Summary Questions
+1. How many alarms were generated in the last 7 days?
+2. How many active alarms are currently open?
+3. How many major alarms occurred?
+4. How many warning alarms occurred?
+5. How many alarms have been cleared?
+6. What is the average TAT for alarms?
+7. How many branches were affected by alarms?
+8. Give me an alarm summary.
+9. Show today's alarm statistics.
+10. Show this week's alarm statistics.
+
+Active Alarm Questions
+11. Show active alarms.
+12. Which alarms are currently open?
+13. How many alarms are unresolved?
+14. Show active major alarms.
+15. Show active warning alarms.
+16. Which branch currently has an active alarm?
+17. What is the oldest active alarm?
+18. Which active alarm needs immediate attention?
+19. Show active alarms by branch.
+20. Show active alarms by zone.
+
+Alarm Severity Questions
+21. Show major alarms.
+22. Show warning alarms.
+23. Show cleared alarms.
+24. Which severity occurs most frequently?
+25. Show severity breakdown.
+26. How many major alarms occurred this week?
+27. How many warning alarms occurred this week?
+28. Show critical alarms.
+29. Which alarms have highest impact?
+30. Show alarm severity trend.
+
+Alarm Trend Questions
+31. Show alarm trend.
+32. Which day had the most alarms?
+33. Which day had the fewest alarms?
+34. Show daily alarm counts.
+35. Show weekly alarm trend.
+36. Are alarms increasing or decreasing?
+37. Compare this week with last week.
+38. Show alarm history.
+39. Which day generated the most major alarms?
+40. What was the peak alarm day?
+
+NBG Analysis Questions
+41. Which NBG generated the most alarms?
+42. Show alarm count for NBG JH.
+43. Show alarm count for NBG Kolkata.
+44. Show alarm count for NBG Odisha.
+45. Rank NBGs by alarm count.
+46. Which NBG is healthiest?
+47. Which NBG needs attention?
+48. Show all alarms under NBG JH.
+49. Show major alarms under NBG Kolkata.
+50. Generate NBG alarm report.
+
+Zone Analysis Questions
+51. Which zone generated the most alarms?
+52. Show alarms for Ranchi.
+53. Show alarms for Kolkata.
+54. Show alarms for Bhubaneswar.
+55. Rank zones by alarm count.
+56. Which zone has the highest alarm rate?
+57. Which zone has the best performance?
+58. Show all major alarms in Ranchi.
+59. Show all warning alarms in Kolkata.
+60. Generate zone alarm report.
+
+Branch Analysis Questions
+61. Which branch generated the most alarms?
+62. Show alarms for BOI-DX7.
+63. Which branch has repeated alarms?
+64. Show branch alarm history.
+65. Which branch is most problematic?
+66. Show alarm count by branch.
+67. Show branches affected by alarms.
+68. Which branch has active alarms?
+69. Generate branch alarm report.
+70. Show alarm summary for BOI-DX7.
+
+Alarm Type Questions
+71. Show Integrated Alarm System Fault alarms.
+72. Show Intrusion Alarm System Fault alarms.
+73. Show Camera Tamper alarms.
+74. Show Camera Disconnect alarms.
+75. Show Fire Alarm System Fault alarms.
+76. Show Time Lock Door Open alarms.
+77. Which alarm type occurs most frequently?
+78. Rank alarm types by occurrence.
+79. Show all fire alarm events.
+80. Show all intrusion alarm events.
+81. Show all camera-related alarms.
+82. Show all access control alarms.
+
+Repeat Alarm Questions
+83. Which branches have repeated alarms?
+84. Show repeat alarm branches.
+85. Why does BOI-DX7 have repeated alarms?
+86. Which alarm repeats most often?
+87. Show recurring alarm patterns.
+88. Which branch has repeated fire alarms?
+89. Which branch has repeated intrusion alarms?
+90. Show alarm recurrence analysis.
+
+TAT Questions
+91. What is the average TAT?
+92. Which alarm had the highest TAT?
+93. Which alarm had the lowest TAT?
+94. Show alarms with TAT above 2 hours.
+95. Show alarms with TAT below 15 minutes.
+96. Which branch has the highest average TAT?
+97. Show TAT performance by zone.
+98. Show TAT performance by NBG.
+99. Generate TAT report.
+100. Which alarms exceeded SLA?
+
+Recent Alarm Event Questions
+101. What was the latest alarm?
+102. Show the last 10 alarm events.
+103. Show alarms from today.
+104. Show alarms from yesterday.
+105. Show alarm events from June 18.
+106. Show all alarm events for BOI-DX7.
+107. Which alarm occurred most recently?
+108. What was the last major alarm?
+109. Show latest active alarm.
+110. Show latest cleared alarm.
+
+Filter-Based Questions
+111. Show alarms from Ranchi.
+112. Show alarms from Kolkata.
+113. Show alarms from NBG JH.
+114. Show alarms from NBG Kolkata.
+115. Show only major alarms.
+116. Show only warning alarms.
+117. Show only active alarms.
+118. Show only cleared alarms.
+119. Show fire alarm events from Ranchi.
+120. Show intrusion alarms from Kolkata.
+
+Investigation Questions
+121. Why did the fire alarm occur?
+122. What caused the camera tamper alarm?
+123. Why was the camera disconnected?
+124. What caused the intrusion alarm?
+125. What caused the integrated alarm system fault?
+126. Which devices generated these alarms?
+127. Which system is responsible for most alarms?
+128. Is there any recurring root cause?
+129. Which alarms need investigation?
+130. Recommend corrective actions.
+
+Multi-Turn Context Testing (Very Important)
+131. Which branch has the most alarms?
+132. Show only major alarms for that branch.
+133. Which alarm type occurs most often there?
+134. Show the latest occurrence.
+135. What was the TAT?
+136. Is the alarm resolved?
+137. Which zone owns that branch?
+138. Which NBG owns that zone?
+139. Show device details related to that alarm.
+140. Generate a detailed incident report.
+
+Management-Level Questions
+141. Which NBG performs worst based on alarms?
+142. Which zone should be audited first?
+143. Which branch needs urgent attention?
+144. What are the top recurring issues?
+145. Which alarm type impacts operations most?
+146. Which alarms contribute most to downtime?
+147. Show top 10 problematic branches.
+148. Show top 10 problematic zones.
+149. Generate executive alarm summary.
+150. Give me today's operational risk summary.
+These alarm-related questions are especially useful because they test:
+* Alarm filtering
+* Hierarchy awareness (NBG ? Zone ? Branch)
+* Severity analysis
+* TAT calculations
+* Trend analysis
+* Root cause investigation
+* Multi-turn conversational memory
+* Incident reporting
+These are exactly the types of questions operations teams, NOCs, SOCs, and bank monitoring users would ask a chatbot like SAI.
+                                                                 S-Vault Report Related 
+This S-Vault ? Request Footage Dashboard is very different from the monitoring dashboards. Here users will ask questions related to CCTV footage retrieval, playback requests, download status, channels, cameras, branches, and audit/history tracking.
+
+Footage Request Questions
+1. How can I request CCTV footage?
+2. Request footage for a branch.
+3. Show me footage request options.
+4. What information is required to request footage?
+5. How do I submit a footage request?
+6. Can I request footage from any branch?
+7. How long does footage retrieval take?
+8. What is the download ETA?
+9. How is record size calculated?
+10. What happens after submitting a request?
+
+Branch Selection Questions
+11. Show all available NBGs.
+12. Show all zones under NBG East.
+13. Show all zones under NBG JH.
+14. Show branches under Ranchi zone.
+15. Show branches under Kolkata zone.
+16. Which branches have CCTV footage available?
+17. Show available branches for footage retrieval.
+18. Find branch by SOL ID.
+19. Search branch by name.
+20. Show branch details before requesting footage.
+
+SOL ID Questions
+21. Search footage using SOL ID.
+22. What is the SOL ID for a branch?
+23. Can I request footage directly using SOL ID?
+24. Find branch by SOL ID.
+25. Show branch information for SOL ID 1234.
+26. Verify a SOL ID before requesting footage.
+27. Why is my SOL ID not found?
+28. Which branch belongs to this SOL ID?
+29. Can multiple branches share a SOL ID?
+30. Search footage by SOL ID instead of hierarchy.
+
+Hierarchy Navigation Questions
+31. Show all NBGs.
+32. Show all ZOs under selected NBG.
+33. Show all branches under selected ZO.
+34. Which NBG owns this branch?
+35. Which ZO owns this branch?
+36. Expand hierarchy for a branch.
+37. Show complete branch hierarchy.
+38. Show branch location details.
+39. Show all branches under a zone.
+40. Show all branches under an NBG.
+
+Device Type Questions
+41. What device types are available?
+42. Show CCTV device types.
+43. Show available DVRs.
+44. Show available NVRs.
+45. Which device should I select?
+46. Show all recording devices in a branch.
+47. Which device stores footage?
+48. Show active recording devices.
+49. Which device type supports playback?
+50. Show available camera recording devices.
+
+Channel Questions
+51. Show available channels.
+52. Which camera is channel 1?
+53. Which camera is channel 4?
+54. Show all channels for this branch.
+55. How many cameras are available?
+56. Show camera-channel mapping.
+57. Which channels have recordings?
+58. Which channels are offline?
+59. Show active channels.
+60. Show available camera feeds.
+
+Date Selection Questions
+61. Show available playback dates.
+62. Is footage available for June 15?
+63. Show recording availability by date.
+64. Which dates contain recordings?
+65. Can I retrieve last week's footage?
+66. Show available recording calendar.
+67. Is footage available for a specific date?
+68. Which days have missing recordings?
+69. Show oldest available footage.
+70. Show latest available footage.
+
+Time Range Questions
+71. Show available time ranges.
+72. Request footage from 10 AM to 11 AM.
+73. Request footage between 2 PM and 4 PM.
+74. Show footage for entire day.
+75. Can I request multiple hours?
+76. What is the maximum time range allowed?
+77. Show footage for a specific time.
+78. Retrieve footage from business hours only.
+79. Show nighttime footage.
+80. Show footage around alarm occurrence time.
+
+Download Questions
+81. What is the estimated download size?
+82. What is the expected download ETA?
+83. Why is the download ETA high?
+84. How large will the recording be?
+85. Can I reduce file size?
+86. Show expected storage consumption.
+87. Which request will take longest?
+88. What affects download speed?
+89. Can I download compressed footage?
+90. Show download status.
+
+History Questions
+91. Show my footage request history.
+92. Show recent footage requests.
+93. Which requests were completed?
+94. Which requests failed?
+95. Show pending requests.
+96. Show footage download history.
+97. Show branch-wise request history.
+98. Show requests made today.
+99. Show requests made this month.
+100. Export footage request history.
+
+Alarm Investigation Questions
+101. Show footage during fire alarm event.
+102. Show footage during intrusion alarm.
+103. Retrieve footage during camera tamper event.
+104. Show footage around alarm time.
+105. Retrieve footage before alarm occurrence.
+106. Retrieve footage after alarm occurrence.
+107. Show evidence footage for alarm.
+108. Which camera captured the alarm?
+109. Retrieve footage linked to a security incident.
+110. Show footage for a specific alarm ID.
+
+Security & Audit Questions
+111. Who requested footage last?
+112. Show footage audit logs.
+113. Who downloaded footage?
+114. Which branch footage was requested most?
+115. Show suspicious footage requests.
+116. Show unauthorized request attempts.
+117. Show request approval history.
+118. Which users accessed footage?
+119. Generate footage access report.
+120. Show CCTV audit summary.
+
+Context-Based Follow-Up Questions
+121. Show branches in Ranchi.
+122. Select BOI-DX7.
+123. Show available recording devices there.
+124. Select DVR.
+125. Show available channels.
+126. Select channel 4.
+127. Show available dates.
+128. Retrieve footage from June 18.
+129. Show file size.
+130. Submit footage request.
+
+Natural User Questions
+131. I need CCTV footage from yesterday.
+132. Show footage for a specific branch.
+133. Retrieve footage for an incident.
+134. Can I download camera recordings?
+135. Which cameras recorded the event?
+136. How quickly can I get the footage?
+137. Show available recordings.
+138. Help me find footage from a branch.
+139. Download footage for investigation.
+140. Generate a CCTV evidence package.
+
+Real Bank Security Team Questions
+141. Show footage during branch opening time.
+142. Show footage during vault access.
+143. Show footage during ATM maintenance.
+144. Retrieve footage during intrusion alarm.
+145. Show footage around door access event.
+146. Show footage for customer dispute investigation.
+147. Retrieve footage around cash handling activity.
+148. Show footage during branch closure.
+149. Generate investigation footage package.
+150. Export all footage related to a security incident.
+These questions are particularly valuable because they test:
+* Hierarchy navigation (HO ? NBG ? ZO ? Branch)
+* CCTV footage retrieval workflows
+* Date/time understanding
+* Channel and device selection
+* Download management
+* Security investigations
+* Audit/history tracking
+* Multi-step guided conversations
+This is exactly how bank security operators would interact with SAI when trying to retrieve surveillance footage for an incident investigation.
+                                                                     Branch Report Dashboard
+This Branch Report Dashboard combines health summary + category analysis + NBG/Zone issue rankings + branch-wise operational status. A real operations manager, NOC engineer, or bank administrator would ask questions like these.
+
+Dashboard Summary Questions
+1. Give me a summary of the Gateway report.
+2. How many Gateway devices are deployed?
+3. How many Gateway devices are healthy?
+4. How many Gateway devices are faulty?
+5. How many Gateway devices are inactive?
+6. What is the Gateway health percentage?
+7. What is the overall branch health status?
+8. Show me today's branch report.
+9. Which device type am I currently viewing?
+10. Generate an executive summary of this report.
+
+Health Analysis Questions
+11. What percentage of Gateway devices are healthy?
+12. What percentage of Gateway devices are inactive?
+13. What percentage of Gateway devices are faulty?
+14. Show health distribution.
+15. Why is Gateway health only 14%?
+16. Which devices contribute to poor health?
+17. Which category has the best health score?
+18. Which category has the worst health score?
+19. Show healthy vs inactive comparison.
+20. Show category-wise health analysis.
+
+Device Category Health Questions
+21. Show CCTV health status.
+22. Show BAS health status.
+23. Show IAS health status.
+24. Show FAS health status.
+25. Show TLS health status.
+26. Show ACS health status.
+27. Which category has 100% uptime?
+28. Which category has offline devices?
+29. Which category has faulty devices?
+30. Compare Gateway and CCTV health.
+
+Gateway-Specific Questions
+31. Which Gateway devices are online?
+32. Which Gateway devices are offline?
+33. Show inactive Gateway branches.
+34. Show all healthy Gateways.
+35. Show Gateway availability report.
+36. Which branch has an offline Gateway?
+37. Which branch has an online Gateway?
+38. Why is a Gateway offline?
+39. Show Gateway issue summary.
+40. Generate Gateway performance report.
+
+NBG Issue Summary Questions
+41. Which NBG has the most issues?
+42. Show issue count for NBG JH.
+43. Show issue count for NBG East.
+44. Show issue count for NBG Odisha.
+45. Show issue count for NBG West II.
+46. Rank NBGs by issue count.
+47. Which NBG is healthiest?
+48. Which NBG needs attention?
+49. Show all problematic NBGs.
+50. Generate NBG issue report.
+
+Zone Issue Summary Questions
+51. Which zone has the most issues?
+52. Show issues in Bhubaneswar.
+53. Show issues in Jamshedpur.
+54. Show issues in Howrah.
+55. Show issues in Ranchi.
+56. Show issues in Barasat.
+57. Show issues in Nasik.
+58. Rank zones by issue count.
+59. Which zone is healthiest?
+60. Which zone needs urgent attention?
+
+Branch Status Questions
+61. Show branch DX-9 status.
+62. Show branch CHIMTHANA status.
+63. Show branch NANDURBAR status.
+64. Show branch AMALNER status.
+65. Show branch CHOPDA status.
+66. Show branch SAVEDI status.
+67. Show branch PATHARDHI PHATA status.
+68. Which branches are online?
+69. Which branches are offline?
+70. Which branches require investigation?
+
+Branch System Questions
+71. Which branches have BAS online?
+72. Which branches have IAS online?
+73. Which branches have TLS online?
+74. Which branches have CCTV online?
+75. Which branches have ACS online?
+76. Which branches have FAS online?
+77. Show all branches with active systems.
+78. Which branches have missing systems?
+79. Show branches where all systems are online.
+80. Show branches where all systems are unavailable.
+
+Filtering Questions
+81. Show branches under NBG West II.
+82. Show branches under NBG JH.
+83. Show branches in Nasik zone.
+84. Show branches in Ranchi zone.
+85. Filter branches with Gateway online.
+86. Filter branches with Gateway offline.
+87. Filter branches with IAS online.
+88. Filter branches with BAS online.
+89. Show only problematic branches.
+90. Show only healthy branches.
+
+Comparison Questions
+91. Compare DX-9 and CHOPDA.
+92. Compare SAVEDI and CHOPDA.
+93. Compare NBG JH and NBG East.
+94. Compare Ranchi and Howrah zones.
+95. Compare Gateway and CCTV performance.
+96. Which zone performs better, Ranchi or Nasik?
+97. Which NBG performs better, East or Odisha?
+98. Compare healthy and inactive devices.
+99. Compare category-wise uptime.
+100. Show top-performing branches.
+
+Operational Questions
+101. Which branch needs immediate attention?
+102. Which branch has the most offline systems?
+103. Which NBG should be investigated first?
+104. Which zone has recurring issues?
+105. What is the biggest operational risk?
+106. Which systems are causing downtime?
+107. Show branches with critical issues.
+108. Which branch has been offline longest?
+109. Recommend priority actions.
+110. Generate maintenance recommendations.
+
+Multi-Condition Questions
+111. Show branches where Gateway is offline but IAS is online.
+112. Show branches where BAS is online and CCTV is unavailable.
+113. Show branches with more than two inactive systems.
+114. Show branches where all security systems are operational.
+115. Show branches missing CCTV and ACS.
+116. Show branches having Gateway but no FAS.
+117. Show branches with inactive Gateway and inactive BAS.
+118. Show branches with maximum active systems.
+119. Show branches with minimum active systems.
+120. Rank branches by operational status.
+
+Report Generation Questions
+121. Generate branch health report.
+122. Generate Gateway report.
+123. Generate zone issue report.
+124. Generate NBG issue report.
+125. Export branch status report.
+126. Generate uptime report.
+127. Generate offline branch report.
+128. Generate system availability report.
+129. Generate maintenance report.
+130. Generate management dashboard summary.
+
+Context-Retention Questions (Very Important)
+131. Which NBG has the highest issue count?
+132. Show zones under that NBG.
+133. Which zone has the most issues there?
+134. Show branches under that zone.
+135. Which branch is causing most issues?
+136. Show branch status.
+137. Which systems are offline?
+138. Are there any alarms for that branch?
+139. What action should be taken?
+140. Generate a detailed investigation report.
+
+Natural User Questions
+141. What is the health of my branch network?
+142. Which branches are working properly?
+143. Are there any major issues today?
+144. Which zones need attention?
+145. Which NBG is performing worst?
+146. Which systems are causing problems?
+147. Is the Gateway network healthy?
+148. What should I investigate first?
+149. Give me a quick operational summary.
+150. What are the top issues across branches today?
+High-Value SAI Training Questions
+These are especially useful because they combine hierarchy + analytics:
+151. Which NBG has the highest number of inactive Gateways?
+152. Which zone contributes most to Gateway downtime?
+153. Which branch has the lowest operational availability?
+154. Show branches with Gateway offline for more than 24 hours.
+155. Which branches have online BAS but offline Gateway?
+156. Which zone has the best system availability percentage?
+157. Which NBG should be prioritized for maintenance?
+158. Predict branches at risk based on current status.
+159. Show recurring issue branches across all zones.
+160. Give me an action plan to improve Gateway health.
+These questions will test SAI's ability to answer not just dashboard lookups, but also operational reasoning, hierarchy traversal, filtering, comparisons, and management reporting, which are often the most valuable capabilities for users.
+                                                           Uptime Report Dashboard
+This Uptime Report Dashboard is one of the best dashboards for testing whether SAI can understand availability percentages, uptime calculations, branch comparisons, system performance, and operational analytics.
+Unlike previous dashboards that showed only Online/Offline/N/A, this dashboard shows actual uptime percentages for each system.
+
+General Uptime Questions
+1. What is the uptime report showing?
+2. Show overall uptime summary.
+3. Which branches have uptime data?
+4. Which branches have the best uptime?
+5. Which branches have the worst uptime?
+6. Show branch-wise uptime report.
+7. Show today's uptime report.
+8. Show current uptime status.
+9. Generate uptime summary.
+10. Export uptime report.
+
+Branch-Specific Questions
+11. Show uptime for DX-7.
+12. Show uptime for DX-2.
+13. Show uptime for JAGULI.
+14. Show uptime for ADITYAPUR.
+15. Show uptime for CHINSURAH.
+16. Show uptime for NANDURBAR.
+17. Show uptime for SAVEDI.
+18. Show uptime for SERAMPORE.
+19. Show uptime for HOWRAH branch.
+20. Show uptime for GUWAHATI branch.
+
+Gateway Uptime Questions
+21. Which branch has the highest Gateway uptime?
+22. Which branch has the lowest Gateway uptime?
+23. Show branches with Gateway uptime below 50%.
+24. Show branches with Gateway uptime above 90%.
+25. Which branches have Gateway uptime below SLA?
+26. Rank branches by Gateway uptime.
+27. Show Gateway uptime trend.
+28. Compare Gateway uptime across branches.
+29. Show branches with Gateway downtime.
+30. Generate Gateway uptime report.
+
+CCTV Uptime Questions
+31. Show CCTV uptime report.
+32. Which branches have CCTV uptime below 50%?
+33. Which branches have CCTV uptime above 90%?
+34. Show CCTV uptime for DX-7.
+35. Which branch has the best CCTV uptime?
+36. Which branch has the worst CCTV uptime?
+37. Compare CCTV uptime across zones.
+38. Show CCTV downtime analysis.
+39. Show branches with CCTV availability issues.
+40. Generate CCTV uptime report.
+
+IAS Uptime Questions
+41. Show IAS uptime report.
+42. Which branches have poor IAS uptime?
+43. Show IAS uptime for DX-7.
+44. Rank branches by IAS uptime.
+45. Which branch has the best IAS uptime?
+46. Which branch has the worst IAS uptime?
+47. Show IAS availability analysis.
+48. Generate IAS uptime report.
+49. Show IAS downtime summary.
+50. Compare IAS uptime between branches.
+
+BAS Uptime Questions
+51. Show BAS uptime report.
+52. Which branches have BAS uptime below 50%?
+53. Which branches have BAS uptime above 90%?
+54. Show BAS uptime for DX-7.
+55. Show BAS downtime analysis.
+56. Rank branches by BAS uptime.
+57. Generate BAS performance report.
+58. Show BAS availability summary.
+59. Which branches have poor BAS uptime?
+60. Compare BAS uptime across branches.
+
+FAS Uptime Questions
+61. Show Fire Alarm System uptime.
+62. Which branches have poor FAS uptime?
+63. Show FAS uptime for DX-7.
+64. Rank branches by FAS uptime.
+65. Show FAS downtime report.
+66. Generate FAS availability report.
+67. Compare FAS uptime across zones.
+68. Show branches with FAS issues.
+69. Which branch has best FAS uptime?
+70. Which branch has worst FAS uptime?
+
+TLS Uptime Questions
+71. Show TLS uptime report.
+72. Which branches have TLS uptime below 50%?
+73. Show TLS uptime for DX-7.
+74. Compare TLS uptime across branches.
+75. Rank branches by TLS uptime.
+76. Generate TLS availability report.
+77. Show TLS downtime summary.
+78. Which branches have TLS issues?
+79. Which branch has best TLS uptime?
+80. Which branch has worst TLS uptime?
+
+ACS Uptime Questions
+81. Show ACS uptime report.
+82. Which branches have ACS uptime below 50%?
+83. Show ACS uptime for DX-7.
+84. Compare ACS uptime across branches.
+85. Rank branches by ACS uptime.
+86. Generate ACS availability report.
+87. Show ACS downtime summary.
+88. Which branches have ACS issues?
+89. Which branch has best ACS uptime?
+90. Which branch has worst ACS uptime?
+
+SLA Monitoring Questions
+91. Which branches violate SLA?
+92. Which systems are below SLA threshold?
+93. Show branches with uptime below 95%.
+94. Show branches with uptime below 80%.
+95. Show branches with uptime below 50%.
+96. Which branch has the highest downtime?
+97. Which branch requires urgent maintenance?
+98. Show SLA compliance report.
+99. Show SLA violations by zone.
+100. Generate SLA compliance summary.
+
+Ranking Questions
+101. Show top 10 branches by uptime.
+102. Show bottom 10 branches by uptime.
+103. Rank branches by Gateway uptime.
+104. Rank branches by CCTV uptime.
+105. Rank branches by IAS uptime.
+106. Rank branches by BAS uptime.
+107. Rank branches by FAS uptime.
+108. Rank branches by TLS uptime.
+109. Rank branches by ACS uptime.
+110. Show overall branch ranking.
+
+Zone & NBG Questions
+111. Which zone has the best uptime?
+112. Which zone has the worst uptime?
+113. Which NBG has the best uptime?
+114. Which NBG has the worst uptime?
+115. Compare uptime across NBGs.
+116. Compare uptime across zones.
+117. Show zone-wise uptime report.
+118. Show NBG-wise uptime report.
+119. Rank zones by uptime.
+120. Rank NBGs by uptime.
+
+Multi-System Analysis Questions
+121. Which branches have all systems above 90% uptime?
+122. Which branches have all systems below 50% uptime?
+123. Show branches with poor Gateway but good CCTV uptime.
+124. Show branches with good Gateway but poor IAS uptime.
+125. Which branches have the most stable systems?
+126. Which branches have the most unstable systems?
+127. Show branches with mixed performance.
+128. Which system contributes most to downtime?
+129. Show system-wise uptime comparison.
+130. Show branch operational reliability score.
+
+Context Retention Testing
+131. Which branch has the lowest Gateway uptime?
+132. Show all systems for that branch.
+133. Which system performs worst there?
+134. How much downtime does it have?
+135. Which zone owns that branch?
+136. Which NBG owns that zone?
+137. Are there any active alarms there?
+138. Show alarm history for that branch.
+139. What corrective action is recommended?
+140. Generate a maintenance report.
+
+Natural User Questions
+141. Which branch is performing best?
+142. Which branch is performing worst?
+143. Are there any branches with serious uptime issues?
+144. What should I investigate first?
+145. Which systems are causing the most downtime?
+146. Is DX-7 healthy?
+147. Are my branches meeting SLA?
+148. Which zone requires attention?
+149. Give me a quick uptime summary.
+150. What are the top uptime concerns today?
+
+Advanced SAI Testing Questions (High Value)
+151. Predict which branches are at risk of failing SLA next month.
+152. Which branches should be prioritized for maintenance?
+153. Show branches with uptime below 50% for multiple systems.
+154. Which zone contributes most to downtime?
+155. Which NBG has recurring uptime issues?
+156. Show branches where Gateway uptime is below 20%.
+157. Which branches have all critical security systems below 50% uptime?
+158. Calculate operational reliability for each branch.
+159. Identify branches requiring immediate intervention.
+160. Give me an action plan to improve uptime across the network.
+These questions are excellent because they test percentage interpretation, SLA analysis, uptime reasoning, ranking, hierarchy navigation, comparisons, and operational recommendations, which are much harder than simple Online/Offline queries.
+                                                         Recording Report Dashboard
+This Recording Report Dashboard is focused on camera recording retention compliance. This is a very important dashboard for banks because CCTV footage retention policies often require 90+ days of recording availability.
+A real user, auditor, security manager, or compliance officer would ask questions like these:
+
+Recording Compliance Summary Questions
+1. How many cameras are non-compliant?
+2. How many branches are affected?
+3. How many cameras are in critical condition?
+4. What is the overall recording compliance status?
+5. Show recording retention summary.
+6. Give me a recording compliance report.
+7. How many cameras have less than 90 days retention?
+8. What percentage of cameras are non-compliant?
+9. Show today's recording compliance status.
+10. Generate recording retention summary.
+
+Retention Analysis Questions
+11. Show cameras with retention below 30 days.
+12. Show cameras with retention between 30 and 59 days.
+13. Show cameras with retention between 60 and 89 days.
+14. Which cameras are below compliance threshold?
+15. Which cameras meet the 90-day requirement?
+16. Show retention bucket distribution.
+17. How many cameras are in each retention category?
+18. Which retention category has the most cameras?
+19. Show retention compliance percentage.
+20. Why are cameras classified as non-compliant?
+
+Critical Camera Questions
+21. Show critical cameras.
+22. Which cameras require immediate attention?
+23. Which cameras have less than 30 days retention?
+24. Show all critical recording issues.
+25. Which branch has the most critical cameras?
+26. Show critical camera report.
+27. Show cameras with only 22 days retention.
+28. Which cameras are at risk of recording loss?
+29. Show highest-priority cameras.
+30. Generate critical camera report.
+
+Branch Questions
+31. Which branches are affected?
+32. Show all affected branches.
+33. How many non-compliant cameras are in PODASTIA?
+34. Show recording status for LOKANNATH branch.
+35. Which branch has the most non-compliant cameras?
+36. Which branch has the least retention?
+37. Show branch-wise recording compliance.
+38. Rank branches by recording retention.
+39. Which branch requires urgent action?
+40. Generate branch compliance report.
+
+Zone Questions
+41. Which zone has the most non-compliant cameras?
+42. Show recording issues in ZO HOWRAH.
+43. Show recording issues in ZO JAMSHEDPUR.
+44. Show recording issues in ZO GUWAHATI.
+45. Show recording issues in ZO BHUBANESHWAR.
+46. Show recording issues in ZO BARIPADA.
+47. Rank zones by non-compliant cameras.
+48. Which zone is most critical?
+49. Which zone has best compliance?
+50. Generate zone compliance report.
+
+NBG Questions
+51. Which NBG has the most non-compliant cameras?
+52. Show recording issues in NBG Odisha.
+53. Show recording issues in NBG East.
+54. Show recording issues in NBG JH.
+55. Rank NBGs by compliance.
+56. Which NBG requires immediate intervention?
+57. Which NBG has best recording retention?
+58. Show NBG-wise retention report.
+59. Generate NBG compliance report.
+60. Show NBG compliance ranking.
+
+Camera-Specific Questions
+61. Show camera 192.168.1.201 status.
+62. Show camera 192.168.1.202 status.
+63. Show camera 192.168.1.203 status.
+64. Show camera 192.168.1.204 status.
+65. Show camera 192.168.1.205 status.
+66. Show camera retention details.
+67. Which camera has lowest retention?
+68. Which camera has highest retention?
+69. Show all critical cameras in PODASTIA.
+70. Show camera compliance status.
+
+Severity Questions
+71. Show critical recording issues.
+72. Show medium severity recording issues.
+73. Show high severity recording issues.
+74. Which severity level occurs most?
+75. Show severity distribution.
+76. Show all critical cameras.
+77. Show all medium severity cameras.
+78. Show branches with critical cameras.
+79. Show zones with critical cameras.
+80. Generate severity report.
+
+Retention Duration Questions
+81. Which cameras have 22-day retention?
+82. Which cameras have 74-day retention?
+83. Show cameras with retention below 15 days.
+84. Show cameras with retention below 45 days.
+85. Show cameras with retention below 60 days.
+86. Show cameras with retention above 80 days.
+87. Show cameras close to compliance.
+88. Which cameras need only a small increase to reach 90 days?
+89. Show longest retention camera.
+90. Show shortest retention camera.
+
+Compliance Questions
+91. Which cameras violate compliance policy?
+92. How many cameras violate the 90-day rule?
+93. Show compliance status by branch.
+94. Show compliance status by zone.
+95. Show compliance status by NBG.
+96. Which branches are fully compliant?
+97. Which zones are fully compliant?
+98. Which NBGs are fully compliant?
+99. Generate compliance audit report.
+100. Show regulatory compliance status.
+
+Investigation Questions
+101. Why is camera retention below 90 days?
+102. Which recording devices are causing issues?
+103. Why are so many cameras non-compliant?
+104. What corrective action is required?
+105. Which branches need storage upgrades?
+106. Which sites need immediate maintenance?
+107. What causes retention loss?
+108. Are storage devices full?
+109. Show root cause analysis.
+110. Recommend corrective actions.
+
+Storage Questions
+111. Which branches need more storage?
+112. Which NVRs are running out of space?
+113. Which DVRs are causing retention issues?
+114. Show storage utilization report.
+115. Show branches with insufficient storage.
+116. Which cameras require storage expansion?
+117. Estimate storage needed for compliance.
+118. Show storage health summary.
+119. Predict future storage shortages.
+120. Generate storage planning report.
+
+Multi-Turn Context Testing
+121. Which zone has the most non-compliant cameras?
+122. Show affected branches in that zone.
+123. Which branch has the worst retention?
+124. Show cameras in that branch.
+125. Which camera has the lowest retention?
+126. What is its current retention period?
+127. What severity level is assigned?
+128. When was it last checked?
+129. What corrective action is recommended?
+130. Generate a remediation report.
+
+Audit & Management Questions
+131. Which branches fail compliance audits?
+132. Which zones should be audited first?
+133. Which NBG has the biggest compliance risk?
+134. Show top 10 non-compliant branches.
+135. Show top 10 critical cameras.
+136. Generate audit-ready compliance report.
+137. Show compliance trend.
+138. Estimate risk exposure.
+139. What is the biggest compliance concern?
+140. Give me a management summary.
+
+Natural User Questions
+141. Are we meeting the 90-day recording policy?
+142. Which cameras need immediate attention?
+143. Which branches are at risk?
+144. What should I investigate first?
+145. Which zone is performing worst?
+146. How many cameras are non-compliant?
+147. Which branches need storage upgrades?
+148. What is the biggest recording issue today?
+149. Give me a quick compliance summary.
+150. What actions should I take to achieve full compliance?
+High-Value SAI Testing Questions
+151. Which branches contribute most to non-compliance?
+152. Which zone should be prioritized for remediation?
+153. Estimate storage required to bring all cameras to 90-day retention.
+154. Predict which cameras will become critical next month.
+155. Which NBG has recurring retention issues?
+156. Show cameras below 30 days retention that also have active alarms.
+157. Which branches have more than 10 non-compliant cameras?
+158. Generate a corrective action plan.
+159. Prioritize cameras for immediate remediation.
+160. What is the fastest path to full recording compliance?
+These questions are particularly valuable because they test retention compliance, storage analysis, audit readiness, regulatory reporting, risk assessment, and remediation planning, which are key use cases for a CCTV recording-retention dashboard.
+                                                  CCTV Inventory Report Dashboard
+This CCTV Inventory Report Dashboard is one of the richest dashboards for SAI training because it combines:
+* CCTV inventory management
+* Vendor analysis (Hikvision, Dahua, CPPLUS)
+* Storage capacity monitoring
+* Recording retention
+* HDD utilization
+* Resolution compliance
+* Device specification tracking
+* Inventory risk assessment
+If I were a bank security administrator, these are the questions I would naturally ask SAI:
+
+Inventory Summary Questions
+1. How many CCTV units are installed?
+2. How many CCTV units are healthy?
+3. How many units have low recording days?
+4. How many devices have missing specifications?
+5. What is the total storage capacity?
+6. Give me a CCTV inventory summary.
+7. Show overall CCTV health status.
+8. Generate CCTV inventory report.
+9. Show current inventory statistics.
+10. What percentage of CCTV inventory is healthy?
+
+Vendor / Make Questions
+11. How many Hikvision devices do we have?
+12. How many Dahua devices are installed?
+13. How many CPPLUS devices are installed?
+14. Show vendor distribution.
+15. Which vendor has the most devices?
+16. Which vendor has the fewest devices?
+17. Show all Hikvision branches.
+18. Show all Dahua branches.
+19. Compare Hikvision and Dahua deployments.
+20. Generate vendor-wise inventory report.
+
+Resolution Questions
+21. How many cameras are 1920p?
+22. How many cameras are 1280p?
+23. Which cameras have unknown resolution?
+24. Show resolution distribution.
+25. Which resolution is most common?
+26. Show branches using 1920p recording.
+27. Show cameras with low resolution.
+28. Show cameras with missing resolution.
+29. Generate resolution compliance report.
+30. Which branches need resolution upgrades?
+
+Recording Retention Questions
+31. Which devices have recording below 90 days?
+32. Show low recording devices.
+33. How many units have retention below compliance?
+34. Which branches have low retention?
+35. Show recording retention report.
+36. Which NBG has the lowest retention?
+37. Which zone has the lowest retention?
+38. Show devices below 30 days retention.
+39. Which branches need storage upgrades?
+40. Generate recording compliance report.
+
+Storage Questions
+41. What is the total storage capacity?
+42. Which branch has the highest storage capacity?
+43. Which branch has the lowest storage capacity?
+44. Show storage utilization report.
+45. Which devices are running out of storage?
+46. Show branches with storage issues.
+47. Which branch has 14.56 TB storage?
+48. Which branch has 10.92 TB storage?
+49. Show storage capacity by branch.
+50. Generate storage analysis report.
+
+HDD Slot Questions
+51. How many devices have all HDD slots full?
+52. Show devices with 4/4 HDD slots used.
+53. Show devices with partial HDD utilization.
+54. Show devices with 1 HDD installed.
+55. Show devices with 2 HDDs installed.
+56. Show devices with unknown HDD status.
+57. Which branches have unused HDD slots?
+58. Show HDD utilization summary.
+59. Which branches can increase storage without new hardware?
+60. Generate HDD utilization report.
+
+Inventory Risk Questions
+61. Which zone has the highest inventory risk?
+62. Show inventory risk for Baripada.
+63. Show inventory risk for Jamshedpur.
+64. Show inventory risk for Howrah.
+65. Show inventory risk for Ranchi.
+66. Show inventory risk for Bhubaneswar.
+67. Rank zones by inventory risk.
+68. Which zone needs immediate attention?
+69. Show inventory risk report.
+70. Generate risk assessment summary.
+
+NBG Analysis Questions
+71. Which NBG has the highest average recording days?
+72. Show recording days for Odisha.
+73. Show recording days for East.
+74. Show recording days for MP.
+75. Show recording days for JH.
+76. Show recording days for West II.
+77. Rank NBGs by recording retention.
+78. Which NBG performs best?
+79. Which NBG performs worst?
+80. Generate NBG inventory report.
+
+Branch Questions
+81. Show CCTV inventory for Sonahatu.
+82. Show CCTV inventory for Nokari.
+83. Show CCTV inventory for Chapra.
+84. Show CCTV inventory for Pathardi.
+85. Show CCTV inventory for Bathua Dohari.
+86. Show CCTV inventory for Chande Kasare.
+87. Show CCTV inventory for Bero.
+88. Show CCTV inventory for Satpur.
+89. Show CCTV inventory for Murarishachowmatha.
+90. Generate branch inventory report.
+
+Device Specification Questions
+91. Show model details for Sonahatu.
+92. Show model details for Nokari.
+93. Which branches use DS-7716NXI-K4?
+94. Which branches use DS-7716NI-Q4?
+95. Which branches use DH-NVR4416-EI?
+96. Which branches use DH-NVR4416-4KS2/I?
+97. Show device make and model.
+98. Show inventory by model.
+99. Which model is most common?
+100. Generate device specification report.
+
+Compliance Questions
+101. Which devices are non-compliant?
+102. Which branches have missing specifications?
+103. Which devices have missing resolution?
+104. Which branches violate retention policy?
+105. Show inventory compliance report.
+106. Show branches requiring audit.
+107. Which branches have incomplete inventory data?
+108. Generate compliance report.
+109. Show audit readiness status.
+110. Which devices need corrective action?
+
+Search & Filter Questions
+111. Show Hikvision devices in Ranchi.
+112. Show Dahua devices in Nasik.
+113. Show CPPLUS devices in Barasat.
+114. Filter branches with retention below 90 days.
+115. Filter devices with 1920 resolution.
+116. Filter devices with missing specs.
+117. Show all healthy inventory.
+118. Show all risky inventory.
+119. Show all branches in NBG Odisha.
+120. Show all branches in NBG East.
+
+Comparison Questions
+121. Compare Hikvision and Dahua deployments.
+122. Compare Odisha and East recording retention.
+123. Compare Ranchi and Howrah inventory risk.
+124. Compare Sonahatu and Nokari storage.
+125. Compare healthy and risky inventory.
+126. Which vendor provides better retention?
+127. Which zone has better inventory health?
+128. Compare HDD utilization across branches.
+129. Compare storage capacities.
+130. Show inventory performance ranking.
+
+Multi-Turn Context Testing
+131. Which zone has the highest inventory risk?
+132. Show affected branches in that zone.
+133. Which branch has the lowest recording retention?
+134. Show inventory details for that branch.
+135. Which vendor is installed there?
+136. What model is being used?
+137. What is the storage capacity?
+138. How many HDD slots are occupied?
+139. Is the device compliant?
+140. What corrective action is recommended?
+
+Natural User Questions
+141. Are all CCTV systems healthy?
+142. Which branches need attention?
+143. Which DVR/NVR should be upgraded first?
+144. Do we have enough storage across branches?
+145. Which branches are at risk of recording loss?
+146. Which vendor is deployed most widely?
+147. What is the biggest inventory issue right now?
+148. Which branch should I audit first?
+149. Give me a quick CCTV inventory summary.
+150. What actions should I take today?
+
+High-Value SAI Testing Questions
+151. Which branches have low recording days and full HDD utilization?
+152. Which branches can increase retention by adding HDDs?
+153. Predict which branches will fall below 90-day retention next month.
+154. Which NBG has the highest inventory risk score?
+155. Which zones require immediate storage expansion?
+156. Show branches with missing specifications and low retention.
+157. Prioritize CCTV upgrades based on risk.
+158. Estimate storage required to achieve 180-day retention.
+159. Generate a CCTV modernization plan.
+160. Recommend the top 10 branches for inventory remediation.
+These questions are extremely valuable because they test inventory management, storage planning, vendor analytics, compliance monitoring, risk assessment, and infrastructure planning, which are common responsibilities for CCTV operations and security teams.
+
