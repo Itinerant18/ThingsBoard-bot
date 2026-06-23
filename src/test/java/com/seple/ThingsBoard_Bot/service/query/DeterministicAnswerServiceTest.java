@@ -480,6 +480,31 @@ class DeterministicAnswerServiceTest {
     }
 
     @Test
+    void shouldReportMissingImeiForSentinelValues() {
+        // "0", "None", "null", "N/A" and an absent key all mean "not reported" -- never echo the sentinel.
+        for (String sentinel : java.util.Arrays.asList("0", "None", "null", "N/A", "")) {
+            BranchSnapshot branch = new BranchSnapshot();
+            com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =
+                    new com.seple.ThingsBoard_Bot.model.domain.BranchIdentity();
+            identity.setBranchName("BRANCH SAVEDI");
+            branch.setIdentity(identity);
+            java.util.Map<String, Object> raw = new java.util.HashMap<>();
+            raw.put("imei_id_dev_id", sentinel);
+            branch.setRawData(raw);
+
+            ResolvedQuery query = ResolvedQuery.builder()
+                    .intent(QueryIntent.DEVICE_IMEI)
+                    .targetBranch(branch)
+                    .deterministic(true)
+                    .confidence(1.0)
+                    .build();
+
+            String answer = answerService.answer(query, List.of(branch));
+            assertTrue(answer.contains("not reported (missing)"), "sentinel=[" + sentinel + "]");
+        }
+    }
+
+    @Test
     void shouldReturnCctvDeviceInfoModel() {
         BranchSnapshot target = snapshots.stream()
                 .filter(snapshot -> "BOI-BALLYBAZAR".equals(snapshot.getIdentity().getTechnicalId()))

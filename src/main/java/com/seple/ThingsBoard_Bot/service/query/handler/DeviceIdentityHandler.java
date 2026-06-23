@@ -30,9 +30,18 @@ public class DeviceIdentityHandler implements AnswerHandler {
             return null;
         }
         String imei = support.firstNonBlank(branch.getRawData(), "imei_id_dev_id", "imei_id");
-        if (imei != null) {
-            return "**For Branch " + support.branchName(branch) + ", the device IMEI is " + imei + ".**";
+        if (imei == null || isMissingImei(imei)) {
+            // "0", "None", null/blank, "N/A" and the absent key all mean the device never reported an
+            // IMEI -- the dashboard's "missing IMEI" case. Report it honestly, never echo the sentinel.
+            return "**For Branch " + support.branchName(branch) + ", the device IMEI is not reported (missing).**";
         }
-        return "**For Branch " + support.branchName(branch) + ", the device IMEI is not available.**";
+        return "**For Branch " + support.branchName(branch) + ", the device IMEI is " + imei + ".**";
+    }
+
+    /** True when the resolved IMEI is a "not reported" sentinel ("0", "None", "null", "N/A", "NA"). */
+    private static boolean isMissingImei(String value) {
+        String v = value.trim();
+        return v.isEmpty() || v.equals("0") || v.equalsIgnoreCase("none")
+                || v.equalsIgnoreCase("null") || v.equalsIgnoreCase("n/a") || v.equalsIgnoreCase("na");
     }
 }
