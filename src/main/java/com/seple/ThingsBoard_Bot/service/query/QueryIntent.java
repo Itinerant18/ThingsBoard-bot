@@ -32,5 +32,6 @@ public enum QueryIntent {
     CCTV_DEVICE_INFO,
     GPS_LOCATION,
     LAST_REPORTED,
+    NETWORK_OPERATOR,
     GENERAL_LLM
 }

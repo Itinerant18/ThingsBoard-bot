@@ -311,6 +311,20 @@ class QueryIntentResolverTest {
     }
 
     @Test
+    void shouldResolveNetworkOperatorQuestion() {
+        ResolvedQuery resolved = resolver.resolve("Which SIM operator does Bally Bazar use?", snapshots, null);
+        assertEquals(QueryIntent.NETWORK_OPERATOR, resolved.getIntent());
+        assertNotNull(resolved.getTargetBranch());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
+    void shouldKeepPlainNetworkQuestionAsNetworkStatus() {
+        ResolvedQuery resolved = resolver.resolve("What is the network status of Bally Bazar?", snapshots, null);
+        assertEquals(QueryIntent.NETWORK_STATUS, resolved.getIntent());
+    }
+
+    @Test
     void shouldResolveLastReportedQuestion() {
         ResolvedQuery resolved = resolver.resolve("When was the last update from Bally Bazar?", snapshots, null);
         assertEquals(QueryIntent.LAST_REPORTED, resolved.getIntent());

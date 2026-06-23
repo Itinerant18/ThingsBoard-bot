@@ -551,6 +551,44 @@ class DeterministicAnswerServiceTest {
         assertTrue(answer.contains("last-reported time is not available"));
     }
 
+    @Test
+    void shouldReturnNetworkOperatorFromStatusField() {
+        java.util.Map<String, Object> raw = new java.util.HashMap<>();
+        raw.put("system_status_statusbox_network", "AirTel");
+        String answer = networkOperatorAnswer(raw);
+        assertTrue(answer.contains("network operator (SIM) is AirTel"));
+    }
+
+    @Test
+    void shouldReturnNetworkOperatorFromLogTypeDetailFallback() {
+        java.util.Map<String, Object> raw = new java.util.HashMap<>();
+        raw.put("log_type_operator_detail", "[{\"service_provider\":\"Jio\",\"operator_no\":40431}]");
+        String answer = networkOperatorAnswer(raw);
+        assertTrue(answer.contains("network operator (SIM) is Jio"));
+    }
+
+    @Test
+    void shouldReportNetworkOperatorNotMapped() {
+        String answer = networkOperatorAnswer(new java.util.HashMap<>());
+        assertTrue(answer.contains("not mapped"));
+    }
+
+    private String networkOperatorAnswer(java.util.Map<String, Object> raw) {
+        BranchSnapshot branch = new BranchSnapshot();
+        com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =
+                new com.seple.ThingsBoard_Bot.model.domain.BranchIdentity();
+        identity.setBranchName("BRANCH SERAMPORE");
+        branch.setIdentity(identity);
+        branch.setRawData(raw);
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.NETWORK_OPERATOR)
+                .targetBranch(branch)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        return answerService.answer(query, List.of(branch));
+    }
+
     private BranchSnapshot lastReportedBranch(String dataAsOf, boolean stale) {
         BranchSnapshot branch = new BranchSnapshot();
         com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =

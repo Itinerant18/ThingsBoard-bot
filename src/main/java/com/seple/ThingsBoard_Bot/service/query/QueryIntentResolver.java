@@ -172,6 +172,13 @@ public class QueryIntentResolver {
                 && !question.contains("INACTIVE")) {
             return QueryIntent.ACTIVE_DEVICES;
         }
+        // Network operator / SIM ("which SIM", "service provider", "carrier"). Must precede the
+        // generic NETWORK -> NETWORK_STATUS check so an operator question isn't answered as on/off.
+        if (question.contains("OPERATOR") || question.contains("CARRIER")
+                || question.contains("SERVICE PROVIDER") || question.contains("NETWORK PROVIDER")
+                || containsWord(question, "SIM")) {
+            return QueryIntent.NETWORK_OPERATOR;
+        }
         if (question.contains("NETWORK")) {
             return QueryIntent.NETWORK_STATUS;
         }
@@ -403,7 +410,8 @@ public class QueryIntentResolver {
                     DEVICE_IMEI,
                     CCTV_DEVICE_INFO,
                     GPS_LOCATION,
-                    LAST_REPORTED -> true;
+                    LAST_REPORTED,
+                    NETWORK_OPERATOR -> true;
             default -> false;
         };
     }
