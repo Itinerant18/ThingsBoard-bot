@@ -385,6 +385,29 @@ class QueryIntentResolverTest {
         assertEquals(true, resolved.isGlobal());
     }
 
+    // ---- Phase 4 (H): category health ----
+
+    @Test
+    void shouldResolveGatewayHealthPercentageToCategoryHealth() {
+        ResolvedQuery resolved = resolver.resolve("What percentage of Gateway devices are healthy?", snapshots, null);
+        assertEquals(QueryIntent.CATEGORY_HEALTH, resolved.getIntent());
+        assertEquals(false, resolved.isGlobal());
+        assertEquals(false, resolved.isAmbiguous());
+    }
+
+    @Test
+    void shouldResolveWhichCategoryMostInactiveToCategoryHealth() {
+        ResolvedQuery resolved = resolver.resolve("Which category has the most inactive devices?", snapshots, null);
+        assertEquals(QueryIntent.CATEGORY_HEALTH, resolved.getIntent());
+    }
+
+    @Test
+    void shouldNotTreatBranchBatteryHealthAsCategoryHealth() {
+        // A branch-scoped health question must stay BATTERY_HEALTH, not the fleet category breakdown.
+        ResolvedQuery resolved = resolver.resolve("What is the battery health of Tarakeshwar?", snapshots, null);
+        assertEquals(QueryIntent.BATTERY_HEALTH, resolved.getIntent());
+    }
+
     // ---- audit #20: "AC" must match as a whole word, not a substring ----
 
     @Test

@@ -35,10 +35,11 @@ public class QueryIntentResolver {
 
         QueryIntent intent = detectIntent(normalizedQuestion, targetBranch != null);
 
-        // Hierarchy navigation (list NBGs/zones, branches-under) operates on the whole scoped set but
-        // is NOT a global overview and must not be hijacked by it or flagged ambiguous for clarification.
-        boolean hierarchy = isHierarchyIntent(intent);
-        boolean global = !hierarchy && isGlobalQuestion(normalizedQuestion, targetBranch != null);
+        // Fleet-scoped intents (hierarchy navigation, category health, ranking, filters) operate on
+        // the whole scoped set but are NOT a global overview and must not be hijacked by it or flagged
+        // ambiguous for clarification.
+        boolean fleetScoped = isFleetScopedIntent(intent);
+        boolean global = !fleetScoped && isGlobalQuestion(normalizedQuestion, targetBranch != null);
 
         // Option A: metric questions must be branch-specific.
         // If user asks a metric without a branch (including "all branch ..."),
@@ -47,11 +48,11 @@ public class QueryIntentResolver {
             global = false;
         }
 
-        // AMBIGUITY DETECTION: If no branch found anywhere, NOT explicitly global, NOT hierarchy, and NOT a general conversation
-        boolean ambiguous = targetBranch == null && !global && !hierarchy && intent != QueryIntent.GENERAL_LLM;
+        // AMBIGUITY DETECTION: If no branch found anywhere, NOT explicitly global, NOT fleet-scoped, and NOT a general conversation
+        boolean ambiguous = targetBranch == null && !global && !fleetScoped && intent != QueryIntent.GENERAL_LLM;
 
         boolean deterministic = intent != QueryIntent.GENERAL_LLM;
-        double confidence = targetBranch != null || global || ambiguous || hierarchy ? 0.95 : 0.55;
+        double confidence = targetBranch != null || global || ambiguous || fleetScoped ? 0.95 : 0.55;
 
         return ResolvedQuery.builder()
                 .intent(intent)
@@ -62,7 +63,7 @@ public class QueryIntentResolver {
                 .global(global)
                 .ambiguous(ambiguous)
                 .branchFromMemory(branchFromMemory)
-                .deterministic(deterministic && (global || targetBranch != null || hierarchy))
+                .deterministic(deterministic && (global || targetBranch != null || fleetScoped))
                 .confidence(confidence)
                 .build();
     }
@@ -117,6 +118,11 @@ public class QueryIntentResolver {
         QueryIntent hierarchyIntent = detectHierarchyIntent(question);
         if (hierarchyIntent != null) {
             return hierarchyIntent;
+        }
+        // Category (device-type) health breakdown across the fleet -- only when no single branch is
+        // the focus, so it doesn't steal a per-branch gateway/battery question.
+        if (!hasTargetBranch && isCategoryHealthQuestion(question)) {
+            return QueryIntent.CATEGORY_HEALTH;
         }
         if (isBatteryLowQuestion(question)) {
             return QueryIntent.BATTERY_LOW_STATUS;
@@ -351,6 +357,32 @@ public class QueryIntentResolver {
         return intent == QueryIntent.HIERARCHY_LIST_NODES
                 || intent == QueryIntent.HIERARCHY_BRANCHES_UNDER
                 || intent == QueryIntent.HIERARCHY_OWNER;
+    }
+
+    /** Intents that operate on the whole scoped snapshot set rather than one branch or the global overview. */
+    private boolean isFleetScopedIntent(QueryIntent intent) {
+        return isHierarchyIntent(intent) || intent == QueryIntent.CATEGORY_HEALTH;
+    }
+
+    /**
+     * Category (device-type) health breakdown, e.g. "what % of Gateways are healthy", "which category
+     * has the most inactive devices", "show category-wise health". Gated on a device-category word so
+     * it doesn't fire on unrelated percentage/health questions.
+     */
+    private boolean isCategoryHealthQuestion(String question) {
+        if (question.contains("CATEGORY")) {
+            return true;
+        }
+        boolean percent = question.contains("PERCENT") || question.contains("%");
+        if (!percent) {
+            return false;
+        }
+        boolean categoryWord = question.contains("GATEWAY") || question.contains("CCTV")
+                || question.contains("CAMERA") || question.contains("IAS") || question.contains("BAS")
+                || question.contains("FAS") || question.contains("TLS") || question.contains("ACS");
+        // "what percentage of Gateway devices are healthy/inactive" -> category-word percentage; or a
+        // bare "what percentage are healthy" -> treat as a fleet category-health breakdown.
+        return categoryWord || question.contains("HEALTH");
     }
 
     /**

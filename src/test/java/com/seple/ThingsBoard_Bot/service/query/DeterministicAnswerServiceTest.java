@@ -619,6 +619,46 @@ class DeterministicAnswerServiceTest {
         assertTrue(answer.contains("HOWRAH"));
     }
 
+    @Test
+    void shouldReportGatewayCategoryHealth() {
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.CATEGORY_HEALTH)
+                .originalQuestion("What percentage of Gateway devices are healthy?")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        assertTrue(answer.contains("Gateway:"));
+        assertTrue(answer.contains("healthy"));
+        assertTrue(answer.contains("%"));
+    }
+
+    @Test
+    void shouldReportWorstCategoryByInactiveCount() {
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.CATEGORY_HEALTH)
+                .originalQuestion("Which category has the most inactive devices?")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        assertTrue(answer.contains("most inactive devices is"));
+    }
+
+    @Test
+    void shouldReportCategoryWiseBreakdownWhenNoCategoryNamed() {
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.CATEGORY_HEALTH)
+                .originalQuestion("Show category-wise health")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        assertTrue(answer.contains("Category-wise health"));
+        assertTrue(answer.contains("Gateway:"));
+        assertTrue(answer.contains("CCTV:"));
+    }
+
     private String networkOperatorAnswer(java.util.Map<String, Object> raw) {
         BranchSnapshot branch = new BranchSnapshot();
         com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =
