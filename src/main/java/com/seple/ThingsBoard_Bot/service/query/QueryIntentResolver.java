@@ -117,12 +117,19 @@ public class QueryIntentResolver {
                 && (question.contains("INFO") || question.contains("DETAIL"))) {
             return QueryIntent.ACCESS_CONTROL_DEVICE_INFO;
         }
-        // CCTV device specification (NVR/DVR make+model, HDD slot count). "model"/"make"/"spec"
-        // are CCTV-recorder attributes in this fleet. Placed after access-control so that intent wins.
+        // CCTV inventory/specification (NVR/DVR vendor+model, HDD slot count, storage capacity,
+        // resolution). "model"/"make" are CCTV-recorder attributes in this fleet. The remaining
+        // attributes are gated behind a CCTV/NVR/DVR/camera context so words like "capacity" or
+        // "resolution" don't misfire. Placed after access-control so that intent wins. NOTE: "SLOT"
+        // (not bare "HDD") triggers this, so "cctv hdd info"/"cctv hdd error" still reach their own
+        // intents below.
+        boolean cctvContext = question.contains("NVR") || question.contains("DVR")
+                || question.contains("CCTV") || question.contains("CAMERA");
         if (question.contains("MODEL") || question.contains("MAKE")
-                || ((question.contains("NVR") || question.contains("DVR")
-                        || question.contains("CCTV") || question.contains("CAMERA"))
-                        && (question.contains("SPEC") || question.contains("INVENTORY")))) {
+                || (cctvContext && (question.contains("SPEC") || question.contains("INVENTORY")
+                        || question.contains("VENDOR") || question.contains("BRAND")
+                        || question.contains("RESOLUTION") || question.contains("STORAGE")
+                        || question.contains("CAPACITY") || question.contains("SLOT")))) {
             return QueryIntent.CCTV_DEVICE_INFO;
         }
         if (question.contains("DOOR")) {

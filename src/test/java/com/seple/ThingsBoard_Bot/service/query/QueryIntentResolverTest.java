@@ -281,6 +281,40 @@ class QueryIntentResolverTest {
         assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
     }
 
+    @Test
+    void shouldResolveCctvResolutionQuestionToDeviceInfo() {
+        ResolvedQuery resolved = resolver.resolve("What CCTV resolution does Bally Bazar have?", snapshots, null);
+        assertEquals(QueryIntent.CCTV_DEVICE_INFO, resolved.getIntent());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
+    void shouldResolveCctvStorageQuestionToDeviceInfo() {
+        ResolvedQuery resolved = resolver.resolve("Show CCTV storage capacity for Bally Bazar", snapshots, null);
+        assertEquals(QueryIntent.CCTV_DEVICE_INFO, resolved.getIntent());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
+    void shouldResolveCctvVendorQuestionToDeviceInfo() {
+        ResolvedQuery resolved = resolver.resolve("Which vendor is the NVR at Bally Bazar?", snapshots, null);
+        assertEquals(QueryIntent.CCTV_DEVICE_INFO, resolved.getIntent());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
+    void shouldResolveNvrHddSlotsQuestionToDeviceInfo() {
+        ResolvedQuery resolved = resolver.resolve("How many HDD slots does the NVR in Bally Bazar have?", snapshots, null);
+        assertEquals(QueryIntent.CCTV_DEVICE_INFO, resolved.getIntent());
+    }
+
+    @Test
+    void shouldKeepCctvHddInfoOutOfDeviceInfo() {
+        // "cctv hdd info" must still reach CCTV_HDD_INFO, not the broadened inventory intent.
+        ResolvedQuery resolved = resolver.resolve("Show CCTV HDD info for Bally Bazar", snapshots, null);
+        assertEquals(QueryIntent.CCTV_HDD_INFO, resolved.getIntent());
+    }
+
     // ---- audit #20: "AC" must match as a whole word, not a substring ----
 
     @Test

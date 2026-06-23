@@ -51,20 +51,34 @@ public class CctvHandler implements AnswerHandler {
         };
     }
 
-    /** NVR/DVR make+model and HDD slot count from raw telemetry. */
+    /** NVR/DVR inventory: vendor, model, HDD slot count, storage capacity and resolution from raw telemetry. */
     private String answerCctvDeviceInfo(BranchSnapshot branch) {
         Map<String, Object> raw = branch.getRawData();
         String model = support.firstNonBlank(raw,
                 "Hikvision_NVR_model", "rock_model", "rockAI_model", "Dahua_NVR_model");
+        String vendor = resolveNvrVendor(raw, model);
         Integer hddSlots = support.firstInteger(raw,
                 "rock_NoOfHDDSlots", "Hikvision_NVR_NoOfHDDSlots1", "Dahua_NVR_NoOfHDDSlots", "count_HDD");
+        Double capacityTb = parsePositiveDouble(support.firstNonBlank(raw,
+                "rock_capacity", "Hikvision_NVR_capacity1", "Dahua_NVR_capacity"));
+        String resolution = support.firstNonBlank(raw,
+                "Video Resolution", "Hikvision_NVR_Resolutions", "Dahua_NVR_Resolutions", "CP_Plus_NVR_Resolutions");
 
         List<String> parts = new ArrayList<>();
+        if (vendor != null) {
+            parts.add("Vendor: " + vendor);
+        }
         if (model != null) {
             parts.add("Model: " + model);
         }
         if (hddSlots != null) {
             parts.add("HDD Slots: " + hddSlots);
+        }
+        if (capacityTb != null) {
+            parts.add("Storage: " + trimNumber(capacityTb) + " TB");
+        }
+        if (resolution != null) {
+            parts.add("Resolution: " + resolution);
         }
         if (parts.isEmpty()) {
             return "**For Branch " + support.branchName(branch)
@@ -72,6 +86,48 @@ public class CctvHandler implements AnswerHandler {
         }
         return "**For Branch " + support.branchName(branch)
                 + ", CCTV Device Info is: " + String.join(", ", parts) + ".**";
+    }
+
+    /**
+     * NVR vendor: prefer the reported {@code nvr_brand}; otherwise infer from the model prefix
+     * (DS-/iDS- = Hikvision, DH or XVR or NVR4 = Dahua, CP-/CP_ = CPPLUS). {@code dexter_config_brand}
+     * is the system-integrator brand (e.g. "SEPLE"), not the NVR make, so it is deliberately not used.
+     */
+    private String resolveNvrVendor(Map<String, Object> raw, String model) {
+        String brand = support.firstNonBlank(raw, "nvr_brand");
+        if (brand != null) {
+            return brand;
+        }
+        if (model == null) {
+            return null;
+        }
+        String m = model.toUpperCase();
+        if (m.startsWith("DS-") || m.startsWith("IDS-")) {
+            return "Hikvision";
+        }
+        if (m.startsWith("DH") || m.startsWith("XVR") || m.startsWith("NVR4")) {
+            return "Dahua";
+        }
+        if (m.startsWith("CP-") || m.startsWith("CP_")) {
+            return "CPPLUS";
+        }
+        return null;
+    }
+
+    private Double parsePositiveDouble(String value) {
+        if (value == null) {
+            return null;
+        }
+        try {
+            double d = Double.parseDouble(value.trim());
+            return d > 0 ? d : null;
+        } catch (NumberFormatException ignored) {
+            return null;
+        }
+    }
+
+    private String trimNumber(double value) {
+        return value % 1 == 0 ? String.valueOf((long) value) : String.valueOf(value);
     }
 
     private String answerCctvHddErrorStatus(BranchSnapshot branch) {

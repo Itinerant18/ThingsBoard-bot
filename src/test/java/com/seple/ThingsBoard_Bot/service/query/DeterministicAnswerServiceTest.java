@@ -501,6 +501,27 @@ class DeterministicAnswerServiceTest {
     }
 
     @Test
+    void shouldReturnCctvDeviceInfoVendorAndStorage() {
+        BranchSnapshot target = snapshots.stream()
+                .filter(snapshot -> "BOI-BALLYBAZAR".equals(snapshot.getIdentity().getTechnicalId()))
+                .findFirst()
+                .orElseThrow();
+
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.CCTV_DEVICE_INFO)
+                .targetBranch(target)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+
+        String answer = answerService.answer(query, snapshots);
+
+        // Vendor inferred from the DS- model prefix (nvr_brand absent); storage from rock_capacity.
+        assertTrue(answer.contains("Vendor: Hikvision"));
+        assertTrue(answer.contains("Storage: 21.55 TB"));
+    }
+
+    @Test
     void shouldGenerateBatteryHealthFormat() {
         BranchSnapshot target = snapshots.stream()
                 .filter(snapshot -> "BOI-TARAKESHWAR".equals(snapshot.getIdentity().getTechnicalId()))
