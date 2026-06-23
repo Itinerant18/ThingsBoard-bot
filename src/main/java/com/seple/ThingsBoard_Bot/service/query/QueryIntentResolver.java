@@ -103,6 +103,9 @@ public class QueryIntentResolver {
 
     private QueryIntent detectIntent(String normalizedQuestion, boolean hasTargetBranch) {
         String question = normalizedQuestion.toUpperCase(Locale.ROOT);
+        if (question.contains("IMEI")) {
+            return QueryIntent.DEVICE_IMEI;
+        }
         if (isBatteryLowQuestion(question)) {
             return QueryIntent.BATTERY_LOW_STATUS;
         }
@@ -112,6 +115,14 @@ public class QueryIntentResolver {
         if (question.contains("ACCESS CONTROL") && question.contains("DEVICE")
                 && (question.contains("INFO") || question.contains("DETAIL"))) {
             return QueryIntent.ACCESS_CONTROL_DEVICE_INFO;
+        }
+        // CCTV device specification (NVR/DVR make+model, HDD slot count). "model"/"make"/"spec"
+        // are CCTV-recorder attributes in this fleet. Placed after access-control so that intent wins.
+        if (question.contains("MODEL") || question.contains("MAKE")
+                || ((question.contains("NVR") || question.contains("DVR")
+                        || question.contains("CCTV") || question.contains("CAMERA"))
+                        && (question.contains("SPEC") || question.contains("INVENTORY")))) {
+            return QueryIntent.CCTV_DEVICE_INFO;
         }
         if (question.contains("DOOR")) {
             return QueryIntent.DOOR_STATUS;
@@ -337,7 +348,9 @@ public class QueryIntentResolver {
                     FAULT_DEVICES,
                     DOOR_STATUS,
                     ACCESS_CONTROL_USER_COUNT,
-                    ACCESS_CONTROL_DEVICE_INFO -> true;
+                    ACCESS_CONTROL_DEVICE_INFO,
+                    DEVICE_IMEI,
+                    CCTV_DEVICE_INFO -> true;
             default -> false;
         };
     }

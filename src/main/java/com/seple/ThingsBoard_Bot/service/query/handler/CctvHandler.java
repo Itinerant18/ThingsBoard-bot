@@ -13,7 +13,7 @@ import com.seple.ThingsBoard_Bot.service.query.AnswerTemplateService;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
 import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
 
-/** CCTV_STATUS, CCTV_HDD_ERROR_STATUS, CCTV_HDD_INFO, CCTV_RECORDING_INFO, CAMERA_DISCONNECT_HISTORY. */
+/** CCTV_STATUS, CCTV_HDD_ERROR_STATUS, CCTV_HDD_INFO, CCTV_RECORDING_INFO, CAMERA_DISCONNECT_HISTORY, CCTV_DEVICE_INFO. */
 @Component
 public class CctvHandler implements AnswerHandler {
 
@@ -30,7 +30,7 @@ public class CctvHandler implements AnswerHandler {
     public boolean supports(QueryIntent intent) {
         return intent == QueryIntent.CCTV_STATUS || intent == QueryIntent.CCTV_HDD_ERROR_STATUS
                 || intent == QueryIntent.CCTV_HDD_INFO || intent == QueryIntent.CCTV_RECORDING_INFO
-                || intent == QueryIntent.CAMERA_DISCONNECT_HISTORY;
+                || intent == QueryIntent.CAMERA_DISCONNECT_HISTORY || intent == QueryIntent.CCTV_DEVICE_INFO;
     }
 
     @Override
@@ -46,8 +46,32 @@ public class CctvHandler implements AnswerHandler {
             case CCTV_HDD_INFO -> answerCctvHddInfo(branch);
             case CCTV_RECORDING_INFO -> answerCctvRecordingInfo(branch);
             case CAMERA_DISCONNECT_HISTORY -> answerCameraDisconnectHistory(query);
+            case CCTV_DEVICE_INFO -> answerCctvDeviceInfo(branch);
             default -> null;
         };
+    }
+
+    /** NVR/DVR make+model and HDD slot count from raw telemetry. */
+    private String answerCctvDeviceInfo(BranchSnapshot branch) {
+        Map<String, Object> raw = branch.getRawData();
+        String model = support.firstNonBlank(raw,
+                "Hikvision_NVR_model", "rock_model", "rockAI_model", "Dahua_NVR_model");
+        Integer hddSlots = support.firstInteger(raw,
+                "rock_NoOfHDDSlots", "Hikvision_NVR_NoOfHDDSlots1", "Dahua_NVR_NoOfHDDSlots", "count_HDD");
+
+        List<String> parts = new ArrayList<>();
+        if (model != null) {
+            parts.add("Model: " + model);
+        }
+        if (hddSlots != null) {
+            parts.add("HDD Slots: " + hddSlots);
+        }
+        if (parts.isEmpty()) {
+            return "**For Branch " + support.branchName(branch)
+                    + ", CCTV device information is not available.**";
+        }
+        return "**For Branch " + support.branchName(branch)
+                + ", CCTV Device Info is: " + String.join(", ", parts) + ".**";
     }
 
     private String answerCctvHddErrorStatus(BranchSnapshot branch) {

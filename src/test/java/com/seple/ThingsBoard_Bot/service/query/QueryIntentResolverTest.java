@@ -222,6 +222,22 @@ class QueryIntentResolverTest {
         assertEquals("ias", resolved.getTargetSystem());
     }
 
+    @Test
+    void shouldResolveImeiQuestion() {
+        ResolvedQuery resolved = resolver.resolve("What is the IMEI of Bally Bazar?", snapshots, null);
+        assertEquals(QueryIntent.DEVICE_IMEI, resolved.getIntent());
+        assertNotNull(resolved.getTargetBranch());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
+    void shouldResolveCctvModelQuestionToDeviceInfo() {
+        ResolvedQuery resolved = resolver.resolve("Show model details for Bally Bazar", snapshots, null);
+        assertEquals(QueryIntent.CCTV_DEVICE_INFO, resolved.getIntent());
+        assertNotNull(resolved.getTargetBranch());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
     // ---- audit #20: "AC" must match as a whole word, not a substring ----
 
     @Test

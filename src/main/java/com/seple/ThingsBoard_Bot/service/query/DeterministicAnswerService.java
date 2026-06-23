@@ -12,6 +12,7 @@ import com.seple.ThingsBoard_Bot.service.query.handler.AlertHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.AnswerHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.AnswerSupport;
 import com.seple.ThingsBoard_Bot.service.query.handler.CctvHandler;
+import com.seple.ThingsBoard_Bot.service.query.handler.DeviceIdentityHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DeviceInventoryHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DoorStatusHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.FaultReasonHandler;
@@ -65,7 +66,8 @@ public class DeterministicAnswerService {
                 new SubsystemHandler(ats, support),
                 new DoorStatusHandler(support),
                 new AccessControlHandler(support),
-                new FaultReasonHandler(support));
+                new FaultReasonHandler(support),
+                new DeviceIdentityHandler(support));
     }
 
     public String answer(ResolvedQuery query, List<BranchSnapshot> snapshots) {

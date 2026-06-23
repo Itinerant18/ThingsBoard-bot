@@ -460,6 +460,47 @@ class DeterministicAnswerServiceTest {
     }
 
     @Test
+    void shouldReturnDeviceImei() {
+        BranchSnapshot target = snapshots.stream()
+                .filter(snapshot -> "BOI-BALLYBAZAR".equals(snapshot.getIdentity().getTechnicalId()))
+                .findFirst()
+                .orElseThrow();
+
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.DEVICE_IMEI)
+                .targetBranch(target)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+
+        String answer = answerService.answer(query, snapshots);
+
+        assertTrue(answer.contains("device IMEI is"));
+        assertTrue(answer.contains("358773400034245"));
+    }
+
+    @Test
+    void shouldReturnCctvDeviceInfoModel() {
+        BranchSnapshot target = snapshots.stream()
+                .filter(snapshot -> "BOI-BALLYBAZAR".equals(snapshot.getIdentity().getTechnicalId()))
+                .findFirst()
+                .orElseThrow();
+
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.CCTV_DEVICE_INFO)
+                .targetBranch(target)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+
+        String answer = answerService.answer(query, snapshots);
+
+        assertTrue(answer.contains("CCTV Device Info"));
+        assertTrue(answer.contains("DS-7716NI-K4"));
+        assertTrue(answer.contains("HDD Slots: 4"));
+    }
+
+    @Test
     void shouldGenerateBatteryHealthFormat() {
         BranchSnapshot target = snapshots.stream()
                 .filter(snapshot -> "BOI-TARAKESHWAR".equals(snapshot.getIdentity().getTechnicalId()))
