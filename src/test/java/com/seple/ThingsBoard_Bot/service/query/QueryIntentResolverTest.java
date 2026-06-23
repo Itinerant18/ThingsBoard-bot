@@ -437,6 +437,27 @@ class QueryIntentResolverTest {
         assertNotEquals(QueryIntent.BRANCH_RANKING, resolved.getIntent());
     }
 
+    // ---- Phase 4 (G): multi-condition filter ----
+
+    @Test
+    void shouldResolveWhereConditionToBranchFilter() {
+        ResolvedQuery resolved = resolver.resolve("Show branches where Gateway is offline but IAS is online", snapshots, null);
+        assertEquals(QueryIntent.BRANCH_FILTER, resolved.getIntent());
+        assertEquals(false, resolved.isAmbiguous());
+    }
+
+    @Test
+    void shouldResolveMissingSystemsToBranchFilter() {
+        ResolvedQuery resolved = resolver.resolve("Show branches missing CCTV and ACS", snapshots, null);
+        assertEquals(QueryIntent.BRANCH_FILTER, resolved.getIntent());
+    }
+
+    @Test
+    void shouldResolveActiveSystemCountToBranchFilter() {
+        ResolvedQuery resolved = resolver.resolve("Show branches with at least 3 active systems", snapshots, null);
+        assertEquals(QueryIntent.BRANCH_FILTER, resolved.getIntent());
+    }
+
     // ---- audit #20: "AC" must match as a whole word, not a substring ----
 
     @Test

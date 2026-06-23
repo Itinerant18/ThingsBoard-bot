@@ -131,6 +131,9 @@ public class QueryIntentResolver {
         if (isRankingQuestion(question)) {
             return QueryIntent.BRANCH_RANKING;
         }
+        if (isFilterQuestion(question)) {
+            return QueryIntent.BRANCH_FILTER;
+        }
         if (isBatteryLowQuestion(question)) {
             return QueryIntent.BATTERY_LOW_STATUS;
         }
@@ -369,7 +372,25 @@ public class QueryIntentResolver {
     /** Intents that operate on the whole scoped snapshot set rather than one branch or the global overview. */
     private boolean isFleetScopedIntent(QueryIntent intent) {
         return isHierarchyIntent(intent) || intent == QueryIntent.CATEGORY_HEALTH
-                || intent == QueryIntent.BRANCH_RANKING || intent == QueryIntent.BRANCH_COMPARE;
+                || intent == QueryIntent.BRANCH_RANKING || intent == QueryIntent.BRANCH_COMPARE
+                || intent == QueryIntent.BRANCH_FILTER;
+    }
+
+    /**
+     * Multi-condition branch filter ("branches where Gateway is offline but IAS is online", "branches
+     * missing CCTV and ACS", "branches with at least 3 active systems", "branches where all systems
+     * are N/A"). Gated on the plural "branches" plus a where/missing/all-systems/count cue.
+     */
+    private boolean isFilterQuestion(String question) {
+        if (!question.contains("BRANCHES")) {
+            return false;
+        }
+        if (question.contains("ALL SYSTEMS") || question.contains("WHERE") || question.contains("MISSING")) {
+            return true;
+        }
+        boolean countCue = question.contains("AT LEAST") || question.contains("OR MORE")
+                || question.contains("MORE THAN") || question.contains("MINIMUM");
+        return countCue && question.contains("SYSTEM");
     }
 
     /**

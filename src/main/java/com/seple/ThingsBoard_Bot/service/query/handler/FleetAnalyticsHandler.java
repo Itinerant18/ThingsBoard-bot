@@ -46,7 +46,8 @@ public class FleetAnalyticsHandler implements AnswerHandler {
     public boolean supports(QueryIntent intent) {
         return intent == QueryIntent.CATEGORY_HEALTH
                 || intent == QueryIntent.BRANCH_RANKING
-                || intent == QueryIntent.BRANCH_COMPARE;
+                || intent == QueryIntent.BRANCH_COMPARE
+                || intent == QueryIntent.BRANCH_FILTER;
     }
 
     @Override
@@ -58,6 +59,7 @@ public class FleetAnalyticsHandler implements AnswerHandler {
             case CATEGORY_HEALTH -> answerCategoryHealth(query, snapshots);
             case BRANCH_RANKING -> answerRanking(query, snapshots);
             case BRANCH_COMPARE -> answerCompare(query, snapshots);
+            case BRANCH_FILTER -> answerFilter(query, snapshots);
             default -> null;
         };
     }
@@ -213,6 +215,134 @@ public class FleetAnalyticsHandler implements AnswerHandler {
     private String voltage(BranchSnapshot s) {
         Double v = s.getPower().getBatteryVoltage();
         return v == null ? "N/A" : v + "V";
+    }
+
+    // ---- Multi-condition filter ----
+
+    /** Expected condition for a category in a filter. */
+    private enum MatchKind { ONLINE, OFFLINE, MISSING }
+
+    private record Predicate(Category category, MatchKind kind) {
+    }
+
+    private String answerFilter(ResolvedQuery query, List<BranchSnapshot> snapshots) {
+        String question = upper(query.getOriginalQuestion());
+
+        // "all systems online" / "all systems are N/A"
+        if (question.contains("ALL SYSTEMS")) {
+            MatchKind kind = detectKind(question);
+            if (kind == null) {
+                return null;
+            }
+            List<String> matches = new ArrayList<>();
+            for (BranchSnapshot snapshot : snapshots) {
+                boolean all = categories.stream().allMatch(c -> matchesKind(c.stateOf().apply(snapshot), kind));
+                if (all) {
+                    matches.add(support.branchName(snapshot));
+                }
+            }
+            return renderMatches("all systems " + kind.name().toLowerCase(Locale.ROOT), matches);
+        }
+
+        // "at least / more than / N or more active systems"
+        Integer threshold = countThreshold(question);
+        if (threshold != null) {
+            boolean strictlyMore = question.contains("MORE THAN");
+            List<String> matches = new ArrayList<>();
+            for (BranchSnapshot snapshot : snapshots) {
+                long online = categories.stream()
+                        .filter(c -> c.stateOf().apply(snapshot) == NormalizedState.ONLINE).count();
+                if (strictlyMore ? online > threshold : online >= threshold) {
+                    matches.add(support.branchName(snapshot));
+                }
+            }
+            return renderMatches((strictlyMore ? "more than " : "at least ") + threshold + " active systems", matches);
+        }
+
+        // Per-system predicates joined by AND / BUT / OR.
+        List<Predicate> predicates = parsePredicates(question);
+        if (predicates.isEmpty()) {
+            return null;
+        }
+        boolean orSemantics = question.contains(" OR ");
+        List<String> matches = new ArrayList<>();
+        for (BranchSnapshot snapshot : snapshots) {
+            boolean result = orSemantics
+                    ? predicates.stream().anyMatch(p -> matchesKind(p.category().stateOf().apply(snapshot), p.kind()))
+                    : predicates.stream().allMatch(p -> matchesKind(p.category().stateOf().apply(snapshot), p.kind()));
+            if (result) {
+                matches.add(support.branchName(snapshot));
+            }
+        }
+        String desc = predicates.stream()
+                .map(p -> p.category().label() + " " + p.kind().name().toLowerCase(Locale.ROOT))
+                .reduce((a, b) -> a + (orSemantics ? " or " : " and ") + b).orElse("");
+        return renderMatches(desc, matches);
+    }
+
+    private List<Predicate> parsePredicates(String question) {
+        String[] clauses = question.split("\\s+(AND|BUT|OR)\\s+");
+        List<Predicate> predicates = new ArrayList<>();
+        MatchKind lastKind = null;
+        for (String clause : clauses) {
+            Category category = matchCategory(clause);
+            if (category == null) {
+                continue;
+            }
+            MatchKind kind = detectKind(clause);
+            if (kind == null) {
+                kind = lastKind; // inherit, e.g. "missing CCTV and ACS"
+            } else {
+                lastKind = kind;
+            }
+            if (kind != null) {
+                predicates.add(new Predicate(category, kind));
+            }
+        }
+        return predicates;
+    }
+
+    /** State asserted in a clause/question, preferring MISSING then OFFLINE then ONLINE. */
+    private MatchKind detectKind(String text) {
+        if (text.contains("MISSING") || text.contains("WITHOUT") || text.contains("UNAVAILABLE")
+                || text.contains("N/A") || text.contains("NOT INSTALLED") || text.contains(" NO ")) {
+            return MatchKind.MISSING;
+        }
+        if (text.contains("OFFLINE") || text.contains("INACTIVE") || text.contains("DOWN")) {
+            return MatchKind.OFFLINE;
+        }
+        if (text.contains("ONLINE") || text.contains("ACTIVE") || text.contains("OPERATIONAL")
+                || text.contains("UP")) {
+            return MatchKind.ONLINE;
+        }
+        return null;
+    }
+
+    private boolean matchesKind(NormalizedState state, MatchKind kind) {
+        return switch (kind) {
+            case ONLINE -> state == NormalizedState.ONLINE;
+            case OFFLINE -> state == NormalizedState.OFFLINE || state == NormalizedState.FAULT;
+            case MISSING -> state == NormalizedState.NOT_INSTALLED || state == NormalizedState.UNKNOWN;
+        };
+    }
+
+    private Integer countThreshold(String question) {
+        boolean cue = question.contains("AT LEAST") || question.contains("OR MORE")
+                || question.contains("MORE THAN") || question.contains("MINIMUM");
+        if (!cue || !question.contains("SYSTEM")) {
+            return null;
+        }
+        java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\b(\\d{1,2})\\b").matcher(question);
+        return matcher.find() ? Integer.parseInt(matcher.group(1)) : null;
+    }
+
+    private String renderMatches(String condition, List<String> matches) {
+        if (matches.isEmpty()) {
+            return "**No branches match (" + condition + ") in your scope.**";
+        }
+        java.util.Collections.sort(matches);
+        return "**" + matches.size() + " branch" + (matches.size() == 1 ? "" : "es")
+                + " match (" + condition + "): " + String.join(", ", matches) + ".**";
     }
 
     private String normalizeName(String value) {

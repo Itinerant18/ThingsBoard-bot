@@ -39,5 +39,6 @@ public enum QueryIntent {
     CATEGORY_HEALTH,
     BRANCH_RANKING,
     BRANCH_COMPARE,
+    BRANCH_FILTER,
     GENERAL_LLM
 }
