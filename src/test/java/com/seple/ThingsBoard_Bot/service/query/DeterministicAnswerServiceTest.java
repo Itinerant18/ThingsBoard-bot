@@ -573,6 +573,52 @@ class DeterministicAnswerServiceTest {
         assertTrue(answer.contains("not mapped"));
     }
 
+    @Test
+    void shouldListNbgsAcrossScopedSnapshots() {
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.HIERARCHY_LIST_NODES)
+                .originalQuestion("List all NBGs")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        // The fixture places every branch under NBG EAST -> exactly one distinct NBG.
+        assertTrue(answer.contains("NBG EAST"));
+        assertTrue(answer.contains("1 NBG"));
+    }
+
+    @Test
+    void shouldListBranchesUnderZone() {
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.HIERARCHY_BRANCHES_UNDER)
+                .originalQuestion("Show branches under ZO HOWRAH")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        assertTrue(answer.contains("ZO HOWRAH"));
+        assertTrue(answer.contains("BALLY BAZAR"));
+    }
+
+    @Test
+    void shouldReportOwningNbgAndZoneForBranch() {
+        BranchSnapshot target = snapshots.stream()
+                .filter(snapshot -> "BOI-BALLYBAZAR".equals(snapshot.getIdentity().getTechnicalId()))
+                .findFirst()
+                .orElseThrow();
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.HIERARCHY_OWNER)
+                .originalQuestion("Which NBG owns Bally Bazar?")
+                .targetBranch(target)
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        assertTrue(answer.contains("BALLY BAZAR"));
+        assertTrue(answer.contains("NBG EAST"));
+        assertTrue(answer.contains("HOWRAH"));
+    }
+
     private String networkOperatorAnswer(java.util.Map<String, Object> raw) {
         BranchSnapshot branch = new BranchSnapshot();
         com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =

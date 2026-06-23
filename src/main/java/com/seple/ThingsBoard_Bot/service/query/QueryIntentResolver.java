@@ -34,7 +34,11 @@ public class QueryIntentResolver {
         // query is flagged ambiguous below so the caller asks the user to clarify which branch.
 
         QueryIntent intent = detectIntent(normalizedQuestion, targetBranch != null);
-        boolean global = isGlobalQuestion(normalizedQuestion, targetBranch != null);
+
+        // Hierarchy navigation (list NBGs/zones, branches-under) operates on the whole scoped set but
+        // is NOT a global overview and must not be hijacked by it or flagged ambiguous for clarification.
+        boolean hierarchy = isHierarchyIntent(intent);
+        boolean global = !hierarchy && isGlobalQuestion(normalizedQuestion, targetBranch != null);
 
         // Option A: metric questions must be branch-specific.
         // If user asks a metric without a branch (including "all branch ..."),
@@ -43,11 +47,11 @@ public class QueryIntentResolver {
             global = false;
         }
 
-        // AMBIGUITY DETECTION: If no branch found anywhere, NOT explicitly global, and NOT a general conversation
-        boolean ambiguous = targetBranch == null && !global && intent != QueryIntent.GENERAL_LLM;
+        // AMBIGUITY DETECTION: If no branch found anywhere, NOT explicitly global, NOT hierarchy, and NOT a general conversation
+        boolean ambiguous = targetBranch == null && !global && !hierarchy && intent != QueryIntent.GENERAL_LLM;
 
         boolean deterministic = intent != QueryIntent.GENERAL_LLM;
-        double confidence = targetBranch != null || global || ambiguous ? 0.95 : 0.55;
+        double confidence = targetBranch != null || global || ambiguous || hierarchy ? 0.95 : 0.55;
 
         return ResolvedQuery.builder()
                 .intent(intent)
@@ -58,7 +62,7 @@ public class QueryIntentResolver {
                 .global(global)
                 .ambiguous(ambiguous)
                 .branchFromMemory(branchFromMemory)
-                .deterministic(deterministic && (global || targetBranch != null))
+                .deterministic(deterministic && (global || targetBranch != null || hierarchy))
                 .confidence(confidence)
                 .build();
     }
@@ -106,6 +110,13 @@ public class QueryIntentResolver {
         String question = normalizedQuestion.toUpperCase(Locale.ROOT);
         if (question.contains("IMEI")) {
             return QueryIntent.DEVICE_IMEI;
+        }
+        // Hierarchy navigation (NBG/zone listing, drill-down, owning node). Detected early so the
+        // NBG/zone keywords aren't mistaken for device-status questions. Returns null when the
+        // question isn't structural, so normal intent detection continues.
+        QueryIntent hierarchyIntent = detectHierarchyIntent(question);
+        if (hierarchyIntent != null) {
+            return hierarchyIntent;
         }
         if (isBatteryLowQuestion(question)) {
             return QueryIntent.BATTERY_LOW_STATUS;
@@ -334,6 +345,43 @@ public class QueryIntentResolver {
 
     private boolean containsSubsystemKeyword(String normalizedQuestion) {
         return detectSubsystem(normalizedQuestion) != null;
+    }
+
+    private boolean isHierarchyIntent(QueryIntent intent) {
+        return intent == QueryIntent.HIERARCHY_LIST_NODES
+                || intent == QueryIntent.HIERARCHY_BRANCHES_UNDER
+                || intent == QueryIntent.HIERARCHY_OWNER;
+    }
+
+    /**
+     * Hierarchy intent for a question, or null when it isn't structural. Triggers only on an explicit
+     * NBG/zone mention combined with a navigation verb, so device-status questions that merely name a
+     * region (e.g. "active devices in NBG East") are left to the normal device intents.
+     */
+    private QueryIntent detectHierarchyIntent(String question) {
+        boolean mentionsNbg = question.contains("NBG");
+        boolean mentionsZone = question.contains("ZONE") || question.contains("ZONAL")
+                || question.contains("ZONES") || containsWord(question, "ZO");
+        if (!mentionsNbg && !mentionsZone) {
+            return null;
+        }
+        // "which NBG/zone owns X" / "X belongs to which zone".
+        if (question.contains("OWN") || question.contains("BELONG")) {
+            return QueryIntent.HIERARCHY_OWNER;
+        }
+        // Drill-down: "branches under/in/within <node>".
+        if (question.contains("BRANCH")
+                && (question.contains("UNDER") || question.contains("WITHIN") || question.contains("IN "))) {
+            return QueryIntent.HIERARCHY_BRANCHES_UNDER;
+        }
+        // Listing/counting NBGs or zones. NOTE: ranking ("rank NBGs by health score") is deliberately
+        // NOT handled here -- this handler has only names, not scores, so ranking falls to the
+        // honest-decline LLM path.
+        if (question.contains("LIST") || question.contains("HOW MANY") || question.contains("SHOW ALL")
+                || question.contains("ALL NBG") || question.contains("ALL ZONE")) {
+            return QueryIntent.HIERARCHY_LIST_NODES;
+        }
+        return null;
     }
 
     private String detectSubsystem(String normalizedQuestion) {

@@ -345,6 +345,46 @@ class QueryIntentResolverTest {
         assertEquals(QueryIntent.CCTV_HDD_INFO, resolved.getIntent());
     }
 
+    // ---- Phase 3: hierarchy navigation ----
+
+    @Test
+    void shouldResolveListNbgsToHierarchyList() {
+        ResolvedQuery resolved = resolver.resolve("List all NBGs", snapshots, null);
+        assertEquals(QueryIntent.HIERARCHY_LIST_NODES, resolved.getIntent());
+        assertEquals(false, resolved.isGlobal());
+        assertEquals(false, resolved.isAmbiguous());
+    }
+
+    @Test
+    void shouldResolveHowManyZonesToHierarchyList() {
+        ResolvedQuery resolved = resolver.resolve("How many zones are there?", snapshots, null);
+        assertEquals(QueryIntent.HIERARCHY_LIST_NODES, resolved.getIntent());
+        assertEquals(false, resolved.isAmbiguous());
+    }
+
+    @Test
+    void shouldResolveBranchesUnderZoneToHierarchyBranchesUnder() {
+        ResolvedQuery resolved = resolver.resolve("Show branches under ZO HOWRAH", snapshots, null);
+        assertEquals(QueryIntent.HIERARCHY_BRANCHES_UNDER, resolved.getIntent());
+        assertEquals(false, resolved.isGlobal());
+    }
+
+    @Test
+    void shouldResolveOwningNbgToHierarchyOwner() {
+        ResolvedQuery resolved = resolver.resolve("Which NBG owns Bally Bazar?", snapshots, null);
+        assertEquals(QueryIntent.HIERARCHY_OWNER, resolved.getIntent());
+        assertNotNull(resolved.getTargetBranch());
+        assertEquals("BOI-BALLYBAZAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
+    void shouldKeepListAllBranchesAsGlobalOverview() {
+        // No NBG/zone keyword -> not a hierarchy question; stays the global branch overview.
+        ResolvedQuery resolved = resolver.resolve("List all branches", snapshots, null);
+        assertEquals(QueryIntent.GLOBAL_OVERVIEW, resolved.getIntent());
+        assertEquals(true, resolved.isGlobal());
+    }
+
     // ---- audit #20: "AC" must match as a whole word, not a substring ----
 
     @Test
