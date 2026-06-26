@@ -1,97 +1,210 @@
- {
-  "id" : "388f1380-31ad-11f1-9c6f-b71bb2771567",
-  "name" : "CANARA-CHETLA",
-  "type" : "Canara Bank Profile",
+{
+  "id" : "23d4b010-ec77-11f0-a6fc-1dffa956f056",
+  "name" : "BOI-ZARKAWT",
+  "type" : "BOI Device Profile",
   "telemetry" : {
-    "imei_id" : "0",
-    "log_type" : "{\"operator_detail\":[{\"service_provider\":\"AirTel\",\"operator_no\":40431}]}",
-    "log_type_operator_detail" : "[{\"service_provider\":\"AirTel\",\"operator_no\":40431}]",
-    "Hikvision_NVR_CameraRecInfo" : "[{\"camera_id\":\"101\",\"total_duration\":0},{\"camera_id\":\"201\",\"total_duration\":0},{\"camera_id\":\"301\",\"total_duration\":0},{\"camera_id\":\"401\",\"total_duration\":0},{\"camera_id\":\"501\",\"total_duration\":0},{\"camera_id\":\"601\",\"total_duration\":0},{\"camera_id\":\"701\",\"total_duration\":0},{\"camera_id\":\"801\",\"total_duration\":0},{\"camera_id\":\"901\",\"total_duration\":0},{\"camera_id\":\"1001\",\"total_duration\":0},{\"camera_id\":\"1101\",\"total_duration\":0},{\"camera_id\":\"1201\",\"total_duration\":0},{\"camera_id\":\"1301\",\"total_duration\":0},{\"camera_id\":\"1401\",\"total_duration\":0},{\"camera_id\":\"1501\",\"total_duration\":0},{\"camera_id\":\"1601\",\"total_duration\":0}]",
-    "date" : "15:06:26",
+    "imei_id" : "{\"dev_id\":358773400385373}",
+    "imei_id_dev_id" : 358773400385373,
+    "usage_daily" : "0",
+    "usage_last_7_days" : "0",
+    "usage_last_15_days" : "0",
+    "error" : "Invalid or missing Device_Issue or id",
+    "log_type" : "heartbeat",
+    "timestamp" : "2026-03-27T12:16:31.223758",
+    "cctvLastHour" : "0",
+    "fasLastHour" : "1",
+    "basLastHour" : "0",
+    "accessControlLastHour" : "0",
+    "timeLockLastHour" : "0",
+    "uptimeTotal" : "1",
+    "BASfaultCOUNT" : "1",
+    "gatewayLastHour" : "1",
+    "iasLastHour" : "0",
+    "alerts" : "[]",
+    "ticketStatus" : "{\"H_ERROR\":\"false\",\"CAM_DIS\":\"false\",\"CAM_TAMPER\":\"false\",\"NVR_OFF\":\"false\",\"FAS_OFF\":\"false\",\"IAS_OFF\":\"false\",\"IAS_FAULT\":\"true\",\"IAS_ACTIVATE\":\"false\",\"FAS_FAULT\":\"false\",\"FAS_ACTIVATE\":\"false\",\"TLS_TAMPER\":\"false\",\"ACS_TAMPER\":\"false\",\"POWER_OFF\":\"false\",\"BATTERY_LOW\":\"false\",\"TLS_OFF\":\"false\",\"ACS_OFF\":\"false\",\"TLS_DOOR_OPEN\":\"false\",\"ACS_DOOR_OPEN\":\"false\",\"IAS_INT_OFF\":\"false\",\"IAS_INT_FAULT\":\"false\",\"IAS_INT_ACTIVATE\":\"false\"}",
+    "ticketStatus_H_ERROR" : "false",
+    "ticketStatus_CAM_DIS" : "false",
+    "ticketStatus_CAM_TAMPER" : "false",
+    "ticketStatus_NVR_OFF" : "false",
+    "ticketStatus_FAS_OFF" : "false",
+    "ticketStatus_IAS_OFF" : "false",
+    "ticketStatus_IAS_FAULT" : "true",
+    "ticketStatus_IAS_ACTIVATE" : "false",
+    "ticketStatus_FAS_FAULT" : "false",
+    "ticketStatus_FAS_ACTIVATE" : "false",
+    "ticketStatus_TLS_TAMPER" : "false",
+    "ticketStatus_ACS_TAMPER" : "false",
+    "ticketStatus_POWER_OFF" : "false",
+    "ticketStatus_BATTERY_LOW" : "false",
+    "ticketStatus_TLS_OFF" : "false",
+    "ticketStatus_ACS_OFF" : "false",
+    "ticketStatus_TLS_DOOR_OPEN" : "false",
+    "ticketStatus_ACS_DOOR_OPEN" : "false",
+    "ticketStatus_IAS_INT_OFF" : "false",
+    "ticketStatus_IAS_INT_FAULT" : "false",
+    "ticketStatus_IAS_INT_ACTIVATE" : "false",
+    "rockAI" : "{\"camera\":\"N/A\",\"fingerPrintModule\":\"N/A\",\"MCUVersion\":\"N/A\",\"macAddress\":\"N/A\",\"manufacturer\":\"N/A\",\"subDeviceType\":\"N/A\",\"Heartbeat\":\"N/A\",\"totalNumOfUsers\":\"N/A\",\"totalNumOfCards\":\"N/A\",\"deviceName\":\"N/A\",\"deviceID\":\"N/A\",\"model\":\"N/A\",\"serialNumber\":\"N/A\",\"firmwareVersion\":\"N/A\",\"deviceType\":\"N/A\",\"RS485Num\":\"N/A\",\"DoorLockStatus\":\"N/A\",\"hostAntiDismantleStatus\":\"N/A\",\"MagneticStatus\":\"N/A\",\"originatorName\":\"N/A\",\"originatorId\":\"N/A\",\"originatorType\":\"N/A\",\"deviceDate\":\"N/A\",\"deviceTime\":\"N/A\",\"syncTimeDate\":\"N/A\"}",
+    "rockAI_camera" : "N/A",
+    "rockAI_fingerPrintModule" : "N/A",
+    "rockAI_MCUVersion" : "N/A",
+    "rockAI_macAddress" : "N/A",
+    "rockAI_manufacturer" : "N/A",
+    "rockAI_subDeviceType" : "N/A",
+    "rockAI_Heartbeat" : "N/A",
+    "rockAI_totalNumOfUsers" : "N/A",
+    "rockAI_totalNumOfCards" : "N/A",
+    "rockAI_deviceName" : "N/A",
+    "rockAI_deviceID" : "N/A",
+    "rockAI_model" : "N/A",
+    "rockAI_serialNumber" : "N/A",
+    "rockAI_firmwareVersion" : "N/A",
+    "rockAI_deviceType" : "N/A",
+    "rockAI_RS485Num" : "N/A",
+    "rockAI_DoorLockStatus" : "N/A",
+    "rockAI_hostAntiDismantleStatus" : "N/A",
+    "rockAI_MagneticStatus" : "N/A",
+    "rockAI_originatorName" : "N/A",
+    "rockAI_originatorId" : "N/A",
+    "rockAI_originatorType" : "N/A",
+    "rockAI_deviceDate" : "N/A",
+    "rockAI_deviceTime" : "N/A",
+    "rockAI_syncTimeDate" : "N/A",
+    "intrusion_alarm_off_last" : "{}",
+    "intrusion_alarm_activate_last" : "{}",
+    "fire_alarm_off_last" : "{\"FaOL\":\"2026-04-27T22:44:55.146Z\",\"ts\":1777310095146,\"log_status\":\"fire_alarm_system_off\",\"deviceType\":\"FAS\",\"Device_Type1\":\"FIRE ALARM\"}",
+    "fire_alarm_off_last_FaOL" : "2026-04-27T22:44:55.146Z",
+    "fire_alarm_off_last_ts" : 1777310095146,
+    "fire_alarm_off_last_log_status" : "fire_alarm_system_off",
+    "fire_alarm_off_last_deviceType" : "FAS",
+    "fire_alarm_off_last_Device_Type1" : "FIRE ALARM",
+    "fire_alarm_activate_last" : "{}",
+    "battery_low_last" : "{}",
+    "Device_Issue" : "fire_alarm_system_off",
+    "fire_alarm_system_off" : "{\"Device_Issue\":\"fire_alarm_system_off\",\"code\":\"FAS_OFF\",\"label\":\"FaOL\",\"id\":\"73272000011127587\"}",
+    "fire_alarm_system_off_Device_Issue" : "fire_alarm_system_off",
+    "fire_alarm_system_off_code" : "FAS_OFF",
+    "fire_alarm_system_off_label" : "FaOL",
+    "fire_alarm_system_off_id" : "73272000011127587",
+    "intrusion_alarm_fault_last" : "{\"IFaultL\":\"2026-01-09T10:23:58.144Z\",\"ts\":1767934438144,\"log_status\":\"intrusion_alarm_system_fault\",\"deviceType\":\"BAS\",\"Device_Type1\":\"INTRUSION ALARM\"}",
+    "intrusion_alarm_fault_last_IFaultL" : "2026-01-09T10:23:58.144Z",
+    "intrusion_alarm_fault_last_ts" : 1767934438144,
+    "intrusion_alarm_fault_last_log_status" : "intrusion_alarm_system_fault",
+    "intrusion_alarm_fault_last_deviceType" : "BAS",
+    "intrusion_alarm_fault_last_Device_Type1" : "INTRUSION ALARM",
+    "power_off_last" : "{}",
+    "temperature" : "60.6",
+    "date" : "30:4:26",
     "lat" : "20.5937",
     "lon" : "78.9629",
-    "time" : "13:13",
+    "time" : "14:12",
+    "id" : "73272000010609006",
+    "frequency" : "1600",
+    "memory" : "18.2",
+    "cpu" : "1.8",
+    "disk" : "78.3",
     "target_sw_title" : "TLChronosProMAIN_391",
     "target_sw_version" : "7",
     "target_sw_tag" : "TLChronosProMAIN_391 7",
-    "target_sw_ts" : "1775541187602",
+    "target_sw_ts" : "1767865689522",
     "sw_state" : "INITIATED",
-    "system_status" : "{\"statusbox_system_on\":\"true\",\"statusbox_system_healthy\":\"true\",\"statusbox_mains_on\":\"true\",\"statusbox_battery_reverse\":\"false\",\"statusbox_battery_low\":\"false\",\"statusbox_sos_status\":\"true\",\"statusbox_network\":\"AirTel\",\"statusbox_no_of_connected_device\":1,\"ts\":1781509345977}",
-    "system_status_statusbox_system_on" : "true",
-    "system_status_statusbox_system_healthy" : "true",
-    "system_status_statusbox_mains_on" : "true",
-    "system_status_statusbox_battery_reverse" : "false",
-    "system_status_statusbox_battery_low" : "false",
-    "system_status_statusbox_sos_status" : "true",
+    "system_status" : "{\"statusbox_system_on\":true,\"statusbox_system_healthy\":true,\"statusbox_mains_on\":true,\"statusbox_battery_reverse\":false,\"statusbox_battery_low\":false,\"statusbox_sos_status\":true,\"statusbox_network\":\"AirTel\",\"statusbox_no_of_connected_device\":2}",
+    "system_status_statusbox_system_on" : true,
+    "system_status_statusbox_system_healthy" : true,
+    "system_status_statusbox_mains_on" : true,
+    "system_status_statusbox_battery_reverse" : false,
+    "system_status_statusbox_battery_low" : false,
+    "system_status_statusbox_sos_status" : true,
     "system_status_statusbox_network" : "AirTel",
-    "system_status_statusbox_no_of_connected_device" : 1,
-    "system_status_ts" : 1781509345977,
-    "battery_status" : "{\"battery_voltage\":0.0}",
-    "battery_status_battery_voltage" : 0.0,
-    "current_status" : "{\"system_current\":0.0}",
-    "current_status_system_current" : 0.0,
+    "system_status_statusbox_no_of_connected_device" : 2,
+    "battery_status" : "{\"battery_voltage\":14.0}",
+    "battery_status_battery_voltage" : 14.0,
+    "lat1" : "20.5937",
+    "alarmCount" : "0",
+    "lon1" : "78.9629",
+    "current_status" : "{\"system_current\":3.0}",
+    "current_status_system_current" : 3.0,
+    "basUptime" : "true",
     "fasUptime" : "true",
-    "ac_status" : "{\"ac_voltage\":0.0}",
-    "ac_status_ac_voltage" : 0.0,
+    "errorCount" : "0",
+    "ac_status" : "{\"ac_voltage\":210.0}",
+    "ac_status_ac_voltage" : 210.0,
     "uptimeHeartbeat" : "true",
-    "iasUptime" : "true",
-    "Hikvision_NVR_Heartbeat" : "hikvision_nvr_off",
+    "attribute" : "{\"lat\":20.5937,\"lon\":78.9629,\"deviceName\":\"BOI-ZARKAWT\"}",
+    "attribute_lat" : 20.5937,
+    "attribute_lon" : 78.9629,
+    "attribute_deviceName" : "BOI-ZARKAWT",
+    "arrLat" : "[20.5937]",
+    "TotalLat" : "[20.5937,20.5937,20.5937,20.5937,20.5937]",
+    "arrLon" : "[78.9629]",
+    "TotalLon" : "[78.9629,78.9629,78.9629,78.9629,78.9629]",
     "gatewayUptime" : "true",
-    "watchdog_log" : "[{\"Module Reboot\":\"Power Status\",\"timestamp\":\"20-04-26 10:30:03\"}]",
-    "rpi_usage" : "[{\"timestamp\":\"2026-04-20T09:56:41.061327\",\"CPU\":96.2,\"Memory\":16.7,\"Disk\":82.0,\"Frequency\":1800.0,\"Temperature\":45.764,\"Net_Sent_MB\":0.0038785934448242188,\"Net_Recv_MB\":0.001739501953125}]",
-    "rpi_alert" : "{\"timestamp\":\"2026-06-15T13:02:37.144505\",\"CPU\":100.0,\"Memory\":16.2,\"Disk\":68.1,\"Frequency\":2400.0,\"Temperature\":58.95,\"Net_Sent_MB\":0.0001201629638671875,\"Net_Recv_MB\":0.0058650970458984375,\"Active_Interface\":\"eth0\",\"eth0_IP\":\"192.168.0.93\",\"ppp0_IP\":\"none\"}",
-    "rpi_alert_timestamp" : "2026-06-15T13:02:37.144505",
-    "rpi_alert_CPU" : 100.0,
-    "rpi_alert_Memory" : 16.2,
-    "rpi_alert_Disk" : 68.1,
+    "watchdog_log" : "[{\"Module Reboot\":\"Hik NVR Info\",\"timestamp\":\"30-04-26 14:10:47\"}]",
+    "rpi_usage" : "[{\"timestamp\":\"2026-04-30T13:40:34.711422\",\"CPU\":0.3,\"Memory\":18.6,\"Disk\":77.9,\"Frequency\":1500.0,\"Temperature\":60.05,\"Net_Sent_MB\":1627.0152711868286,\"Net_Recv_MB\":1059.217384338379}]",
+    "rpi_alert" : "{\"timestamp\":\"2026-04-30T14:27:33.704793\",\"CPU\":2.5,\"Memory\":18.4,\"Disk\":78.2,\"Frequency\":2400.0,\"Temperature\":61.7,\"Net_Sent_MB\":1627.4859952926636,\"Net_Recv_MB\":1059.5251731872559}",
+    "rpi_alert_timestamp" : "2026-04-30T14:27:33.704793",
+    "rpi_alert_CPU" : 2.5,
+    "rpi_alert_Memory" : 18.4,
+    "rpi_alert_Disk" : 78.2,
     "rpi_alert_Frequency" : 2400.0,
-    "rpi_alert_Temperature" : 58.95,
-    "rpi_alert_Net_Sent_MB" : 1.201629638671875E-4,
-    "rpi_alert_Net_Recv_MB" : 0.0058650970458984375,
-    "rpi_alert_Active_Interface" : "eth0",
-    "rpi_alert_eth0_IP" : "192.168.0.93",
-    "rpi_alert_ppp0_IP" : "none",
-    "cavlidata_ontime" : "2026-04-06T17:15:07",
-    "heartbeat" : "online",
-    "heartbeat_IAS" : "online",
-    "battery_voltage" : "0.0",
-    "ac_voltage" : "0.0",
-    "system_current" : "0.0",
-    "statusbox_system_on" : "true",
-    "statusbox_system_healthy" : "true",
-    "statusbox_sos_status" : "true",
-    "statusbox_no_of_connected_device" : "1",
-    "statusbox_network" : "AirTel",
-    "statusbox_mains_on" : "true",
-    "statusbox_battery_reverse" : "false",
-    "statusbox_battery_low" : "false",
-    "lat_lon_default" : "true",
-    "dailyHeartbeatCounts" : "{\"heartbeat\":25,\"heartbeat_BAS\":0,\"heartbeat_FAS\":0,\"heartbeat_CCTV\":0,\"heartbeat_access_control\":0,\"heartbeat_IAS\":9,\"heartbeat_TLS\":0}",
-    "dailyHeartbeatCounts_heartbeat" : 25,
-    "dailyHeartbeatCounts_heartbeat_BAS" : 0,
-    "dailyHeartbeatCounts_heartbeat_FAS" : 0,
-    "dailyHeartbeatCounts_heartbeat_CCTV" : 0,
-    "dailyHeartbeatCounts_heartbeat_access_control" : 0,
-    "dailyHeartbeatCounts_heartbeat_IAS" : 9,
-    "dailyHeartbeatCounts_heartbeat_TLS" : 0,
-    "heartbeatKeys" : "{\"heartbeat\":{\"heartbeat_health_percentage\":\"17.36\",\"heartbeat_received_count\":25,\"heartbeat_expected_count\":144},\"heartbeat_BAS\":{\"heartbeat_BAS_health_percentage\":\"0.00\",\"heartbeat_BAS_received_count\":0,\"heartbeat_BAS_expected_count\":144},\"heartbeat_FAS\":{\"heartbeat_FAS_health_percentage\":\"0.00\",\"heartbeat_FAS_received_count\":0,\"heartbeat_FAS_expected_count\":144},\"heartbeat_CCTV\":{\"heartbeat_CCTV_health_percentage\":\"0.00\",\"heartbeat_CCTV_received_count\":0,\"heartbeat_CCTV_expected_count\":144},\"heartbeat_access_control\":{\"heartbeat_access_control_health_percentage\":\"0.00\",\"heartbeat_access_control_received_count\":0,\"heartbeat_access_control_expected_count\":144},\"heartbeat_IAS\":{\"heartbeat_IAS_health_percentage\":\"6.25\",\"heartbeat_IAS_received_count\":9,\"heartbeat_IAS_expected_count\":144},\"heartbeat_TLS\":{\"heartbeat_TLS_health_percentage\":\"0.00\",\"heartbeat_TLS_received_count\":0,\"heartbeat_TLS_expected_count\":144},\"date\":\"2026-06-15\"}",
-    "heartbeatKeys_heartbeat" : "{\"heartbeat_health_percentage\":\"17.36\",\"heartbeat_received_count\":25,\"heartbeat_expected_count\":144}",
-    "heartbeatKeys_heartbeat_BAS" : "{\"heartbeat_BAS_health_percentage\":\"0.00\",\"heartbeat_BAS_received_count\":0,\"heartbeat_BAS_expected_count\":144}",
-    "heartbeatKeys_heartbeat_FAS" : "{\"heartbeat_FAS_health_percentage\":\"0.00\",\"heartbeat_FAS_received_count\":0,\"heartbeat_FAS_expected_count\":144}",
-    "heartbeatKeys_heartbeat_CCTV" : "{\"heartbeat_CCTV_health_percentage\":\"0.00\",\"heartbeat_CCTV_received_count\":0,\"heartbeat_CCTV_expected_count\":144}",
-    "heartbeatKeys_heartbeat_access_control" : "{\"heartbeat_access_control_health_percentage\":\"0.00\",\"heartbeat_access_control_received_count\":0,\"heartbeat_access_control_expected_count\":144}",
-    "heartbeatKeys_heartbeat_IAS" : "{\"heartbeat_IAS_health_percentage\":\"6.25\",\"heartbeat_IAS_received_count\":9,\"heartbeat_IAS_expected_count\":144}",
-    "heartbeatKeys_heartbeat_TLS" : "{\"heartbeat_TLS_health_percentage\":\"0.00\",\"heartbeat_TLS_received_count\":0,\"heartbeat_TLS_expected_count\":144}",
-    "heartbeatKeys_date" : "2026-06-15",
-    "lastResetDate" : "2026-06-15",
-    "heartbeat30DaysQueue" : "[]",
-    "serial_number" : "SL26R5P30005B005"
+    "rpi_alert_Temperature" : 61.7,
+    "rpi_alert_Net_Sent_MB" : 1627.4859952926636,
+    "rpi_alert_Net_Recv_MB" : 1059.5251731872559,
+    "net_sent_mb" : "1131.2763986587524",
+    "net_recv_mb" : "736.3359565734863",
+    "Total_Data_Usage" : "[{\"Date\":\"2025-05-06\",\"usage\":\"0.49 MB\"},{\"Date\":\"2025-05-07\",\"usage\":\"1.455 MB\"},{\"Date\":\"2025-05-08\",\"usage\":\"1.528 MB\"},{\"Date\":\"2025-05-09\",\"usage\":\"1.669 MB\"},{\"Date\":\"2025-05-10\",\"usage\":\"2.053 MB\"},{\"Date\":\"2025-05-11\",\"usage\":\"2.104 MB\"},{\"Date\":\"2025-05-12\",\"usage\":\"2.103 MB\"},{\"Date\":\"2025-05-13\",\"usage\":\"0.932 MB\"},{\"Date\":\"2025-05-23\",\"usage\":\"0.199 MB\"},{\"Date\":\"2025-05-24\",\"usage\":\"0.671 MB\"},{\"Date\":\"2025-05-25\",\"usage\":\"0.725 MB\"},{\"Date\":\"2025-05-26\",\"usage\":\"0.505 MB\"},{\"Date\":\"2025-05-27\",\"usage\":\"0.542 MB\"},{\"Date\":\"2025-05-29\",\"usage\":\"0.008 MB\"},{\"Date\":\"2025-06-11\",\"usage\":\"0.001 MB\"},{\"Date\":\"2025-06-12\",\"usage\":\"0.349 MB\"},{\"Date\":\"2025-06-13\",\"usage\":\"0.696 MB\"},{\"Date\":\"2025-06-14\",\"usage\":\"2.427 MB\"},{\"Date\":\"2025-06-15\",\"usage\":\"2.714 MB\"},{\"Date\":\"2025-06-16\",\"usage\":\"2.454 MB\"},{\"Date\":\"2025-06-17\",\"usage\":\"2.648 MB\"},{\"Date\":\"2025-06-18\",\"usage\":\"2.588 MB\"},{\"Date\":\"2025-06-19\",\"usage\":\"2.613 MB\"},{\"Date\":\"2025-06-20\",\"usage\":\"2.722 MB\"},{\"Date\":\"2025-06-21\",\"usage\":\"2.696 MB\"},{\"Date\":\"2025-06-22\",\"usage\":\"2.702 MB\"},{\"Date\":\"2025-06-23\",\"usage\":\"2.263 MB\"},{\"Date\":\"2025-06-24\",\"usage\":\"2.511 MB\"},{\"Date\":\"2025-06-25\",\"usage\":\"2.802 MB\"},{\"Date\":\"2025-06-26\",\"usage\":\"1.672 MB\"},{\"Date\":\"2025-07-10\",\"usage\":\"0.058 MB\"},{\"Date\":\"2025-07-22\",\"usage\":\"0.366 MB\"},{\"Date\":\"2025-07-23\",\"usage\":\"0.226 MB\"},{\"Date\":\"2025-07-24\",\"usage\":\"1.569 MB\"},{\"Date\":\"2025-07-25\",\"usage\":\"1.293 MB\"},{\"Date\":\"2025-07-28\",\"usage\":\"0.025 MB\"},{\"Date\":\"2019-02-05\",\"usage\":\"0.004 MB\"},{\"Date\":\"2025-08-11\",\"usage\":\"0.811 MB\"},{\"Date\":\"2025-08-12\",\"usage\":\"2.78 MB\"},{\"Date\":\"2025-08-13\",\"usage\":\"2.781 MB\"},{\"Date\":\"2025-08-14\",\"usage\":\"2.624 MB\"},{\"Date\":\"2025-08-15\",\"usage\":\"1.821 MB\"},{\"Date\":\"2025-08-16\",\"usage\":\"0.004 MB\"},{\"Date\":\"2025-08-17\",\"usage\":\"0.004 MB\"},{\"Date\":\"2025-08-18\",\"usage\":\"1.635 MB\"},{\"Date\":\"2025-08-19\",\"usage\":\"1.672 MB\"},{\"Date\":\"2018-01-19\",\"usage\":\"1.048 MB\"},{\"Date\":\"2018-01-20\",\"usage\":\"1.673 MB\"},{\"Date\":\"2025-08-20\",\"usage\":\"1.011 MB\"},{\"Date\":\"2025-08-21\",\"usage\":\"2.841 MB\"},{\"Date\":\"2025-08-22\",\"usage\":\"2.807 MB\"},{\"Date\":\"2025-08-23\",\"usage\":\"1.533 MB\"},{\"Date\":\"2025-08-25\",\"usage\":\"0.652 MB\"},{\"Date\":\"2025-08-26\",\"usage\":\"0.975 MB\"},{\"Date\":\"2025-08-27\",\"usage\":\"2.372 MB\"},{\"Date\":\"2025-08-28\",\"usage\":\"1.782 MB\"},{\"Date\":\"2025-08-29\",\"usage\":\"1.578 MB\"},{\"Date\":\"2025-08-30\",\"usage\":\"1.851 MB\"},{\"Date\":\"2025-09-01\",\"usage\":\"1.182 MB\"},{\"Date\":\"2025-09-02\",\"usage\":\"2.1 MB\"},{\"Date\":\"2025-09-03\",\"usage\":\"1.36 MB\"},{\"Date\":\"2025-09-04\",\"usage\":\"1.166 MB\"},{\"Date\":\"2025-09-05\",\"usage\":\"1.774 MB\"},{\"Date\":\"2025-09-09\",\"usage\":\"0.289 MB\"},{\"Date\":\"2018-01-30\",\"usage\":\"0.0 MB\"},{\"Date\":\"2025-03-06\",\"usage\":\"0.024 MB\"},{\"Date\":\"2018-01-18\",\"usage\":\"0.243 MB\"},{\"Date\":\"2025-10-07\",\"usage\":\"0.081 MB\"},{\"Date\":\"2018-02-13\",\"usage\":\"0.005 MB\"},{\"Date\":\"2025-10-08\",\"usage\":\"0.024 MB\"},{\"Date\":\"2025-10-09\",\"usage\":\"0.094 MB\"},{\"Date\":\"2018-11-27\",\"usage\":\"0.013 MB\"},{\"Date\":\"2025-11-27\",\"usage\":\"0.167 MB\"},{\"Date\":\"2025-12-10\",\"usage\":\"0.093 MB\"},{\"Date\":\"2026-01-08\",\"usage\":\"1.083 MB\"},{\"Date\":\"2026-01-09\",\"usage\":\"3.229 MB\"},{\"Date\":\"2026-01-10\",\"usage\":\"3.25 MB\"},{\"Date\":\"2026-01-11\",\"usage\":\"3.247 MB\"},{\"Date\":\"2026-01-12\",\"usage\":\"3.248 MB\"},{\"Date\":\"2026-01-13\",\"usage\":\"3.252 MB\"},{\"Date\":\"2026-01-14\",\"usage\":\"3.25 MB\"},{\"Date\":\"2026-01-15\",\"usage\":\"3.252 MB\"},{\"Date\":\"2026-01-16\",\"usage\":\"3.25 MB\"},{\"Date\":\"2026-01-17\",\"usage\":\"3.253 MB\"},{\"Date\":\"2026-01-18\",\"usage\":\"3.25 MB\"},{\"Date\":\"2026-01-19\",\"usage\":\"3.249 MB\"},{\"Date\":\"2026-01-20\",\"usage\":\"3.247 MB\"},{\"Date\":\"2026-01-21\",\"usage\":\"3.23 MB\"},{\"Date\":\"2026-01-22\",\"usage\":\"3.224 MB\"},{\"Date\":\"2026-01-23\",\"usage\":\"3.224 MB\"}]",
+    "cavlidata_ontime" : "2026-01-08T15:21:39",
+    "BAS_Uptime_Minutes" : "0.0",
+    "BAS_Downtime_Minutes" : "0.0",
+    "DahuaNVR_Heartbeat" : "DahuaNVR_off",
+    "heartBeatFAS" : "1",
+    "fasUptimeDurationTime" : "6000",
+    "intrusion_alarm_system_fault" : "{\"Device_Issue\":\"intrusion_alarm_system_fault\",\"code\":\"IAS_FAULT\",\"label\":\"IFaultL\",\"id\":\"73272000009300003\"}",
+    "intrusion_alarm_system_fault_Device_Issue" : "intrusion_alarm_system_fault",
+    "intrusion_alarm_system_fault_code" : "IAS_FAULT",
+    "intrusion_alarm_system_fault_label" : "IFaultL",
+    "intrusion_alarm_system_fault_id" : "73272000009300003",
+    "fire_alarm_system_activate" : "{\"Device_Issue\":\"fire_alarm_system_activate\",\"code\":\"FAS_ACTIVATE\",\"label\":\"FaAL\",\"id\":\"73272000009301003\"}",
+    "fire_alarm_system_activate_Device_Issue" : "fire_alarm_system_activate",
+    "fire_alarm_system_activate_code" : "FAS_ACTIVATE",
+    "fire_alarm_system_activate_label" : "FaAL",
+    "fire_alarm_system_activate_id" : "73272000009301003",
+    "FASofftimeTS" : "1774336949427",
+    "FASheartbeatTS" : "1774338758443",
+    "FASheartbeatCount" : "0",
+    "basUptimeDurationTime" : "42000"
   },
   "serverAttributes" : {
-    "inactivityAlarmTime" : 1781512831149,
-    "sol_id_change" : "SEPL-DX7 -> CANARA-CHETLA",
-    "basOff_history" : [ ],
-    "basFault_history" : [ ],
+    "inactivityAlarmTime" : 1780996516397,
+    "bas_downtime_min" : 0.0,
+    "provisionState" : "provisioned",
+    "care" : "done",
+    "cctv" : "N/A",
+    "accessControl" : "N/A",
+    "timeLock" : "N/A",
+    "cameraLinkStatus" : "N/A",
+    "timeLockDoor" : "N/A",
+    "accessControlHealth" : "N/A",
+    "basHealth" : "N/A",
+    "accessControlStatus" : "N/A",
+    "cctvStatus" : "N/A",
+    "hddStatus" : "N/A",
+    "cameraStatus" : "N/A",
+    "fasHealth" : "N/A",
+    "timeLockHealth" : "N/A",
+    "accessControlDoor" : "N/A",
+    "ias" : "N/A",
+    "iasStatus" : "N/A",
+    "iasSystem" : "N/A",
+    "iasHealth" : "N/A",
+    "fasFault_history" : [ ],
+    "tlsOff_history" : [ ],
+    "tlsTamper_history" : [ ],
+    "tlsDoorOpen_history" : [ ],
+    "acsOff_history" : [ ],
+    "acsTamper_history" : [ ],
+    "acsDoorOpen_history" : [ ],
+    "iasOff_history" : [ ],
+    "iasFault_history" : [ ],
     "cameraTamperCH1_history" : [ ],
     "cameraTamperCH2_history" : [ ],
     "cameraTamperCH3_history" : [ ],
@@ -124,35 +237,338 @@
     "cameraDisconnectCH14_history" : [ ],
     "cameraDisconnectCH15_history" : [ ],
     "cameraDisconnectCH16_history" : [ ],
-    "hddError_history" : [ ],
-    "fasOff_history" : [ ],
-    "fasFault_history" : [ ],
-    "tlsTamper_history" : [ ],
-    "tlsDoorOpen_history" : [ ],
-    "acsOff_history" : [ ],
-    "acsTamper_history" : [ ],
-    "acsDoorOpen_history" : [ ],
-    "iasFault_history" : [ ],
     "dvrNvrOff_history" : [ ],
-    "tlsOff_history" : [ ],
-    "iasOff_history" : [ ],
-    "cameraTamperCount" : { },
-    "cameraDisconnectCount" : { },
-    "hddandDvrNvr" : { },
-    "warning" : 0,
-    "critical" : 0,
-    "major" : 0,
-    "gwStatus" : "On",
-    "gateway_sts" : "Online",
-    "severity" : "",
-    "iasMiliTime" : 1781528717859,
-    "timeLockAlarmCreatedTime" : "2026-06-15T07:35:38.382Z",
-    "timeLockMiliTime" : 1781528738382,
+    "hddError_history" : [ ],
+    "MAINS ON" : true,
     "gwHealth" : "Healthy",
-    "ias" : {
-      "logStatus" : "Integrated Alarm System On",
-      "logFullName" : "Integrated Alarm System",
-      "logStatusMode" : "On",
+    "BATTERY LOW" : false,
+    "gatewayStatus" : "Healthy",
+    "SYSTEM ON" : true,
+    "gwStatus" : "On",
+    "POWER OFF" : false,
+    "NETWORK" : true,
+    "imei_id" : {
+      "dev_id" : 358773400385373
+    },
+    "imei_id_dev_id" : 358773400385373,
+    "undefined" : false,
+    "fasSystem" : "Normal",
+    "FIRE ALARM SYSTEM ACTIVATION RESTORED" : true,
+    "FIRE ALARM SYSTEM ACTIVE" : false,
+    "FIRE ALARM SYSTEM ACTIVATE" : true,
+    "INTRUSION ALARM SYSTEM FAULT" : true,
+    "INTRUSION ALARM FAULT CONDITION RESTORED" : false,
+    "basSystem" : "Normal",
+    "INTRUSION ALARM SYSTEM ACTIVATION RESTORED" : true,
+    "INTRUSION ALARM SYSTEM ACTIVE" : false,
+    "BATTERY ON" : true,
+    "BATTERY REVERSE" : false,
+    "gatewayType" : "MAINS ON",
+    "bas" : "Online",
+    "INTRUSION ALARM SYSTEM ON" : true,
+    "basStatus" : "On",
+    "basAlarmCreatedTime" : "2026-02-25T06:00:28.153Z",
+    "INTRUSION ALARM SYSTEM OFF" : false,
+    "intrusionType" : "INTRUSION ALARM SYSTEM ON",
+    "intrusionStatus" : "Healthy",
+    "severity" : "CRITICAL",
+    "FIRE ALARM SYSTEM ON" : true,
+    "FIRE ALARM SYSTEM OFF" : false,
+    "fasMiliTime" : 1774358558270,
+    "deviceName" : "BOI-ZARKAWT",
+    "zoName" : "ZO GUWAHATI",
+    "nbgName" : "NBG EAST",
+    "usage_history" : [ {
+      "Date" : "2026-01-08",
+      "usage" : 9.943
+    }, {
+      "Date" : "2026-01-09",
+      "usage" : 53.906
+    }, {
+      "Date" : "2026-01-10",
+      "usage" : 54.509
+    }, {
+      "Date" : "2026-01-11",
+      "usage" : 54.651
+    }, {
+      "Date" : "2026-01-12",
+      "usage" : 54.845
+    }, {
+      "Date" : "2026-01-13",
+      "usage" : 55.126
+    }, {
+      "Date" : "2026-01-14",
+      "usage" : 55.248
+    }, {
+      "Date" : "2026-01-15",
+      "usage" : 55.46
+    }, {
+      "Date" : "2026-01-16",
+      "usage" : 55.55
+    }, {
+      "Date" : "2026-01-17",
+      "usage" : 55.819
+    }, {
+      "Date" : "2026-01-18",
+      "usage" : 55.949
+    }, {
+      "Date" : "2026-01-19",
+      "usage" : 52.852
+    }, {
+      "Date" : "2026-01-20",
+      "usage" : 53.754
+    }, {
+      "Date" : "2026-01-21",
+      "usage" : 53.814
+    }, {
+      "Date" : "2026-01-22",
+      "usage" : 53.652
+    }, {
+      "Date" : "2026-01-23",
+      "usage" : 38.099
+    }, {
+      "Date" : "2026-01-24",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-25",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-26",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-27",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-28",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-29",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-30",
+      "usage" : 0
+    }, {
+      "Date" : "2026-01-31",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-01",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-02",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-03",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-04",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-05",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-06",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-07",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-08",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-09",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-10",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-11",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-12",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-13",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-14",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-15",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-16",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-17",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-18",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-19",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-20",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-21",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-22",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-23",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-24",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-25",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-26",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-27",
+      "usage" : 0
+    }, {
+      "Date" : "2026-02-28",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-01",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-02",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-03",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-04",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-05",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-06",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-07",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-08",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-09",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-10",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-11",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-12",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-13",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-14",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-15",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-16",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-17",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-18",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-19",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-20",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-21",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-22",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-23",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-24",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-25",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-26",
+      "usage" : 0
+    }, {
+      "Date" : "2026-03-27",
+      "usage" : 0
+    } ],
+    "Faulty Device(Time Lock)" : 0,
+    "Inactive Device(Time Lock)" : 0,
+    "Healthy Device(Intrusion)" : 0,
+    "Healthy Device(Time Lock)" : 0,
+    "Inactive Device(Intrusion)" : 0,
+    "Faulty Device(Intrusion)" : 0,
+    "Total System(Time Lock)" : 0,
+    "Total System(Intrusion)" : 0,
+    "alarm" : 0,
+    "basOff_history" : [ ],
+    "basFault_history" : [ ],
+    "formattedBranchName" : "BOI-ZARKAWT",
+    "fasOff_history" : [ ],
+    "gatewayAlarmCreatedTime" : "2026-03-31T22:48:00.293Z",
+    "deviceType" : "fas",
+    "unknown_status" : "Unknown Event",
+    "systemHealth" : {
+      "alarmCount" : 0,
+      "timestamp" : "2026-04-24T10:19:35.011Z"
+    },
+    "systemHealth_alarmCount" : 0,
+    "systemHealth_timestamp" : "2026-04-24T10:19:35.011Z",
+    "subsystems" : {
+      "cctv" : { },
+      "ias" : { },
+      "bas" : { },
+      "fas" : { },
+      "timeLock" : { },
+      "accessControl" : {
+        "details" : { }
+      }
+    },
+    "subsystems_cctv" : "{}",
+    "subsystems_ias" : "{}",
+    "subsystems_bas" : "{}",
+    "subsystems_fas" : "{}",
+    "subsystems_timeLock" : "{}",
+    "subsystems_accessControl" : "{\"details\":{}}",
+    "eventMetadata" : {
+      "alarmFlag" : true,
+      "notification" : false
+    },
+    "eventMetadata_alarmFlag" : true,
+    "eventMetadata_notification" : false,
+    "gateway" : "Online",
+    "lastDisconnectTime" : 1777176842998,
+    "lastConnectTime" : 1777176864001,
+    "active" : false,
+    "lastUpdate" : "2026-04-27T11:24:02.386Z",
+    "unknown" : {
+      "logStatus" : "Unknown Event",
+      "logFullName" : "Unknown",
+      "logStatusMode" : "Unknown",
       "powerStatus" : "On",
       "systemStatus" : "Normal",
       "healthStatus" : "Active",
@@ -160,263 +576,231 @@
       "alarmFlag" : false,
       "severity" : "",
       "activeAlarm" : [ ],
-      "ts" : 1781508917859
+      "timestamp" : "2026-04-27T11:24:02.386Z"
     },
-    "ias_logStatus" : "Integrated Alarm System On",
-    "ias_logFullName" : "Integrated Alarm System",
-    "ias_logStatusMode" : "On",
-    "ias_powerStatus" : "On",
-    "ias_systemStatus" : "Normal",
-    "ias_healthStatus" : "Active",
-    "ias_notification" : "false",
-    "ias_alarmFlag" : false,
-    "ias_severity" : "",
-    "ias_activeAlarm" : "[]",
-    "ias_ts" : 1781508917859,
-    "timeLockDoor" : "Close",
-    "care" : "done",
-    "provisionState" : "provisioned",
-    "deviceName" : "CANARA-CHETLA",
-    "alarm" : 0,
-    "zoName" : "RO KOLKATA - I",
-    "nbgName" : "HO (Canara Bank)",
-    "formattedBranchName" : "CANARA-CHETLA",
-    "intrusionStatus" : "Healthy",
-    "roName" : "RO KOLKATA - I",
-    "ts" : 1781511218411,
-    "active" : false,
+    "unknown_logStatus" : "Unknown Event",
+    "unknown_logFullName" : "Unknown",
+    "unknown_logStatusMode" : "Unknown",
+    "unknown_powerStatus" : "On",
+    "unknown_systemStatus" : "Normal",
+    "unknown_healthStatus" : "Active",
+    "unknown_notification" : "false",
+    "unknown_alarmFlag" : false,
+    "unknown_severity" : "",
+    "unknown_activeAlarm" : "[]",
+    "unknown_timestamp" : "2026-04-27T11:24:02.386Z",
+    "status" : "Healthy",
+    "type" : "FIRE ALARM SYSTEM ON",
+    "fas" : "Online",
     "fasStatus" : "On",
-    "fasAlarmCreatedTime" : "2026-04-20T10:51:15.962Z",
-    "lastDisconnectTime" : 1781512224088,
-    "basStatus" : "On",
-    "deviceType" : "cctv",
-    "status" : "Inactive",
-    "type" : "DVR/NVR OFF",
-    "alarmFlag" : false,
-    "cctvStatus" : "Off",
-    "cctvAlarmCreatedTime" : "2026-04-20T10:54:18.009Z",
-    "intrusionType" : "DVR/NVR OFF",
-    "fas" : {
-      "logStatus" : "N/A",
-      "logFullName" : "N/A",
-      "logStatusMode" : "N/A",
-      "powerStatus" : "N/A",
-      "systemStatus" : "N/A",
-      "healthStatus" : "N/A"
-    },
-    "fas_logStatus" : "N/A",
-    "fas_logFullName" : "N/A",
-    "fas_logStatusMode" : "N/A",
-    "fas_powerStatus" : "N/A",
-    "fas_systemStatus" : "N/A",
-    "fas_healthStatus" : "N/A",
-    "timeLock" : {
-      "logStatus" : "Time Lock Door Closed",
-      "logFullName" : "Time Lock System",
-      "logStatusMode" : "Restored",
-      "powerStatus" : "On",
-      "systemStatus" : "Normal",
-      "healthStatus" : "Active",
-      "notification" : "true",
-      "alarmFlag" : false,
-      "severity" : "",
-      "activeAlarm" : [ ],
-      "ts" : 1781508938382
-    },
-    "timeLock_logStatus" : "Time Lock Door Closed",
-    "timeLock_logFullName" : "Time Lock System",
-    "timeLock_logStatusMode" : "Restored",
-    "timeLock_powerStatus" : "On",
-    "timeLock_systemStatus" : "Normal",
-    "timeLock_healthStatus" : "Active",
-    "timeLock_notification" : "true",
-    "timeLock_alarmFlag" : false,
-    "timeLock_severity" : "",
-    "timeLock_activeAlarm" : "[]",
-    "timeLock_ts" : 1781508938382,
-    "iasAlarmCreatedTime" : "2026-06-15T07:35:17.859Z",
-    "timeLock_sts" : "Online",
-    "log_type" : "network",
-    "basMiliTime" : 1781528763987,
-    "basAlarmCreatedTime" : "2026-06-15T07:36:03.987Z",
-    "bas" : {
-      "logStatus" : "Intrusion Alarm Cleared",
-      "logFullName" : "Intrusion Alarm System",
-      "logStatusMode" : "Restored",
-      "powerStatus" : "On",
-      "systemStatus" : "Normal",
-      "healthStatus" : "Active",
-      "notification" : "true",
-      "alarmFlag" : false,
-      "severity" : "",
-      "activeAlarm" : [ ],
-      "ts" : 1781508963987
-    },
-    "bas_logStatus" : "Intrusion Alarm Cleared",
-    "bas_logFullName" : "Intrusion Alarm System",
-    "bas_logStatusMode" : "Restored",
-    "bas_powerStatus" : "On",
-    "bas_systemStatus" : "Normal",
-    "bas_healthStatus" : "Active",
-    "bas_notification" : "true",
-    "bas_alarmFlag" : false,
-    "bas_severity" : "",
-    "bas_activeAlarm" : "[]",
-    "bas_ts" : 1781508963987,
-    "gatewayAlarmCreatedTime" : "2026-06-15T07:37:41.551Z",
-    "gateMiliTime" : 1781528861551,
-    "lastConnectTime" : 1781508759451,
-    "cctv" : {
-      "logStatus" : "N/A",
-      "logFullName" : "N/A",
-      "logStatusMode" : "N/A",
-      "powerStatus" : "N/A",
-      "systemStatus" : "N/A",
-      "healthStatus" : "N/A"
-    },
-    "cctv_logStatus" : "N/A",
-    "cctv_logFullName" : "N/A",
-    "cctv_logStatusMode" : "N/A",
-    "cctv_powerStatus" : "N/A",
-    "cctv_systemStatus" : "N/A",
-    "cctv_healthStatus" : "N/A",
-    "bas_sts" : "Online",
-    "accessControl" : {
-      "logStatus" : "N/A",
-      "logFullName" : "N/A",
-      "logStatusMode" : "N/A",
-      "powerStatus" : "N/A",
-      "systemStatus" : "N/A",
-      "healthStatus" : "N/A",
-      "accessControlDoor" : "N/A"
-    },
-    "accessControl_logStatus" : "N/A",
-    "accessControl_logFullName" : "N/A",
-    "accessControl_logStatusMode" : "N/A",
-    "accessControl_powerStatus" : "N/A",
-    "accessControl_systemStatus" : "N/A",
-    "accessControl_healthStatus" : "N/A",
-    "accessControl_accessControlDoor" : "N/A",
-    "fas_sts" : "N/A",
-    "cctv_sts" : "N/A",
-    "accessControl_sts" : "N/A",
-    "coName" : "CO Kolkata",
-    "org_id" : "CANARA-HO",
-    "BranchName" : "CHETLA",
-    "heartbeat" : "online",
-    "notification" : true,
-    "ias_sts" : "Online",
-    "gateway" : {
-      "logStatus" : "Battery Low Restore",
-      "logFullName" : "Battery",
-      "logStatusMode" : "Restored",
-      "powerStatus" : "On",
-      "systemStatus" : "Healthy",
-      "healthStatus" : "Healthy",
-      "notification" : "true",
-      "alarmFlag" : false,
-      "severity" : "",
-      "activeAlarm" : [ ],
-      "ts" : 1781509061551
-    },
-    "gateway_logStatus" : "Battery Low Restore",
-    "gateway_logFullName" : "Battery",
-    "gateway_logStatusMode" : "Restored",
-    "gateway_powerStatus" : "On",
-    "gateway_systemStatus" : "Healthy",
-    "gateway_healthStatus" : "Healthy",
-    "gateway_notification" : "true",
-    "gateway_alarmFlag" : false,
-    "gateway_severity" : "",
-    "gateway_activeAlarm" : "[]",
-    "gateway_ts" : 1781509061551,
-    "lastActivityTime" : 1781512224081,
-    "audit_ts" : "2026-06-10 17:38",
-    "bank_name" : "CANARA BANK",
-    "bas_downtime_min" : 0.0,
-    "total_data_mb" : 0.0,
-    "zo_name" : "RO KOLKATA - I",
-    "fault_score" : 15.0,
-    "fault_severity" : "HEALTHY",
-    "fault_reasons" : "ZERO_DATA(+15)",
-    "gap_days" : 0,
-    "Total_Data_Usage" : 0.0,
-    "BAS_Downtime_Minutes" : 0.0,
-    "full_path" : "CANARA BANK → HO (Canara Bank) → RO KOLKATA - I → CANARA-CHETLA",
+    "fasAlarmCreatedTime" : "2026-04-27T17:36:15.198Z",
+    "fireAlarmStatus" : "Healthy",
+    "fireAlarmType" : "FIRE ALARM SYSTEM ON",
+    "notification" : false,
+    "alarmFlag" : true,
+    "cameraTamperCount" : { },
+    "cameraDisconnectCount" : { },
+    "hddandDvrNvr" : { },
+    "warning" : 0,
+    "critical" : 0,
+    "major" : 0,
+    "count_CH" : 16,
+    "ts" : 1777539329626,
+    "lastActivityTime" : 1777539572367,
     "hierarchy_depth" : 4,
+    "zone_name" : "ZO GUWAHATI",
+    "bank_name" : "BANK OF INDIA",
     "nvr_brand" : "",
     "integrated_status" : "",
-    "nbg_name" : "HO (Canara Bank)",
-    "branch_name" : "CANARA-CHETLA",
-    "zone_name" : "RO KOLKATA - I"
+    "audit_ts" : "2026-06-24 10:05",
+    "Total_Data_Usage" : 0.0,
+    "BAS_Downtime_Minutes" : 0.0,
+    "fault_score" : 83.0,
+    "fault_severity" : "CRITICAL",
+    "fault_reasons" : "ZERO_DATA(+15) | HDD=N/A(+30) | IAS_FAULT(+15) | ACS_FAULT(+15) | DISK_WARN(78%)",
+    "gap_days" : 0,
+    "nbg_name" : "NBG EAST",
+    "branch_name" : "BOI-ZARKAWT",
+    "total_data_mb" : 0.0,
+    "zo_name" : "ZO GUWAHATI",
+    "full_path" : "BANK OF INDIA → NBG EAST → ZO GUWAHATI → BOI-ZARKAWT"
   },
   "clientAttributes" : {
+    "CP_Plus_NVR_cameraInfo" : {
+      "0" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "1" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "2" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "3" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "4" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "5" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "6" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "7" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "8" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "9" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "10" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "11" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "12" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "13" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "14" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      },
+      "15" : {
+        "CP_Plus_NVR_Address" : "NA",
+        "CP_Plus_NVR_Resolutions" : "NA",
+        "CP_Plus_NVR_FPS_Values" : "NA",
+        "CP_Plus_NVR_Name" : "NA"
+      }
+    },
+    "CP_Plus_NVR_cameraInfo_0" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_1" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_2" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_3" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_4" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_5" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_6" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_7" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_8" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_9" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_10" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_11" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_12" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_13" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_14" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
+    "CP_Plus_NVR_cameraInfo_15" : "{\"CP_Plus_NVR_Address\":\"NA\",\"CP_Plus_NVR_Resolutions\":\"NA\",\"CP_Plus_NVR_FPS_Values\":\"NA\",\"CP_Plus_NVR_Name\":\"NA\"}",
     "dexter_config" : {
-      "powerzone" : "{1 1 2 0 1 2 1 1 1 1 1 5 1 1 1 0 1 6 0 1 1 0 1 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}",
-      "zone" : "{1 1 1 1 1 2 0 1 3 0 1 4 0 1 6 0 1 3 1 1 5 0 1 5 0 1 1 0 1 4 0 1 2 0 1 6 0 1 1 0 1 4 0 1 5 0 1 5}",
+      "powerzone" : "{1 1 1 1 1 2 0 1 3 0 1 4 0 1 5 0 1 6 0 1 1 0 1 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}",
+      "zone" : "{1 1 1 1 1 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 5}",
       "brand" : "SEPLE",
-      "branch" : "CHETLA",
+      "branch" : "SDF",
       "modem_parameter" : {
-        "client_id" : "cetla-cl",
-        "user_name" : "celta-un",
-        "password" : "cetla-pwd",
+        "client_id" : "ZRT-R-CL-ID",
+        "user_name" : "ZRT-UN-ID",
+        "password" : "ZRT-PWD",
         "gsm_modem_mode" : "physical",
         "network_type" : "gsm",
-        "device_name" : "CANERA-CETLA"
+        "device_name" : "BOI-ZARKAWT "
       },
       "integration" : [ {
         "id" : 1,
         "device_type" : "HikvisionNVR1",
-        "ip_address" : "192.168.0.45",
-        "username" : "admin",
-        "password" : "sepl1234",
-        "port" : 8080,
-        "camera_ip" : [ ]
+        "ip_address" : "192.168.0.11",
+        "username" : "Admin",
+        "password" : "sepl@2024",
+        "port" : 8080
       }, {
         "id" : 2,
         "device_type" : "DahuaNVR1",
-        "ip_address" : "192.168.0.211",
-        "username" : "admin",
-        "password" : "sepl1984",
-        "port" : 8080
+        "ip_address" : "192.168.1.11",
+        "username" : "admin1",
+        "password" : "admin@1234",
+        "port" : 8080,
+        "camera_ip" : [ ]
       }, {
         "id" : 3,
         "device_type" : "HikvisionBioMetric1",
-        "ip_address" : "192.168.0.27",
-        "username" : "sepl",
-        "password" : "sepl1984",
-        "port" : 8082
+        "ip_address" : "192.168.0.116",
+        "username" : "Admin",
+        "password" : "Sepl1234",
+        "port" : 8888
       }, {
         "id" : 4,
         "device_type" : "CP_PlusNVR1",
         "ip_address" : "192.168.0.102",
         "username" : "admin",
         "password" : "Sepl@1984",
-        "port" : 8080,
+        "port" : 80,
         "camera_ip" : [ {
           "username" : "admin",
           "password" : "Sepl@1984"
         }, {
           "username" : "admin",
           "password" : "Sepl@1984"
-        }, {
-          "username" : "admin",
-          "password" : "sepl1984"
-        }, {
-          "username" : "admin",
-          "password" : "sepl1984"
-        }, {
-          "username" : "admin",
-          "password" : "sepl1984"
-        }, {
-          "username" : "admin",
-          "password" : "sepl1984"
         } ]
+      }, {
+        "id" : 5,
+        "device_type" : "SparshNVR1",
+        "ip_address" : "192.168.0.108",
+        "username" : "ADMIN",
+        "password" : "34r",
+        "port" : 8080
       } ],
       "active_device_parameter" : {
-        "active_integration_hikvision_nvr" : 1,
+        "active_integration_hikvision_nvr" : 0,
         "active_integration_hikvision_biometric" : 0,
-        "active_integration_dahua_nvr" : 0,
+        "active_integration_dahua_nvr" : 1,
         "active_integration_cp_plus_nvr" : 0
       },
       "active_parameter" : {
@@ -428,44 +812,179 @@
         "Enable/Disable GNSS" : "True",
         "Alert Types (SMS)" : "Vibrate",
         "Notification Schedule" : "Every hour",
-        "Enable/Disable GSM" : "True",
-        "reset_to_dhcp" : "True",
         "Enable/Disable for Network LED Status" : "True",
         "Enable/Disable for Wireless LAN" : "False",
+        "APN Settings" : "internet",
+        "Network Test" : "False",
+        "Enable/Disable GSM" : "True",
         "Enable/Disable IP Module" : "False",
         "DNS Setup" : "Automatic",
-        "APN Settings" : "Automatic",
-        "Network Test" : "False",
-        "IPv4/IPv6 Selection" : "IPv4",
         "Enable/Disable Static/dynamic" : "Static",
-        "set_ip_address" : "192.168.1.7",
-        "set_port_no" : "8002",
-        "subnet_mask" : "255.255.255.0",
-        "gate_way" : "192.168.1.1",
-        "preferred_dns" : "8.8.4.4",
-        "alternate_dns" : "8.8.2.2",
-        "apn_settings" : "8008",
-        "alternate_dns_server" : "8.8.8.8",
-        "preferred_dns_server" : "8.8.4.4",
-        "Subnet mask" : "255.255.255.0",
+        "IPv4/IPv6 Selection" : "IPv4",
+        "reset_to_dhcp" : "True",
         "Set Port Number" : "8080",
-        "Set IP Address" : "192.168.0.65",
-        "Gateway" : "192.168.0.1"
+        "preferred_dns_server" : "8.8.8.8",
+        "alternate_dns_server" : "8.8.4.4",
+        "Gateway" : "192.168.1.1",
+        "Subnet mask" : "255.255.255.0",
+        "Set IP Address" : "192.168.1.13"
       },
       "batt" : "67",
-      "timestamp" : "2026-04-20T10:01:13"
+      "timestamp" : "2026-01-09T09:59:13"
     },
-    "dexter_config_powerzone" : "{1 1 2 0 1 2 1 1 1 1 1 5 1 1 1 0 1 6 0 1 1 0 1 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}",
-    "dexter_config_zone" : "{1 1 1 1 1 2 0 1 3 0 1 4 0 1 6 0 1 3 1 1 5 0 1 5 0 1 1 0 1 4 0 1 2 0 1 6 0 1 1 0 1 4 0 1 5 0 1 5}",
+    "dexter_config_powerzone" : "{1 1 1 1 1 2 0 1 3 0 1 4 0 1 5 0 1 6 0 1 1 0 1 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}",
+    "dexter_config_zone" : "{1 1 1 1 1 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 5}",
     "dexter_config_brand" : "SEPLE",
-    "dexter_config_branch" : "CHETLA",
-    "dexter_config_modem_parameter" : "{\"client_id\":\"cetla-cl\",\"user_name\":\"celta-un\",\"password\":\"cetla-pwd\",\"gsm_modem_mode\":\"physical\",\"network_type\":\"gsm\",\"device_name\":\"CANERA-CETLA\"}",
-    "dexter_config_integration" : "[{\"id\":1,\"device_type\":\"HikvisionNVR1\",\"ip_address\":\"192.168.0.45\",\"username\":\"admin\",\"password\":\"sepl1234\",\"port\":8080,\"camera_ip\":[]},{\"id\":2,\"device_type\":\"DahuaNVR1\",\"ip_address\":\"192.168.0.211\",\"username\":\"admin\",\"password\":\"sepl1984\",\"port\":8080},{\"id\":3,\"device_type\":\"HikvisionBioMetric1\",\"ip_address\":\"192.168.0.27\",\"username\":\"sepl\",\"password\":\"sepl1984\",\"port\":8082},{\"id\":4,\"device_type\":\"CP_PlusNVR1\",\"ip_address\":\"192.168.0.102\",\"username\":\"admin\",\"password\":\"Sepl@1984\",\"port\":8080,\"camera_ip\":[{\"username\":\"admin\",\"password\":\"Sepl@1984\"},{\"username\":\"admin\",\"password\":\"Sepl@1984\"},{\"username\":\"admin\",\"password\":\"sepl1984\"},{\"username\":\"admin\",\"password\":\"sepl1984\"},{\"username\":\"admin\",\"password\":\"sepl1984\"},{\"username\":\"admin\",\"password\":\"sepl1984\"}]}]",
-    "dexter_config_active_device_parameter" : "{\"active_integration_hikvision_nvr\":1,\"active_integration_hikvision_biometric\":0,\"active_integration_dahua_nvr\":0,\"active_integration_cp_plus_nvr\":0}",
+    "dexter_config_branch" : "SDF",
+    "dexter_config_modem_parameter" : "{\"client_id\":\"ZRT-R-CL-ID\",\"user_name\":\"ZRT-UN-ID\",\"password\":\"ZRT-PWD\",\"gsm_modem_mode\":\"physical\",\"network_type\":\"gsm\",\"device_name\":\"BOI-ZARKAWT \"}",
+    "dexter_config_integration" : "[{\"id\":1,\"device_type\":\"HikvisionNVR1\",\"ip_address\":\"192.168.0.11\",\"username\":\"Admin\",\"password\":\"sepl@2024\",\"port\":8080},{\"id\":2,\"device_type\":\"DahuaNVR1\",\"ip_address\":\"192.168.1.11\",\"username\":\"admin1\",\"password\":\"admin@1234\",\"port\":8080,\"camera_ip\":[]},{\"id\":3,\"device_type\":\"HikvisionBioMetric1\",\"ip_address\":\"192.168.0.116\",\"username\":\"Admin\",\"password\":\"Sepl1234\",\"port\":8888},{\"id\":4,\"device_type\":\"CP_PlusNVR1\",\"ip_address\":\"192.168.0.102\",\"username\":\"admin\",\"password\":\"Sepl@1984\",\"port\":80,\"camera_ip\":[{\"username\":\"admin\",\"password\":\"Sepl@1984\"},{\"username\":\"admin\",\"password\":\"Sepl@1984\"}]},{\"id\":5,\"device_type\":\"SparshNVR1\",\"ip_address\":\"192.168.0.108\",\"username\":\"ADMIN\",\"password\":\"34r\",\"port\":8080}]",
+    "dexter_config_active_device_parameter" : "{\"active_integration_hikvision_nvr\":0,\"active_integration_hikvision_biometric\":0,\"active_integration_dahua_nvr\":1,\"active_integration_cp_plus_nvr\":0}",
     "dexter_config_active_parameter" : "{\"active_integration_on_off_bit\":1}",
-    "dexter_config_network_parameter" : "{\"e-SIM Enable/Disable\":\"True\",\"Network Selection for e-SIM\":\"LTE\",\"Enable/Disable GNSS\":\"True\",\"Alert Types (SMS)\":\"Vibrate\",\"Notification Schedule\":\"Every hour\",\"Enable/Disable GSM\":\"True\",\"reset_to_dhcp\":\"True\",\"Enable/Disable for Network LED Status\":\"True\",\"Enable/Disable for Wireless LAN\":\"False\",\"Enable/Disable IP Module\":\"False\",\"DNS Setup\":\"Automatic\",\"APN Settings\":\"Automatic\",\"Network Test\":\"False\",\"IPv4/IPv6 Selection\":\"IPv4\",\"Enable/Disable Static/dynamic\":\"Static\",\"set_ip_address\":\"192.168.1.7\",\"set_port_no\":\"8002\",\"subnet_mask\":\"255.255.255.0\",\"gate_way\":\"192.168.1.1\",\"preferred_dns\":\"8.8.4.4\",\"alternate_dns\":\"8.8.2.2\",\"apn_settings\":\"8008\",\"alternate_dns_server\":\"8.8.8.8\",\"preferred_dns_server\":\"8.8.4.4\",\"Subnet mask\":\"255.255.255.0\",\"Set Port Number\":\"8080\",\"Set IP Address\":\"192.168.0.65\",\"Gateway\":\"192.168.0.1\"}",
+    "dexter_config_network_parameter" : "{\"e-SIM Enable/Disable\":\"True\",\"Network Selection for e-SIM\":\"LTE\",\"Enable/Disable GNSS\":\"True\",\"Alert Types (SMS)\":\"Vibrate\",\"Notification Schedule\":\"Every hour\",\"Enable/Disable for Network LED Status\":\"True\",\"Enable/Disable for Wireless LAN\":\"False\",\"APN Settings\":\"internet\",\"Network Test\":\"False\",\"Enable/Disable GSM\":\"True\",\"Enable/Disable IP Module\":\"False\",\"DNS Setup\":\"Automatic\",\"Enable/Disable Static/dynamic\":\"Static\",\"IPv4/IPv6 Selection\":\"IPv4\",\"reset_to_dhcp\":\"True\",\"Set Port Number\":\"8080\",\"preferred_dns_server\":\"8.8.8.8\",\"alternate_dns_server\":\"8.8.4.4\",\"Gateway\":\"192.168.1.1\",\"Subnet mask\":\"255.255.255.0\",\"Set IP Address\":\"192.168.1.13\"}",
     "dexter_config_batt" : "67",
-    "dexter_config_timestamp" : "2026-04-20T10:01:13"
+    "dexter_config_timestamp" : "2026-01-09T09:59:13",
+    "lastUpdate" : "2026-04-27T11:24:02.386Z",
+    "unknown" : {
+      "logStatus" : "Unknown Event",
+      "logFullName" : "Unknown",
+      "logStatusMode" : "Unknown",
+      "powerStatus" : "On",
+      "systemStatus" : "Normal",
+      "healthStatus" : "Active",
+      "notification" : "false",
+      "alarmFlag" : false,
+      "severity" : "",
+      "activeAlarm" : [ ],
+      "timestamp" : "2026-04-27T11:24:02.386Z"
+    },
+    "unknown_logStatus" : "Unknown Event",
+    "unknown_logFullName" : "Unknown",
+    "unknown_logStatusMode" : "Unknown",
+    "unknown_powerStatus" : "On",
+    "unknown_systemStatus" : "Normal",
+    "unknown_healthStatus" : "Active",
+    "unknown_notification" : "false",
+    "unknown_alarmFlag" : false,
+    "unknown_severity" : "",
+    "unknown_activeAlarm" : "[]",
+    "unknown_timestamp" : "2026-04-27T11:24:02.386Z",
+    "Dahua_NVR_cameraInfo" : {
+      "0" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "1" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "2" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "3" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "4" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "5" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "6" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "7" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "8" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "9" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "10" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "11" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "12" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "13" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "14" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      },
+      "15" : {
+        "Dahua_NVR_Address" : "NA",
+        "Dahua_NVR_Resolutions" : "NA",
+        "Dahua_NVR_FPS_Values" : "NA",
+        "Dahua_NVR_Name" : "NA"
+      }
+    },
+    "Dahua_NVR_cameraInfo_0" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_1" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_2" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_3" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_4" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_5" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_6" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_7" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_8" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_9" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_10" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_11" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_12" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_13" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_14" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}",
+    "Dahua_NVR_cameraInfo_15" : "{\"Dahua_NVR_Address\":\"NA\",\"Dahua_NVR_Resolutions\":\"NA\",\"Dahua_NVR_FPS_Values\":\"NA\",\"Dahua_NVR_Name\":\"NA\"}"
   },
-  "sharedAttributes" : { }
+  "sharedAttributes" : {
+    "customer_title" : "BRANCH ZARKAWT",
+    "alarmFlag" : true
+  }
 }

@@ -332,7 +332,7 @@ public class ThingsBoardTimescaleImporter {
 
             List<String> pathSegments = new ArrayList<>();
             if (!fullPath.isEmpty()) {
-                String[] parts = fullPath.split("→");
+                String[] parts = fullPath.split("→|->");
                 for (String p : parts) {
                     String trimmed = p.trim();
                     if (!trimmed.isEmpty()) {

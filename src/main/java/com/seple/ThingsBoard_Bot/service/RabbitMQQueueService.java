@@ -29,7 +29,7 @@ public class RabbitMQQueueService {
     private final RabbitTemplate rabbitTemplate;
     private final MeterRegistry meterRegistry;
 
-    @PostConstruct
+    @org.springframework.context.event.EventListener(org.springframework.boot.context.event.ApplicationReadyEvent.class)
     public void initQueues() {
         log.info("[RABBITMQ] Initializing customer-specific queues...");
         // Gauge: total messages queued across all customer queues, polled at scrape time.
