@@ -2,18 +2,18 @@ import React from 'react'
 import { useChat } from '../context/ChatContext'
 
 const QUICK_ACTIONS = [
-  { label: 'Are there any inactive branches in the network?', question: 'Are there any inactive branches?' },
-  { label: 'Check the current battery health and low voltage sensors', question: 'Are there any low battery devices?' },
-  { label: 'List all active alarms and critical alerts across regions', question: 'Are there any active alarms?' },
-  { label: 'What is the CCTV camera online status of BALLY BAZAR?', question: 'What is the CCTV status of BALLY BAZAR?' }
+  { label: 'Are there any offline branches in the network?', question: 'Are there any inactive branches?' },
+  { label: 'Compare the status of SALTLAKE and MALDATOWN side-by-side', question: 'Compare BOI-SALTLAKE and BOI-MALDATOWN' },
+  { label: 'Show the top 5 branches by alarm count', question: 'Top 5 branches by alarm count' },
+  { label: 'Get a category-wise health breakdown of the IoT fleet', question: 'Show category-wise health' }
 ]
 
 const TAGS = [
-  { label: 'Low Battery', question: 'Are there any low battery devices?' },
-  { label: 'Active Alarms', question: 'Are there any active alarms?' },
-  { label: 'CCTV Status', question: 'What is the CCTV status?' },
+  { label: 'Compare Branches', question: 'Compare BOI-SALTLAKE and BOI-MALDATOWN' },
+  { label: 'Top Alarms', question: 'Which branch has the most alarms?' },
+  { label: 'CCTV Health', question: 'Show category-wise health of CCTV' },
   { label: 'Offline Branches', question: 'Are there any inactive branches?' },
-  { label: 'System Health', question: 'What is the system health overview?' }
+  { label: 'Fleet Health Breakdown', question: 'Show category-wise health' }
 ]
 
 export const WelcomeMessage: React.FC = () => {
@@ -34,10 +34,10 @@ export const WelcomeMessage: React.FC = () => {
 
       {/* Headers */}
       <h2 className="text-[#1C1917] text-2xl font-bold text-center tracking-tight mb-2">
-        Ask about HMS Panel Troubleshooting
+        ThingsBoard IoT Assistant
       </h2>
       <p className="text-[#44403C] text-xs text-center max-w-xl px-4 mb-9 leading-relaxed">
-        I am SAI, your HMS support assistant. Ask me anything — troubleshooting, configuration, or installation.
+        I am SAI, your smart IoT monitoring assistant. Ask me about branch statuses, network health, active alerts, or regional breakdowns.
       </p>
 
       {/* Quick Actions — Paper Cards in 2x2 Grid */}
