@@ -700,6 +700,20 @@ class DeterministicAnswerServiceTest {
         assertTrue(answer.contains("Gateway:"));
     }
 
+    @Test
+    void shouldCompareTwoBranchesWithAliases() {
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.BRANCH_COMPARE)
+                .originalQuestion("Compare BallyBazar and Chandannagar")
+                .deterministic(true)
+                .confidence(1.0)
+                .build();
+        String answer = answerService.answer(query, snapshots);
+        assertTrue(answer.contains("Comparing"));
+        assertTrue(answer.contains("BALLY BAZAR"));
+        assertTrue(answer.contains("CHANDANNAGAR"));
+    }
+
     private String networkOperatorAnswer(java.util.Map<String, Object> raw) {
         BranchSnapshot branch = new BranchSnapshot();
         com.seple.ThingsBoard_Bot.model.domain.BranchIdentity identity =

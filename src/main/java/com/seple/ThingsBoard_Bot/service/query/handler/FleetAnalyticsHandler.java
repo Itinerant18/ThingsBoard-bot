@@ -177,9 +177,17 @@ public class FleetAnalyticsHandler implements AnswerHandler {
         String question = upper(query.getOriginalQuestion());
         List<BranchSnapshot> matched = new ArrayList<>();
         for (BranchSnapshot snapshot : snapshots) {
-            String norm = normalizeName(support.branchName(snapshot));
-            if (norm.length() >= 4 && question.contains(norm) && !matched.contains(snapshot)) {
-                matched.add(snapshot);
+            if (snapshot.getIdentity() == null || snapshot.getIdentity().getAliases() == null) {
+                continue;
+            }
+            for (String alias : snapshot.getIdentity().getAliases()) {
+                String norm = normalizeName(alias);
+                if (norm.length() >= 4 && question.contains(norm)) {
+                    if (!matched.contains(snapshot)) {
+                        matched.add(snapshot);
+                    }
+                    break;
+                }
             }
             if (matched.size() == 2) {
                 break;

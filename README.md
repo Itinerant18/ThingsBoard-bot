@@ -177,59 +177,68 @@ SAI is a **Context-Augmented Generation** system. The backend deterministically 
 
 ## System Architecture
 
-```
-┌──────────────────────────────────────────────────────────────────────┐
-│  ThingsBoard Dashboard                                                │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │  HTML Widget  (iframe → React Chat UI)                        │   │
-│  │  postMessage sends JWT + host on load (origin-validated)      │   │
-│  └────────────────────────┬──────────────────────────────────────┘   │
-└───────────────────────────│──────────────────────────────────────────┘
-                            │  HTTPS / SSE
-                     ┌──────▼──────────────────┐
-                     │   Caddy Reverse Proxy    │  flush_interval -1 (SSE)
-                     │   (TLS + security hdrs)  │
-                     └──────┬──────────────────┘
-                            │
-          ┌─────────────────▼──────────────────┐
-          │         Spring Boot App             │
-          │  ┌──────────────────────────────┐  │
-          │  │ ChatController               │  │  profile: chat
-          │  │  → JWT decode (+ optional    │  │
-          │  │    signature verify)         │  │
-          │  │  → customer mapping          │  │
-          │  │  → QueryIntentResolver       │  │
-          │  │  → BranchSnapshotMapper      │  │
-          │  │  → ChatService → OpenAI      │  │
-          │  └──────────────────────────────┘  │
-          │  ┌──────────────────────────────┐  │
-          │  │ EventConsumerService         │  │  profile: consumer
-          │  │  → idempotency check (Redis) │  │
-          │  │  → TimescaleDB write         │  │
-          │  │  → Redis state update        │  │
-          │  │  → idempotency mark AFTER    │  │
-          │  └──────────────────────────────┘  │
-          │  ┌──────────────────────────────┐  │
-          │  │ WebhookController            │  │  profile: ingestion
-          │  │  → HMAC verify               │  │
-          │  │  → timestamp skew check      │  │
-          │  │  → publish to RabbitMQ       │  │
-          │  └──────────────────────────────┘  │
-          └───────┬───────────────────┬─────────┘
-                  │                   │
-         ┌────────▼───────┐  ┌────────▼──────────────┐
-         │  Redis (Upstash)│  │  TimescaleDB (Cloud)  │
-         │  device state  │  │  device_events         │
-         │  + replay lock │  │  hierarchy_nodes       │
-         └────────────────┘  │  branch_ancestor_paths │
-                             └───────────────────────┘
-                  │
-         ┌────────▼──────────┐
-         │  RabbitMQ          │
-         │  iot.events        │
-         │  iot.dlx (DLX)     │
-         │  iot.events.dlq    │
-         └────────────────────┘
+```mermaid
+graph TD
+    subgraph ClientLayer ["Client Layer"]
+        TB["ThingsBoard Dashboard"]
+        UI["React Chat UI (Iframe)"]
+        TB -->|postMessage: JWT & Host| UI
+    end
+
+    subgraph ProxyLayer ["Proxy Layer"]
+        Caddy["Caddy Reverse Proxy"]
+        UI -->|HTTPS / SSE| Caddy
+    end
+
+    subgraph SpringApp ["Spring Boot Application"]
+        subgraph ChatProfile ["Profile: chat"]
+            CC["ChatController"]
+            QIR["QueryIntentResolver"]
+            BSM["BranchSnapshotMapper"]
+            CS["ChatService"]
+            OAI["OpenAI (GPT-4o)"]
+            
+            CC --> QIR
+            CC --> BSM
+            CC --> CS
+            CS --> OAI
+        end
+
+        subgraph IngestionProfile ["Profile: ingestion"]
+            WC["WebhookController"]
+        end
+
+        subgraph ConsumerProfile ["Profile: consumer"]
+            ECS["EventConsumerService"]
+        end
+    end
+
+    Caddy -->|Flushes SSE| CC
+    TB -->|Real-time Webhook Events| WC
+
+    subgraph BrokerLayer ["Messaging Layer"]
+        RMQ["RabbitMQ Broker"]
+        Queue["Queue: iot.events"]
+        DLQ["Queue: iot.events.dlq (DLQ)"]
+        RMQ --> Queue
+        RMQ --> DLQ
+    end
+
+    WC -->|Publish Events| RMQ
+    Queue -->|Consume Events| ECS
+
+    subgraph StorageLayer ["Database & Cache Layer"]
+        Redis[("Redis - Upstash: Device State & Replay Lock")]
+        Timescale[("TimescaleDB - Cloud: Event & Hierarchy Store")]
+    end
+
+    ECS -->|1. Idempotency Check| Redis
+    ECS -->|2. Write Time-series| Timescale
+    ECS -->|3. Update Active State| Redis
+    ECS -->|4. Mark Ingested| Redis
+
+    CC -->|Read Live State| Redis
+    CC -->|Read Historical/Hierarchy| Timescale
 ```
 
 ---
