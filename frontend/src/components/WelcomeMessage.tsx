@@ -34,7 +34,7 @@ export const WelcomeMessage: React.FC = () => {
 
       {/* Headers */}
       <h2 className="text-[#1C1917] text-2xl font-bold text-center tracking-tight mb-2">
-        ThingsBoard IoT Assistant
+        SAI Assistant
       </h2>
       <p className="text-[#44403C] text-xs text-center max-w-xl px-4 mb-9 leading-relaxed">
         I am SAI, your smart IoT monitoring assistant. Ask me about branch statuses, network health, active alerts, or regional breakdowns.
