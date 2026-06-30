@@ -37,7 +37,7 @@ export const WelcomeMessage: React.FC = () => {
         SAI Assistant
       </h2>
       <p className="text-[#44403C] text-xs text-center max-w-xl px-4 mb-9 leading-relaxed">
-        I am SAI, your smart IoT monitoring assistant. Ask me about branch statuses, network health, active alerts, or regional breakdowns.
+        I am SAI, your smart assistant
       </p>
 
       {/* Quick Actions — Paper Cards in 2x2 Grid */}

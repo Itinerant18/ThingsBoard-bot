@@ -54,8 +54,7 @@ export const ChatWindow: React.FC = () => {
           </div>
 
           <div>
-            <div className="font-bold text-sm text-[#1C1917] leading-tight">SAI Tech Support</div>
-            <div className="text-[10px] text-[#44403C] mt-0.5">Technical support, troubleshooting, and diagrams</div>
+            <div className="font-bold text-sm text-[#1C1917] leading-tight">SAI</div>
           </div>
         </div>
 
