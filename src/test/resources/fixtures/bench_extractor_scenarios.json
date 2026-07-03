@@ -1,0 +1,51 @@
+[
+  {
+    "question": "battery voltage and cctv status for Bally Bazar",
+    "category": "multi_intent",
+    "expectIntentCount": 2,
+    "expectStatus": "ANSWERED",
+    "contains": ["Battery Voltage Reading", "---"]
+  },
+  {
+    "question": "power status and door status of Bhadreswar",
+    "category": "multi_intent",
+    "expectIntentCount": 2,
+    "expectStatus": "ANSWERED",
+    "contains": ["---"]
+  },
+  {
+    "question": "is the battery dying at Tarakeshwar?",
+    "category": "paraphrase",
+    "expectIntents": ["BATTERY_LOW_STATUS"],
+    "expectStatus": "ANSWERED",
+    "contains": ["Battery"]
+  },
+  {
+    "question": "and Liluah?",
+    "category": "paraphrase",
+    "expectIntents": ["CCTV_STATUS"],
+    "expectStatus": "ANSWERED",
+    "contains": ["ONLINE"]
+  },
+  {
+    "question": "show battery voltage of Tarakeswar as a table",
+    "category": "entity_resolution",
+    "expectIntents": ["BATTERY_VOLTAGE"],
+    "expectStatus": "ANSWERED",
+    "contains": ["Battery Voltage Reading"]
+  },
+  {
+    "question": "what does stale mean",
+    "category": "knowledge",
+    "expectIntents": ["GLOSSARY"],
+    "expectStatus": "ANSWERED",
+    "contains": ["**stale:**"]
+  },
+  {
+    "question": "how do I add a camera?",
+    "category": "knowledge",
+    "expectIntents": ["HOW_TO"],
+    "expectStatus": "ANSWERED",
+    "contains": ["read-only"]
+  }
+]

@@ -30,6 +30,12 @@
       { "intent": "BATTERY_VOLTAGE", "entities": ["Tarakeswar"], "format": "TABLE", "confidence": 0.95 }
     ]
   },
+  "power status and door status of Bhadreswar": {
+    "intents": [
+      { "intent": "POWER_STATUS", "entities": ["Bhadreswar"], "format": null, "confidence": 0.93 },
+      { "intent": "DOOR_STATUS", "entities": ["Bhadreswar"], "format": null, "confidence": 0.92 }
+    ]
+  },
   "what does stale mean": {
     "intents": [
       { "intent": "GLOSSARY", "entities": ["stale"], "format": null, "confidence": 0.97 }

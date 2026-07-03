@@ -64,6 +64,7 @@ class GoldenQuestionAccuracyTest {
         }
     }
 
-    private record GoldenQuestion(String question, String intent, String matchedBranch, List<String> contains) {
+    private record GoldenQuestion(String question, String intent, String category, String matchedBranch,
+            List<String> contains) {
     }
 }
