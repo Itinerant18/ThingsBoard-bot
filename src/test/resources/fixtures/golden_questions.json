@@ -21,10 +21,28 @@
     "contains": ["Battery Voltage Reading", "14"]
   },
   {
+    "question": "What is Tarakeswar battery voltage?",
+    "intent": "BATTERY_VOLTAGE",
+    "matchedBranch": "BOI-TARAKESHWAR",
+    "contains": ["Battery Voltage Reading", "14"]
+  },
+  {
     "question": "How many cameras are online in Liluah?",
     "intent": "CCTV_STATUS",
     "matchedBranch": "BOI-LILUAH",
     "contains": ["12", "ONLINE"]
+  },
+  {
+    "question": "How many cameras are online in Lilua?",
+    "intent": "CCTV_STATUS",
+    "matchedBranch": "BOI-LILUAH",
+    "contains": ["12", "ONLINE"]
+  },
+  {
+    "question": "What is Bhadreswer time lock status?",
+    "intent": "SUBSYSTEM_STATUS",
+    "matchedBranch": "BOI-BHADRESWAR",
+    "contains": ["Time Lock Status", "OFFLINE"]
   },
   {
     "question": "What is Bhadreswar time lock status?",
