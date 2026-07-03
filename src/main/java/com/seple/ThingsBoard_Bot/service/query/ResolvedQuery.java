@@ -21,4 +21,6 @@ public class ResolvedQuery {
     double confidence;
     /** Fuzzy branch-name outcome when exact matching failed; null when not attempted. */
     BranchResolution branchResolution;
+    /** Requested rendering from the extractor; null means handler default. */
+    ResponseFormat responseFormat;
 }
