@@ -27,6 +27,7 @@ import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
 import com.seple.ThingsBoard_Bot.service.query.QueryRouterService;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntentResolver;
 import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
+import com.seple.ThingsBoard_Bot.service.query.extract.ExtractorShadowService;
 import com.seple.ThingsBoard_Bot.service.query.resolve.BranchResolution;
 import com.seple.ThingsBoard_Bot.util.StructuredContextBuilder;
 import com.seple.ThingsBoard_Bot.util.TokenCounterService;
@@ -62,6 +63,7 @@ public class ChatService {
     private final GlobalAggregatorService globalAggregatorService;
     private final QueryRouterService queryRouterService;
     private final ResponseEvaluationService responseEvaluationService;
+    private final ExtractorShadowService extractorShadowService;
     private final io.micrometer.core.instrument.Counter deterministicAnswers;
     private final io.micrometer.core.instrument.Counter llmAnswers;
     private final io.micrometer.core.instrument.Counter llmTokens;
@@ -75,6 +77,7 @@ public class ChatService {
             GlobalAggregatorService globalAggregatorService,
             QueryRouterService queryRouterService,
             ResponseEvaluationService responseEvaluationService,
+            ExtractorShadowService extractorShadowService,
             io.micrometer.core.instrument.MeterRegistry meterRegistry,
             @org.springframework.beans.factory.annotation.Value("classpath:prompts/system-prompt.txt") Resource systemPromptResource) {
         this.systemPrompt = loadSystemPrompt(systemPromptResource) + PROMPT_INJECTION_GUARD;
@@ -95,6 +98,7 @@ public class ChatService {
         this.globalAggregatorService = globalAggregatorService;
         this.queryRouterService = queryRouterService;
         this.responseEvaluationService = responseEvaluationService;
+        this.extractorShadowService = extractorShadowService;
     }
 
     private static String loadSystemPrompt(Resource resource) {
@@ -309,6 +313,10 @@ public class ChatService {
                     : userDataService.getUserBranchSnapshots(userToken);
             ResolvedQuery resolvedQuery = queryIntentResolver.resolve(request.getQuestion(), snapshots,
                     chatMemoryService.getActiveBranch(sessionId));
+
+            // Phase 2 shadow mode: compare the LLM extractor against the deterministic resolver
+            // asynchronously. No-op unless iotchatbot.extractor.mode=shadow; never affects the answer.
+            extractorShadowService.maybeShadow(request.getQuestion(), history, resolvedQuery);
 
             if (resolvedQuery.isGlobal() && globalAggregatorService.isEnabled()) {
                 GlobalOverviewCounters counters = globalAggregatorService.fetchGlobalOverview(userToken);
