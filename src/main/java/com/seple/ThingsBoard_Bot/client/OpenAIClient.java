@@ -174,6 +174,51 @@ public class OpenAIClient {
     }
 
     /**
+     * Generic deterministic JSON-mode completion (temperature 0,
+     * {@code response_format=json_object}) with optional conversation history. Used by the
+     * Phase 2 intent extractor; {@link #evaluateJson} is the judge-specific variant without
+     * history.
+     *
+     * @return the raw JSON content string, or {@code null} on any error (never throws)
+     */
+    public String completeJson(String systemPrompt,
+            List<com.seple.ThingsBoard_Bot.model.dto.ChatMessage> history, String userMessage) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + config.getApiKey());
+
+            Map<String, Object> requestBody = buildRequestBody(systemPrompt, history, userMessage, false);
+            requestBody.put("temperature", 0.0);
+            requestBody.put("response_format", Map.of("type", "json_object"));
+
+            String jsonBody = objectMapper.writeValueAsString(requestBody);
+            HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
+
+            long startTime = System.currentTimeMillis();
+            ResponseEntity<String> response = restTemplate.postForEntity(OPENAI_CHAT_URL, entity, String.class);
+            latencyTimer.record(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS);
+
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                JsonNode responseJson = objectMapper.readTree(response.getBody());
+                int totalTokens = responseJson.path("usage").path("total_tokens").asInt(0);
+                if (totalTokens > 0) {
+                    tokensSummary.record(totalTokens);
+                }
+                meterRegistry.counter("openai.requests", "result", "success").increment();
+                return responseJson.path("choices").get(0).path("message").path("content").asText();
+            }
+            meterRegistry.counter("openai.requests", "result", "error").increment();
+            log.error("❌ OpenAI JSON completion returned non-success: {}", response.getStatusCode());
+            return null;
+        } catch (Exception e) {
+            meterRegistry.counter("openai.requests", "result", "error").increment();
+            log.error("❌ Error calling OpenAI for JSON completion: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Streaming variant of {@link #chat}. Sends {@code "stream": true} to OpenAI,
      * reads the SSE {@code data:} lines, and invokes {@code onToken} for each
      * delta content chunk as it arrives. Returns the full concatenated answer.
