@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,16 +13,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seple.ThingsBoard_Bot.model.domain.BranchSnapshot;
 import com.seple.ThingsBoard_Bot.service.normalization.BranchAliasIndex;
-import com.seple.ThingsBoard_Bot.service.normalization.BranchSnapshotMapper;
-import com.seple.ThingsBoard_Bot.service.normalization.FieldPrecedenceResolver;
-import com.seple.ThingsBoard_Bot.service.normalization.FullDataPayloadParser;
-import com.seple.ThingsBoard_Bot.service.normalization.ValueNormalizer;
 import com.seple.ThingsBoard_Bot.service.query.AnswerTemplateService;
 import com.seple.ThingsBoard_Bot.service.query.DeterministicAnswerService;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntentResolver;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
 import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
 import com.seple.ThingsBoard_Bot.support.FixtureLoader;
+import com.seple.ThingsBoard_Bot.support.MockSnapshotStore;
 
 class GoldenQuestionAccuracyTest {
 
@@ -34,12 +30,7 @@ class GoldenQuestionAccuracyTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        FullDataPayloadParser parser = new FullDataPayloadParser();
-        BranchSnapshotMapper mapper = new BranchSnapshotMapper(
-                new FieldPrecedenceResolver(new ValueNormalizer()), new ValueNormalizer());
-        snapshots = parser.parse(FixtureLoader.load("fixtures/full_data_fixture.json")).branches().values().stream()
-                .map(mapper::map)
-                .collect(Collectors.toList());
+        snapshots = MockSnapshotStore.loadDefault();
         resolver = new QueryIntentResolver(new BranchAliasIndex());
         answerService = new DeterministicAnswerService(new AnswerTemplateService());
     }
