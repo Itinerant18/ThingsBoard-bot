@@ -121,6 +121,20 @@ class MultiIntentOrchestratorTest {
     }
 
     @Test
+    void knowledgeIntentEntitiesAreNotResolvedAsBranches() {
+        // "stale" is a glossary term, not a branch - the orchestrator must not turn it into a
+        // "couldn't find a branch named stale" clarification. GlossaryHandler is not in the
+        // default handler set here, so the outcome is UNANSWERED (LLM fallback), never a bogus
+        // branch clarification.
+        OrchestrationResult result = orchestrator.orchestrate(
+                new ExtractionResult(List.of(intent(QueryIntent.GLOSSARY, 0.95, "stale"))),
+                "what does stale mean?", snapshots, "BOI");
+
+        assertTrue(result.status() != OrchestrationResult.Status.CLARIFICATION,
+                "glossary term must not produce a branch clarification");
+    }
+
+    @Test
     void unhandledIntentFallsBackToUnanswered() {
         OrchestrationResult result = orchestrator.orchestrate(
                 new ExtractionResult(List.of(intent(QueryIntent.GENERAL_LLM, 0.95))),

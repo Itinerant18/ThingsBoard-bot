@@ -101,7 +101,11 @@ public class MultiIntentOrchestrator {
             BranchDictionary dictionary, String customerId) {
         BranchSnapshot targetBranch = null;
 
-        for (String entity : intent.entities()) {
+        // Knowledge intents (glossary/capability) carry terms as entities, not branch names -
+        // fuzzy-resolving "stale" as a branch would short-circuit into a bogus clarification.
+        List<String> branchEntities = intent.intent().isKnowledge() ? List.of() : intent.entities();
+
+        for (String entity : branchEntities) {
             BranchResolution resolution = fuzzyBranchResolver.resolve(entity, dictionary);
             switch (resolution.status()) {
                 case RESOLVED -> {
