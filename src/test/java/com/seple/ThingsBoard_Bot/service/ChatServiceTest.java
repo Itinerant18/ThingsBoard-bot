@@ -52,6 +52,9 @@ class ChatServiceTest {
             mock(com.seple.ThingsBoard_Bot.service.query.orchestrate.MultiIntentOrchestrator.class);
     private final com.seple.ThingsBoard_Bot.config.ExtractorConfig extractorConfig =
             new com.seple.ThingsBoard_Bot.config.ExtractorConfig();
+    private final com.seple.ThingsBoard_Bot.service.query.safety.SafetyGateService safetyGateService =
+            new com.seple.ThingsBoard_Bot.service.query.safety.SafetyGateService(
+                    new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
 
     private final ChatService service = new ChatService(
             userDataService,
@@ -69,6 +72,7 @@ class ChatServiceTest {
             intentExtractor,
             multiIntentOrchestrator,
             extractorConfig,
+            safetyGateService,
             new io.micrometer.core.instrument.simple.SimpleMeterRegistry(),
             new org.springframework.core.io.ClassPathResource("prompts/system-prompt.txt"));
 

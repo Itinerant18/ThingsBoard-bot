@@ -67,6 +67,7 @@ public class ChatService {
     private final com.seple.ThingsBoard_Bot.service.query.extract.IntentExtractor intentExtractor;
     private final com.seple.ThingsBoard_Bot.service.query.orchestrate.MultiIntentOrchestrator multiIntentOrchestrator;
     private final com.seple.ThingsBoard_Bot.config.ExtractorConfig extractorConfig;
+    private final com.seple.ThingsBoard_Bot.service.query.safety.SafetyGateService safetyGateService;
     private final io.micrometer.core.instrument.Counter deterministicAnswers;
     private final io.micrometer.core.instrument.Counter llmAnswers;
     private final io.micrometer.core.instrument.Counter llmTokens;
@@ -84,6 +85,7 @@ public class ChatService {
             com.seple.ThingsBoard_Bot.service.query.extract.IntentExtractor intentExtractor,
             com.seple.ThingsBoard_Bot.service.query.orchestrate.MultiIntentOrchestrator multiIntentOrchestrator,
             com.seple.ThingsBoard_Bot.config.ExtractorConfig extractorConfig,
+            com.seple.ThingsBoard_Bot.service.query.safety.SafetyGateService safetyGateService,
             io.micrometer.core.instrument.MeterRegistry meterRegistry,
             @org.springframework.beans.factory.annotation.Value("classpath:prompts/system-prompt.txt") Resource systemPromptResource) {
         this.systemPrompt = loadSystemPrompt(systemPromptResource) + PROMPT_INJECTION_GUARD;
@@ -108,6 +110,7 @@ public class ChatService {
         this.intentExtractor = intentExtractor;
         this.multiIntentOrchestrator = multiIntentOrchestrator;
         this.extractorConfig = extractorConfig;
+        this.safetyGateService = safetyGateService;
     }
 
     private static String loadSystemPrompt(Resource resource) {
@@ -276,6 +279,16 @@ public class ChatService {
                         .answer("Please log in first.")
                         .error(true)
                         .build());
+            }
+
+            // Phase 3 safety gate: injection markers and garbage input are stopped here, before
+            // the router, resolver, extractor, or any LLM call - zero tokens spent on attacks.
+            com.seple.ThingsBoard_Bot.service.query.safety.SafetyGateService.GateResult gate =
+                    safetyGateService.check(request.getQuestion());
+            if (gate.outcome() != com.seple.ThingsBoard_Bot.service.query.safety.SafetyGateService.Outcome.CLEAN) {
+                String gateIntent = gate.outcome() == com.seple.ThingsBoard_Bot.service.query.safety.SafetyGateService.Outcome.INJECTION
+                        ? "REFUSAL" : "GARBAGE";
+                return cannedAnswer(sessionId, request, gateIntent, gate.reply());
             }
 
             String customerId = userDataService.resolveCustomerIdPrefix(userToken);
