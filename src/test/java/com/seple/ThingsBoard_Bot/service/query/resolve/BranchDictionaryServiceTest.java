@@ -29,7 +29,7 @@ class BranchDictionaryServiceTest {
     @BeforeEach
     void setUp() {
         repository = mock(HierarchyNodeRepository.class);
-        service = new BranchDictionaryService(repository, aliasIndex);
+        service = new BranchDictionaryService(repository, aliasIndex, new ManualAliasTable(aliasIndex));
     }
 
     private HierarchyNode leaf(String nodeId, String customerId, String displayName) {

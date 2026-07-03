@@ -28,6 +28,7 @@ public class BranchDictionaryService {
 
     private final HierarchyNodeRepository hierarchyNodeRepository;
     private final BranchAliasIndex branchAliasIndex;
+    private final ManualAliasTable manualAliasTable;
 
     private final Map<String, BranchDictionary> dictionariesByCustomer = new ConcurrentHashMap<>();
 
@@ -57,7 +58,8 @@ public class BranchDictionaryService {
         List<HierarchyNode> leaves = "ALL".equals(customerId)
                 ? hierarchyNodeRepository.findAll().stream().filter(n -> Boolean.TRUE.equals(n.getIsLeaf())).toList()
                 : hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
-        BranchDictionary dictionary = BranchDictionary.fromHierarchyNodes(leaves, branchAliasIndex);
+        BranchDictionary dictionary = BranchDictionary.fromHierarchyNodes(leaves, branchAliasIndex)
+                .withManualAliases(manualAliasTable.mappings());
         log.info("Branch dictionary loaded for customer {}: {} branches", customerId, dictionary.entries().size());
         return dictionary;
     }

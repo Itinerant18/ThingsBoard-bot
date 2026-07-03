@@ -82,6 +82,45 @@ public final class BranchDictionary {
         variants.addAll(aliasIndex.aliasVariants(name));
     }
 
+    /**
+     * Returns a new dictionary where each manual shorthand (already normalized) is attached
+     * as an extra variant of the entry its canonical name resolves to. Shorthands whose
+     * canonical name is not in this dictionary are ignored.
+     */
+    public BranchDictionary withManualAliases(Map<String, String> shorthandToCanonical) {
+        if (shorthandToCanonical == null || shorthandToCanonical.isEmpty()) {
+            return this;
+        }
+        Map<String, Set<String>> extraVariantsByTechnicalId = new HashMap<>();
+        for (Map.Entry<String, String> mapping : shorthandToCanonical.entrySet()) {
+            BranchEntry target = exactLookup.get(mapping.getValue());
+            if (target == null) {
+                target = exactLookup.get(mapping.getValue().replace(" ", ""));
+            }
+            if (target != null) {
+                Set<String> extras = extraVariantsByTechnicalId.computeIfAbsent(target.technicalId(),
+                        ignored -> new LinkedHashSet<>());
+                extras.add(mapping.getKey());
+                extras.add(mapping.getKey().replace(" ", ""));
+            }
+        }
+        if (extraVariantsByTechnicalId.isEmpty()) {
+            return this;
+        }
+        List<BranchEntry> enriched = new ArrayList<>();
+        for (BranchEntry entry : entries) {
+            Set<String> extras = extraVariantsByTechnicalId.get(entry.technicalId());
+            if (extras == null) {
+                enriched.add(entry);
+            } else {
+                Set<String> variants = new LinkedHashSet<>(entry.variants());
+                variants.addAll(extras);
+                enriched.add(new BranchEntry(entry.technicalId(), entry.displayName(), entry.customerId(), variants));
+            }
+        }
+        return index(enriched);
+    }
+
     public List<BranchEntry> entries() {
         return entries;
     }
