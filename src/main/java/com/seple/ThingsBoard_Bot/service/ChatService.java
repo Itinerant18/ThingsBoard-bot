@@ -412,18 +412,22 @@ public class ChatService {
                 throw new ContextOverflowException("Structured context exceeded local token budget");
             }
 
+            String formatInstruction = com.seple.ThingsBoard_Bot.service.query.ResponseFormatInstructions
+                    .forFormat(resolvedQuery.getResponseFormat());
             String userMessage;
             if (targetBranch != null && targetBranch.getIdentity() != null) {
                 userMessage = "Structured Branch Context:\n" + contextJson
-                        + "\nNOTE: You are currently reporting for " + targetBranch.getIdentity().getBranchName() 
+                        + "\nNOTE: You are currently reporting for " + targetBranch.getIdentity().getBranchName()
                         + ". You MUST explicitly name this branch in your response header (e.g. **Branch " + targetBranch.getIdentity().getBranchName() + ": ...**)."
                         + (activeTopic != null ? "\nCRITICAL: The user is following up on a previous question about '" + activeTopic + "'. You MUST ONLY report on this specific topic for the branch." : "")
+                        + formatInstruction
                         + wrapUntrusted(request.getQuestion());
             } else {
                 userMessage = "Structured Context (all branches):\n" + contextJson
                         + "\nNOTE: This is a global query. Analyze all branches in the structured context and provide a summary answering the user's question."
                         + "\nNOTE: Since this is a global query across multiple branches, you are EXEMPTED from the MANDATORY HEADER RULES. Do NOT use a single-branch header format (like **Branch [Name]: ...**). Instead, answer the question globally (e.g. summarize across all branches)."
                         + "\nNOTE: Do NOT associate this answer with any branch from prior history or memory, as the user is explicitly asking about all branches."
+                        + formatInstruction
                         + wrapUntrusted(request.getQuestion());
             }
             // LLM-backed answer: defer the OpenAI call to the caller so the
