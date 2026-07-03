@@ -64,6 +64,9 @@ public class ChatService {
     private final QueryRouterService queryRouterService;
     private final ResponseEvaluationService responseEvaluationService;
     private final ExtractorShadowService extractorShadowService;
+    private final com.seple.ThingsBoard_Bot.service.query.extract.IntentExtractor intentExtractor;
+    private final com.seple.ThingsBoard_Bot.service.query.orchestrate.MultiIntentOrchestrator multiIntentOrchestrator;
+    private final com.seple.ThingsBoard_Bot.config.ExtractorConfig extractorConfig;
     private final io.micrometer.core.instrument.Counter deterministicAnswers;
     private final io.micrometer.core.instrument.Counter llmAnswers;
     private final io.micrometer.core.instrument.Counter llmTokens;
@@ -78,6 +81,9 @@ public class ChatService {
             QueryRouterService queryRouterService,
             ResponseEvaluationService responseEvaluationService,
             ExtractorShadowService extractorShadowService,
+            com.seple.ThingsBoard_Bot.service.query.extract.IntentExtractor intentExtractor,
+            com.seple.ThingsBoard_Bot.service.query.orchestrate.MultiIntentOrchestrator multiIntentOrchestrator,
+            com.seple.ThingsBoard_Bot.config.ExtractorConfig extractorConfig,
             io.micrometer.core.instrument.MeterRegistry meterRegistry,
             @org.springframework.beans.factory.annotation.Value("classpath:prompts/system-prompt.txt") Resource systemPromptResource) {
         this.systemPrompt = loadSystemPrompt(systemPromptResource) + PROMPT_INJECTION_GUARD;
@@ -99,6 +105,9 @@ public class ChatService {
         this.queryRouterService = queryRouterService;
         this.responseEvaluationService = responseEvaluationService;
         this.extractorShadowService = extractorShadowService;
+        this.intentExtractor = intentExtractor;
+        this.multiIntentOrchestrator = multiIntentOrchestrator;
+        this.extractorConfig = extractorConfig;
     }
 
     private static String loadSystemPrompt(Resource resource) {
@@ -318,6 +327,51 @@ public class ChatService {
             // asynchronously. No-op unless iotchatbot.extractor.mode=shadow; never affects the answer.
             extractorShadowService.maybeShadow(request.getQuestion(), history, resolvedQuery);
 
+            // Phase 2 active mode: the extractor drives only what the deterministic resolver could
+            // not place (GENERAL_LLM / ambiguous). Its fast path stays untouched in every mode.
+            if (extractorConfig.getMode() == com.seple.ThingsBoard_Bot.config.ExtractorConfig.Mode.ACTIVE
+                    && (resolvedQuery.getIntent() == QueryIntent.GENERAL_LLM || resolvedQuery.isAmbiguous())) {
+                com.seple.ThingsBoard_Bot.service.query.extract.ExtractionResult extraction =
+                        intentExtractor.extract(request.getQuestion(), history);
+                if (!extraction.isEmpty()) {
+                    com.seple.ThingsBoard_Bot.service.query.extract.ExtractedIntent top = extraction.intents().stream()
+                            .max(java.util.Comparator.comparingDouble(
+                                    com.seple.ThingsBoard_Bot.service.query.extract.ExtractedIntent::confidence))
+                            .orElseThrow();
+
+                    if (top.intent() == QueryIntent.REFUSAL) {
+                        log.warn("[EXTRACTOR] Refused manipulated input: '{}'", request.getQuestion());
+                        return cannedAnswer(sessionId, request, "REFUSAL",
+                                "I can only help with questions about your branch monitoring data. "
+                                        + "I can't follow instructions embedded in questions.");
+                    }
+                    if (top.intent() == QueryIntent.OUT_OF_SCOPE) {
+                        return cannedAnswer(sessionId, request, "OUT_OF_SCOPE",
+                                "That's outside what I can help with. Ask me about your branches' device "
+                                        + "status, power, CCTV, alarms, or related monitoring data.");
+                    }
+
+                    com.seple.ThingsBoard_Bot.service.query.orchestrate.OrchestrationResult orchestration =
+                            multiIntentOrchestrator.orchestrate(extraction, request.getQuestion(), snapshots, customerId);
+                    if (orchestration.status() != com.seple.ThingsBoard_Bot.service.query.orchestrate.OrchestrationResult.Status.UNANSWERED) {
+                        chatMemoryService.recordInteraction(sessionId, request.getQuestion(), orchestration.message());
+                        return AnswerPlan.deterministic(ChatResponse.builder()
+                                .answer(orchestration.message())
+                                .metadata(AnswerMetadata.builder()
+                                        .intent(top.intent().name())
+                                        .deterministic(true)
+                                        .confidence(top.confidence())
+                                        .build())
+                                .tokensUsed(0)
+                                .timestamp(System.currentTimeMillis())
+                                .error(false)
+                                .build());
+                    }
+                    // Fall through to the LLM path, carrying the requested format with us.
+                    resolvedQuery = resolvedQuery.toBuilder().responseFormat(top.format()).build();
+                }
+            }
+
             if (resolvedQuery.isGlobal() && globalAggregatorService.isEnabled()) {
                 GlobalOverviewCounters counters = globalAggregatorService.fetchGlobalOverview(userToken);
                 String globalAnswer = deterministicAnswerService.answerGlobalOverview(counters);
@@ -502,6 +556,22 @@ public class ChatService {
                 tokens);
     }
 
+
+    /** Deterministic canned reply used by the extractor's REFUSAL / OUT_OF_SCOPE classifications. */
+    private AnswerPlan cannedAnswer(String sessionId, ChatRequest request, String intentName, String answer) {
+        chatMemoryService.recordInteraction(sessionId, request.getQuestion(), answer);
+        return AnswerPlan.deterministic(ChatResponse.builder()
+                .answer(answer)
+                .metadata(AnswerMetadata.builder()
+                        .intent(intentName)
+                        .deterministic(true)
+                        .confidence(1.0)
+                        .build())
+                .tokensUsed(0)
+                .timestamp(System.currentTimeMillis())
+                .error(false)
+                .build());
+    }
 
     /**
      * Renders the clarification for an ambiguous branch. When the fuzzy resolver produced a
