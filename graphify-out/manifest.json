@@ -1,0 +1,1127 @@
+{
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\mvnw": {
+    "mtime": 1772776599.2976146,
+    "ast_hash": "ab50dd89da7da2346b28003352eeeeeb",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.codex\\hooks.json": {
+    "mtime": 1780133087.9092467,
+    "ast_hash": "b7940b17075648ef8d97c98d9b65e9b8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\package.json": {
+    "mtime": 1780296113.6145184,
+    "ast_hash": "604c133ab1c28aa65e98bb8474335c89",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\postcss.config.js": {
+    "mtime": 1780296113.6145184,
+    "ast_hash": "9e94f5afd46d0b71c0f40431ba0394c2",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\tailwind.config.ts": {
+    "mtime": 1780293661.1991704,
+    "ast_hash": "e79085907eedacc6f13930f6b9f6c72a",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\tsconfig.json": {
+    "mtime": 1780296113.6150625,
+    "ast_hash": "d0c4eed370045bf28dfa112142be33d3",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\tsconfig.node.json": {
+    "mtime": 1780293661.1996841,
+    "ast_hash": "281e378713152cccc7860c818db55849",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\vite.config.d.ts": {
+    "mtime": 1780296113.6150625,
+    "ast_hash": "0e1a67b4f5e8a7d0b4ce59225bb47e16",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\vite.config.js": {
+    "mtime": 1781086488.246442,
+    "ast_hash": "3b4822932989597a45cb42f4bda8753c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\vite.config.ts": {
+    "mtime": 1780468937.575376,
+    "ast_hash": "4273c6acddbcad74a29fda60e33ba64e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\App.tsx": {
+    "mtime": 1781162863.660881,
+    "ast_hash": "92e05525daa8b1cae2aecd013b1533dd",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\main.tsx": {
+    "mtime": 1780293661.195114,
+    "ast_hash": "ecda11754ebaf69980159f3c76e1f2cf",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\components\\ChatInput.tsx": {
+    "mtime": 1781162841.8942525,
+    "ast_hash": "1b49d760e33f3c1d9488938bce8a36e5",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\components\\ChatToggle.tsx": {
+    "mtime": 1780468383.1197262,
+    "ast_hash": "14862f37183850967510ee0275f1a6bb",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\components\\ChatWindow.tsx": {
+    "mtime": 1782819458.9160702,
+    "ast_hash": "b90b1abd50a5356cbdc106576ff6a1b5",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\components\\MessageBubble.tsx": {
+    "mtime": 1780468937.573382,
+    "ast_hash": "01f09455da4af50107900da71a3a2f45",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\components\\TypingIndicator.tsx": {
+    "mtime": 1780293661.1865182,
+    "ast_hash": "6682d564163e79b8fdc33bdcdd4e0577",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\components\\WelcomeMessage.tsx": {
+    "mtime": 1782819456.6156843,
+    "ast_hash": "6d619e704aef3e4b4dade19f6a9639e8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\context\\ChatContext.tsx": {
+    "mtime": 1781588150.5425131,
+    "ast_hash": "7700444b01e7ba8a63542742b6350020",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\types\\index.ts": {
+    "mtime": 1781162903.5120513,
+    "ast_hash": "3b525d661019fcbcb4aadabfb8c22ce7",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\ThingsBoardBotApplication.java": {
+    "mtime": 1772777210.3482292,
+    "ast_hash": "50f924b6f08a1608cc172b19b3a24349",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\client\\OpenAIClient.java": {
+    "mtime": 1781498482.4487083,
+    "ast_hash": "bd151d9ff1f361c9b5579c86f492f6a8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\client\\ThingsBoardClient.java": {
+    "mtime": 1781161561.727489,
+    "ast_hash": "2c62cad981e44a8c9efc55a15adc7385",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\client\\UserAwareThingsBoardClient.java": {
+    "mtime": 1781160581.20106,
+    "ast_hash": "c7fe066d1bdbc97668cb9448ff2a6e70",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\CacheConfig.java": {
+    "mtime": 1772777218.5147834,
+    "ast_hash": "3d8a1a046db0eaadb602d99a12692cad",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\ChatbotConfig.java": {
+    "mtime": 1775192794.9152784,
+    "ast_hash": "d80706e80097312b02af80b39d7df1a7",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\CorsConfig.java": {
+    "mtime": 1780977545.3735244,
+    "ast_hash": "6c6a21e92bbe42c9e1b4c981cdc29153",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\CustomerConfig.java": {
+    "mtime": 1779685604.8559227,
+    "ast_hash": "24379bada48997885e3a3bdb236bb498",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\DatabaseConfig.java": {
+    "mtime": 1779685604.8595743,
+    "ast_hash": "1d18bcbcdfae603c24737c57efccc8c3",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\DatabaseInitializer.java": {
+    "mtime": 1779685604.8702433,
+    "ast_hash": "7e1071c1a55a1dfed93dbdc4c87e989f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\JacksonConfig.java": {
+    "mtime": 1780892302.1481957,
+    "ast_hash": "4ddc525bba2b4cee84b7c5b3f3e2c5b5",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\OpenAIConfig.java": {
+    "mtime": 1773473477.3757772,
+    "ast_hash": "edc2cc7f65324d183a3c9bc132a3408d",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\RabbitMQConfig.java": {
+    "mtime": 1781161938.884782,
+    "ast_hash": "dac78dca542100059f4b8abaf9aa0921",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\RedisConfig.java": {
+    "mtime": 1779956332.6013575,
+    "ast_hash": "27d6d9213e5b0523518e7ff01980b397",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\ThingsBoardConfig.java": {
+    "mtime": 1777280867.2793906,
+    "ast_hash": "59da4d2b4fb914b53882b1b073e2e818",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\ChatController.java": {
+    "mtime": 1781162408.4372692,
+    "ast_hash": "3c1aa436564c5dd46684554c76abf5bf",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\DataController.java": {
+    "mtime": 1779690994.4799054,
+    "ast_hash": "9df53bfca1f70dab94776b8690d1bdb0",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\HierarchyAdminController.java": {
+    "mtime": 1781162979.149127,
+    "ast_hash": "ac74f0a88102da7fc0036d5942a0ddb4",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\ReplayController.java": {
+    "mtime": 1781161449.6114438,
+    "ast_hash": "b576ca81b1a3328f4b6595c24575dbb4",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\WebhookController.java": {
+    "mtime": 1781161799.4257436,
+    "ast_hash": "7f6ba2f34c858e7fbd3dea02a80f896f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\entity\\BranchAncestorPath.java": {
+    "mtime": 1779685604.8811336,
+    "ast_hash": "85414510480ef2ce0ea8b0d448fdd0c3",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\entity\\Customer.java": {
+    "mtime": 1781246686.165083,
+    "ast_hash": "212aaccac36403dcaf34f884c59d5be3",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\entity\\DeviceEvent.java": {
+    "mtime": 1781161255.1141949,
+    "ast_hash": "80ec6b6ac1ffc46bdf5695c8ae972f6e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\entity\\HierarchyNode.java": {
+    "mtime": 1779685604.9021246,
+    "ast_hash": "f592fac46d40ae5ba9d07d656b3dc22b",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\ContextOverflowException.java": {
+    "mtime": 1772777380.4431539,
+    "ast_hash": "5b47cd7dc3c34564f328a4c9eda66e4a",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\GlobalExceptionHandler.java": {
+    "mtime": 1781160098.4114504,
+    "ast_hash": "100dc1a47309d8f85851f71c4ceeb321",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\OpenAIException.java": {
+    "mtime": 1772777390.1640782,
+    "ast_hash": "8f992fbdf288edaa46cb8d3b1f6ce4e4",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\ThingsBoardException.java": {
+    "mtime": 1772777382.322407,
+    "ast_hash": "ab99d4d2c820e0d9f1fb63d78e8f377d",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\AlertSummary.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "905bd652e68ec09286fa7be0a43d1a2f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\BranchIdentity.java": {
+    "mtime": 1775192115.360868,
+    "ast_hash": "0211d146403efffc60b16453ec58b2fe",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\BranchSnapshot.java": {
+    "mtime": 1775192115.374378,
+    "ast_hash": "dca4a44aad5282e00b7e5e7aeb80d55b",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\BranchSubsystems.java": {
+    "mtime": 1775192115.374378,
+    "ast_hash": "fe13f076d661cac2a03e9c49845b60ef",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\CctvStatus.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "8669988b119f2a96c495d419db12bda1",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\GatewayStatus.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "cb05d417cd628067d0ddc8141e650fdf",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\HardwareHealth.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "bc3a0c4a195d84d9adfd922f29d9104e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\NormalizedState.java": {
+    "mtime": 1775192115.360868,
+    "ast_hash": "91ce1eaf004484058d07433312ae6812",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\PowerStatus.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "7d9a4e510f1cf764d853ffb3f6fefe7c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\SubsystemStatus.java": {
+    "mtime": 1782210211.6100352,
+    "ast_hash": "59e71909e39df1f058a5ea630fb7130a",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\AnswerMetadata.java": {
+    "mtime": 1775192195.287189,
+    "ast_hash": "5447531f436eb378e6a1a5f1da735c33",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\ChartData.java": {
+    "mtime": 1772777239.1323645,
+    "ast_hash": "6a1aacf6b67d28c8b1329744973a13f8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\ChatMessage.java": {
+    "mtime": 1773031074.1842992,
+    "ast_hash": "c970c84e64c59112f538777d6ee57eb0",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\ChatRequest.java": {
+    "mtime": 1772778224.1111348,
+    "ast_hash": "9cb96a9226ee7d49918904b22795e91b",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\ChatResponse.java": {
+    "mtime": 1775192295.2504425,
+    "ast_hash": "ed04c2f27651ec47b78509cb5a6972b6",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\DeviceIndexEntry.java": {
+    "mtime": 1781585727.4392433,
+    "ast_hash": "13aff5abbd11881a9e84ada10f73c41e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\GlobalOverviewCounters.java": {
+    "mtime": 1777280867.298135,
+    "ast_hash": "d07e1e4dd17eb4d276d25bae9328a7b9",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\TbEventPayload.java": {
+    "mtime": 1779690994.480429,
+    "ast_hash": "c5ff57b8f1cd17e612874f4e0e0bf910",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\repository\\BranchAncestorPathRepository.java": {
+    "mtime": 1779685604.90624,
+    "ast_hash": "695ffba86378760a438d82343b0a4591",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\repository\\CustomerRepository.java": {
+    "mtime": 1779703877.8238447,
+    "ast_hash": "12d315214c76c5062577c5262988c947",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\repository\\DeviceEventRepository.java": {
+    "mtime": 1780123409.694851,
+    "ast_hash": "880ee1445badeb6be6018ec140fa4d1f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\repository\\HierarchyNodeRepository.java": {
+    "mtime": 1779963744.961519,
+    "ast_hash": "73ef1da16dad1626c9a9f775c7f52e69",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\AncestorPathCache.java": {
+    "mtime": 1779690994.480429,
+    "ast_hash": "87ce6233b86f9b342f50325d8627e6a8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\AncestorPathService.java": {
+    "mtime": 1779705610.8033223,
+    "ast_hash": "538168ed71bb1119d4a16ae6b5d5cf05",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ChartService.java": {
+    "mtime": 1772787044.574211,
+    "ast_hash": "9f30761edabbd2a8cdd1f3eee9f3af1b",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ChatMemoryService.java": {
+    "mtime": 1780977545.3745246,
+    "ast_hash": "5951bbb6404f21456875409e4f15db41",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ChatService.java": {
+    "mtime": 1781498555.7555115,
+    "ast_hash": "bcb84e817f550a81074602123198b1b0",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\DataService.java": {
+    "mtime": 1777280462.8706803,
+    "ast_hash": "1ba88732653d1730193debe630f3155a",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\EventConsumerService.java": {
+    "mtime": 1781160865.925379,
+    "ast_hash": "de5c3c7d478f978c7b1bf4d46c390da8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\EventParseService.java": {
+    "mtime": 1780909785.6449914,
+    "ast_hash": "fd19b6e49984cb17fab634eaec3a8960",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\EventWriteService.java": {
+    "mtime": 1781160851.4919024,
+    "ast_hash": "e3e76130f6e4fe10b27874dab197a5d9",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\IdempotencyService.java": {
+    "mtime": 1781160840.8923817,
+    "ast_hash": "6e885b9d9ad14a4b153e82ef0f2483e1",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\LuaScriptService.java": {
+    "mtime": 1781163085.9443786,
+    "ast_hash": "9c2aa09300cc8c07a95a34c6162fb374",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\RabbitMQQueueService.java": {
+    "mtime": 1782454372.5634122,
+    "ast_hash": "17d249f2476bf26784094abdf4daff1e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ReconciliationService.java": {
+    "mtime": 1779705646.0806773,
+    "ast_hash": "d5682fc72703afbd7cb32acf68b555b5",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\RedisCacheService.java": {
+    "mtime": 1781162704.5303473,
+    "ast_hash": "66ba7f33fbe208bdf1e94fb4493718c9",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ReplayService.java": {
+    "mtime": 1781163098.8243668,
+    "ast_hash": "f12cfed26890a2296bbdbed35d154992",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\UserDataService.java": {
+    "mtime": 1782100963.4502578,
+    "ast_hash": "7956df81fa74437caefd7a87bf74974a",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\index\\BranchIndexService.java": {
+    "mtime": 1782101020.2074761,
+    "ast_hash": "dfd55d840bd9bedf9d1b6ad33a26b58b",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\index\\GlobalAggregatorService.java": {
+    "mtime": 1777280867.3093545,
+    "ast_hash": "8580c346f23640e4c9995e305f873fdb",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\BranchAliasIndex.java": {
+    "mtime": 1775199378.3498712,
+    "ast_hash": "966087a614e9fe36ce3c847051b76c69",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\BranchSnapshotMapper.java": {
+    "mtime": 1782210211.6100352,
+    "ast_hash": "b19e796c01f3d353defd3a04b8233250",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\FieldPrecedenceResolver.java": {
+    "mtime": 1781776758.9306648,
+    "ast_hash": "0fbfb7a1ce0677b42b2985b93148e945",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\FullDataPayloadParser.java": {
+    "mtime": 1775192115.3753784,
+    "ast_hash": "71f0325bb4f771125f1e3c70b52b7a9f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\ValueNormalizer.java": {
+    "mtime": 1779776358.6425755,
+    "ast_hash": "c0d0cb192c0c3a1f1bc63fe87600f70c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\AnswerTemplateService.java": {
+    "mtime": 1782210211.6100352,
+    "ast_hash": "1731f1541a2e311c6d94c978232f2b25",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\DeterministicAnswerService.java": {
+    "mtime": 1782216072.0976524,
+    "ast_hash": "fcb1140518d039538c6714e80ebcbc76",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\IntentKeyProfileRegistry.java": {
+    "mtime": 1780996705.3555477,
+    "ast_hash": "52ce444e2a6eb107c6717abe9206cee5",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\NodeNameResolver.java": {
+    "mtime": 1781585756.8273504,
+    "ast_hash": "c02146c8d2e53a3b81937240e86e4a43",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryIntent.java": {
+    "mtime": 1782216396.6671243,
+    "ast_hash": "fe0b781e026471311ab830b70e665655",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryIntentResolver.java": {
+    "mtime": 1782216415.9866447,
+    "ast_hash": "8efbcb40739480d92b45710539094719",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRouterService.java": {
+    "mtime": 1781775959.8572254,
+    "ast_hash": "0288356e10d90eeb203eb2891f72ec45",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\RedisQueryService.java": {
+    "mtime": 1781585760.2412555,
+    "ast_hash": "956f974b760f3df6080314d4f2f826cd",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\ResolvedQuery.java": {
+    "mtime": 1782210211.6120417,
+    "ast_hash": "a48d4d5964ecf51d71be092df89a0ff8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\JwtParserUtil.java": {
+    "mtime": 1781585724.5757284,
+    "ast_hash": "db74f9d82ead03850ac0877d2bbb70d6",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\StructuredContextBuilder.java": {
+    "mtime": 1782212271.0291262,
+    "ast_hash": "c49d9e7ddcadb30b0f9a65d3603b9d90",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\ThingsBoardRequestContext.java": {
+    "mtime": 1780376836.6682034,
+    "ast_hash": "0f1adadd72c8040de839db1145e22960",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\ThingsBoardRequestFilter.java": {
+    "mtime": 1780376843.3112478,
+    "ast_hash": "ac77fcd74ccace2be45f1b5c3570d159",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\TokenCounterService.java": {
+    "mtime": 1775192781.387511,
+    "ast_hash": "2cb1dc79befd3bc40f1e3133bb66e284",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\resources\\scripts\\update_counters.lua": {
+    "mtime": 1779690994.48199,
+    "ast_hash": "53a7cbaf4c9f08f43dcd9532937655c4",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\ThingsBoardBotApplicationTests.java": {
+    "mtime": 1779703993.0044634,
+    "ast_hash": "820442068bd1e34d269209d697751912",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\controller\\ChatControllerTest.java": {
+    "mtime": 1775193081.0549233,
+    "ast_hash": "75cbbc0628f46575773a5ddd357e28b3",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\integration\\GoldenQuestionAccuracyTest.java": {
+    "mtime": 1775192964.2613792,
+    "ast_hash": "85464c3af98321226c95a1abf36ee3eb",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\AncestorPathServiceTest.java": {
+    "mtime": 1779705677.0600586,
+    "ast_hash": "ade6bf7720b348d25f546847e085e2e6",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\ChatServiceTest.java": {
+    "mtime": 1781498604.6668885,
+    "ast_hash": "7545061b18eeffbc469d1042e89c314c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\ReconciliationServiceTest.java": {
+    "mtime": 1779705686.17607,
+    "ast_hash": "8e6909d1c6b16c7949a00f6b9e13a817",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\ReplayServiceTest.java": {
+    "mtime": 1781161455.3633668,
+    "ast_hash": "dd997b91a3c43d5ea37cf99e064412f5",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\BranchSnapshotMapperTest.java": {
+    "mtime": 1775465541.2568865,
+    "ast_hash": "5d2450dc88048bb1c8df45bb8bd806a7",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\FullDataPayloadParserTest.java": {
+    "mtime": 1775192892.3812418,
+    "ast_hash": "01aaee58439514c958454b7c7f5cdf66",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\ValueNormalizerTest.java": {
+    "mtime": 1779776361.958149,
+    "ast_hash": "0f573ad3a9e1b8f9f75ea8c59f342fcd",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\DeterministicAnswerServiceTest.java": {
+    "mtime": 1782707846.0387232,
+    "ast_hash": "a8b86ed7909a3581d0097c5cfacb42ae",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\NodeNameResolverTest.java": {
+    "mtime": 1779704446.371376,
+    "ast_hash": "c62a5738212ba2e143dd8b640711145e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryIntentResolverTest.java": {
+    "mtime": 1782216503.705495,
+    "ast_hash": "3edf0e2f07e4607886b5659fe17c9c06",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRouterServiceTest.java": {
+    "mtime": 1781775970.8181806,
+    "ast_hash": "120a4b4bb1f40d2b29703b901caaaf9d",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\support\\FixtureLoader.java": {
+    "mtime": 1775192884.7018392,
+    "ast_hash": "bd33f4b66af663bc974bc2519010ea0d",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\branch_conflict_cases.json": {
+    "mtime": 1775192869.2062552,
+    "ast_hash": "b93b9a237c0267ba96940e8347b9c294",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\full_data_fixture.json": {
+    "mtime": 1781777378.5876877,
+    "ast_hash": "4c73999cc1df8a93eb3aed9054846866",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\golden_questions.json": {
+    "mtime": 1775199349.1484005,
+    "ast_hash": "4e61a1beb12fdd782c2d996e7b6333a2",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\AGENTS.md": {
+    "mtime": 1780977887.8696995,
+    "ast_hash": "818d4c7023b01add50d8ce0535ffcc07",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\DEVELOPMENT.md": {
+    "mtime": 1780989666.9508297,
+    "ast_hash": "5248632d911262a712e2c6468b00b339",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docker-compose.yml": {
+    "mtime": 1781162233.9834843,
+    "ast_hash": "875e40bcac5157e9fbc49f8d23cfdfd9",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\README.md": {
+    "mtime": 1782732675.9557562,
+    "ast_hash": "87d1aad2c1859390c01b895ebc998ed8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\index.html": {
+    "mtime": 1782819461.8794668,
+    "ast_hash": "d5a1887de889297430c51b51d4a15778",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\README.md": {
+    "mtime": 1780293661.1844108,
+    "ast_hash": "27624cb3e5317e4866d1161b08d328f2",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\vite-env.d.ts": {
+    "mtime": 1781160414.7339983,
+    "ast_hash": "60fe08311f0e03ab3596287bb55bda21",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\logo\\thingsboard_bot_logo.png": {
+    "mtime": 1780381486.0721676,
+    "ast_hash": "1c8c5d068ab9b0c9fcefe98bb89171c2",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\assets\\thingsboard_bot_logo.png": {
+    "mtime": 1780381486.0721676,
+    "ast_hash": "1c8c5d068ab9b0c9fcefe98bb89171c2",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\components\\BotLogoSvg.tsx": {
+    "mtime": 1780381711.2040603,
+    "ast_hash": "27e30a96fad85f1793c9aa0fdb51434f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\logo\\thingsboard_bot_logo.svg": {
+    "mtime": 1780381831.744584,
+    "ast_hash": "6edd04be9339975b4d11bf6157385b7f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\assets\\thingsboard_bot_logo.svg": {
+    "mtime": 1780381836.935891,
+    "ast_hash": "6edd04be9339975b4d11bf6157385b7f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.antigravitycli\\7b471072-ad62-490d-a6b0-653876fe60c2.json": {
+    "mtime": 1780468937.5568242,
+    "ast_hash": "f75cf3e7cbff8363bd933ed79661d513",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\_- visual selection.svg": {
+    "mtime": 1780468937.566149,
+    "ast_hash": "22368236e0fe09c96422740788754906",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.mcp.json": {
+    "mtime": 1780977885.9244864,
+    "ast_hash": "4c7e6dd972023b352e71e3ec525b718c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.opencode.json": {
+    "mtime": 1780977885.9479518,
+    "ast_hash": "8b2fd45ed3f0ce5bb5289efa1f583985",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.claude\\settings.json": {
+    "mtime": 1780977887.8718565,
+    "ast_hash": "cbda800ae2159c48d6ad280b09abdbda",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.cursor\\mcp.json": {
+    "mtime": 1780977885.934767,
+    "ast_hash": "4c7e6dd972023b352e71e3ec525b718c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\AdminAuthFilter.java": {
+    "mtime": 1780977545.3735244,
+    "ast_hash": "3b9f78782d9d08726b1b9a635510c391",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\DotenvEnvironmentPostProcessor.java": {
+    "mtime": 1780977545.3735244,
+    "ast_hash": "8863e36e846bdf1eb22e1b586535c781",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\JwtParserInitializer.java": {
+    "mtime": 1781160449.6982398,
+    "ast_hash": "9b7da9d6da589fcf0168085a49d2e896",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\SecurityProperties.java": {
+    "mtime": 1781162033.4005768,
+    "ast_hash": "a97331f73eb6f972752a738dae8f346c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRule.java": {
+    "mtime": 1780977545.3755243,
+    "ast_hash": "bfff979e16fe22c8f4e89d6a6ae83364",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRuleRegistry.java": {
+    "mtime": 1780977545.3755243,
+    "ast_hash": "d773eb2f8afef52d545ab97f4ec0f9e9",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\AccessControlHandler.java": {
+    "mtime": 1780977545.3755243,
+    "ast_hash": "5d2646e3fb29a1d06494674ac98794be",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\AlertHandler.java": {
+    "mtime": 1780977545.3755243,
+    "ast_hash": "ba2372855e9f00172936854db752b84d",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\AnswerHandler.java": {
+    "mtime": 1780977545.3765244,
+    "ast_hash": "5d9a4396af9208aba107224245559e08",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\AnswerSupport.java": {
+    "mtime": 1780996705.3562336,
+    "ast_hash": "5bdd7dc4c3519c3fa2d8e9e3fdeb3e1b",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\CctvHandler.java": {
+    "mtime": 1782210701.5032852,
+    "ast_hash": "55bea70f50a10bcbda0f496a551190b5",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\DeviceInventoryHandler.java": {
+    "mtime": 1780977545.3775246,
+    "ast_hash": "20d28a6bfea39a7c96aa7b4905c07d5e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\DoorStatusHandler.java": {
+    "mtime": 1780978616.2241497,
+    "ast_hash": "fed47212b8af7140956c6a9da361ac95",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\FaultReasonHandler.java": {
+    "mtime": 1780977545.3775246,
+    "ast_hash": "31ac299d6680a76fc4173ea87f737d6f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\GatewayStatusHandler.java": {
+    "mtime": 1780977545.3775246,
+    "ast_hash": "17bf799e09d6bc64ae7f33c676f92534",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\GlobalOverviewHandler.java": {
+    "mtime": 1782101627.0511968,
+    "ast_hash": "3f852566ee8e476ccae0edc0f5862721",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\NetworkStatusHandler.java": {
+    "mtime": 1782211706.5060828,
+    "ast_hash": "2942555e429e73e25ce5366e1b6e606c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\PowerHandler.java": {
+    "mtime": 1780996705.3569276,
+    "ast_hash": "04ee5bb0195011a792f7fc8d22197ac4",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\SubsystemHandler.java": {
+    "mtime": 1782210211.6120417,
+    "ast_hash": "8cbb8eaf2985fbc032d3c6c6a6fbc901",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\tools\\ThingsBoardBackupUtility.java": {
+    "mtime": 1780977545.3798504,
+    "ast_hash": "8969345ec8e8b5c9475fcc6efb76069c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\tools\\ThingsBoardTimescaleImporter.java": {
+    "mtime": 1782288617.250587,
+    "ast_hash": "a32aafa0b90abe6d90ee0f0b0fa204d7",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\HmacUtil.java": {
+    "mtime": 1780977545.3798504,
+    "ast_hash": "e7fae02579c7c84ab1cf2f1abdd24016",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\config\\DotenvEnvironmentPostProcessorTest.java": {
+    "mtime": 1780977545.3810146,
+    "ast_hash": "f4ca4ffe3afb8adea7c7d0fe56505e4b",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRuleRegistryTest.java": {
+    "mtime": 1780977545.3810146,
+    "ast_hash": "f7630d6be25d25bd69f2f367523d7bd7",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\tools\\ThingsBoardBackupUtilityTest.java": {
+    "mtime": 1780977545.3810146,
+    "ast_hash": "9dba2cf1c6c4f56d39fc92702b927807",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\JwtParserUtilTest.java": {
+    "mtime": 1781585762.4095905,
+    "ast_hash": "66890b499f6caf6b3b1435ae2faf9eee",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\CLAUDE.md": {
+    "mtime": 1781495700.1270108,
+    "ast_hash": "159bb863f755ce3ad7fe11d16c560f0d",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\GEMINI.md": {
+    "mtime": 1780977887.870699,
+    "ast_hash": "f0c147986e95d13713104ff4dd18e655",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.claude\\skills\\debug-issue.md": {
+    "mtime": 1780977885.9691646,
+    "ast_hash": "83266930cd7096aee27fd30edc55c85f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.claude\\skills\\explore-codebase.md": {
+    "mtime": 1780977885.9691646,
+    "ast_hash": "b70f59c577a3ce3a3e72d8c61ce3469a",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.claude\\skills\\refactor-safely.md": {
+    "mtime": 1780977885.9691646,
+    "ast_hash": "de0e5b1c85bd387821268d0f9411a778",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.claude\\skills\\review-changes.md": {
+    "mtime": 1780977885.9691646,
+    "ast_hash": "1ce0725b638aed739326a7687c7fffb0",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docs\\RUNBOOKS.md": {
+    "mtime": 1780977545.3649683,
+    "ast_hash": "38e0f348ff56925acfb1d715f36d6bed",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docs\\adr\\0001-three-profile-deployment.md": {
+    "mtime": 1780977545.3654819,
+    "ast_hash": "c44d85cbe5fa6353e54b2748e29c0cf9",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docs\\adr\\0002-atomic-lua-counters.md": {
+    "mtime": 1780977545.3654819,
+    "ast_hash": "f03d23a3abd3e65b45d5484004ec57f5",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docs\\adr\\0003-unverified-jwt-claims.md": {
+    "mtime": 1780977545.3659952,
+    "ast_hash": "4dfaa90f6984c4d8b61ab7c67e100ea9",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\resources\\prompts\\system-prompt.txt": {
+    "mtime": 1782210210.9957874,
+    "ast_hash": "5ae20f607a8da7a56a35761a25fe7f17",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\CoverageMatrixDeterministicTest.java": {
+    "mtime": 1780996705.3574522,
+    "ast_hash": "a5fca0e89298c1cc44c6873f43fb6eb9",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docs\\coverage-matrix.md": {
+    "mtime": 1780996705.3517172,
+    "ast_hash": "a13126fb334b13d52b1d63261961a784",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docs\\format-contract.md": {
+    "mtime": 1780996705.3522472,
+    "ast_hash": "d4a96f715d5c12bd69c3e960f4b7e0ee",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\plans\\qustions_ans_answers.txt": {
+    "mtime": 1775719978.720374,
+    "ast_hash": "9e84262b90b65bc7a1d8fe2c0e470a41",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\.claude\\settings.local.json": {
+    "mtime": 1781158047.1298845,
+    "ast_hash": "4253ab55b461626b5a0ad1d0322ea945",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\frontend\\src\\components\\ErrorBoundary.tsx": {
+    "mtime": 1781162850.7254682,
+    "ast_hash": "99d076928bbef6c7b82e742fced9d207",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\ContentSecurityPolicyFilter.java": {
+    "mtime": 1781162042.932901,
+    "ast_hash": "f0dd9e2f0620d2227e80ee96ca211877",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\SecurityStartupValidator.java": {
+    "mtime": 1781161786.3328228,
+    "ast_hash": "aeedde0c78d9fa70c0cc3b0bdcbb2c9e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\TimescaleInitializer.java": {
+    "mtime": 1781161283.7549584,
+    "ast_hash": "0e3ae3d79429e8d11e72bab3bff15662",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\UnprovisionedCustomerException.java": {
+    "mtime": 1781160038.3923905,
+    "ast_hash": "c330c592644128f4387df04317644def",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\CustomerMatcher.java": {
+    "mtime": 1781161574.3796422,
+    "ast_hash": "23acee1f402d74a1f9562b05e3bc8c13",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\CustomerSyncRunner.java": {
+    "mtime": 1781247300.0723886,
+    "ast_hash": "220518026c0c6cae268662f572a7ce64",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\StatusDeltaUtil.java": {
+    "mtime": 1781163056.450204,
+    "ast_hash": "34b67e4d9421de7bc2d9b953a8986cc8",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\ThingsBoardHostValidator.java": {
+    "mtime": 1781160547.842469,
+    "ast_hash": "c402dc8258d6e6d54ce276ff2b129e29",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\resources\\db\\timescale\\timescale_setup.sql": {
+    "mtime": 1781161266.5748897,
+    "ast_hash": "473aa3f130f81ad0f243cf9b75be3a44",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\controller\\HierarchyCsvParseTest.java": {
+    "mtime": 1781162991.0683732,
+    "ast_hash": "87f88dbdad79b45202d16dcf7276602a",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\repository\\DeviceEventRepositoryPostgresTest.java": {
+    "mtime": 1781161185.8611493,
+    "ast_hash": "451fe0df7a028fceade54072b77eb541",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\CustomerMatcherTest.java": {
+    "mtime": 1781161616.3520765,
+    "ast_hash": "a4af9bb608b9b579f08fe5c202e12121",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\UserDataServiceTest.java": {
+    "mtime": 1781585765.0995848,
+    "ast_hash": "c2a3db9459b9cc79e4bd18a960396795",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\StatusDeltaUtilTest.java": {
+    "mtime": 1781163110.2949007,
+    "ast_hash": "f1050230cbe009d5baddf27f6b6453e7",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\ThingsBoardHostValidatorTest.java": {
+    "mtime": 1781160600.959194,
+    "ast_hash": "b8325cdde0710aeaf829de6aab50f60f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docs\\data-refresh.md": {
+    "mtime": 1781170369.319636,
+    "ast_hash": "c8c8325a6f4824e11e33390e1893b929",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\docs\\deployment-topology.md": {
+    "mtime": 1781161984.7760992,
+    "ast_hash": "192c00123e39dd63afb94fc5ec971afa",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\EvaluationConfig.java": {
+    "mtime": 1781498403.945824,
+    "ast_hash": "5c27d1f1dfdbe6b8f317836ce397a4e6",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\EvaluationInput.java": {
+    "mtime": 1781498414.490945,
+    "ast_hash": "62c1dcd95aa6400d4aac3fbe118d75db",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\EvaluationIssue.java": {
+    "mtime": 1781498428.071605,
+    "ast_hash": "a57ce7a99eb140ebcca37922fd556e0d",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\EvaluationReport.java": {
+    "mtime": 1781498437.3834844,
+    "ast_hash": "214dc8663ce12e639ced089e9494660b",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\FactualContradiction.java": {
+    "mtime": 1781498421.220163,
+    "ast_hash": "bb3520d1e677e149bb6dfa617d8f777d",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ResponseEvaluationService.java": {
+    "mtime": 1781498471.1149914,
+    "ast_hash": "897c69211b9de34cc19a8dae68cade39",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\ResponseEvaluationServiceTest.java": {
+    "mtime": 1781498581.4438913,
+    "ast_hash": "f928f7279ba46f932f5c3c64ec664833",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\resources\\prompts\\evaluation-prompt.txt": {
+    "mtime": 1781498383.880782,
+    "ast_hash": "4665d5b6778a864fcb44b7410d91c806",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\RegionalScopeUtil.java": {
+    "mtime": 1782103625.9867086,
+    "ast_hash": "4e44c0aa73629847d7c0112c8ca1285f",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\GlobalOverviewUnknownBucketTest.java": {
+    "mtime": 1782101683.8635755,
+    "ast_hash": "0b6983751146a173585f811dc2c3a92e",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\SubsystemFieldQueryTest.java": {
+    "mtime": 1782210211.6120417,
+    "ast_hash": "67a843e764aa03eeff7efb0a2b099413",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\tools\\ImporterNodeTypeTest.java": {
+    "mtime": 1782123944.7494092,
+    "ast_hash": "f960a56552a5990d394393594f78ee8c",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\RegionalScopeUtilTest.java": {
+    "mtime": 1782103638.5068066,
+    "ast_hash": "9c349bedf317c9b5a1d3fb9fc73be605",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\Thingsboard-Data\\single_device_data.json": {
+    "mtime": 1782735105.6780038,
+    "ast_hash": "7ec33ffbc3b3bc575bf4b2942bd851de",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\Thingsboard-Data\\thingsboard_devices_backup.json": {
+    "mtime": 1782706664.03495,
+    "ast_hash": "3055d6381d91395daae0b5432a4a59cb",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\Thingsboard-Data\\qustions.txt": {
+    "mtime": 1782378369.1841586,
+    "ast_hash": "57ddd256c0f28f79f80e61e14ca5e2e0",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\DeviceIdentityHandler.java": {
+    "mtime": 1782211599.0588424,
+    "ast_hash": "76d7c4bdc2beabc356fbdbe9674c5993",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\FleetAnalyticsHandler.java": {
+    "mtime": 1782707802.674297,
+    "ast_hash": "505ece3082829728106f9f0789ef3264",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\HierarchyHandler.java": {
+    "mtime": 1782212777.778968,
+    "ast_hash": "5f737b52da573619e5cc025457c1f494",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\FleetAnalyticsFilterTest.java": {
+    "mtime": 1782216523.9853516,
+    "ast_hash": "8d5dedad855f7e4b2f603109ed0bcbb2",
+    "semantic_hash": ""
+  },
+  "D:\\Ganesh\\Office\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\StructuredContextBuilderTest.java": {
+    "mtime": 1782212320.1314962,
+    "ast_hash": "024abb2b59163e9d22de3c98ff2a32bb",
+    "semantic_hash": ""
+  }
+}
