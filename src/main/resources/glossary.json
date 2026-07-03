@@ -1,0 +1,151 @@
+{
+  "terms": [
+    {
+      "term": "IAS",
+      "fullName": "Intrusion Alarm System",
+      "aliases": ["intrusion alarm system", "intrusion alarm"],
+      "definition": "The intrusion (burglar) alarm subsystem at a branch. It reports ON/OFF state, activation events (alarm triggered), and fault conditions. Related telemetry: intrusion alarm activate/fault events and the IAS status field.",
+      "related": ["BAS", "FAS", "alarm", "fault"]
+    },
+    {
+      "term": "BAS",
+      "fullName": "Burglar Alarm System",
+      "aliases": ["burglar alarm system", "burglar alarm"],
+      "definition": "The alarm panel hardware that raises intrusion events at a branch. Its heartbeat and uptime are tracked separately from the gateway, so the bot can tell you if the panel itself stopped reporting.",
+      "related": ["IAS", "heartbeat", "uptime"]
+    },
+    {
+      "term": "FAS",
+      "fullName": "Fire Alarm System",
+      "aliases": ["fire alarm system", "fire alarm"],
+      "definition": "The fire alarm subsystem at a branch. Reports ON/OFF state, activation (fire alarm triggered), and fault conditions.",
+      "related": ["IAS", "alarm", "fault"]
+    },
+    {
+      "term": "TLS",
+      "fullName": "Time Lock System",
+      "aliases": ["time lock system", "time lock", "timelock"],
+      "definition": "The vault time lock at a branch. Reports ON/OFF state, door open/close, and tamper conditions. A time lock only allows the vault to open during its configured window.",
+      "related": ["ACS", "tamper", "door"]
+    },
+    {
+      "term": "ACS",
+      "fullName": "Access Control System",
+      "aliases": ["access control system", "access control"],
+      "definition": "The door access control subsystem (card/fingerprint entry). Reports device status, door open events, tamper, and the number of enrolled users and cards.",
+      "related": ["TLS", "tamper"]
+    },
+    {
+      "term": "NBG",
+      "fullName": "National Banking Group",
+      "aliases": ["national banking group"],
+      "definition": "A top-level regional grouping in the bank's hierarchy (e.g. NBG EAST). Branches roll up into zonal offices, which roll up into NBGs. Ask about an NBG to get counts across all branches under it.",
+      "related": ["ZO", "hierarchy"]
+    },
+    {
+      "term": "ZO",
+      "fullName": "Zonal Office",
+      "aliases": ["zonal office", "zone office"],
+      "definition": "A mid-level node in the bank's hierarchy (e.g. ZO SILIGURI). A zonal office groups the branches in its zone; ask about a zone to get online/offline counts for its branches.",
+      "related": ["NBG", "hierarchy"]
+    },
+    {
+      "term": "offline",
+      "aliases": ["off line"],
+      "definition": "A device or branch is offline when it has stopped communicating with the monitoring platform - no recent heartbeat or telemetry. Offline does not necessarily mean powered off; it can also be a network failure.",
+      "related": ["heartbeat", "stale", "network"]
+    },
+    {
+      "term": "stale",
+      "aliases": ["stale data"],
+      "definition": "Data is stale when the branch has not reported fresh telemetry recently, so the values shown reflect the last known state rather than the current one. Check the last-reported time to see how old the data is.",
+      "related": ["offline", "telemetry", "last reported"]
+    },
+    {
+      "term": "telemetry",
+      "aliases": [],
+      "definition": "The stream of measurements and status values a branch device reports to the platform - voltages, camera status, alarm states, heartbeats, and so on. Everything the bot answers about live state comes from telemetry.",
+      "related": ["heartbeat", "gateway"]
+    },
+    {
+      "term": "heartbeat",
+      "aliases": ["heart beat"],
+      "definition": "A periodic \"I am alive\" signal each subsystem sends. Missing heartbeats are how the platform detects that a gateway, camera system, or alarm panel has gone offline. Heartbeat health is the received-vs-expected percentage over the day.",
+      "related": ["offline", "uptime"]
+    },
+    {
+      "term": "gateway",
+      "aliases": ["gateway device", "status box"],
+      "definition": "The on-site device that collects data from all branch subsystems (alarms, CCTV, sensors) and reports it to the platform. Gateway status includes system on/off, mains power, battery state, and network connectivity.",
+      "related": ["telemetry", "mains", "battery low"]
+    },
+    {
+      "term": "tamper",
+      "aliases": ["tampered", "tampering"],
+      "definition": "A tamper condition means a device's physical integrity switch was triggered - its enclosure was opened or it was interfered with. Cameras, time locks, and access control devices all report tamper events.",
+      "related": ["alarm", "camera"]
+    },
+    {
+      "term": "HDD error",
+      "aliases": ["hdd errors", "hard disk error", "hard drive error"],
+      "definition": "The CCTV recorder (NVR/DVR) is reporting a problem with one of its hard disks, which can interrupt camera footage recording. HDD info shows per-slot status, capacity, and free space.",
+      "related": ["NVR", "recording"]
+    },
+    {
+      "term": "mains",
+      "aliases": ["mains power", "mains on"],
+      "definition": "The utility (grid) power supply at the branch. \"Mains off\" with the system still running means the site is on battery backup - watch the battery voltage in that state.",
+      "related": ["battery low", "power"]
+    },
+    {
+      "term": "battery low",
+      "aliases": ["low battery"],
+      "definition": "The backup battery voltage has dropped below the safe threshold. If mains power is also off, the site risks going dark when the battery is exhausted.",
+      "related": ["mains", "gateway"]
+    },
+    {
+      "term": "uptime",
+      "aliases": [],
+      "definition": "The proportion of time a subsystem was reporting normally. Calculated from heartbeats: received count versus expected count over the period.",
+      "related": ["heartbeat", "offline"]
+    },
+    {
+      "term": "fault",
+      "aliases": ["fault condition"],
+      "definition": "A fault means a subsystem is malfunctioning or in an error state (e.g. a broken sensor loop) - the equipment itself has a problem. This is different from an alarm, which means the system detected an event it is designed to detect.",
+      "related": ["alarm"]
+    },
+    {
+      "term": "alarm",
+      "aliases": ["alarm activation", "activated"],
+      "definition": "An alarm means a security system detected the event it monitors for - an intrusion alarm activating, a fire alarm triggering. This is different from a fault, which means the equipment itself is malfunctioning.",
+      "related": ["fault", "IAS", "FAS"]
+    },
+    {
+      "term": "NVR",
+      "fullName": "Network Video Recorder",
+      "aliases": ["network video recorder"],
+      "definition": "The device that records footage from the branch's IP cameras. The bot can report its model, serial number, firmware, HDD health, per-camera status, and recording durations.",
+      "related": ["DVR", "HDD error", "camera"]
+    },
+    {
+      "term": "DVR",
+      "fullName": "Digital Video Recorder",
+      "aliases": ["digital video recorder"],
+      "definition": "The device that records footage from analog cameras. Functionally equivalent to an NVR for monitoring purposes: status, HDD health, and recording info are reported the same way.",
+      "related": ["NVR", "camera"]
+    },
+    {
+      "term": "SOL ID",
+      "aliases": ["sol id", "solid", "sol"],
+      "definition": "The bank's own branch identifier (Service Outlet ID). Branch devices are named with it (e.g. BOI-MALDATOWN); when a branch is renamed the change is tracked so old identifiers still resolve.",
+      "related": ["hierarchy"]
+    },
+    {
+      "term": "hierarchy",
+      "aliases": ["branch hierarchy"],
+      "definition": "The organizational tree the branches live in: client at the top, then groupings such as NBG and zonal office, with branches as the leaves. Counts and health roll up along this tree.",
+      "related": ["NBG", "ZO"]
+    }
+  ]
+}

@@ -18,10 +18,13 @@ public class QueryIntentResolver {
 
     private final BranchAliasIndex branchAliasIndex;
     private final FuzzyBranchResolver fuzzyBranchResolver;
+    private final com.seple.ThingsBoard_Bot.service.query.glossary.GlossaryService glossaryService;
 
-    public QueryIntentResolver(BranchAliasIndex branchAliasIndex, FuzzyBranchResolver fuzzyBranchResolver) {
+    public QueryIntentResolver(BranchAliasIndex branchAliasIndex, FuzzyBranchResolver fuzzyBranchResolver,
+            com.seple.ThingsBoard_Bot.service.query.glossary.GlossaryService glossaryService) {
         this.branchAliasIndex = branchAliasIndex;
         this.fuzzyBranchResolver = fuzzyBranchResolver;
+        this.glossaryService = glossaryService;
     }
 
     public ResolvedQuery resolve(String question, List<BranchSnapshot> snapshots, String activeBranchAlias) {
@@ -53,8 +56,11 @@ public class QueryIntentResolver {
             global = false;
         }
 
-        // AMBIGUITY DETECTION: If no branch found anywhere, NOT explicitly global, NOT fleet-scoped, and NOT a general conversation
-        boolean ambiguous = targetBranch == null && !global && !fleetScoped && intent != QueryIntent.GENERAL_LLM;
+        // AMBIGUITY DETECTION: If no branch found anywhere, NOT explicitly global, NOT fleet-scoped,
+        // NOT a general conversation, and NOT a knowledge intent (glossary/capability questions are
+        // inherently branchless - asking "which branch?" for "what does stale mean" is nonsense).
+        boolean ambiguous = targetBranch == null && !global && !fleetScoped
+                && intent != QueryIntent.GENERAL_LLM && !intent.isKnowledge();
 
         // FUZZY FALLBACK: exact matching found no branch - try typo-tolerant resolution before
         // asking the user to clarify. A high-confidence hit resolves silently; mid/low bands stay
@@ -84,7 +90,7 @@ public class QueryIntentResolver {
                 .global(global)
                 .ambiguous(ambiguous)
                 .branchFromMemory(branchFromMemory)
-                .deterministic(deterministic && (global || targetBranch != null || fleetScoped))
+                .deterministic(deterministic && (global || targetBranch != null || fleetScoped || intent.isKnowledge()))
                 .confidence(confidence)
                 .branchResolution(branchResolution)
                 .build();
@@ -121,6 +127,42 @@ public class QueryIntentResolver {
             }
         }
         return best;
+    }
+
+    /**
+     * Phase 3 keyword fast path for knowledge intents - works in every extractor mode.
+     * Definitional phrasings require the candidate term to actually exist in the glossary so
+     * "what is Tarakeshwar battery voltage" (branch missed for any reason) never lands here.
+     * Returns null when the question is not a knowledge question.
+     */
+    private QueryIntent detectKnowledgeIntent(String question) {
+        boolean definitional = question.contains("WHAT DOES") && question.contains("MEAN")
+                || question.contains("MEANING OF")
+                || question.contains("DEFINITION OF")
+                || question.startsWith("DEFINE ")
+                || question.startsWith("WHAT IS A ") || question.startsWith("WHAT IS AN ");
+        if (definitional && glossaryService.containsKnownTerm(question)) {
+            return QueryIntent.GLOSSARY;
+        }
+        if (question.startsWith("EXPLAIN ") && glossaryService.containsKnownTerm(question)) {
+            return QueryIntent.CONCEPT_EXPLAIN;
+        }
+
+        boolean howPhrasing = question.contains("HOW DO I") || question.contains("HOW CAN I")
+                || question.startsWith("HOW TO ");
+        if (howPhrasing) {
+            boolean repairPhrasing = question.contains("FIX") || question.contains("RESOLVE")
+                    || question.contains("REPAIR") || question.contains("RESTORE")
+                    || question.contains("TROUBLESHOOT");
+            return repairPhrasing ? QueryIntent.TROUBLESHOOTING : QueryIntent.HOW_TO;
+        }
+
+        // Narrow on purpose: "WHERE IS <branch>" stays a GPS/location question; only the
+        // "where can/do I ..." UI-seeking phrasing is navigation.
+        if (question.contains("WHERE CAN I") || question.contains("WHERE DO I")) {
+            return QueryIntent.NAVIGATION;
+        }
+        return null;
     }
 
     private BranchSnapshot findSnapshotByTechnicalId(List<BranchSnapshot> snapshots, String technicalId) {
@@ -176,6 +218,16 @@ public class QueryIntentResolver {
 
     private QueryIntent detectIntent(String normalizedQuestion, boolean hasTargetBranch) {
         String question = normalizedQuestion.toUpperCase(Locale.ROOT);
+        // Knowledge intents first (Phase 3): definitional and capability phrasings are checked
+        // before any data-keyword branch, otherwise "what does STALE mean" would hit the
+        // LAST_REPORTED keyword and "what does IMEI mean" would hit DEVICE_IMEI. Only fires when
+        // no branch is named, so data questions are never stolen.
+        if (!hasTargetBranch) {
+            QueryIntent knowledgeIntent = detectKnowledgeIntent(question);
+            if (knowledgeIntent != null) {
+                return knowledgeIntent;
+            }
+        }
         if (question.contains("IMEI")) {
             return QueryIntent.DEVICE_IMEI;
         }

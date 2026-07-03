@@ -35,7 +35,9 @@ class GoldenQuestionAccuracyTest {
         snapshots = MockSnapshotStore.loadDefault();
         BranchAliasIndex aliasIndex = new BranchAliasIndex();
         resolver = new QueryIntentResolver(aliasIndex,
-                new FuzzyBranchResolver(aliasIndex, new ManualAliasTable(aliasIndex), 0.90, 0.75, 0.55));
+                new FuzzyBranchResolver(aliasIndex, new ManualAliasTable(aliasIndex), 0.90, 0.75, 0.55),
+                new com.seple.ThingsBoard_Bot.service.query.glossary.GlossaryService(
+                        new org.springframework.core.io.ClassPathResource("glossary.json")));
         answerService = new DeterministicAnswerService(new AnswerTemplateService());
     }
 

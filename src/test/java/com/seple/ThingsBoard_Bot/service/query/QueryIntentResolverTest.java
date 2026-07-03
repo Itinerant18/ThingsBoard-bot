@@ -29,7 +29,9 @@ class QueryIntentResolverTest {
     void setUp() throws Exception {
         BranchAliasIndex aliasIndex = new BranchAliasIndex();
         resolver = new QueryIntentResolver(aliasIndex,
-                new FuzzyBranchResolver(aliasIndex, new ManualAliasTable(aliasIndex), 0.90, 0.75, 0.55));
+                new FuzzyBranchResolver(aliasIndex, new ManualAliasTable(aliasIndex), 0.90, 0.75, 0.55),
+                new com.seple.ThingsBoard_Bot.service.query.glossary.GlossaryService(
+                        new org.springframework.core.io.ClassPathResource("glossary.json")));
         FullDataPayloadParser parser = new FullDataPayloadParser();
         BranchSnapshotMapper mapper = new BranchSnapshotMapper(
                 new FieldPrecedenceResolver(new ValueNormalizer()), new ValueNormalizer());
@@ -67,6 +69,48 @@ class QueryIntentResolverTest {
 
         assertEquals(true, resolved.isAmbiguous());
         assertEquals(null, resolved.getTargetBranch());
+    }
+
+    @Test
+    void glossaryQuestionDetectedAndNotAmbiguous() {
+        ResolvedQuery resolved = resolver.resolve("What does stale mean?", snapshots, null);
+
+        assertEquals(QueryIntent.GLOSSARY, resolved.getIntent());
+        assertEquals(false, resolved.isAmbiguous());
+        assertEquals(true, resolved.isDeterministic());
+    }
+
+    @Test
+    void glossaryDetectionRequiresKnownTerm() {
+        // Definitional phrasing but no glossary term - must not become GLOSSARY.
+        ResolvedQuery resolved = resolver.resolve("What does Rampurhat mean?", snapshots, null);
+        assertEquals(true, resolved.getIntent() != QueryIntent.GLOSSARY);
+    }
+
+    @Test
+    void explainPhraseBecomesConceptExplain() {
+        ResolvedQuery resolved = resolver.resolve("Explain heartbeat", snapshots, null);
+        assertEquals(QueryIntent.CONCEPT_EXPLAIN, resolved.getIntent());
+    }
+
+    @Test
+    void howToAndTroubleshootingAndNavigationDetected() {
+        assertEquals(QueryIntent.HOW_TO,
+                resolver.resolve("How do I add a new device?", snapshots, null).getIntent());
+        assertEquals(QueryIntent.TROUBLESHOOTING,
+                resolver.resolve("How do I fix the camera?", snapshots, null).getIntent());
+        assertEquals(QueryIntent.NAVIGATION,
+                resolver.resolve("Where can I see the alarms?", snapshots, null).getIntent());
+    }
+
+    @Test
+    void dataQuestionsNotStolenByKnowledgeDetection() {
+        // Branch named -> knowledge detection is skipped entirely.
+        ResolvedQuery battery = resolver.resolve("What is Tarakeshwar battery voltage?", snapshots, null);
+        assertEquals(QueryIntent.BATTERY_VOLTAGE, battery.getIntent());
+        // "stale" keyword with a branch stays a staleness/data question.
+        ResolvedQuery stale = resolver.resolve("Is Tarakeshwar data stale?", snapshots, null);
+        assertEquals(QueryIntent.LAST_REPORTED, stale.getIntent());
     }
 
     @Test

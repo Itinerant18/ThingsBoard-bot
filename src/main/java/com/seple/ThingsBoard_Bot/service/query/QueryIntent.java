@@ -47,5 +47,16 @@ public enum QueryIntent {
     CONCEPT_EXPLAIN,
     GLOSSARY,
     OUT_OF_SCOPE,
-    REFUSAL
+    REFUSAL;
+
+    /**
+     * Knowledge intents are answered from static content (glossary/capability replies) and are
+     * never branch-scoped: they must not trigger "which branch?" clarification, and their
+     * extracted entities are terms, not branch names.
+     */
+    public boolean isKnowledge() {
+        return this == HOW_TO || this == NAVIGATION || this == TROUBLESHOOTING
+                || this == CONCEPT_EXPLAIN || this == GLOSSARY
+                || this == OUT_OF_SCOPE || this == REFUSAL;
+    }
 }
