@@ -71,7 +71,11 @@ public class DeterministicAnswerService {
                 new FaultReasonHandler(support),
                 new DeviceIdentityHandler(support),
                 new HierarchyHandler(support),
-                new FleetAnalyticsHandler(support));
+                new FleetAnalyticsHandler(support),
+                new com.seple.ThingsBoard_Bot.service.query.handler.GlossaryHandler(
+                        new com.seple.ThingsBoard_Bot.service.query.glossary.GlossaryService(
+                                new org.springframework.core.io.ClassPathResource("glossary.json"))),
+                new com.seple.ThingsBoard_Bot.service.query.handler.CapabilityReplyHandler());
     }
 
     public String answer(ResolvedQuery query, List<BranchSnapshot> snapshots) {

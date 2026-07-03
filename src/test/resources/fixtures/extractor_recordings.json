@@ -29,5 +29,15 @@
     "intents": [
       { "intent": "BATTERY_VOLTAGE", "entities": ["Tarakeswar"], "format": "TABLE", "confidence": 0.95 }
     ]
+  },
+  "what does stale mean": {
+    "intents": [
+      { "intent": "GLOSSARY", "entities": ["stale"], "format": null, "confidence": 0.97 }
+    ]
+  },
+  "how do I add a camera?": {
+    "intents": [
+      { "intent": "HOW_TO", "entities": [], "format": null, "confidence": 0.96 }
+    ]
   }
 }

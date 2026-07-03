@@ -45,6 +45,36 @@
     "contains": ["Time Lock Status", "OFFLINE"]
   },
   {
+    "question": "What does stale mean?",
+    "intent": "GLOSSARY",
+    "contains": ["**stale:**", "telemetry"]
+  },
+  {
+    "question": "What is an IAS?",
+    "intent": "GLOSSARY",
+    "contains": ["Intrusion Alarm System"]
+  },
+  {
+    "question": "Explain heartbeat",
+    "intent": "CONCEPT_EXPLAIN",
+    "contains": ["heartbeat", "Related terms"]
+  },
+  {
+    "question": "How do I add a new device?",
+    "intent": "HOW_TO",
+    "contains": ["read-only", "administrator"]
+  },
+  {
+    "question": "Where can I see the alarms?",
+    "intent": "NAVIGATION",
+    "contains": ["I'm the interface"]
+  },
+  {
+    "question": "How do I fix the camera at the branch?",
+    "intent": "TROUBLESHOOTING",
+    "contains": ["can't perform repairs"]
+  },
+  {
     "question": "What is Bhadreswar time lock status?",
     "intent": "SUBSYSTEM_STATUS",
     "matchedBranch": "BOI-BHADRESWAR",
