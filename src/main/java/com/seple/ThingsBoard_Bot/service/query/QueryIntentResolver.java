@@ -9,14 +9,19 @@ import org.springframework.stereotype.Component;
 
 import com.seple.ThingsBoard_Bot.model.domain.BranchSnapshot;
 import com.seple.ThingsBoard_Bot.service.normalization.BranchAliasIndex;
+import com.seple.ThingsBoard_Bot.service.query.resolve.BranchDictionary;
+import com.seple.ThingsBoard_Bot.service.query.resolve.BranchResolution;
+import com.seple.ThingsBoard_Bot.service.query.resolve.FuzzyBranchResolver;
 
 @Component
 public class QueryIntentResolver {
 
     private final BranchAliasIndex branchAliasIndex;
+    private final FuzzyBranchResolver fuzzyBranchResolver;
 
-    public QueryIntentResolver(BranchAliasIndex branchAliasIndex) {
+    public QueryIntentResolver(BranchAliasIndex branchAliasIndex, FuzzyBranchResolver fuzzyBranchResolver) {
         this.branchAliasIndex = branchAliasIndex;
+        this.fuzzyBranchResolver = fuzzyBranchResolver;
     }
 
     public ResolvedQuery resolve(String question, List<BranchSnapshot> snapshots, String activeBranchAlias) {
@@ -51,6 +56,22 @@ public class QueryIntentResolver {
         // AMBIGUITY DETECTION: If no branch found anywhere, NOT explicitly global, NOT fleet-scoped, and NOT a general conversation
         boolean ambiguous = targetBranch == null && !global && !fleetScoped && intent != QueryIntent.GENERAL_LLM;
 
+        // FUZZY FALLBACK: exact matching found no branch - try typo-tolerant resolution before
+        // asking the user to clarify. A high-confidence hit resolves silently; mid/low bands stay
+        // ambiguous but carry the resolution so the caller can ask "Did you mean X?" instead of a
+        // generic clarification.
+        BranchResolution branchResolution = null;
+        if (ambiguous) {
+            branchResolution = fuzzyResolve(normalizedQuestion, snapshots);
+            if (branchResolution != null && branchResolution.status() == BranchResolution.Status.RESOLVED) {
+                targetBranch = findSnapshotByTechnicalId(snapshots, branchResolution.match().technicalId());
+                if (targetBranch != null) {
+                    ambiguous = false;
+                    intent = detectIntent(normalizedQuestion, true);
+                }
+            }
+        }
+
         boolean deterministic = intent != QueryIntent.GENERAL_LLM;
         double confidence = targetBranch != null || global || ambiguous || fleetScoped ? 0.95 : 0.55;
 
@@ -65,7 +86,53 @@ public class QueryIntentResolver {
                 .branchFromMemory(branchFromMemory)
                 .deterministic(deterministic && (global || targetBranch != null || fleetScoped))
                 .confidence(confidence)
+                .branchResolution(branchResolution)
                 .build();
+    }
+
+    /**
+     * Scores every 1-3 word window of the question against the branch dictionary and returns
+     * the best fuzzy resolution, or null when nothing clears the suggestion floor. The
+     * dictionary is built from the caller's snapshots, so customer scoping is inherited.
+     */
+    private BranchResolution fuzzyResolve(String normalizedQuestion, List<BranchSnapshot> snapshots) {
+        BranchDictionary dictionary = BranchDictionary.fromSnapshots(snapshots, null, branchAliasIndex);
+        if (dictionary.isEmpty()) {
+            return null;
+        }
+        String[] words = normalizedQuestion.split("\\s+");
+        BranchResolution best = null;
+        double bestScore = 0.0;
+        for (int start = 0; start < words.length; start++) {
+            for (int len = 1; len <= 3 && start + len <= words.length; len++) {
+                String window = String.join(" ", java.util.Arrays.copyOfRange(words, start, start + len));
+                if (window.length() < 2) {
+                    continue;
+                }
+                BranchResolution candidate = fuzzyBranchResolver.resolve(window, dictionary);
+                if (candidate.status() == BranchResolution.Status.NO_MATCH || candidate.candidates().isEmpty()) {
+                    continue;
+                }
+                double score = candidate.candidates().get(0).score();
+                if (best == null || score > bestScore) {
+                    best = candidate;
+                    bestScore = score;
+                }
+            }
+        }
+        return best;
+    }
+
+    private BranchSnapshot findSnapshotByTechnicalId(List<BranchSnapshot> snapshots, String technicalId) {
+        if (technicalId == null) {
+            return null;
+        }
+        for (BranchSnapshot snapshot : snapshots) {
+            if (snapshot.getIdentity() != null && technicalId.equals(snapshot.getIdentity().getTechnicalId())) {
+                return snapshot;
+            }
+        }
+        return null;
     }
 
     private BranchSnapshot findBranchInQuestion(String normalizedQuestion, String compactQuestion, Map<String, BranchSnapshot> aliasIndex) {

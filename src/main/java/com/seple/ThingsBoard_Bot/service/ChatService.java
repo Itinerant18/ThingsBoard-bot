@@ -27,6 +27,7 @@ import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
 import com.seple.ThingsBoard_Bot.service.query.QueryRouterService;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntentResolver;
 import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
+import com.seple.ThingsBoard_Bot.service.query.resolve.BranchResolution;
 import com.seple.ThingsBoard_Bot.util.StructuredContextBuilder;
 import com.seple.ThingsBoard_Bot.util.TokenCounterService;
 
@@ -335,10 +336,7 @@ public class ChatService {
                     chatMemoryService.setPendingTopic(sessionId, resolvedQuery.getIntent().name());
                 }
 
-                String clarification = "I found multiple branches. Which specific branch would you like to check? \n\n" +
-                        String.join(", ", snapshots.stream()
-                                .map(s -> s.getIdentity().getBranchName())
-                                .toList());
+                String clarification = buildBranchClarification(resolvedQuery, snapshots);
                 
                 chatMemoryService.recordInteraction(sessionId, request.getQuestion(), clarification);
                 return AnswerPlan.deterministic(ChatResponse.builder()
@@ -492,6 +490,30 @@ public class ChatService {
                 tokens);
     }
 
+
+    /**
+     * Renders the clarification for an ambiguous branch. When the fuzzy resolver produced a
+     * near-miss, ask "Did you mean X?" (mid band) or offer its top suggestions (low band)
+     * instead of dumping the whole branch list.
+     */
+    private String buildBranchClarification(ResolvedQuery resolvedQuery, List<BranchSnapshot> snapshots) {
+        BranchResolution resolution = resolvedQuery.getBranchResolution();
+        if (resolution != null && resolution.status() == BranchResolution.Status.NEEDS_CONFIRMATION) {
+            return "Did you mean **" + resolution.match().displayName()
+                    + "**? Please confirm the branch name and I'll fetch the data.";
+        }
+        if (resolution != null && resolution.status() == BranchResolution.Status.SUGGESTIONS
+                && !resolution.candidates().isEmpty()) {
+            return "I couldn't find that exact branch. Did you mean one of these?\n\n"
+                    + String.join(", ", resolution.candidates().stream()
+                            .map(c -> c.entry().displayName())
+                            .toList());
+        }
+        return "I found multiple branches. Which specific branch would you like to check? \n\n"
+                + String.join(", ", snapshots.stream()
+                        .map(s -> s.getIdentity().getBranchName())
+                        .toList());
+    }
 
     private ResolvedQuery applyPendingTopic(ResolvedQuery base, String pendingTopic) {
         QueryIntent intent = mapPendingTopicToIntent(pendingTopic);

@@ -16,6 +16,8 @@ import com.seple.ThingsBoard_Bot.service.normalization.BranchSnapshotMapper;
 import com.seple.ThingsBoard_Bot.service.normalization.FieldPrecedenceResolver;
 import com.seple.ThingsBoard_Bot.service.normalization.FullDataPayloadParser;
 import com.seple.ThingsBoard_Bot.service.normalization.ValueNormalizer;
+import com.seple.ThingsBoard_Bot.service.query.resolve.FuzzyBranchResolver;
+import com.seple.ThingsBoard_Bot.service.query.resolve.ManualAliasTable;
 import com.seple.ThingsBoard_Bot.support.FixtureLoader;
 
 class QueryIntentResolverTest {
@@ -25,7 +27,9 @@ class QueryIntentResolverTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        resolver = new QueryIntentResolver(new BranchAliasIndex());
+        BranchAliasIndex aliasIndex = new BranchAliasIndex();
+        resolver = new QueryIntentResolver(aliasIndex,
+                new FuzzyBranchResolver(aliasIndex, new ManualAliasTable(aliasIndex), 0.90, 0.75, 0.55));
         FullDataPayloadParser parser = new FullDataPayloadParser();
         BranchSnapshotMapper mapper = new BranchSnapshotMapper(
                 new FieldPrecedenceResolver(new ValueNormalizer()), new ValueNormalizer());
@@ -43,6 +47,26 @@ class QueryIntentResolverTest {
         assertEquals(QueryIntent.BATTERY_VOLTAGE, resolved.getIntent());
         assertNotNull(resolved.getTargetBranch());
         assertEquals("BOI-TARAKESHWAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+    }
+
+    @Test
+    void shouldResolveTypoBranchNameThroughFuzzyFallback() {
+        // "Tarakeswar" (missing H) has no exact alias variant - fuzzy fallback must recover it.
+        ResolvedQuery resolved = resolver.resolve("What is Tarakeswar battery voltage?", snapshots, null);
+
+        assertEquals(QueryIntent.BATTERY_VOLTAGE, resolved.getIntent());
+        assertNotNull(resolved.getTargetBranch());
+        assertEquals("BOI-TARAKESHWAR", resolved.getTargetBranch().getIdentity().getTechnicalId());
+        assertEquals(false, resolved.isAmbiguous());
+        assertNotNull(resolved.getBranchResolution());
+    }
+
+    @Test
+    void unknownBranchMetricQuestionStaysAmbiguous() {
+        ResolvedQuery resolved = resolver.resolve("What is Rampurhat battery voltage?", snapshots, null);
+
+        assertEquals(true, resolved.isAmbiguous());
+        assertEquals(null, resolved.getTargetBranch());
     }
 
     @Test

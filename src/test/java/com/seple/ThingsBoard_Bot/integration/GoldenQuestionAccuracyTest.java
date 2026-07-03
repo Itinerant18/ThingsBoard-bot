@@ -18,6 +18,8 @@ import com.seple.ThingsBoard_Bot.service.query.DeterministicAnswerService;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntentResolver;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
 import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
+import com.seple.ThingsBoard_Bot.service.query.resolve.FuzzyBranchResolver;
+import com.seple.ThingsBoard_Bot.service.query.resolve.ManualAliasTable;
 import com.seple.ThingsBoard_Bot.support.FixtureLoader;
 import com.seple.ThingsBoard_Bot.support.MockSnapshotStore;
 
@@ -31,7 +33,9 @@ class GoldenQuestionAccuracyTest {
     @BeforeEach
     void setUp() throws Exception {
         snapshots = MockSnapshotStore.loadDefault();
-        resolver = new QueryIntentResolver(new BranchAliasIndex());
+        BranchAliasIndex aliasIndex = new BranchAliasIndex();
+        resolver = new QueryIntentResolver(aliasIndex,
+                new FuzzyBranchResolver(aliasIndex, new ManualAliasTable(aliasIndex), 0.90, 0.75, 0.55));
         answerService = new DeterministicAnswerService(new AnswerTemplateService());
     }
 
