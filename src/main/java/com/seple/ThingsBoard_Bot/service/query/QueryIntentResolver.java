@@ -42,6 +42,9 @@ public class QueryIntentResolver {
         // query is flagged ambiguous below so the caller asks the user to clarify which branch.
 
         QueryIntent intent = detectIntent(normalizedQuestion, targetBranch != null);
+        if (isPotentialMultiIntent(normalizedQuestion) && !isFleetScopedIntent(intent) && !intent.isKnowledge()) {
+            intent = QueryIntent.GENERAL_LLM;
+        }
 
         // Fleet-scoped intents (hierarchy navigation, category health, ranking, filters) operate on
         // the whole scoped set but are NOT a global overview and must not be hijacked by it or flagged
@@ -665,5 +668,29 @@ public class QueryIntentResolver {
                     NETWORK_OPERATOR -> true;
             default -> false;
         };
+    }
+
+    private boolean isPotentialMultiIntent(String normalizedQuestion) {
+        String question = normalizedQuestion.toLowerCase(Locale.ROOT);
+        if (!question.contains("and") && !question.contains("plus") && !question.contains(",") && !question.contains("with")) {
+            return false;
+        }
+
+        int categoriesMatched = 0;
+        if (containsAnyKeyword(question, "battery", "volt", "power", "mains", "ups", "current", "ac")) categoriesMatched++;
+        if (containsAnyKeyword(question, "cctv", "camera", "nvr", "dvr", "recording", "disconnect", "hdd")) categoriesMatched++;
+        if (containsAnyKeyword(question, "alarm", "error", "ias", "bas", "fas", "fire", "intrusion", "tamper", "door")) categoriesMatched++;
+        if (containsAnyKeyword(question, "access control", "acs", "biometric", "user")) categoriesMatched++;
+
+        return categoriesMatched >= 2;
+    }
+
+    private boolean containsAnyKeyword(String question, String... keywords) {
+        for (String keyword : keywords) {
+            if (question.contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

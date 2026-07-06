@@ -526,6 +526,18 @@ class QueryIntentResolverTest {
         assertEquals(QueryIntent.BRANCH_FILTER, resolved.getIntent());
     }
 
+    @Test
+    void shouldResolveMultiIntentToGeneralLlm() {
+        ResolvedQuery resolved = resolver.resolve("tell me the battery voltage and cctv status of chetla", snapshots, null);
+        assertEquals(QueryIntent.GENERAL_LLM, resolved.getIntent());
+    }
+
+    @Test
+    void shouldNotResolveSingleIntentWithAndToGeneralLlm() {
+        ResolvedQuery resolved = resolver.resolve("what is the battery voltage and ac status of Tarakeshwar?", snapshots, null);
+        assertEquals(QueryIntent.BATTERY_VOLTAGE, resolved.getIntent());
+    }
+
     // ---- audit #20: "AC" must match as a whole word, not a substring ----
 
     @Test
