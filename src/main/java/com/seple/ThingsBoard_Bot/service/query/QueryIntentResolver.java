@@ -676,6 +676,11 @@ public class QueryIntentResolver {
             return false;
         }
 
+        // Check if multiple distinct subsystems are requested (e.g. IAS and FAS)
+        if (countDistinctSubsystems(question) >= 2) {
+            return true;
+        }
+
         int categoriesMatched = 0;
         if (containsAnyKeyword(question, "battery", "volt", "power", "mains", "ups", "current", "ac")) categoriesMatched++;
         if (containsAnyKeyword(question, "cctv", "camera", "nvr", "dvr", "recording", "disconnect", "hdd")) categoriesMatched++;
@@ -683,6 +688,17 @@ public class QueryIntentResolver {
         if (containsAnyKeyword(question, "access control", "acs", "biometric", "user")) categoriesMatched++;
 
         return categoriesMatched >= 2;
+    }
+
+    private int countDistinctSubsystems(String question) {
+        int count = 0;
+        if (question.contains("ias") || question.contains("intrusion")) count++;
+        if (question.contains("bas")) count++;
+        if (question.contains("fas") || question.contains("fire")) count++;
+        if (question.contains("time lock") || question.contains("timelock")) count++;
+        if (question.contains("access control") || question.contains("acs")) count++;
+        if (question.contains("cctv") || question.contains("camera")) count++;
+        return count;
     }
 
     private boolean containsAnyKeyword(String question, String... keywords) {

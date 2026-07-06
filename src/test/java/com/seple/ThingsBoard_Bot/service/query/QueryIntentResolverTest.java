@@ -538,6 +538,12 @@ class QueryIntentResolverTest {
         assertEquals(QueryIntent.BATTERY_VOLTAGE, resolved.getIntent());
     }
 
+    @Test
+    void shouldResolveMultiSubsystemToGeneralLlm() {
+        ResolvedQuery resolved = resolver.resolve("what is the ias and fas status for branch chetla", snapshots, null);
+        assertEquals(QueryIntent.GENERAL_LLM, resolved.getIntent());
+    }
+
     // ---- audit #20: "AC" must match as a whole word, not a substring ----
 
     @Test
