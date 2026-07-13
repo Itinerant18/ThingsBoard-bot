@@ -1,6 +1,17 @@
 import React from 'react'
 import { ChatMessage } from '../types'
 
+const renderFormattedText = (text: string) => {
+  if (!text) return null
+  const parts = text.split('**')
+  return parts.map((part, idx) => {
+    if (idx % 2 === 1) {
+      return <strong key={idx} className="font-extrabold text-[#1C1917]">{part}</strong>
+    }
+    return part
+  })
+}
+
 interface MessageBubbleProps {
   message: ChatMessage
   onSuggestionClick?: (question: string) => void
@@ -27,7 +38,7 @@ const CollapsibleSection: React.FC<{ summary: string; content: string; isOpenDef
       </button>
       {isOpen && (
         <div className="p-3 text-xs whitespace-pre-wrap break-words leading-relaxed text-stone-700 bg-[#FAF7F2]">
-          {content}
+          {renderFormattedText(content)}
         </div>
       )}
     </div>
@@ -134,7 +145,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, onSuggest
             if (block.type === 'text') {
               return (
                 <div key={idx} className="whitespace-pre-wrap break-words">
-                  {block.content}
+                  {renderFormattedText(block.content)}
                 </div>
               )
             } else {
