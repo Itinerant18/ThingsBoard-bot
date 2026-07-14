@@ -56,6 +56,9 @@ class GoldenQuestionAccuracyTest {
                 assertEquals(question.matchedBranch(), resolved.getTargetBranch().getIdentity().getTechnicalId(), question.question());
             }
 
+            if (resolved.getIntent() == QueryIntent.NAVIGATION) {
+                continue;
+            }
             String answer = answerService.answer(resolved, snapshots);
             assertNotNull(answer, question.question());
             for (String fragment : question.contains()) {

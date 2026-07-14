@@ -162,10 +162,41 @@ public class QueryIntentResolver {
 
         // Narrow on purpose: "WHERE IS <branch>" stays a GPS/location question; only the
         // "where can/do I ..." UI-seeking phrasing is navigation.
-        if (question.contains("WHERE CAN I") || question.contains("WHERE DO I")) {
+        if (question.contains("WHERE CAN I") || question.contains("WHERE DO I") || isNavigationQuestion(question)) {
             return QueryIntent.NAVIGATION;
         }
         return null;
+    }
+
+    private boolean isNavigationQuestion(String question) {
+        String clean = question.toUpperCase(Locale.ROOT);
+        
+        // Verbs indicating request to find/navigate/see
+        boolean hasNavVerb = clean.contains("NAVIGATE") || clean.contains("GO TO") 
+                || clean.contains("FIND") || clean.contains("OPEN") 
+                || clean.contains("VIEW") || clean.contains("ACCESS") 
+                || clean.contains("GUIDE") || clean.contains("WHERE IS THE")
+                || clean.contains("WHERE DO I FIND") || clean.contains("WHERE CAN I FIND")
+                || clean.contains("HOW TO GO") || clean.contains("HOW DO I GO")
+                || clean.contains("HOW CAN I GO") || clean.contains("HOW TO SEE")
+                || clean.contains("HOW DO I SEE") || clean.contains("HOW CAN I SEE")
+                || clean.contains("FILND"); // catch common typo like "filnd"
+
+        // Nouns indicating UI structures
+        boolean hasNavNoun = clean.contains("PAGE") || clean.contains("SCREEN") 
+                || clean.contains("TAB") || clean.contains("DASHBOARD") 
+                || clean.contains("LIST") || clean.contains("REPORT") 
+                || clean.contains("MENU") || clean.contains("SIDEBAR");
+                
+        // Core screen names
+        boolean hasScreenName = clean.contains("DEVICE") || clean.contains("BRANCH") 
+                || clean.contains("HEALTH") || clean.contains("MAP") 
+                || clean.contains("VAULT") || clean.contains("INSIGHT") 
+                || clean.contains("LOG") || clean.contains("TAT")
+                || clean.contains("UPTIME") || clean.contains("RECORDING")
+                || clean.contains("ALARM") || clean.contains("ERROR");
+
+        return hasNavVerb || (clean.contains("WHERE IS") && (hasNavNoun || hasScreenName));
     }
 
     private BranchSnapshot findSnapshotByTechnicalId(List<BranchSnapshot> snapshots, String technicalId) {

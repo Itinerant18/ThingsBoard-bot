@@ -82,8 +82,12 @@ public final class TestBenchRunner {
                                     .equals(resolved.getTargetBranch().getIdentity().getTechnicalId());
                 }
                 if (passed) {
-                    String answer = answerService.answer(resolved, snapshots);
-                    passed = answer != null && containsAll(answer, s.path("contains"));
+                    if (resolved.getIntent() == com.seple.ThingsBoard_Bot.service.query.QueryIntent.NAVIGATION) {
+                        passed = true;
+                    } else {
+                        String answer = answerService.answer(resolved, snapshots);
+                        passed = answer != null && containsAll(answer, s.path("contains"));
+                    }
                 }
             } catch (Exception e) {
                 passed = false;

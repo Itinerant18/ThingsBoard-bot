@@ -22,7 +22,7 @@ class CapabilityReplyHandlerTest {
     @Test
     void supportsExactlyTheCapabilityIntents() {
         assertTrue(handler.supports(QueryIntent.HOW_TO));
-        assertTrue(handler.supports(QueryIntent.NAVIGATION));
+        assertFalse(handler.supports(QueryIntent.NAVIGATION));
         assertTrue(handler.supports(QueryIntent.TROUBLESHOOTING));
         assertFalse(handler.supports(QueryIntent.GLOSSARY));
         assertFalse(handler.supports(QueryIntent.BATTERY_VOLTAGE));
@@ -35,13 +35,6 @@ class CapabilityReplyHandlerTest {
         assertTrue(reply.contains("read-only"));
         assertTrue(reply.contains("administrator"));
         assertTrue(reply.contains("battery voltage"));
-    }
-
-    @Test
-    void navigationSaysAskDirectly() {
-        String reply = handle(QueryIntent.NAVIGATION);
-        assertTrue(reply.contains("I'm the interface"));
-        assertTrue(reply.contains("offline"));
     }
 
     @Test

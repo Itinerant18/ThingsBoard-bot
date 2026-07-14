@@ -74,7 +74,9 @@ class ChatServiceTest {
             extractorConfig,
             safetyGateService,
             new io.micrometer.core.instrument.simple.SimpleMeterRegistry(),
-            new org.springframework.core.io.ClassPathResource("prompts/system-prompt.txt"));
+            new org.springframework.core.io.ClassPathResource("prompts/system-prompt.txt"),
+            new org.springframework.core.io.ClassPathResource("prompts/navigation-system-prompt.txt"),
+            new org.springframework.core.io.ClassPathResource("docs/SWatch360_Navigation_Guide.md"));
 
     @Test
     void shouldApplyPendingTopicForBranchOnlyFollowUpAndUseDeterministicAnswer() {

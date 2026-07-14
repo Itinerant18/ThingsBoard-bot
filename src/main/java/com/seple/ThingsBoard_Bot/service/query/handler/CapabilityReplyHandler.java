@@ -42,7 +42,7 @@ public class CapabilityReplyHandler implements AnswerHandler {
         } catch (IOException e) {
             log.warn("Failed to load {} - capability replies are empty", RESOURCE, e);
         }
-        for (QueryIntent intent : List.of(QueryIntent.HOW_TO, QueryIntent.NAVIGATION, QueryIntent.TROUBLESHOOTING)) {
+        for (QueryIntent intent : List.of(QueryIntent.HOW_TO, QueryIntent.TROUBLESHOOTING)) {
             String reply = properties.getProperty(intent.name());
             if (reply != null && !reply.isBlank()) {
                 replies.put(intent, reply.trim());
