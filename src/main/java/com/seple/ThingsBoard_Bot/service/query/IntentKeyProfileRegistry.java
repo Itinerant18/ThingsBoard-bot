@@ -17,7 +17,7 @@ public class IntentKeyProfileRegistry {
             case AC_VOLTAGE -> List.of("gatewayStatus_ac_voltage", "ac_status_ac_voltage", "ac_result");
             case SYSTEM_CURRENT -> List.of("gatewayStatus_system_current", "current_status_system_current", "cur_result");
             case NETWORK_STATUS -> List.of("gatewayStatus_NETWORK", "system_status_statusbox_network", "networkOperator");
-            case CCTV_STATUS -> List.of("cameraLinkStatus", "cctvStatus", "rock_CAMERAdETAILS", "hikvision_camera_status");
+            case CCTV_STATUS -> List.of("cctv_sts", "cameraStatus_cctvStatus", "cctvStatus", "cctv_status", "cameraLinkStatus", "rock_CAMERAdETAILS", "CAMERAdETAILS", "Hikvision_NVR_CameraRecInfo", "rock_VIDEOdETAILS", "hikvision_camera_status");
             case CCTV_HDD_ERROR_STATUS -> List.of("HDD ERROR", "ticketStatus_HDD_ERROR", "cameraStatus_HDD ERROR", "hddStatus");
             case CCTV_HDD_INFO -> List.of("rock_HddINFO", "hddStatus");
             case CCTV_RECORDING_INFO -> List.of("rock_VIDEOdETAILS", "Hikvision_NVR_CameraRecInfo");

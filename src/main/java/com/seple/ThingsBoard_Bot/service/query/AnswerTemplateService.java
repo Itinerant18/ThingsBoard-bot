@@ -85,6 +85,27 @@ public class AnswerTemplateService {
 
     public String renderCctvStatus(BranchSnapshot branch, Integer onlineCameras, Integer totalCameras) {
         if (onlineCameras == null && totalCameras == null) {
+            if (branch != null && branch.getSubsystems() != null && branch.getSubsystems().getCctv() != null) {
+                com.seple.ThingsBoard_Bot.model.domain.NormalizedState state = branch.getSubsystems().getCctv().getState();
+                if (state != com.seple.ThingsBoard_Bot.model.domain.NormalizedState.UNKNOWN
+                        && state != com.seple.ThingsBoard_Bot.model.domain.NormalizedState.NOT_INSTALLED) {
+                    return "**For Branch " + branchName(branch) + ", CCTV Camera Status is " + state.name() + ".**";
+                }
+            }
+            if (branch != null && branch.getRawData() != null) {
+                Map<String, Object> raw = branch.getRawData();
+                for (String key : new String[]{"cameraStatus_cctvStatus", "cctvStatus", "cctv_status", "cctv_sts", "cameraLinkStatus"}) {
+                    Object val = raw.get(key);
+                    if (val != null) {
+                        String str = val.toString().trim().toUpperCase();
+                        if ("ON".equals(str) || "ONLINE".equals(str) || "ACTIVE".equals(str) || "TRUE".equals(str) || "1".equals(str)) {
+                            return "**For Branch " + branchName(branch) + ", CCTV Camera Status is ONLINE.**";
+                        } else if ("OFF".equals(str) || "OFFLINE".equals(str) || "INACTIVE".equals(str) || "FALSE".equals(str) || "0".equals(str)) {
+                            return "**For Branch " + branchName(branch) + ", CCTV Camera Status is OFFLINE.**";
+                        }
+                    }
+                }
+            }
             return "**For Branch " + branchName(branch) + ", CCTV Camera Status is N/A.**";
         }
         List<OfflineCamera> offlineCameras = null;

@@ -43,7 +43,7 @@ public class BranchSnapshotMapper {
         // subsystem status. A device that does not carry the _sts key reports UNKNOWN — we do not
         // guess from operational flags. A present _sts value (Online/Offline/Fault/N/A) is shown as-is.
         BranchSubsystems subsystems = BranchSubsystems.builder()
-                .cctv(buildSubsystem("CCTV", raw, "cctv_sts"))
+                .cctv(buildSubsystem("CCTV", raw, "cctv_sts", "cameraStatus_cctvStatus", "cctvStatus", "cctv_status", "cameraLinkStatus", "cctv_state", "rock_cctv_status"))
                 .ias(buildSubsystem("IAS", raw, "ias_sts"))
                 .bas(buildSubsystem("BAS", raw, "bas_sts"))
                 .fas(buildSubsystem("FAS", raw, "fas_sts"))
@@ -209,6 +209,30 @@ public class BranchSnapshotMapper {
                     online = onlineCount;
                 }
             } catch (Exception ignored) {
+            }
+        }
+
+        if (total == null) {
+            String recInfo = choose(raw, "Hikvision_NVR_CameraRecInfo", "rock_VIDEOdETAILS");
+            if (recInfo != null && recInfo.startsWith("[")) {
+                try {
+                    JsonNode node = objectMapper.readTree(recInfo);
+                    if (node.isArray() && !node.isEmpty()) {
+                        int totalCount = node.size();
+                        int onlineCount = 0;
+                        for (JsonNode entry : node) {
+                            if (entry != null && entry.isObject()) {
+                                int duration = entry.path("total_duration").asInt(0);
+                                if (duration > 0) {
+                                    onlineCount++;
+                                }
+                            }
+                        }
+                        total = totalCount;
+                        online = onlineCount > 0 ? onlineCount : totalCount;
+                    }
+                } catch (Exception ignored) {
+                }
             }
         }
 
