@@ -20,49 +20,49 @@ export const WelcomeMessage: React.FC = () => {
   const { sendMessage } = useChat()
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center py-10 px-4">
-      {/* Embossed Bot Icon */}
-      <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+    <div className="flex-1 flex flex-col items-center justify-center py-4 sm:py-8 px-2 sm:px-4">
+      {/* Embossed Bot Icon — smaller on tiny frames */}
+      <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center mb-3 sm:mb-5"
         style={{
           background: 'linear-gradient(135deg, #5c3a2a 0%, #4b2e22 50%, #3d2519 100%)',
           border: '1px solid #3d2519',
           boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 3px 8px rgba(75,46,34,0.25)'
         }}
       >
-        <span className="text-2xl">🤖</span>
+        <span className="text-xl sm:text-2xl">🤖</span>
       </div>
 
       {/* Headers */}
-      <h2 className="text-[#1C1917] text-2xl font-bold text-center tracking-tight mb-2">
+      <h2 className="text-[#1C1917] text-lg sm:text-2xl font-bold text-center tracking-tight mb-1 sm:mb-2">
         SAI Assistant
       </h2>
-      <p className="text-[#44403C] text-xs text-center max-w-xl px-4 mb-9 leading-relaxed">
+      <p className="text-[#44403C] text-[10px] sm:text-xs text-center max-w-xs sm:max-w-xl px-2 mb-4 sm:mb-7 leading-relaxed">
         I am SAI, your smart assistant
       </p>
 
-      {/* Quick Actions — Paper Cards in 2x2 Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 w-full max-w-3xl mb-8">
+      {/* Quick Actions — 1 column on narrow frames, 2 columns when space allows */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 w-full max-w-xl mb-4 sm:mb-7">
         {QUICK_ACTIONS.map((action) => (
           <button
             key={action.question}
             onClick={() => sendMessage(action.question)}
-            className="paper-card text-left p-4 flex items-start gap-3 cursor-pointer"
+            className="paper-card text-left p-2.5 sm:p-4 flex items-start gap-2 sm:gap-3 cursor-pointer"
           >
-            <span className="text-[#CA8A04] font-mono text-sm leading-none mt-0.5"
+            <span className="text-[#CA8A04] font-mono text-xs sm:text-sm leading-none mt-0.5"
               style={{ textShadow: '0 1px 0 rgba(255,255,255,0.6)' }}
             >➔</span>
-            <span className="text-xs text-[#1C1917] font-semibold leading-normal">{action.label}</span>
+            <span className="text-[10px] sm:text-xs text-[#1C1917] font-semibold leading-normal">{action.label}</span>
           </button>
         ))}
       </div>
 
       {/* Suggestion Tags — Brass Pills */}
-      <div className="flex flex-wrap gap-2 justify-center max-w-3xl">
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center max-w-xl">
         {TAGS.map((tag) => (
           <button
             key={tag.label}
             onClick={() => sendMessage(tag.question)}
-            className="brass-tag px-3.5 py-2 text-[11px] text-[#44403C]"
+            className="brass-tag px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-[10px] sm:text-[11px] text-[#44403C]"
           >
             {tag.label}
           </button>
@@ -71,3 +71,4 @@ export const WelcomeMessage: React.FC = () => {
     </div>
   )
 }
+

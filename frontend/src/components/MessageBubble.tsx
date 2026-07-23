@@ -115,9 +115,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, onSuggest
   const blocks = parseContentBlocks(mainContent)
 
   return (
-    <div className={`flex gap-2 sm:gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} message-enter items-start w-full max-w-[96%] sm:max-w-[85%] ${isUser ? 'ml-auto' : 'mr-auto'}`}>
+    <div className={`flex gap-1.5 sm:gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} message-enter items-start w-full max-w-[97%] sm:max-w-[88%] ${isUser ? 'ml-auto' : 'mr-auto'}`}>
       {/* Avatar with vintage skeuomorphic border */}
-      <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md border ${
+      <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md border ${
         isUser 
           ? 'text-[#FAF7F2] font-bold text-xs border-[#3d2519]' 
           : 'text-[#EAB308] font-bold text-xs border-[#3d2519]'
@@ -133,7 +133,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, onSuggest
 
       {/* Bubble */}
       <div
-        className={`px-4.5 py-3 text-sm leading-relaxed shadow-md ${
+        className={`px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm leading-relaxed shadow-md ${
           isUser
             ? 'leather-bubble rounded-tr-none'
             : 'paper-card rounded-tl-none text-[#1C1917]'

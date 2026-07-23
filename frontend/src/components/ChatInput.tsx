@@ -64,14 +64,14 @@ export const ChatInput: React.FC = () => {
   }
 
   return (
-    <div className="px-3 pb-3 pt-2 sm:px-5 sm:pb-5 sm:pt-3 flex-shrink-0"
+    <div className="px-2 pb-2 pt-1.5 sm:px-4 sm:pb-4 sm:pt-2.5 flex-shrink-0"
       style={{
         background: 'linear-gradient(180deg, transparent 0%, rgba(232,224,212,0.8) 30%)',
       }}
     >
       <div className="max-w-3xl mx-auto w-full">
         {/* Inset Well Input */}
-        <div className="inset-well flex items-center gap-2 p-1.5 pl-4">
+        <div className="inset-well flex items-center gap-2 p-1 pl-3 sm:p-1.5 sm:pl-4">
           <div className="relative flex-1">
             <input
               ref={inputRef}
