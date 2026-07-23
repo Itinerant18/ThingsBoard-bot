@@ -21,48 +21,42 @@ export const WelcomeMessage: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center py-4 sm:py-8 px-2 sm:px-4">
-      {/* Embossed Bot Icon — smaller on tiny frames */}
-      <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center mb-3 sm:mb-5"
-        style={{
-          background: 'linear-gradient(135deg, #5c3a2a 0%, #4b2e22 50%, #3d2519 100%)',
-          border: '1px solid #3d2519',
-          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 3px 8px rgba(75,46,34,0.25)'
-        }}
-      >
+      {/* Bot Icon */}
+      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-3 sm:mb-4 bg-gradient-to-br from-[#0F172A] to-[#1E293B] border border-slate-700 shadow-md">
         <span className="text-xl sm:text-2xl">🤖</span>
       </div>
 
       {/* Headers */}
-      <h2 className="text-[#1C1917] text-lg sm:text-2xl font-bold text-center tracking-tight mb-1 sm:mb-2">
+      <h2 className="text-[#0F172A] text-lg sm:text-2xl font-bold text-center tracking-tight mb-1 sm:mb-1.5">
         SAI Assistant
       </h2>
-      <p className="text-[#44403C] text-[10px] sm:text-xs text-center max-w-xs sm:max-w-xl px-2 mb-4 sm:mb-7 leading-relaxed">
-        I am SAI, your smart assistant
+      <p className="text-[#64748B] text-xs sm:text-sm text-center max-w-xs sm:max-w-xl px-2 mb-5 sm:mb-7 leading-relaxed">
+        I am SAI, your smart assistant for IoT network analytics & fleet management.
       </p>
 
-      {/* Quick Actions — 1 column on narrow frames, 2 columns when space allows */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 w-full max-w-xl mb-4 sm:mb-7">
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 w-full max-w-xl mb-4 sm:mb-6">
         {QUICK_ACTIONS.map((action) => (
           <button
             key={action.question}
             onClick={() => sendMessage(action.question)}
-            className="paper-card text-left p-2.5 sm:p-4 flex items-start gap-2 sm:gap-3 cursor-pointer"
+            className="dashboard-card text-left p-3 sm:p-4 flex items-start gap-2.5 sm:gap-3 cursor-pointer group"
           >
-            <span className="text-[#CA8A04] font-mono text-xs sm:text-sm leading-none mt-0.5"
-              style={{ textShadow: '0 1px 0 rgba(255,255,255,0.6)' }}
-            >➔</span>
-            <span className="text-[10px] sm:text-xs text-[#1C1917] font-semibold leading-normal">{action.label}</span>
+            <span className="text-[#2563EB] font-sans text-xs sm:text-sm leading-none mt-0.5 group-hover:translate-x-0.5 transition-transform">
+              ➔
+            </span>
+            <span className="text-xs sm:text-sm text-[#1E293B] font-medium leading-normal">{action.label}</span>
           </button>
         ))}
       </div>
 
-      {/* Suggestion Tags — Brass Pills */}
+      {/* Suggestion Tags */}
       <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center max-w-xl">
         {TAGS.map((tag) => (
           <button
             key={tag.label}
             onClick={() => sendMessage(tag.question)}
-            className="brass-tag px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-[10px] sm:text-[11px] text-[#44403C]"
+            className="dashboard-tag px-3 py-1.5 text-xs text-[#334155]"
           >
             {tag.label}
           </button>
