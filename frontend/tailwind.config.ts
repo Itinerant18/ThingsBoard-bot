@@ -5,21 +5,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          dark: '#0f172a',
-          navy: '#1e293b',
-          blue: '#2563eb',
-          light: '#f8fafc',
-          card: '#ffffff',
-          border: '#e2e8f0',
-          muted: '#64748b'
+        stone: {
+          50: '#faf7f2',
+          100: '#f0ebe3',
+          950: '#1c1917',
+          900: '#44403c',
+          800: '#78716c',
+          700: '#a8a29e',
+          600: '#57534e',
+          400: '#d6cfc4'
+        },
+        accent: {
+          gold: '#ca8a04',
+          teal: '#0d9488'
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['"Trebuchet MS"', 'sans-serif'],
+        display: ['"DM Sans"', 'sans-serif']
+      },
+      spacing: {
+        unit: '8px'
       }
     }
   },
   plugins: []
 } satisfies Config
-

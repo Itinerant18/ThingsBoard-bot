@@ -64,10 +64,14 @@ export const ChatInput: React.FC = () => {
   }
 
   return (
-    <div className="px-2 pb-2 pt-1.5 sm:px-4 sm:pb-4 sm:pt-2.5 flex-shrink-0 bg-[#F8FAFC]">
+    <div className="px-2 pb-2 pt-1.5 sm:px-4 sm:pb-4 sm:pt-2.5 flex-shrink-0"
+      style={{
+        background: 'linear-gradient(180deg, transparent 0%, rgba(244,246,249,0.9) 30%)',
+      }}
+    >
       <div className="max-w-3xl mx-auto w-full">
         {/* Inset Well Input */}
-        <div className="input-well flex items-center gap-2 p-1 pl-3 sm:p-1.5 sm:pl-4">
+        <div className="inset-well flex items-center gap-2 p-1 pl-3 sm:p-1.5 sm:pl-4">
           <div className="relative flex-1">
             <input
               ref={inputRef}
@@ -78,7 +82,7 @@ export const ChatInput: React.FC = () => {
               placeholder="Ask anything..."
               disabled={isLoading}
               maxLength={MAX_INPUT_LENGTH}
-              className="w-full bg-transparent text-xs sm:text-sm text-[#0F172A] placeholder-slate-400 outline-none py-2 pr-9 pl-1 disabled:opacity-50 font-sans"
+              className="w-full bg-transparent text-sm text-[#0F172A] placeholder-slate-400 outline-none py-2.5 pr-10 pl-1 disabled:opacity-50 font-medium"
             />
             {input.length > MAX_INPUT_LENGTH - 100 && (
               <span className="absolute -top-4 right-2 text-[10px] text-slate-400">
@@ -90,9 +94,9 @@ export const ChatInput: React.FC = () => {
             <button
               type="button"
               onClick={startVoiceInput}
-              className={`absolute right-2 top-1/2 -translate-y-1/2 transition-colors p-1.5 rounded-lg cursor-pointer ${isListening
-                ? 'text-red-500 bg-red-50 animate-pulse'
-                : 'text-slate-400 hover:text-[#2563EB]'
+              className={`absolute right-2 top-1/2 -translate-y-1/2 transition-colors p-1.5 rounded cursor-pointer ${isListening
+                ? 'text-red-600 bg-red-50 animate-pulse'
+                : 'text-slate-400 hover:text-blue-600'
                 }`}
               title={isListening ? "Listening... Click to stop" : "Voice Input"}
             >
@@ -109,7 +113,7 @@ export const ChatInput: React.FC = () => {
             <button
               onClick={stopStreaming}
               title="Stop generating"
-              className="primary-button w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0"
+              className="brass-button w-10 h-10 flex items-center justify-center flex-shrink-0"
             >
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="5" y="5" width="14" height="14" rx="2.5" />
@@ -119,7 +123,7 @@ export const ChatInput: React.FC = () => {
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
-              className="primary-button w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0"
+              className="brass-button w-10 h-10 flex items-center justify-center flex-shrink-0"
             >
               <svg className="w-4 h-4 transform rotate-45 -translate-x-0.5 translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13" />

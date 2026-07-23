@@ -21,31 +21,31 @@ export const WelcomeMessage: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center py-4 sm:py-8 px-2 sm:px-4">
-      {/* Bot Icon */}
-      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-3 sm:mb-4 bg-gradient-to-br from-[#0F172A] to-[#1E293B] border border-slate-700 shadow-md">
-        <span className="text-xl sm:text-2xl">🤖</span>
+      {/* Bot Icon Badge */}
+      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-3 sm:mb-4 bg-gradient-to-br from-blue-600 to-blue-700 shadow-md border border-blue-400/30">
+        <span className="text-2xl sm:text-3xl">🤖</span>
       </div>
 
       {/* Headers */}
-      <h2 className="text-[#0F172A] text-lg sm:text-2xl font-bold text-center tracking-tight mb-1 sm:mb-1.5">
+      <h2 className="text-[#0F172A] text-lg sm:text-2xl font-bold text-center tracking-tight mb-1">
         SAI Assistant
       </h2>
-      <p className="text-[#64748B] text-xs sm:text-sm text-center max-w-xs sm:max-w-xl px-2 mb-5 sm:mb-7 leading-relaxed">
-        I am SAI, your smart assistant for IoT network analytics & fleet management.
+      <p className="text-[#64748B] text-[11px] sm:text-xs text-center max-w-xs sm:max-w-xl px-2 mb-5 sm:mb-7 leading-relaxed font-medium">
+        I am SAI, your smart assistant
       </p>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 w-full max-w-xl mb-4 sm:mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 w-full max-w-xl mb-5 sm:mb-7">
         {QUICK_ACTIONS.map((action) => (
           <button
             key={action.question}
             onClick={() => sendMessage(action.question)}
-            className="dashboard-card text-left p-3 sm:p-4 flex items-start gap-2.5 sm:gap-3 cursor-pointer group"
+            className="paper-card text-left p-3 sm:p-4 flex items-start gap-2.5 sm:gap-3 cursor-pointer group"
           >
-            <span className="text-[#2563EB] font-sans text-xs sm:text-sm leading-none mt-0.5 group-hover:translate-x-0.5 transition-transform">
+            <span className="text-[#2563EB] font-bold text-xs sm:text-sm leading-none mt-0.5 group-hover:translate-x-0.5 transition-transform">
               ➔
             </span>
-            <span className="text-xs sm:text-sm text-[#1E293B] font-medium leading-normal">{action.label}</span>
+            <span className="text-xs text-[#1E293B] font-semibold leading-snug">{action.label}</span>
           </button>
         ))}
       </div>
@@ -56,7 +56,7 @@ export const WelcomeMessage: React.FC = () => {
           <button
             key={tag.label}
             onClick={() => sendMessage(tag.question)}
-            className="dashboard-tag px-3 py-1.5 text-xs text-[#334155]"
+            className="brass-tag px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-xs text-[#334155]"
           >
             {tag.label}
           </button>
@@ -65,4 +65,3 @@ export const WelcomeMessage: React.FC = () => {
     </div>
   )
 }
-
