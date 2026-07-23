@@ -22,20 +22,23 @@ public class EventParseService {
     private final ObjectMapper objectMapper;
     private final RedisCacheService redisCacheService;
 
-    @Value("${iotchatbot.customers.prefixes:BOI,BOB,SBI,CB,IB,PNB,UBI,CBI,IOB,UCO}")
+    @Value("${iotchatbot.customers.prefixes:CANARA,BOI,BOB,SBI,CB,IB,PNB,UBI,CBI,IOB,UCO,SEPL,SDF,DEXTER,NEW}")
     private String customerPrefixes;
 
     private String[] getCustomerPrefixes() {
         if (customerPrefixes == null || customerPrefixes.isBlank()) {
-            return new String[]{"BOI", "BOB", "SBI", "CB", "IB", "PNB", "UBI", "CBI", "IOB", "UCO"};
+            return new String[]{"CANARA", "BOI", "BOB", "SBI", "CB", "IB", "PNB", "UBI", "CBI", "IOB", "UCO", "SEPL", "SDF", "DEXTER", "NEW"};
         }
         String[] parts = customerPrefixes.split(",");
         String[] trimmed = new String[parts.length];
         for (int i = 0; i < parts.length; i++) {
             trimmed[i] = parts[i].trim().toUpperCase();
         }
+        // Sort by length descending so longer prefixes match before shorter ones
+        java.util.Arrays.sort(trimmed, (a, b) -> Integer.compare(b.length(), a.length()));
         return trimmed;
     }
+
 
     public EventParseService(ObjectMapper objectMapper, RedisCacheService redisCacheService) {
         this.objectMapper = objectMapper;
