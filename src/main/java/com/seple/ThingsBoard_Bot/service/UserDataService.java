@@ -490,8 +490,15 @@ public class UserDataService {
     // ==================== Helpers ====================
 
     public String resolveCustomerIdPrefix(String userToken) {
-        if (userToken == null || userToken.isBlank() || JwtParserUtil.hasScope(userToken, "TENANT_ADMIN")) {
+        // Only an explicit TENANT_ADMIN scope grants cross-tenant "ALL" access. A missing/blank
+        // token is NOT admin — it must fall through to unmappedCustomer() so strict mode fails
+        // closed (403) and lenient mode falls back loudly to BOI. Treating null as ALL leaks every
+        // tenant's data to unauthenticated callers.
+        if (userToken != null && !userToken.isBlank() && JwtParserUtil.hasScope(userToken, "TENANT_ADMIN")) {
             return "ALL";
+        }
+        if (userToken == null || userToken.isBlank()) {
+            return unmappedCustomer(null);
         }
         String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);
         if (tbCustomerId == null) {
