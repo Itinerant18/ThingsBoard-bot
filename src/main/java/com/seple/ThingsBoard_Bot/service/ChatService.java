@@ -451,8 +451,9 @@ public class ChatService {
                     resolvedQuery = resolvedQuery.toBuilder().targetBranch(hydrated).build();
                     snapshots = List.of(hydrated);
                 }
-            } else if (twoStepEnabled && resolvedQuery.isGlobal()) {
-                // Global deterministic overview still needs a branch list with states for now.
+            } else if (twoStepEnabled && (resolvedQuery.isGlobal()
+                    || resolvedQuery.getIntent() == QueryIntent.ZONE_OVERVIEW)) {
+                // Global and zone-scoped overview need a full branch list with states.
                 snapshots = userDataService.getUserBranchSnapshots(userToken);
             }
 

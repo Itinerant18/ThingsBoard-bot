@@ -420,6 +420,20 @@ public class UserDataService {
             authNames.add(normalizeKey(node.getDisplayName()));
             authNames.add(normalizeKey(node.getNodeId()));
         }
+
+        // Also add zone/NBG (non-leaf) node names to the authorized set so that
+        // zone-scoped questions like "gateway status for ZO Howrah" are never
+        // flagged as unauthorized.  A user who can see *any* branch under a zone
+        // is implicitly allowed to *name* that zone.
+        java.util.Set<String> zoneNames = new java.util.HashSet<>();
+        for (HierarchyNode node : cached.allNodes) {
+            if (!Boolean.TRUE.equals(node.getIsLeaf())) {
+                String normName = normalizeKey(node.getDisplayName());
+                zoneNames.add(normName);
+                authNames.add(normName);
+                authNames.add(normalizeKey(node.getNodeId()));
+            }
+        }
         
         String normalizedQuestion = normalizeKey(question);
         log.info("[SCOPING] normalizedQuestion: '{}'", normalizedQuestion);
@@ -439,6 +453,15 @@ public class UserDataService {
             // Check if the name or ID is contained in the question
             if ((normName.length() >= 4 && normalizedQuestion.contains(normName)) || 
                 (normId.length() >= 5 && normalizedQuestion.contains(normId))) {
+
+                // If this branch name is actually part of a zone/NBG phrase in the
+                // question (e.g. "HOWRAH" matched but the user wrote "ZO HOWRAH"),
+                // skip it — the user is asking about the zone container, not the
+                // individual branch.
+                if (isPartOfZonePhrase(normalizedQuestion, normName)) {
+                    log.info("[SCOPING] Skipping '{}' — part of a zone/NBG phrase in the question", node.getDisplayName());
+                    continue;
+                }
                 
                 boolean nameAuth = authNames.contains(normName);
                 boolean idAuth = authNames.contains(normId);
@@ -455,6 +478,31 @@ public class UserDataService {
         }
         log.info("[SCOPING] No unauthorized branch name detected in question.");
         return null;
+    }
+
+    /**
+     * Checks whether a matched branch name is actually part of a zone or NBG
+     * phrase in the question.  E.g. if normName is "HOWRAH" and the question
+     * contains "ZO HOWRAH", the match is a zone reference, not a branch
+     * reference.
+     */
+    private boolean isPartOfZonePhrase(String normalizedQuestion, String normName) {
+        // Check for "ZO <name>" pattern
+        String zoPrefix = "ZO " + normName;
+        if (normalizedQuestion.contains(zoPrefix)) {
+            return true;
+        }
+        // Check for "NBG <name>" pattern (sometimes zones are referenced via NBG)
+        String nbgPrefix = "NBG " + normName;
+        if (normalizedQuestion.contains(nbgPrefix)) {
+            return true;
+        }
+        // Check for "ZONE <name>" pattern
+        String zonePrefix = "ZONE " + normName;
+        if (normalizedQuestion.contains(zonePrefix)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isTwoStepFetchEnabled() {

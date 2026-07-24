@@ -40,6 +40,7 @@ public enum QueryIntent {
     BRANCH_RANKING,
     BRANCH_COMPARE,
     BRANCH_FILTER,
+    ZONE_OVERVIEW,
     GENERAL_LLM,
     HOW_TO,
     NAVIGATION,

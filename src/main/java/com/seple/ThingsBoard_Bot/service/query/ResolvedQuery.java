@@ -19,6 +19,8 @@ public class ResolvedQuery {
     boolean branchFromMemory;
     boolean deterministic;
     double confidence;
+    /** The zone or NBG name to filter by (e.g. "ZO HOWRAH"); null when not zone-scoped. */
+    String zoneFilter;
     /** Fuzzy branch-name outcome when exact matching failed; null when not attempted. */
     BranchResolution branchResolution;
     /** Requested rendering from the extractor; null means handler default. */

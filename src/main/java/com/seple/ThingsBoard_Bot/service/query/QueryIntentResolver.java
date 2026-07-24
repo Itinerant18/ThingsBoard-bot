@@ -81,6 +81,13 @@ public class QueryIntentResolver {
             }
         }
 
+        // ZONE FILTER EXTRACTION: when the intent is ZONE_OVERVIEW, extract the
+        // zone/NBG name from the question so the handler can filter snapshots.
+        String zoneFilter = null;
+        if (intent == QueryIntent.ZONE_OVERVIEW) {
+            zoneFilter = extractZoneNameFromQuestion(normalizedQuestion.toUpperCase(Locale.ROOT));
+        }
+
         boolean deterministic = intent != QueryIntent.GENERAL_LLM;
         double confidence = targetBranch != null || global || ambiguous || fleetScoped ? 0.95 : 0.55;
 
@@ -95,6 +102,7 @@ public class QueryIntentResolver {
                 .branchFromMemory(branchFromMemory)
                 .deterministic(deterministic && (global || targetBranch != null || fleetScoped || intent.isKnowledge()))
                 .confidence(confidence)
+                .zoneFilter(zoneFilter)
                 .branchResolution(branchResolution)
                 .build();
     }
@@ -533,7 +541,7 @@ public class QueryIntentResolver {
     private boolean isFleetScopedIntent(QueryIntent intent) {
         return isHierarchyIntent(intent) || intent == QueryIntent.CATEGORY_HEALTH
                 || intent == QueryIntent.BRANCH_RANKING || intent == QueryIntent.BRANCH_COMPARE
-                || intent == QueryIntent.BRANCH_FILTER;
+                || intent == QueryIntent.BRANCH_FILTER || intent == QueryIntent.ZONE_OVERVIEW;
     }
 
     /**
@@ -625,7 +633,75 @@ public class QueryIntentResolver {
                 || question.contains("ALL NBG") || question.contains("ALL ZONE")) {
             return QueryIntent.HIERARCHY_LIST_NODES;
         }
+        // ZONE-SCOPED DATA QUERY: The question mentions a zone/NBG and also contains
+        // data keywords (status, gateway, offline, CCTV, FAS, alarm, etc.) but doesn't
+        // match any structural navigation verb above. This is a zone-filtered data
+        // question like "gateway status for ZO Howrah" or "offline branches in ZO Barasat".
+        if (hasDataKeyword(question)) {
+            return QueryIntent.ZONE_OVERVIEW;
+        }
         return null;
+    }
+
+    /**
+     * Returns true when the question contains keywords that indicate a data/metric
+     * question rather than a structural hierarchy question.
+     */
+    private boolean hasDataKeyword(String question) {
+        return question.contains("STATUS") || question.contains("GATEWAY")
+                || question.contains("OFFLINE") || question.contains("ONLINE")
+                || question.contains("INACTIVE") || question.contains("ACTIVE")
+                || question.contains("CCTV") || question.contains("CAMERA")
+                || question.contains("FAS") || question.contains("IAS")
+                || question.contains("BAS") || question.contains("ALARM")
+                || question.contains("POWER") || question.contains("BATTERY")
+                || question.contains("HEALTH") || question.contains("FAULT")
+                || question.contains("ERROR") || question.contains("DOOR")
+                || question.contains("NETWORK") || question.contains("ACS")
+                || question.contains("ACCESS CONTROL") || question.contains("TIME LOCK");
+    }
+
+    /**
+     * Extracts the zone or NBG name from the question. Looks for "ZO <name>",
+     * "ZONE <name>", or "NBG <name>" patterns.
+     */
+    private String extractZoneNameFromQuestion(String upperQuestion) {
+        // Try "ZO <words>" pattern — match the longest prefix that is a known
+        // hierarchy name token sequence.  For simplicity, grab everything after
+        // the prefix up to the next data keyword or end of string.
+        String[] prefixes = { "ZO ", "ZONE ", "NBG " };
+        for (String prefix : prefixes) {
+            int idx = upperQuestion.indexOf(prefix);
+            if (idx < 0) continue;
+            String afterPrefix = upperQuestion.substring(idx + prefix.length()).trim();
+            // Take the first word(s) that look like a place name (stop at common
+            // data/question keywords).
+            String[] words = afterPrefix.split("\\s+");
+            StringBuilder name = new StringBuilder();
+            for (String word : words) {
+                if (isDataOrStopWord(word)) break;
+                if (!name.isEmpty()) name.append(" ");
+                name.append(word);
+            }
+            if (!name.isEmpty()) {
+                // Return with the prefix so the handler can match against
+                // raw zo_name values like "ZO HOWRAH".
+                return prefix.trim() + " " + name.toString().trim();
+            }
+        }
+        return null;
+    }
+
+    private boolean isDataOrStopWord(String word) {
+        return java.util.Set.of(
+                "STATUS", "GATEWAY", "OFFLINE", "ONLINE", "INACTIVE", "ACTIVE",
+                "CCTV", "CAMERA", "FAS", "IAS", "BAS", "ALARM", "POWER",
+                "BATTERY", "HEALTH", "FAULT", "ERROR", "DOOR", "NETWORK",
+                "ACS", "ACCESS", "TIME", "BRANCHES", "BRANCH", "DEVICE",
+                "DEVICES", "ALL", "ANY", "HOW", "MANY", "WHAT", "WHICH",
+                "SHOW", "LIST", "ARE", "IS", "THE", "FOR", "OF", "IN",
+                "CURRENT", "OVERVIEW", "SUMMARY", "REPORT"
+        ).contains(word);
     }
 
     private String detectSubsystem(String normalizedQuestion) {

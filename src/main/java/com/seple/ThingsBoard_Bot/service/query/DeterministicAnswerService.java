@@ -23,6 +23,7 @@ import com.seple.ThingsBoard_Bot.service.query.handler.HierarchyHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.NetworkStatusHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.PowerHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.SubsystemHandler;
+import com.seple.ThingsBoard_Bot.service.query.handler.ZoneOverviewHandler;
 
 /**
  * Routes a {@link ResolvedQuery} to the {@link AnswerHandler} that supports its intent and returns
@@ -72,6 +73,7 @@ public class DeterministicAnswerService {
                 new DeviceIdentityHandler(support),
                 new HierarchyHandler(support),
                 new FleetAnalyticsHandler(support),
+                new ZoneOverviewHandler(support),
                 new com.seple.ThingsBoard_Bot.service.query.handler.GlossaryHandler(
                         new com.seple.ThingsBoard_Bot.service.query.glossary.GlossaryService(
                                 new org.springframework.core.io.ClassPathResource("glossary.json"))),
