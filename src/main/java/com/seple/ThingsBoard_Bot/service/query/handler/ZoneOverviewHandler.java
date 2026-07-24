@@ -113,7 +113,10 @@ public class ZoneOverviewHandler implements AnswerHandler {
      * ZO SILIGURI. A single zone parses to a one-element list (unchanged behaviour).
      */
     private List<ZoneSpec> parseZoneSpecs(String zoneFilter) {
-        String upper = zoneFilter.toUpperCase(Locale.ROOT).trim();
+        String upper = zoneFilter.toUpperCase(Locale.ROOT)
+                .replaceAll("[\\?\\!\\.,;:_]", " ")
+                .replaceAll("\\s+", " ")
+                .trim();
         String prefix = "";
         String remainder = upper;
         for (String p : new String[]{"ZO", "ZONE", "NBG"}) {
@@ -125,7 +128,7 @@ public class ZoneOverviewHandler implements AnswerHandler {
         }
         List<ZoneSpec> specs = new ArrayList<>();
         for (String piece : remainder.split("/")) {
-            String name = piece.trim();
+            String name = piece.replaceAll("[^A-Z0-9 ]", "").trim();
             if (name.isEmpty()) {
                 continue;
             }

@@ -676,26 +676,22 @@ public class QueryIntentResolver {
      * "ZONE <name>", or "NBG <name>" patterns.
      */
     private String extractZoneNameFromQuestion(String upperQuestion) {
-        // Try "ZO <words>" pattern — match the longest prefix that is a known
-        // hierarchy name token sequence.  For simplicity, grab everything after
-        // the prefix up to the next data keyword or end of string.
+        // Strip trailing punctuation from question
+        String cleanQuestion = upperQuestion.replaceAll("[\\?\\!\\.,;:_]", " ");
         String[] prefixes = { "ZO ", "ZONE ", "NBG " };
         for (String prefix : prefixes) {
-            int idx = upperQuestion.indexOf(prefix);
+            int idx = cleanQuestion.indexOf(prefix);
             if (idx < 0) continue;
-            String afterPrefix = upperQuestion.substring(idx + prefix.length()).trim();
-            // Take the first word(s) that look like a place name (stop at common
-            // data/question keywords).
+            String afterPrefix = cleanQuestion.substring(idx + prefix.length()).trim();
             String[] words = afterPrefix.split("\\s+");
             StringBuilder name = new StringBuilder();
             for (String word : words) {
-                if (isDataOrStopWord(word)) break;
+                String cleanWord = word.replaceAll("[^A-Z0-9/]", "");
+                if (cleanWord.isEmpty() || isDataOrStopWord(cleanWord)) break;
                 if (!name.isEmpty()) name.append(" ");
-                name.append(word);
+                name.append(cleanWord);
             }
             if (!name.isEmpty()) {
-                // Return with the prefix so the handler can match against
-                // raw zo_name values like "ZO HOWRAH".
                 return prefix.trim() + " " + name.toString().trim();
             }
         }
