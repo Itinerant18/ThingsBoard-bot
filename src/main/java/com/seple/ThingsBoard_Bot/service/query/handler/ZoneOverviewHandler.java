@@ -45,6 +45,10 @@ public class ZoneOverviewHandler implements AnswerHandler {
     @Autowired(required = false)
     private BranchAncestorPathRepository branchAncestorPathRepository;
 
+    /** Shared network summary builder (same package). Injected via field so unit tests still compile. */
+    @Autowired(required = false)
+    private NetworkStatusHandler networkStatusHandler;
+
     private final Map<String, CachedHierarchy> hierarchyCache = new java.util.concurrent.ConcurrentHashMap<>();
 
     private static class CachedHierarchy {
@@ -89,6 +93,12 @@ public class ZoneOverviewHandler implements AnswerHandler {
         String question = query.getOriginalQuestion().toUpperCase(Locale.ROOT);
 
         // Determine what type of data the user is asking about.
+        if (isAlarmRankingQuestion(question)) {
+            return renderAlarmRanking(zoneLabel, zoneSnapshots);
+        }
+        if (isNetworkQuestion(question)) {
+            return renderNetworkOverview(zoneLabel, zoneSnapshots);
+        }
         if (isPowerQuestion(question)) {
             return renderPowerOverview(zoneLabel, zoneSnapshots);
         }
@@ -513,6 +523,62 @@ public class ZoneOverviewHandler implements AnswerHandler {
     private boolean isOnlineQuestion(String question) {
         return (question.contains("ONLINE") || question.contains("ACTIVE"))
                 && !question.contains("INACTIVE");
+    }
+
+    /** Step 2: Network questions for a zone — "network status for ZO Howrah", "which ZO has network issues?" */
+    private boolean isNetworkQuestion(String question) {
+        return question.contains("NETWORK") || question.contains("OPERATOR")
+                || question.contains("SIM") || question.contains("CARRIER");
+    }
+
+    /** Step 3: Alarm ranking within a zone — "top branches by alarms in ZO Howrah", "most alarms" */
+    private boolean isAlarmRankingQuestion(String question) {
+        boolean hasAlarm = question.contains("ALARM") || question.contains("ERROR");
+        boolean hasRank = question.contains("TOP ") || question.contains("MOST") || question.contains("RANK")
+                || question.contains("HIGHEST") || question.contains("WORST");
+        return hasAlarm && hasRank;
+    }
+
+    // --- Network rendering (Step 2) ---
+
+    private String renderNetworkOverview(String zoneLabel, List<BranchSnapshot> zoneSnapshots) {
+        if (networkStatusHandler != null) {
+            return networkStatusHandler.buildNetworkSummary(zoneLabel, zoneSnapshots);
+        }
+        // Fallback if handler not injected (unit-test path)
+        return "Network summary not available for " + zoneLabel + ".";
+    }
+
+    // --- Alarm ranking rendering (Step 3) ---
+
+    private String renderAlarmRanking(String zoneLabel, List<BranchSnapshot> zoneSnapshots) {
+        List<BranchSnapshot> withAlarms = zoneSnapshots.stream()
+                .filter(s -> s.getAlerts() != null && s.getAlerts().getAlarmCount() > 0)
+                .sorted((a, b) -> Integer.compare(
+                        b.getAlerts().getAlarmCount(), a.getAlerts().getAlarmCount()))
+                .toList();
+
+        int totalAlarms = zoneSnapshots.stream()
+                .mapToInt(s -> s.getAlerts() != null ? s.getAlerts().getAlarmCount() : 0).sum();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("### 🚨 Alarm Ranking — ").append(zoneLabel).append("\n\n");
+        sb.append("**Total open alarms across zone: ").append(totalAlarms).append("**\n");
+        sb.append("**Branches scoped: ").append(zoneSnapshots.size()).append("**\n\n");
+
+        if (withAlarms.isEmpty()) {
+            sb.append("✅ No branches with open alarms in this zone.");
+            return sb.toString();
+        }
+
+        sb.append("| # | Branch | Alarms |\n|---|--------|--------|");
+        int rank = 1;
+        for (BranchSnapshot snap : withAlarms) {
+            sb.append("\n| ").append(rank++)
+              .append(" | ").append(support.branchName(snap))
+              .append(" | ").append(snap.getAlerts().getAlarmCount()).append(" |");
+        }
+        return sb.toString();
     }
 
     // --- Raw data accessors ---

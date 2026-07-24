@@ -298,6 +298,14 @@ public class QueryIntentResolver {
                 return knowledgeIntent;
             }
         }
+        // Data quality questions ("what % have IMEI", "data completeness", "data quality")
+        if (isDataQualityQuestion(question)) {
+            return QueryIntent.DATA_QUALITY;
+        }
+        // Instant briefing / triage ("what should I look at first", "morning brief", "top risks")
+        if (isInstantBriefingQuestion(question)) {
+            return QueryIntent.INSTANT_BRIEFING;
+        }
         if (question.contains("IMEI")) {
             return QueryIntent.DEVICE_IMEI;
         }
@@ -453,6 +461,10 @@ public class QueryIntentResolver {
         if (question.contains("ERROR")) {
             return QueryIntent.ERROR_STATUS;
         }
+        // Severity / detail alarm questions go to ALARM_DETAIL; plain "alarm" goes to ALARM_STATUS.
+        if (isAlarmDetailQuestion(question)) {
+            return QueryIntent.ALARM_DETAIL;
+        }
         if (question.contains("ALARM")) {
             return QueryIntent.ALARM_STATUS;
         }
@@ -585,7 +597,8 @@ public class QueryIntentResolver {
     private boolean isFleetScopedIntent(QueryIntent intent) {
         return isHierarchyIntent(intent) || intent == QueryIntent.CATEGORY_HEALTH
                 || intent == QueryIntent.BRANCH_RANKING || intent == QueryIntent.BRANCH_COMPARE
-                || intent == QueryIntent.BRANCH_FILTER || intent == QueryIntent.ZONE_OVERVIEW;
+                || intent == QueryIntent.BRANCH_FILTER || intent == QueryIntent.ZONE_OVERVIEW
+                || intent == QueryIntent.DATA_QUALITY || intent == QueryIntent.INSTANT_BRIEFING;
     }
 
     /**
@@ -611,10 +624,14 @@ public class QueryIntentResolver {
      * isn't one it can compute, so e.g. "rank NBGs by health score" is not falsely answered.
      */
     private boolean isRankingQuestion(String question) {
-        // Hierarchy-level ranking (NBG/zone, typically by health score) isn't computable from the
-        // device snapshot -> leave it to the honest-decline path, not branch ranking.
+        // For zone/NBG questions: only block ranking when there is no rankable metric keyword.
+        // A question like "rank NBGs by health score" has no computable metric -> block.
+        // But "top 5 branches by alarms in ZO Howrah" IS rankable -> allow.
         if (question.contains("NBG") || question.contains("ZONE") || containsWord(question, "ZO")) {
-            return false;
+            boolean hasRankMetric = question.contains("ALARM") || question.contains("ERROR")
+                    || question.contains("BATTERY") || question.contains("CAMERA")
+                    || question.contains("CCTV") || question.contains("FAULT");
+            if (!hasRankMetric) return false;
         }
         // NOTE: the alias normalizer strips the singular word "branch", so don't gate on it here.
         boolean rankVerb = question.contains("TOP ") || question.contains("BOTTOM ") || question.contains("RANK");
@@ -740,7 +757,10 @@ public class QueryIntentResolver {
                 "ACS", "ACCESS", "TIME", "BRANCHES", "BRANCH", "DEVICE",
                 "DEVICES", "ALL", "ANY", "HOW", "MANY", "WHAT", "WHICH",
                 "SHOW", "LIST", "ARE", "IS", "THE", "FOR", "OF", "IN",
-                "CURRENT", "OVERVIEW", "SUMMARY", "REPORT"
+                "CURRENT", "OVERVIEW", "SUMMARY", "REPORT",
+                // Bug 4c: these words were being included in the extracted zone name
+                "RELATED", "EVERY", "EACH", "WITHIN", "UNDER", "ABOUT",
+                "PLEASE", "GIVE", "ME", "TELL", "AND", "OR", "FROM", "TO"
         ).contains(word);
     }
 
@@ -839,11 +859,8 @@ public class QueryIntentResolver {
                     DOOR_STATUS,
                     ACCESS_CONTROL_USER_COUNT,
                     ACCESS_CONTROL_DEVICE_INFO,
-                    DEVICE_IMEI,
                     CCTV_DEVICE_INFO,
-                    GPS_LOCATION,
-                    LAST_REPORTED,
-                    NETWORK_OPERATOR -> true;
+                    LAST_REPORTED -> true;
             default -> false;
         };
     }
@@ -886,5 +903,56 @@ public class QueryIntentResolver {
             }
         }
         return false;
+    }
+
+    /**
+     * "What % have IMEI", "data quality", "data completeness", "how many devices have GPS".
+     * Must not fire on "what does data quality mean" (caught earlier by the glossary check).
+     */
+    private boolean isDataQualityQuestion(String question) {
+        if (question.contains("DATA QUALITY") || question.contains("DATA COMPLETENESS")) {
+            return true;
+        }
+        boolean pctOrCount = question.contains("%") || question.contains("PERCENT")
+                || question.contains("HOW MANY") || question.contains("RATIO");
+        boolean qualityField = question.contains("IMEI") || question.contains("GPS")
+                || question.contains("NETWORK");
+        boolean qualityVerb = question.contains("HAVE") || question.contains("MISSING")
+                || question.contains("AVAILABLE") || question.contains("MAPPED")
+                || question.contains("REPORTED");
+        return pctOrCount && qualityField && qualityVerb;
+    }
+
+    /**
+     * "What should I look at first", "morning brief", "one-line summary", "priority triage",
+     * "top risk items", "critical issues first".
+     */
+    private boolean isInstantBriefingQuestion(String question) {
+        return question.contains("LOOK AT FIRST")
+                || question.contains("MORNING BRIEF")
+                || question.contains("ONE LINE SUMMARY") || question.contains("ONE-LINE SUMMARY")
+                || question.contains("QUICK STATUS")
+                || question.contains("PRIORITY TRIAGE") || question.contains("TRIAGE")
+                || question.contains("TOP RISK") || question.contains("RISK ITEM")
+                || question.contains("CRITICAL ISSUE") && question.contains("FIRST")
+                || question.contains("WHAT SHOULD I") && question.contains("FIRST")
+                || question.contains("INSTANT BRIEF");
+    }
+
+    /**
+     * Severity-level alarm detail questions that should go to {@link QueryIntent#ALARM_DETAIL}
+     * rather than the simple {@link QueryIntent#ALARM_STATUS} count.
+     * Examples: "critical alarms", "major alarms", "severity breakdown", "alarm types".
+     */
+    private boolean isAlarmDetailQuestion(String question) {
+        boolean hasSeverity = question.contains("CRITICAL") || question.contains("MAJOR")
+                || question.contains("MINOR") || question.contains("WARNING");
+        boolean hasAlarmContext = question.contains("ALARM");
+        if (hasSeverity && hasAlarmContext) return true;
+
+        boolean hasBreakdown = question.contains("SEVERITY") || question.contains("BREAKDOWN")
+                || question.contains("DISTRIBUTION") || question.contains("WHAT TYPE")
+                || question.contains("WHAT KIND") || question.contains("ALARM TYPE");
+        return hasBreakdown && hasAlarmContext;
     }
 }

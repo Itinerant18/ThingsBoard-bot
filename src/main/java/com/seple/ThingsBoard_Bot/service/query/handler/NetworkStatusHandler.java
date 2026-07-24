@@ -31,7 +31,8 @@ public class NetworkStatusHandler implements AnswerHandler {
     public String handle(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
         BranchSnapshot branch = query.getTargetBranch();
         if (branch == null) {
-            return null;
+            // Fleet-level network query
+            return answerFleetNetwork(snapshots);
         }
         return switch (query.getIntent()) {
             case NETWORK_STATUS -> answerNetworkStatus(branch);
@@ -91,4 +92,69 @@ public class NetworkStatusHandler implements AnswerHandler {
         }
         return "**For Branch " + support.branchName(branch) + ", the Network Status is N/A.**";
     }
+
+    // ── Fleet-level methods ─────────────────────────────────────────────────
+
+    private String answerFleetNetwork(List<BranchSnapshot> snapshots) {
+        return buildNetworkSummary("Fleet", snapshots);
+    }
+
+    /**
+     * Package-visible: builds a formatted network summary for any snapshot subset.
+     * Called by both this handler (fleet mode) and {@link ZoneOverviewHandler} (zone mode).
+     *
+     * @param scopeLabel human-readable label for the scope (e.g., "Fleet" or "ZO HOWRAH")
+     * @param snapshots  the branches to summarise
+     */
+    String buildNetworkSummary(String scopeLabel, List<BranchSnapshot> snapshots) {
+        java.util.Map<String, java.util.List<String>> byOperator = new java.util.LinkedHashMap<>();
+        java.util.List<String> unmapped = new java.util.ArrayList<>();
+        java.util.List<String> offline = new java.util.ArrayList<>();
+
+        for (BranchSnapshot snap : snapshots) {
+            String operator = resolveOperator(snap.getRawData());
+            Boolean networkUp = support.resolveBoolean(snap.getRawData(), "NETWORK", "gatewayStatus_NETWORK");
+
+            if (Boolean.FALSE.equals(networkUp)) {
+                offline.add(support.branchName(snap));
+            }
+            if (operator == null || operator.isBlank()) {
+                unmapped.add(support.branchName(snap));
+            } else {
+                byOperator.computeIfAbsent(operator, k -> new java.util.ArrayList<>())
+                        .add(support.branchName(snap));
+            }
+        }
+
+        int total = snapshots.size();
+        StringBuilder sb = new StringBuilder();
+        sb.append("### 🌐 Network Status — ").append(scopeLabel).append("\n\n");
+        sb.append("| Metric | Count |\n|--------|-------|\n");
+        sb.append("| Total Devices | ").append(total).append(" |\n");
+        sb.append("| 🔴 Network Offline | ").append(offline.size()).append(" |\n");
+        sb.append("| ⚠️ Operator Unmapped | ").append(unmapped.size()).append(" |\n\n");
+
+        if (!byOperator.isEmpty()) {
+            sb.append("**Network Operator Distribution:**\n\n");
+            sb.append("| Operator | Branches |\n|----------|----------|\n");
+            byOperator.forEach((op, branches) ->
+                    sb.append("| ").append(op).append(" | ").append(branches.size()).append(" |\n"));
+            sb.append("\n");
+        }
+
+        if (!offline.isEmpty()) {
+            sb.append("**Branches with Network Offline (").append(offline.size()).append("):**\n");
+            for (String name : offline) {
+                sb.append("- ").append(name).append("\n");
+            }
+        }
+        if (!unmapped.isEmpty() && unmapped.size() <= 30) {
+            sb.append("\n**Branches with Unmapped Operator (").append(unmapped.size()).append("):**\n");
+            for (String name : unmapped) {
+                sb.append("- ").append(name).append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }
+

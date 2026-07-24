@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import com.seple.ThingsBoard_Bot.model.domain.BranchSnapshot;
 import com.seple.ThingsBoard_Bot.model.dto.GlobalOverviewCounters;
 import com.seple.ThingsBoard_Bot.service.query.handler.AccessControlHandler;
+import com.seple.ThingsBoard_Bot.service.query.handler.AlarmDetailHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.AlertHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.AnswerHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.AnswerSupport;
 import com.seple.ThingsBoard_Bot.service.query.handler.CctvHandler;
+import com.seple.ThingsBoard_Bot.service.query.handler.DataQualityHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DeviceIdentityHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DeviceInventoryHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DoorStatusHandler;
@@ -20,6 +22,7 @@ import com.seple.ThingsBoard_Bot.service.query.handler.FleetAnalyticsHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.GatewayStatusHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.GlobalOverviewHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.HierarchyHandler;
+import com.seple.ThingsBoard_Bot.service.query.handler.InstantBriefingHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.NetworkStatusHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.PowerHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.SubsystemHandler;
@@ -75,6 +78,10 @@ public class DeterministicAnswerService {
                 new HierarchyHandler(support),
                 new FleetAnalyticsHandler(support),
                 new ZoneOverviewHandler(support),
+                new DataQualityHandler(support),
+                new InstantBriefingHandler(support),
+                // AlarmDetailHandler requires AlarmFetchService (Spring bean) — not wired in test
+                // constructor; alarm detail queries will fall through to LLM in unit tests.
                 new com.seple.ThingsBoard_Bot.service.query.handler.GlossaryHandler(
                         new com.seple.ThingsBoard_Bot.service.query.glossary.GlossaryService(
                                 new org.springframework.core.io.ClassPathResource("glossary.json"))),

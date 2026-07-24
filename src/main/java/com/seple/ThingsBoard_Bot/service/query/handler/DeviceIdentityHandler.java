@@ -33,7 +33,12 @@ public class DeviceIdentityHandler implements AnswerHandler {
     public String handle(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
         BranchSnapshot branch = query.getTargetBranch();
         if (branch == null) {
-            return null;
+            // Fleet-level query: scan all snapshots
+            return switch (query.getIntent()) {
+                case DEVICE_IMEI -> answerFleetImei(snapshots);
+                case GPS_LOCATION -> answerFleetGps(snapshots);
+                default -> null;
+            };
         }
         return switch (query.getIntent()) {
             case DEVICE_IMEI -> answerImei(branch);
@@ -106,5 +111,81 @@ public class DeviceIdentityHandler implements AnswerHandler {
         } catch (NumberFormatException ignored) {
             return null;
         }
+    }
+
+    // ── Fleet-level methods ─────────────────────────────────────────────────
+
+    private String answerFleetImei(List<BranchSnapshot> snapshots) {
+        List<String> missing = new java.util.ArrayList<>();
+        List<String> present = new java.util.ArrayList<>();
+        for (BranchSnapshot snap : snapshots) {
+            String imei = support.firstNonBlank(snap.getRawData(), "imei_id_dev_id", "imei_id");
+            if (imei == null || isMissingImei(imei)) {
+                missing.add(support.branchName(snap));
+            } else {
+                present.add(support.branchName(snap));
+            }
+        }
+        int total = snapshots.size();
+        StringBuilder sb = new StringBuilder();
+        sb.append("### 📱 IMEI Data Quality Across Fleet\n\n");
+        sb.append("| Metric | Count |\n|--------|-------|\n");
+        sb.append("| Total Devices | ").append(total).append(" |\n");
+        sb.append("| ✅ IMEI Present | ").append(present.size()).append(" |\n");
+        sb.append("| ❌ IMEI Missing | ").append(missing.size()).append(" |\n");
+        if (total > 0) {
+            sb.append("| Data Quality | ").append(Math.round(present.size() * 100.0 / total)).append("% |\n");
+        }
+        if (!missing.isEmpty()) {
+            sb.append("\n**Branches with Missing IMEI (").append(missing.size()).append("):**\n");
+            for (String name : missing) {
+                sb.append("- ").append(name).append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    private String answerFleetGps(List<BranchSnapshot> snapshots) {
+        List<String> missing = new java.util.ArrayList<>();
+        List<String> defaultGps = new java.util.ArrayList<>();
+        List<String> valid = new java.util.ArrayList<>();
+        for (BranchSnapshot snap : snapshots) {
+            Map<String, Object> raw = snap.getRawData();
+            Double lat = parseDouble(support.firstNonBlank(raw, "lat", "latitude"));
+            Double lon = parseDouble(support.firstNonBlank(raw, "lon", "longitude"));
+            boolean usingDefault = support.isTrue(raw.get("lat_lon_default"))
+                    || (lat != null && lon != null && isCentroid(lat, lon));
+            if (lat == null || lon == null) {
+                missing.add(support.branchName(snap));
+            } else if (usingDefault) {
+                defaultGps.add(support.branchName(snap));
+            } else {
+                valid.add(support.branchName(snap));
+            }
+        }
+        int total = snapshots.size();
+        StringBuilder sb = new StringBuilder();
+        sb.append("### 📍 GPS Data Quality Across Fleet\n\n");
+        sb.append("| Metric | Count |\n|--------|-------|\n");
+        sb.append("| Total Devices | ").append(total).append(" |\n");
+        sb.append("| ✅ Valid GPS | ").append(valid.size()).append(" |\n");
+        sb.append("| ⚠️ Default Location | ").append(defaultGps.size()).append(" |\n");
+        sb.append("| ❌ GPS Missing | ").append(missing.size()).append(" |\n");
+        if (total > 0) {
+            sb.append("| Data Quality | ").append(Math.round(valid.size() * 100.0 / total)).append("% |\n");
+        }
+        if (!missing.isEmpty()) {
+            sb.append("\n**Branches with Missing GPS (").append(missing.size()).append("):**\n");
+            for (String name : missing) {
+                sb.append("- ").append(name).append("\n");
+            }
+        }
+        if (!defaultGps.isEmpty()) {
+            sb.append("\n**Branches Using Default Location (").append(defaultGps.size()).append("):**\n");
+            for (String name : defaultGps) {
+                sb.append("- ").append(name).append("\n");
+            }
+        }
+        return sb.toString();
     }
 }

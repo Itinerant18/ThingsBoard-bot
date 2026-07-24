@@ -146,6 +146,31 @@
       "aliases": ["branch hierarchy"],
       "definition": "The organizational tree the branches live in: client at the top, then groupings such as NBG and zonal office, with branches as the leaves. Counts and health roll up along this tree.",
       "related": ["NBG", "ZO"]
+    },
+    {
+      "term": "error vs alarm",
+      "aliases": ["errors vs alarms", "error and alarm", "alarm vs error", "difference between error and alarm", "alarm vs fault"],
+      "definition": "An **alarm** means a security system detected the event it monitors for (e.g. intrusion detected, fire detected). An **error** (or fault) means the monitoring equipment itself is malfunctioning (e.g. a sensor loop is broken, an HDD has failed). In short: alarms = real events; errors/faults = equipment problems.",
+      "related": ["alarm", "fault", "error"]
+    },
+    {
+      "term": "TAT",
+      "fullName": "Turn Around Time",
+      "aliases": ["turn around time", "turnaround time", "tat report"],
+      "definition": "The elapsed time between an alarm being created and being cleared/resolved. TAT measures how quickly security incidents or faults are addressed. Lower TAT indicates faster response. TAT reports are available in S-Insights on the SWatch360 portal.",
+      "related": ["alarm", "fault", "S-Insights"]
+    },
+    {
+      "term": "data quality",
+      "aliases": ["data quality score", "data completeness"],
+      "definition": "A measure of how many branch devices are reporting key telemetry fields such as IMEI, GPS coordinates, and network operator. Higher data quality means more complete monitoring visibility across the fleet.",
+      "related": ["IMEI", "GPS", "telemetry"]
+    },
+    {
+      "term": "healthy",
+      "aliases": ["health", "health score", "what is healthy"],
+      "definition": "A device or branch is considered 'Healthy' when: (1) the gateway is online and communicating, (2) mains power is on, (3) battery is not low, (4) all installed subsystems (CCTV, IAS, BAS, FAS, TLS, ACS) report normal states, and (5) there are no active alarms or faults. The health percentage is the ratio of healthy devices to total devices.",
+      "related": ["fault", "offline", "gateway"]
     }
   ]
 }

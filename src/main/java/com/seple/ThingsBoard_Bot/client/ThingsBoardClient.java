@@ -350,7 +350,60 @@ public class ThingsBoardClient {
         log.info("[{}] {} = {}", prefix, key, value);
     }
 
+
+    // ==================== Alarms ====================
+
+    /**
+     * Fetches active alarms for a single device from the ThingsBoard Alarm REST API.
+     *
+     * <p>Calls {@code GET /api/alarms/DEVICE/{entityId}?pageSize={pageSize}&amp;fetchOriginator=false
+     * &amp;status=ACTIVE_UNACK,ACTIVE_ACK} and maps each alarm to an {@link ActiveAlarm} record.
+     *
+     * @param deviceId  ThingsBoard device entity UUID
+     * @param pageSize  maximum alarms to fetch (typically 50)
+     * @return list of active alarms; empty if none or on error
+     */
+    public List<com.seple.ThingsBoard_Bot.model.domain.ActiveAlarm> fetchAlarmsByDevice(
+            String deviceId, int pageSize) {
+        String url = config.getUrl()
+                + "/api/alarms/DEVICE/" + deviceId
+                + "?pageSize=" + pageSize
+                + "&page=0"
+                + "&fetchOriginator=false"
+                + "&status=ACTIVE_UNACK,ACTIVE_ACK";
+
+        List<com.seple.ThingsBoard_Bot.model.domain.ActiveAlarm> alarms = new ArrayList<>();
+        try {
+            HttpEntity<Void> entity = new HttpEntity<>(getAuthHeaders());
+            ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                JsonNode json = objectMapper.readTree(response.getBody());
+                JsonNode dataArray = json.path("data");
+                if (dataArray.isArray()) {
+                    for (JsonNode alarm : dataArray) {
+                        String alarmId = alarm.path("id").path("id").asText(null);
+                        String type = alarm.path("type").asText("UNKNOWN");
+                        String severity = alarm.path("severity").asText(null);
+                        String status = alarm.path("status").asText(null);
+                        long createdTime = alarm.path("createdTime").asLong(0L);
+                        // Originator name may appear in the nested originator node
+                        String deviceName = alarm.path("originatorName").asText(null);
+                        if (deviceName == null || deviceName.isBlank()) {
+                            deviceName = alarm.path("originator").path("name").asText(null);
+                        }
+                        alarms.add(new com.seple.ThingsBoard_Bot.model.domain.ActiveAlarm(
+                                alarmId, type, severity, status, createdTime, deviceName, deviceId));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not fetch alarms for device {}: {}", deviceId, e.getMessage());
+        }
+        return alarms;
+    }
+
     // ==================== History (for Charts) ====================
+
 
     public Map<String, List<Map<String, Object>>> getHistory(String key, long startTs, long endTs) {
         String url = config.getUrl()
