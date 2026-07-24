@@ -82,9 +82,11 @@ public class QueryIntentResolver {
         }
 
         // ZONE FILTER EXTRACTION: when the intent is ZONE_OVERVIEW, extract the
-        // zone/NBG name from the question so the handler can filter snapshots.
+        // zone/NBG name from the question so the handler can filter snapshots,
+        // and clear targetBranch so this is treated as a zone-wide query.
         String zoneFilter = null;
         if (intent == QueryIntent.ZONE_OVERVIEW) {
+            targetBranch = null;
             zoneFilter = extractZoneNameFromQuestion(normalizedQuestion.toUpperCase(Locale.ROOT));
         }
 
