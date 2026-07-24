@@ -76,7 +76,11 @@ public class UserAwareThingsBoardClient {
 
     private HttpHeaders getHeaders(String userToken) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Authorization", "Bearer " + userToken);
+        String cleanToken = userToken != null ? userToken.trim() : "";
+        if (cleanToken.startsWith("Bearer ")) {
+            cleanToken = cleanToken.substring(7).trim();
+        }
+        headers.set("X-Authorization", "Bearer " + cleanToken);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
     }
