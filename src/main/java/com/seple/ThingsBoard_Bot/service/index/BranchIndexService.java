@@ -66,7 +66,7 @@ public class BranchIndexService {
     }
 
     public List<DeviceIndexEntry> refreshIndex(String userToken) {
-        boolean isTenantAdmin = JwtParserUtil.hasScope(userToken, "TENANT_ADMIN");
+        boolean isTenantAdmin = userToken == null || userToken.isBlank() || JwtParserUtil.hasScope(userToken, "TENANT_ADMIN");
         String customerId = "BOI";
         List<HierarchyNode> nodes;
 

@@ -239,7 +239,7 @@ public class UserDataService {
             redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
         }
 
-        if (thingsBoardConfig.isLiveFetchEnabled() && userToken != null && !userToken.isBlank()) {
+        if (thingsBoardConfig.isLiveFetchEnabled()) {
             try {
                 Map<String, Object> liveTelemetry = userAwareThingsBoardClient.getTelemetry(userToken, deviceId);
                 if (liveTelemetry != null && !liveTelemetry.isEmpty()) {
@@ -372,7 +372,7 @@ public class UserDataService {
         }
 
         // Live fetch directly from ThingsBoard API for real-time accuracy
-        if (thingsBoardConfig.isLiveFetchEnabled() && userToken != null && !userToken.isBlank()) {
+        if (thingsBoardConfig.isLiveFetchEnabled()) {
             try {
                 String deviceId = matched.getDeviceId();
                 Map<String, Object> liveTelemetry = userAwareThingsBoardClient.getTelemetry(userToken, deviceId);
@@ -490,7 +490,7 @@ public class UserDataService {
     // ==================== Helpers ====================
 
     public String resolveCustomerIdPrefix(String userToken) {
-        if (JwtParserUtil.hasScope(userToken, "TENANT_ADMIN")) {
+        if (userToken == null || userToken.isBlank() || JwtParserUtil.hasScope(userToken, "TENANT_ADMIN")) {
             return "ALL";
         }
         String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);

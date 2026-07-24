@@ -63,24 +63,25 @@ public class UserAwareThingsBoardClient {
         return config.getUrl();
     }
 
+    private final ThingsBoardClient thingsBoardClient;
+
     public UserAwareThingsBoardClient(ThingsBoardConfig config,
             @Qualifier("thingsBoardRestTemplate") RestTemplate restTemplate,
-            com.seple.ThingsBoard_Bot.config.SecurityProperties securityProperties) {
+            com.seple.ThingsBoard_Bot.config.SecurityProperties securityProperties,
+            ThingsBoardClient thingsBoardClient) {
         this.config = config;
         this.restTemplate = restTemplate;
         this.objectMapper = new ObjectMapper();
         this.securityProperties = securityProperties;
+        this.thingsBoardClient = thingsBoardClient;
     }
 
     // ==================== Auth Headers ====================
 
     private HttpHeaders getHeaders(String userToken) {
         HttpHeaders headers = new HttpHeaders();
-        String cleanToken = userToken != null ? userToken.trim() : "";
-        if (cleanToken.startsWith("Bearer ")) {
-            cleanToken = cleanToken.substring(7).trim();
-        }
-        headers.set("X-Authorization", "Bearer " + cleanToken);
+        String tokenToUse = (userToken != null && !userToken.isBlank()) ? userToken : thingsBoardClient.getValidToken();
+        headers.set("X-Authorization", "Bearer " + tokenToUse);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
     }

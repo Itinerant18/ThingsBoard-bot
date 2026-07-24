@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   deploy:
@@ -12,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Deploy to EC2 via SSH
@@ -21,15 +20,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script_stop: true
           script: |
-            echo "🚀 Starting deployment on AWS EC2..."
             cd ~/ThingsBoard-Bot
-            git fetch origin main
-            git reset --hard origin/main
-            echo "🧹 Cleaning unused docker layers to free disk space..."
-            docker system prune -af
-            echo "📦 Rebuilding and starting docker containers..."
+            git pull origin main
             docker compose down
             docker compose up -d --build
-            echo "✅ Deployment completed successfully!"
