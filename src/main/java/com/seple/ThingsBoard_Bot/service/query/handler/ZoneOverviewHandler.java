@@ -2,16 +2,24 @@ package com.seple.ThingsBoard_Bot.service.query.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.seple.ThingsBoard_Bot.entity.BranchAncestorPath;
+import com.seple.ThingsBoard_Bot.entity.HierarchyNode;
 import com.seple.ThingsBoard_Bot.model.domain.BranchSnapshot;
 import com.seple.ThingsBoard_Bot.model.domain.NormalizedState;
 import com.seple.ThingsBoard_Bot.model.domain.SubsystemStatus;
+import com.seple.ThingsBoard_Bot.repository.BranchAncestorPathRepository;
+import com.seple.ThingsBoard_Bot.repository.HierarchyNodeRepository;
 import com.seple.ThingsBoard_Bot.service.query.QueryIntent;
 import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
 
@@ -27,6 +35,33 @@ import com.seple.ThingsBoard_Bot.service.query.ResolvedQuery;
 public class ZoneOverviewHandler implements AnswerHandler {
 
     private final AnswerSupport support;
+
+    // Zone membership lives in the hierarchy (ancestor paths), not device telemetry — the zo/nbg
+    // telemetry keys are present on <10% of devices. Field-injected so the manual test constructor
+    // (repos null) keeps working and falls back to the telemetry match.
+    @Autowired(required = false)
+    private HierarchyNodeRepository hierarchyNodeRepository;
+
+    @Autowired(required = false)
+    private BranchAncestorPathRepository branchAncestorPathRepository;
+
+    private final Map<String, CachedHierarchy> hierarchyCache = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static class CachedHierarchy {
+        final List<BranchAncestorPath> paths;
+        final List<HierarchyNode> nodes;
+        final long cachedAt;
+
+        CachedHierarchy(List<BranchAncestorPath> paths, List<HierarchyNode> nodes) {
+            this.paths = paths;
+            this.nodes = nodes;
+            this.cachedAt = System.currentTimeMillis();
+        }
+
+        boolean isExpired() {
+            return System.currentTimeMillis() - cachedAt > 300_000;
+        }
+    }
 
     public ZoneOverviewHandler(AnswerSupport support) {
         this.support = support;
@@ -45,7 +80,7 @@ public class ZoneOverviewHandler implements AnswerHandler {
         }
 
         // Filter snapshots to only branches under this zone.
-        List<BranchSnapshot> zoneSnapshots = filterByZone(snapshots, zoneFilter);
+        List<BranchSnapshot> zoneSnapshots = filterByZone(snapshots, zoneFilter, customerId);
         if (zoneSnapshots.isEmpty()) {
             return "**No branches found under " + zoneFilter + " in your scope.**";
         }
@@ -68,9 +103,9 @@ public class ZoneOverviewHandler implements AnswerHandler {
 
     // --- Filtering ---
 
-    private List<BranchSnapshot> filterByZone(List<BranchSnapshot> snapshots, String zoneFilter) {
+    private List<BranchSnapshot> filterByZone(List<BranchSnapshot> snapshots, String zoneFilter, String customerId) {
         String upperFilter = zoneFilter.toUpperCase(Locale.ROOT);
-        // Strip the prefix for matching (e.g., "ZO HOWRAH" -> "HOWRAH", 
+        // Strip the prefix for matching (e.g., "ZO HOWRAH" -> "HOWRAH",
         // "NBG EAST" -> "EAST") so we can also match raw values that don't
         // include the prefix.
         String nameOnly = upperFilter
@@ -79,8 +114,16 @@ public class ZoneOverviewHandler implements AnswerHandler {
                 .replaceFirst("^NBG\\s+", "")
                 .trim();
 
+        // Primary source: hierarchy ancestor names (covers every branch). Falls back to the sparse
+        // zo/nbg telemetry keys when the hierarchy repos aren't available (e.g. unit tests).
+        Map<String, Set<String>> ancestorNames = resolveAncestorNames(snapshots, customerId);
+
         List<BranchSnapshot> result = new ArrayList<>();
         for (BranchSnapshot snapshot : snapshots) {
+            if (matchesByHierarchy(snapshot, ancestorNames, upperFilter, nameOnly)) {
+                result.add(snapshot);
+                continue;
+            }
             String zo = zoneOf(snapshot);
             String nbg = nbgOf(snapshot);
             if (matchesZone(zo, upperFilter, nameOnly) || matchesZone(nbg, upperFilter, nameOnly)) {
@@ -88,6 +131,102 @@ public class ZoneOverviewHandler implements AnswerHandler {
             }
         }
         return result;
+    }
+
+    private boolean matchesByHierarchy(BranchSnapshot snapshot, Map<String, Set<String>> ancestorNames,
+                                       String upperFilter, String nameOnly) {
+        if (snapshot.getIdentity() == null || snapshot.getIdentity().getBranchName() == null) {
+            return false;
+        }
+        Set<String> ancestors = ancestorNames.get(snapshot.getIdentity().getBranchName());
+        if (ancestors == null) {
+            return false;
+        }
+        for (String ancestor : ancestors) {
+            if (matchesZone(ancestor, upperFilter, nameOnly)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Map each branch name to the set of its ancestor (zone/NBG) display names, resolved from the
+     * hierarchy. Returns an empty map when the hierarchy repos are unavailable. Cached per customer.
+     */
+    private Map<String, Set<String>> resolveAncestorNames(List<BranchSnapshot> snapshots, String customerId) {
+        if (hierarchyNodeRepository == null || branchAncestorPathRepository == null || customerId == null) {
+            return Map.of();
+        }
+        CachedHierarchy cached = hierarchyCache.get(customerId);
+        if (cached == null || cached.isExpired()) {
+            List<HierarchyNode> allNodes = hierarchyNodeRepository.findByCustomerId(customerId);
+            List<BranchAncestorPath> allPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+            cached = new CachedHierarchy(allPaths, allNodes);
+            hierarchyCache.put(customerId, cached);
+        }
+
+        Map<String, HierarchyNode> leafNodes = new HashMap<>();
+        Map<String, HierarchyNode> nonLeafNodes = new HashMap<>();
+        for (HierarchyNode node : cached.nodes) {
+            if (Boolean.TRUE.equals(node.getIsLeaf())) {
+                leafNodes.put(normalizeKey(node.getDisplayName()), node);
+                leafNodes.put(normalizeKey(node.getNodeId()), node);
+            } else {
+                nonLeafNodes.put(node.getNodeId(), node);
+            }
+        }
+        Map<String, List<String>> pathMap = new HashMap<>();
+        for (BranchAncestorPath path : cached.paths) {
+            pathMap.put(path.getBranchNodeId(), path.getAncestorList());
+        }
+
+        Map<String, Set<String>> byBranch = new HashMap<>();
+        for (BranchSnapshot snapshot : snapshots) {
+            if (snapshot.getIdentity() == null) continue;
+            String branchName = snapshot.getIdentity().getBranchName();
+            if (branchName == null) continue;
+
+            HierarchyNode leaf = leafNodes.get(normalizeKey(branchName));
+            if (leaf == null) {
+                String devId = snapshot.getIdentity().getDeviceId();
+                if (devId != null) {
+                    leaf = leafNodes.get(normalizeKey(devId));
+                }
+            }
+            if (leaf == null) continue;
+
+            List<String> ancestors = pathMap.get(leaf.getNodeId());
+            if ((ancestors == null || ancestors.isEmpty()) && leaf.getParentId() != null) {
+                ancestors = List.of(leaf.getParentId());
+            }
+            if (ancestors == null) continue;
+
+            Set<String> names = new HashSet<>();
+            for (String ancestorId : ancestors) {
+                HierarchyNode ancestorNode = nonLeafNodes.get(ancestorId);
+                if (ancestorNode != null && ancestorNode.getDisplayName() != null) {
+                    names.add(ancestorNode.getDisplayName());
+                }
+            }
+            if (!names.isEmpty()) {
+                byBranch.put(branchName, names);
+            }
+        }
+        return byBranch;
+    }
+
+    private String normalizeKey(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toUpperCase(Locale.ROOT)
+                .replace("BOI-", "")
+                .replace("BRANCH ", "")
+                .replace('-', ' ')
+                .replace('_', ' ')
+                .replaceAll("\\s+", " ")
+                .trim();
     }
 
     private boolean matchesZone(String value, String fullFilter, String nameOnly) {
