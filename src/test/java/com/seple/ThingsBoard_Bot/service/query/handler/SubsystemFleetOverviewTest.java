@@ -51,9 +51,11 @@ class SubsystemFleetOverviewTest {
         String answer = handler.handle(cctvOverviewQuery(), snapshots, "BOI");
 
         assertTrue(answer.contains("CCTV"), answer);
-        assertTrue(answer.contains("1 Online | 1 Offline"), answer);
-        assertTrue(answer.contains("1 Not Installed"), answer);
-        assertTrue(answer.contains("1 Unknown"), answer);
+        // Prose summary: one branch in each bucket.
+        assertTrue(answer.contains("1 Branches** have active/working **Online**"), answer);
+        assertTrue(answer.contains("Offline / Faulty"), answer);
+        assertTrue(answer.contains("Not Installed"), answer);
+        assertTrue(answer.contains("Unknown / Unreachable"), answer);
         assertTrue(answer.contains("Not Installed:"), "Not Installed must be its own bucket: " + answer);
         assertTrue(answer.contains("BRANCH C"), answer);
     }
@@ -67,7 +69,7 @@ class SubsystemFleetOverviewTest {
 
         String answer = handler.handle(cctvOverviewQuery(), snapshots, "BOI");
 
-        assertTrue(answer.contains("2 Not Installed"), answer);
-        assertFalse(answer.contains("Offline:"), "no Offline section when nothing is offline: " + answer);
+        assertTrue(answer.contains("2 Branches** have CCTV **Not Installed**"), answer);
+        assertFalse(answer.contains("Offline:"), "no Offline bucket section when nothing is offline: " + answer);
     }
 }

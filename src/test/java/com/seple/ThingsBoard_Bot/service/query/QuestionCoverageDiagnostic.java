@@ -31,13 +31,16 @@ class QuestionCoverageDiagnostic {
 
     @Test
     void reportIntentCoverage() throws Exception {
-        Path file = Path.of("Thingsboard-Data/qustions.txt");
+        Path file = Path.of(System.getProperty("questions.file", "Thingsboard-Data/qustions.txt"));
         org.junit.jupiter.api.Assumptions.assumeTrue(Files.exists(file), "questions file absent — skipping diagnostic");
         Pattern numbered = Pattern.compile("^\\s*\\d+\\.\\s*(.+?)\\s*$");
         List<String> questions = Files.readAllLines(file).stream()
                 .map(l -> {
                     Matcher m = numbered.matcher(l);
-                    return m.matches() ? m.group(1) : null;
+                    if (m.matches()) return m.group(1);
+                    String t = l.strip();
+                    // Any non-blank line that reads like a question (ends with '?' or an imperative).
+                    return (t.endsWith("?") || t.matches("(?i)^(show|list|give|compare|display) .*")) ? t : null;
                 })
                 .filter(q -> q != null && !q.isBlank())
                 .collect(Collectors.toList());
@@ -81,6 +84,13 @@ class QuestionCoverageDiagnostic {
         }
         StringBuilder generalLlm = new StringBuilder();
         themeCounts.forEach((k, v) -> generalLlm.append(String.format("  %-58s %d%n", k, v)));
+        generalLlm.append("\n--- GENERAL_LLM questions verbatim ---\n");
+        for (String q : questions) {
+            QueryIntent intent;
+            try { intent = resolver.resolve(q, snapshots, null).getIntent(); }
+            catch (Exception e) { intent = QueryIntent.GENERAL_LLM; }
+            if (intent == QueryIntent.GENERAL_LLM) generalLlm.append("  ? ").append(q).append("\n");
+        }
 
         System.out.println("\n================ QUESTION COVERAGE ================");
         System.out.println("Total questions: " + questions.size());

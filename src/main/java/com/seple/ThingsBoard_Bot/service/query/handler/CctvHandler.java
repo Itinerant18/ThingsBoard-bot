@@ -21,6 +21,10 @@ public class CctvHandler implements AnswerHandler {
     private final AnswerSupport support;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /** Recording-retention compliance threshold in days. Cameras with fewer recorded days are non-compliant. */
+    @org.springframework.beans.factory.annotation.Value("${iotchatbot.cctv.recording-retention-days:90}")
+    private int retentionDays = 90;
+
     public CctvHandler(AnswerTemplateService answerTemplateService, AnswerSupport support) {
         this.answerTemplateService = answerTemplateService;
         this.support = support;
@@ -30,11 +34,16 @@ public class CctvHandler implements AnswerHandler {
     public boolean supports(QueryIntent intent) {
         return intent == QueryIntent.CCTV_STATUS || intent == QueryIntent.CCTV_HDD_ERROR_STATUS
                 || intent == QueryIntent.CCTV_HDD_INFO || intent == QueryIntent.CCTV_RECORDING_INFO
+                || intent == QueryIntent.CCTV_RECORDING_COMPLIANCE
                 || intent == QueryIntent.CAMERA_DISCONNECT_HISTORY || intent == QueryIntent.CCTV_DEVICE_INFO;
     }
 
     @Override
     public String handle(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
+        // Fleet compliance aggregates every branch's cameras, so it runs before the single-branch guard.
+        if (query.getIntent() == QueryIntent.CCTV_RECORDING_COMPLIANCE) {
+            return answerRecordingCompliance(snapshots);
+        }
         BranchSnapshot branch = query.getTargetBranch();
         if (branch == null) {
             return null;
@@ -199,52 +208,128 @@ public class CctvHandler implements AnswerHandler {
         }
     }
 
-    private String answerCctvRecordingInfo(BranchSnapshot branch) {
-        Object rawInfo = branch.getRawData().get("rock_VIDEOdETAILS");
-        if (rawInfo == null) {
-            rawInfo = branch.getRawData().get("Hikvision_NVR_CameraRecInfo");
-        }
-        if (rawInfo == null) {
-            return "**For Branch " + support.branchName(branch)
-                    + ", CCTV Recording Information is not available.**";
-        }
+    /** One camera's recorded-days signal. days == 0 means present but empty; null channel is dropped. */
+    private record CameraRec(String channel, int days) {}
 
-        try {
-            JsonNode node = objectMapper.readTree(String.valueOf(rawInfo));
-            if (!node.isArray() || node.isEmpty()) {
-                return "**For Branch " + support.branchName(branch)
-                        + ", CCTV Recording Information is not available.**";
+    /** All CCTV recording-history keys, across NVR vendors, that carry per-channel recorded days. */
+    private static final List<String> REC_KEYS = List.of(
+            "rock_VIDEOdETAILS", "VIDEOdETAILS", "Hikvision_NVR_CameraRecInfo",
+            "Dahua_NVR_CameraRecInfo", "CP_Plus_NVR_CameraRecInfo",
+            "Hik_rock_NVR1_VIDEOdETAILS", "Hik_rock_NVR2_VIDEOdETAILS");
+
+    /**
+     * Parse per-channel recorded days from whatever RecInfo arrays a branch carries. Vendors name the
+     * days field differently — {@code total_recording_days} (CP Plus/Dahua) or {@code total_duration}
+     * (Hikvision/rock, same meaning) — and the channel as channel / channel_no / camera_id. Cameras are
+     * keyed by channel so the same physical camera reported under two NVR keys isn't double-counted.
+     */
+    private List<CameraRec> parseRecordings(Map<String, Object> raw) {
+        Map<String, CameraRec> byChannel = new java.util.LinkedHashMap<>();
+        for (String key : REC_KEYS) {
+            Object rawInfo = raw.get(key);
+            if (rawInfo == null) {
+                continue;
             }
-
-            int withRecording = 0;
-            List<String> noRecordingChannels = new ArrayList<>();
-            for (JsonNode entry : node) {
-                if (!entry.isObject()) {
+            try {
+                JsonNode node = objectMapper.readTree(String.valueOf(rawInfo));
+                if (!node.isArray()) {
                     continue;
                 }
-                int duration = entry.path("total_duration").asInt(0);
-                String channel = entry.has("channel_no") ? entry.path("channel_no").asText("") : entry.path("camera_id").asText("");
-                if (duration > 0) {
-                    withRecording++;
-                } else if (channel != null && !channel.isBlank() && !"N/A".equalsIgnoreCase(channel)) {
-                    noRecordingChannels.add(channel);
+                for (JsonNode e : node) {
+                    if (!e.isObject()) {
+                        continue;
+                    }
+                    String channel = e.has("channel_no") ? e.path("channel_no").asText("")
+                            : e.has("channel") ? e.path("channel").asText("")
+                            : e.path("camera_id").asText("");
+                    if (channel == null || channel.isBlank() || "N/A".equalsIgnoreCase(channel)) {
+                        continue;
+                    }
+                    int days = e.has("total_recording_days")
+                            ? e.path("total_recording_days").asInt(0)
+                            : e.path("total_duration").asInt(0);
+                    // Keep the max seen for a channel (a camera reported twice; take the better signal).
+                    CameraRec prev = byChannel.get(channel);
+                    if (prev == null || days > prev.days()) {
+                        byChannel.put(channel, new CameraRec(channel, days));
+                    }
                 }
+            } catch (Exception ignored) {
+                // skip an unparseable vendor blob; other keys may still yield data
             }
+        }
+        return new ArrayList<>(byChannel.values());
+    }
 
-            StringBuilder builder = new StringBuilder("**For Branch ")
-                    .append(support.branchName(branch))
-                    .append(", CCTV Recording Information is: ");
-            builder.append(withRecording).append(" channel(s) have recording data");
-            if (!noRecordingChannels.isEmpty()) {
-                builder.append("; no recording data for channel(s) ")
-                        .append(String.join(", ", noRecordingChannels));
-            }
-            builder.append(".**");
-            return builder.toString();
-        } catch (Exception ignored) {
+    private String answerCctvRecordingInfo(BranchSnapshot branch) {
+        List<CameraRec> cams = parseRecordings(branch.getRawData());
+        if (cams.isEmpty()) {
             return "**For Branch " + support.branchName(branch)
                     + ", CCTV Recording Information is not available.**";
         }
+        int compliant = 0, nonCompliant = 0, zero = 0;
+        List<String> zeroCh = new ArrayList<>();
+        int min = Integer.MAX_VALUE, max = 0;
+        for (CameraRec c : cams) {
+            if (c.days() <= 0) { zero++; zeroCh.add(c.channel()); }
+            if (c.days() >= retentionDays) compliant++; else nonCompliant++;
+            min = Math.min(min, c.days());
+            max = Math.max(max, c.days());
+        }
+        StringBuilder b = new StringBuilder("**For Branch ").append(support.branchName(branch))
+                .append(", CCTV Recording (retention target ").append(retentionDays).append(" days):** ")
+                .append(cams.size()).append(" camera(s) — ")
+                .append(compliant).append(" compliant (≥").append(retentionDays).append("d), ")
+                .append(nonCompliant).append(" non-compliant");
+        if (zero > 0) {
+            b.append(" of which ").append(zero).append(" have 0 days (channel(s) ")
+                    .append(String.join(", ", zeroCh)).append(")");
+        }
+        b.append(". Recorded days range ").append(min == Integer.MAX_VALUE ? 0 : min)
+                .append("–").append(max).append(".");
+        return b.toString();
+    }
+
+    /** Fleet-wide recording compliance: aggregate every branch's cameras against the retention target. */
+    private String answerRecordingCompliance(List<BranchSnapshot> snapshots) {
+        if (snapshots == null || snapshots.isEmpty()) {
+            return "No branches are in scope, so there is no recording compliance to report.";
+        }
+        int totalCams = 0, compliant = 0, nonCompliant = 0, zero = 0, branchesWithData = 0;
+        List<String> nonCompliantBranches = new ArrayList<>();
+        for (BranchSnapshot s : snapshots) {
+            List<CameraRec> cams = parseRecordings(s.getRawData());
+            if (cams.isEmpty()) {
+                continue;
+            }
+            branchesWithData++;
+            int branchNon = 0;
+            for (CameraRec c : cams) {
+                totalCams++;
+                if (c.days() <= 0) zero++;
+                if (c.days() >= retentionDays) compliant++; else { nonCompliant++; branchNon++; }
+            }
+            if (branchNon > 0 && s.getIdentity() != null && s.getIdentity().getBranchName() != null) {
+                nonCompliantBranches.add(support.branchName(s) + " (" + branchNon + ")");
+            }
+        }
+        if (totalCams == 0) {
+            return "No camera recording data is available across the branches in scope.";
+        }
+        java.util.Collections.sort(nonCompliantBranches);
+        StringBuilder b = new StringBuilder("**CCTV Recording Compliance (retention target ")
+                .append(retentionDays).append(" days), ").append(branchesWithData).append(" branches:**\n")
+                .append("- ").append(totalCams).append(" cameras total\n")
+                .append("- ").append(compliant).append(" compliant (≥").append(retentionDays).append(" days)\n")
+                .append("- ").append(nonCompliant).append(" non-compliant (<").append(retentionDays).append(" days)")
+                .append(zero > 0 ? ", including " + zero + " with 0 days" : "").append("\n");
+        if (!nonCompliantBranches.isEmpty()) {
+            b.append("\nNon-compliant branches (count of cameras below target):\n");
+            for (String br : nonCompliantBranches) {
+                b.append("  - ").append(br).append("\n");
+            }
+        }
+        return b.toString();
     }
 
     private String answerCameraDisconnectHistory(ResolvedQuery query) {

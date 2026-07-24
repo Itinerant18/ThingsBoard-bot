@@ -20,7 +20,9 @@ public class IntentKeyProfileRegistry {
             case CCTV_STATUS -> List.of("cctv_sts", "cameraStatus_cctvStatus", "cctvStatus", "cctv_status", "cameraLinkStatus", "rock_CAMERAdETAILS", "CAMERAdETAILS", "Hikvision_NVR_CameraRecInfo", "rock_VIDEOdETAILS", "hikvision_camera_status");
             case CCTV_HDD_ERROR_STATUS -> List.of("HDD ERROR", "ticketStatus_HDD_ERROR", "cameraStatus_HDD ERROR", "hddStatus");
             case CCTV_HDD_INFO -> List.of("rock_HddINFO", "hddStatus");
-            case CCTV_RECORDING_INFO -> List.of("rock_VIDEOdETAILS", "Hikvision_NVR_CameraRecInfo");
+            case CCTV_RECORDING_INFO, CCTV_RECORDING_COMPLIANCE -> List.of("rock_VIDEOdETAILS", "VIDEOdETAILS",
+                    "Hikvision_NVR_CameraRecInfo", "Dahua_NVR_CameraRecInfo", "CP_Plus_NVR_CameraRecInfo",
+                    "Hik_rock_NVR1_VIDEOdETAILS", "Hik_rock_NVR2_VIDEOdETAILS");
             case SUBSYSTEM_STATUS, SUBSYSTEM_FAULT_STATUS, SUBSYSTEM_ALARM_STATUS -> List.of(
                     "iasStatus", "basStatus", "fasStatus", "timeLock", "timeLockHealth", "accessControlStatus",
                     "ticketStatus_IAS_FAULT", "ticketStatus_FAS_FAULT", "BASfaultCOUNT", "ticketStatus_TLS_TAMPER",

@@ -534,14 +534,17 @@ class CoverageMatrixDeterministicTest {
     @Test
     void testCctvRecordingInfo() {
         BranchSnapshot branch = createBaseBranch("BRANCH A", "BOI-BRANCHA");
-        String recordingJson = "[{\"channel_no\":\"1\",\"total_duration\":86400},{\"channel_no\":\"2\",\"total_duration\":0}]";
+        // total_duration is recorded days (same unit as total_recording_days): ch1 compliant, ch2 zero.
+        String recordingJson = "[{\"channel_no\":\"1\",\"total_duration\":120},{\"channel_no\":\"2\",\"total_duration\":0}]";
         branch.getRawData().put("rock_VIDEOdETAILS", recordingJson);
 
         ResolvedQuery query = createQuery(QueryIntent.CCTV_RECORDING_INFO, branch);
         String answer = answerService.answer(query, List.of(branch));
 
         assertNotNull(answer);
-        assertTrue(answer.contains("CCTV Recording Information is: 1 channel(s) have recording data; no recording data for channel(s) 2"));
+        assertTrue(answer.contains("2 camera(s)"), answer);
+        assertTrue(answer.contains("1 compliant"), answer);
+        assertTrue(answer.contains("0 days") && answer.contains("channel(s) 2"), answer);
     }
 
     // ==========================================

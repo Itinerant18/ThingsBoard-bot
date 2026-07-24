@@ -52,10 +52,13 @@ public class QueryIntentResolver {
         boolean fleetScoped = isFleetScopedIntent(intent);
         boolean global = !fleetScoped && isGlobalQuestion(normalizedQuestion, targetBranch != null);
 
-        // Option A: metric questions must be branch-specific UNLESS explicitly global.
-        // If user asks a metric without a branch and without global markers,
-        // force clarification instead of falling back to global overview.
-        if (targetBranch == null && isBranchMetricIntent(intent) && !hasGlobalMarkers(normalizedQuestion)) {
+        // Option A: metric questions must be branch-specific UNLESS explicitly global AND the metric is
+        // one the global overview can actually answer. The global overview reports gateway/device
+        // connectivity — so a branchless connectivity question ("all offline devices") is legitimately
+        // global, but a branchless specific-metric question ("all branch battery voltage") must NOT be
+        // silently answered with gateway data; force clarification instead.
+        if (targetBranch == null && isBranchMetricIntent(intent)
+                && (!hasGlobalMarkers(normalizedQuestion) || !isFleetAnswerableMetric(intent))) {
             global = false;
         }
 
@@ -321,7 +324,9 @@ public class QueryIntentResolver {
         // branch, not a single-branch question — it must win over an accidental fuzzy branch match
         // (e.g. "BAS" ~ branch "BASTA") and over the single-branch CCTV/subsystem keyword returns
         // below. The subsystem is carried on ResolvedQuery.targetSystem (set via detectSubsystem).
-        if (isFleetSubsystemOverview(question)) {
+        // A specific branch in the question means single-branch, even with a "how many/count/any"
+        // marker ("how many cameras are online in Liluah" is CCTV_STATUS for Liluah, not a fleet roll-up).
+        if (!hasTargetBranch && isFleetSubsystemOverview(question)) {
             return QueryIntent.GLOBAL_OVERVIEW;
         }
         // Category (device-type) health breakdown across the fleet -- only when no single branch is
@@ -433,6 +438,16 @@ public class QueryIntentResolver {
         if ((question.contains("CCTV") || question.contains("CAMERA")) && question.contains("HDD")
                 && (question.contains("INFO") || question.contains("DETAIL"))) {
             return QueryIntent.CCTV_HDD_INFO;
+        }
+        // CCTV recording retention / compliance. A fleet-wide compliance/retention/0-days question
+        // (no single branch in focus) aggregates every camera; a branch-scoped one is answered by the
+        // enhanced CCTV_RECORDING_INFO (per-branch days + compliance).
+        if ((question.contains("CAMERA") || question.contains("CCTV") || question.contains("RECORDING"))
+                && (question.contains("COMPLIAN") || question.contains("RETENTION")
+                    || question.contains("0 DAYS") || question.contains("ZERO DAYS")
+                    || (question.contains("DAYS") && question.contains("RECORD")))
+                && !hasTargetBranch) {
+            return QueryIntent.CCTV_RECORDING_COMPLIANCE;
         }
         if ((question.contains("CCTV") || question.contains("CAMERA")) && question.contains("RECORD")) {
             return QueryIntent.CCTV_RECORDING_INFO;
@@ -575,6 +590,13 @@ public class QueryIntentResolver {
      * single-branch context. Mirrors the router's classification of the same shape.
      */
     private boolean isGlobalCountWithStatus(String question) {
+        // This is a fleet BRANCH/DEVICE connectivity count ("how many branches are offline"). Camera/CCTV
+        // counts are a per-branch subsystem metric ("how many cameras are online in Lilua"), so exclude
+        // them — otherwise the branchless-count heuristic hijacks a single-branch camera question and
+        // blocks fuzzy branch recovery of a typo'd branch name.
+        if (question.contains("camera") || question.contains("cctv")) {
+            return false;
+        }
         boolean countOrList = question.contains("how many") || question.contains("count")
                 || question.contains("are there") || question.contains("are their");
         boolean statusWord = question.contains("offline") || question.contains("online")
@@ -774,13 +796,14 @@ public class QueryIntentResolver {
         if (!hasSubsystem) {
             return false;
         }
+        // A fleet subsystem overview needs an EXPLICIT fleet scope. Bare count words (how many / count /
+        // any) are not enough — "how many cameras are online in Lilua" names a branch and is single-branch.
         boolean fleetMarker = containsWord(question, "ALL")
                 || question.contains("OVERVIEW")
                 || question.contains("EVERY BRANCH")
                 || question.contains("EACH BRANCH")
-                || question.contains("HOW MANY")
-                || question.contains("COUNT")
-                || question.contains("ANY");
+                || question.contains("ACROSS")
+                || question.contains("FLEET");
         boolean statusOrCount = question.contains("OFFLINE") || question.contains("ONLINE")
                 || question.contains("INACTIVE") || question.contains("ACTIVE")
                 || question.contains("STATUS") || question.contains("SUMMARY")
@@ -831,6 +854,18 @@ public class QueryIntentResolver {
             return "healthStatus";
         }
         return null;
+    }
+
+    /**
+     * Branch-metric intents the global overview can legitimately answer without a branch (fleet
+     * connectivity roll-ups). Specific metrics not listed here — battery/AC/current, CCTV, alarms,
+     * subsystems — have no fleet handler, so a branchless one must clarify rather than return gateway data.
+     */
+    private boolean isFleetAnswerableMetric(QueryIntent intent) {
+        return switch (intent) {
+            case ACTIVE_DEVICES, OFFLINE_DEVICES, CONNECTED_DEVICES, FAULT_DEVICES -> true;
+            default -> false;
+        };
     }
 
     private boolean isBranchMetricIntent(QueryIntent intent) {

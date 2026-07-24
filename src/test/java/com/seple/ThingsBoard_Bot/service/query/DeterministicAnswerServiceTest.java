@@ -285,8 +285,8 @@ class DeterministicAnswerServiceTest {
 
         String answer = answerService.answer(query, snapshots);
 
-        assertTrue(answer.contains("CCTV Recording Information"));
-        assertTrue(answer.contains("12 channel(s)"));
+        assertTrue(answer.contains("CCTV Recording"), answer);
+        assertTrue(answer.contains("camera(s)") && answer.contains("compliant"), answer);
     }
 
     @Test

@@ -135,12 +135,16 @@ public class GlobalOverviewHandler implements AnswerHandler {
             }
         }
 
+        int total = onlineCount + offlineCount + unknownCount;
         StringBuilder b = new StringBuilder();
-        b.append("**Gateway Status Across All Branches:**\n\n");
-        b.append("- **").append(onlineCount).append(" Branches** have active/working **Online** Gateways.\n");
-        b.append("- **").append(offlineCount).append(" Branches** are explicitly **Offline / Down**.\n");
+        b.append("**Gateway Status Across All Branches (").append(total).append(" total):**\n\n");
+        b.append("- **").append(onlineCount).append(" Branches** (").append(pct(onlineCount, total))
+                .append(") have active/working **Online** Gateways.\n");
+        b.append("- **").append(offlineCount).append(" Branches** (").append(pct(offlineCount, total))
+                .append(") are explicitly **Offline / Down**.\n");
         if (unknownCount > 0) {
-            b.append("- **").append(unknownCount).append(" Branches** are **Unresponsive / Not Reporting** (no live gateway telemetry).\n");
+            b.append("- **").append(unknownCount).append(" Branches** (").append(pct(unknownCount, total))
+                    .append(") are **Unresponsive / Not Reporting** (no live gateway telemetry).\n");
         }
         b.append("\n");
         appendBucket(b, "Online", onlineCount, groupedOnline, false);
@@ -331,6 +335,11 @@ public class GlobalOverviewHandler implements AnswerHandler {
             headers.put(branchName, groupHeader);
         }
         return headers;
+    }
+
+    /** Whole-number percentage of part in total, e.g. "37%". Zero total -> "0%". */
+    private String pct(int part, int total) {
+        return (total == 0 ? 0 : Math.round(part * 100.0 / total)) + "%";
     }
 
     private void appendBucket(StringBuilder builder, String title, int count,
