@@ -187,23 +187,47 @@ public class GlobalOverviewHandler implements AnswerHandler {
             }
         }
 
+        List<String> onlineBranches = getAllBranchNames(groupedOnline);
+        List<String> offlineBranches = getAllBranchNames(groupedOffline);
+        List<String> notInstalledBranches = getAllBranchNames(groupedNotInstalled);
+
         StringBuilder b = new StringBuilder();
-        b.append("**").append(label).append(" — Total: ")
-                .append(onlineCount).append(" Online | ")
-                .append(offlineCount).append(" Offline");
-        if (notInstalledCount > 0) {
-            b.append(" | ").append(notInstalledCount).append(" Not Installed");
+        b.append("**").append(label).append(" Subsystem Status Across All Branches:**\n\n");
+
+        b.append("- **").append(onlineCount).append(" Branches** have active/working **Online** ").append(label).append(" devices");
+        if (!onlineBranches.isEmpty() && onlineCount <= 5) {
+            b.append(" (").append(String.join(", ", onlineBranches)).append(")");
         }
-        if (unknownCount > 0) {
-            b.append(" | ").append(unknownCount).append(" Unknown");
+        b.append(".\n");
+
+        b.append("- **").append(offlineCount).append(" Branches** have explicitly **Offline / Faulty** ").append(label).append(" devices");
+        if (!offlineBranches.isEmpty() && offlineCount <= 5) {
+            b.append(" (").append(String.join(", ", offlineBranches)).append(")");
         }
-        b.append("**\nFor your question about ").append(label)
-                .append(" across all branches, here is the current branch-level status.");
+        b.append(".\n");
+
+        b.append("- **").append(notInstalledCount).append(" Branches** have ").append(label).append(" **Not Installed**");
+        if (!notInstalledBranches.isEmpty() && notInstalledCount <= 5) {
+            b.append(" (").append(String.join(", ", notInstalledBranches)).append(")");
+        }
+        b.append(".\n");
+
+        b.append("- **").append(unknownCount).append(" Branches** are **Unknown / Unreachable** (gateways have not sent ").append(label).append(" telemetry).\n");
+
         appendBucket(b, "Online", onlineCount, groupedOnline, false);
         appendBucket(b, "Offline", offlineCount, groupedOffline, true);
         appendBucket(b, "Not Installed", notInstalledCount, groupedNotInstalled, false);
         appendBucket(b, "Unknown", unknownCount, groupedUnknown, false);
         return b.toString();
+    }
+
+    private List<String> getAllBranchNames(Map<String, List<String>> grouped) {
+        List<String> all = new ArrayList<>();
+        for (List<String> list : grouped.values()) {
+            all.addAll(list);
+        }
+        java.util.Collections.sort(all);
+        return all;
     }
 
     private NormalizedState subsystemState(BranchSnapshot snapshot, String subsystem) {
