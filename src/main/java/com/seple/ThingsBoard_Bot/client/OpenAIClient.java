@@ -309,9 +309,17 @@ public class OpenAIClient {
             List<com.seple.ThingsBoard_Bot.model.dto.ChatMessage> history,
             String userMessage, boolean stream) {
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("model", config.getModel());
-        requestBody.put("max_tokens", config.getMaxTokens());
-        requestBody.put("temperature", config.getTemperature());
+        String model = config.getModel();
+        requestBody.put("model", model);
+
+        boolean isReasoningModel = model != null && (model.startsWith("o1") || model.startsWith("o3") || model.contains("luna") || model.contains("reasoning"));
+        if (isReasoningModel) {
+            requestBody.put("max_completion_tokens", config.getMaxTokens());
+        } else {
+            requestBody.put("max_tokens", config.getMaxTokens());
+            requestBody.put("temperature", config.getTemperature());
+        }
+
         if (stream) {
             requestBody.put("stream", true);
         }
