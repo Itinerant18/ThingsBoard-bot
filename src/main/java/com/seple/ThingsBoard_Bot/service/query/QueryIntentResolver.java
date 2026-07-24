@@ -112,9 +112,19 @@ public class QueryIntentResolver {
     private static final java.util.Set<String> SKIP_FUZZY_WORDS = java.util.Set.of(
             "ACTIVE", "INACTIVE", "ONLINE", "OFFLINE", "STATUS", "WORKING", "DEVICE", "DEVICES",
             "BRANCH", "BRANCHES", "BRANCHS", "CAMERA", "CAMERAS", "BATTERY", "ALARM", "ALARMS", "SYSTEM",
-            "HEALTH", "FAULT", "ERROR", "TOTAL", "COUNT", "MANY", "THERE", "THEIR", "HERE",
+            "HEALTH", "FAULT", "ERROR", "TOTAL", "COUNT", "MANY", "THERE", "THEIR", "HERE", "ANY", "ARE", "IS",
             "PLEASE", "SHOW", "LIST", "GIVE", "WHAT", "WHICH", "WHERE", "WHEN", "WITH", "FROM"
     );
+
+    private boolean isWindowAllSkipWords(String window) {
+        String[] parts = window.toUpperCase(java.util.Locale.ROOT).split("\\s+");
+        for (String part : parts) {
+            if (!SKIP_FUZZY_WORDS.contains(part)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Scores every 1-3 word window of the question against the branch dictionary and returns
@@ -132,7 +142,7 @@ public class QueryIntentResolver {
         for (int start = 0; start < words.length; start++) {
             for (int len = 1; len <= 3 && start + len <= words.length; len++) {
                 String window = String.join(" ", java.util.Arrays.copyOfRange(words, start, start + len));
-                if (window.length() < 2 || SKIP_FUZZY_WORDS.contains(window.toUpperCase(java.util.Locale.ROOT))) {
+                if (window.length() < 2 || isWindowAllSkipWords(window)) {
                     continue;
                 }
                 BranchResolution candidate = fuzzyBranchResolver.resolve(window, dictionary);
