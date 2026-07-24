@@ -96,7 +96,7 @@ That's exactly what we built. **SAI (Smart Assistant for IoT)** connects directl
 - **Save Time:** Get a full branch health report in 3 seconds instead of 10 minutes.
 - **Zero Learning Curve:** If you can send a chat message, you can use SAI.
 - **Strict Access Controls:** Users only see branches they are authorized to view (Regional / Zonal / Head Office scoping).
-- **Always Fresh Data:** Events flow in real-time from ThingsBoard through RabbitMQ — Redis always reflects current device state.
+- **Always Fresh Real-Time Data:** Direct live API fetch from ThingsBoard coupled with real-time event flow via RabbitMQ and Redis.
 - **Crash-Safe Pipeline:** Every ingested event is deduplicated and can be safely retried; no data is silently dropped.
 
 ---
