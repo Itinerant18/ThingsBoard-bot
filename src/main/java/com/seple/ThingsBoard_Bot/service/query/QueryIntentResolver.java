@@ -741,11 +741,22 @@ public class QueryIntentResolver {
      * branches" keeps flowing to the existing gateway global overview.
      */
     private boolean isFleetSubsystemOverview(String question) {
+        boolean hasSubsystem = detectSubsystem(question) != null;
+        if (!hasSubsystem) {
+            return false;
+        }
         boolean fleetMarker = containsWord(question, "ALL")
                 || question.contains("OVERVIEW")
                 || question.contains("EVERY BRANCH")
-                || question.contains("EACH BRANCH");
-        return fleetMarker && detectSubsystem(question) != null;
+                || question.contains("EACH BRANCH")
+                || question.contains("HOW MANY")
+                || question.contains("COUNT")
+                || question.contains("ANY");
+        boolean statusOrCount = question.contains("OFFLINE") || question.contains("ONLINE")
+                || question.contains("INACTIVE") || question.contains("ACTIVE")
+                || question.contains("STATUS") || question.contains("SUMMARY")
+                || question.contains("DISCONNECT");
+        return fleetMarker && statusOrCount;
     }
 
     private String detectSubsystem(String normalizedQuestion) {
