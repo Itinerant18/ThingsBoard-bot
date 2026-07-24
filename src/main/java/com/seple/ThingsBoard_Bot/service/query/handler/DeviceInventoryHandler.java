@@ -16,10 +16,12 @@ public class DeviceInventoryHandler implements AnswerHandler {
 
     private final AnswerTemplateService answerTemplateService;
     private final AnswerSupport support;
+    private final GlobalOverviewHandler globalOverviewHandler;
 
-    public DeviceInventoryHandler(AnswerTemplateService answerTemplateService, AnswerSupport support) {
+    public DeviceInventoryHandler(AnswerTemplateService answerTemplateService, AnswerSupport support, GlobalOverviewHandler globalOverviewHandler) {
         this.answerTemplateService = answerTemplateService;
         this.support = support;
+        this.globalOverviewHandler = globalOverviewHandler;
     }
 
     @Override
@@ -32,11 +34,8 @@ public class DeviceInventoryHandler implements AnswerHandler {
     public String handle(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
         BranchSnapshot branch = query.getTargetBranch();
         if (branch == null) {
-            if (query.getIntent() == QueryIntent.OFFLINE_DEVICES) {
-                return answerGlobalOfflineBranches(snapshots);
-            }
-            if (query.getIntent() == QueryIntent.ACTIVE_DEVICES) {
-                return answerGlobalActiveBranches(snapshots);
+            if (query.getIntent() == QueryIntent.OFFLINE_DEVICES || query.getIntent() == QueryIntent.ACTIVE_DEVICES) {
+                return globalOverviewHandler.answer(snapshots, customerId);
             }
             return null;
         }
