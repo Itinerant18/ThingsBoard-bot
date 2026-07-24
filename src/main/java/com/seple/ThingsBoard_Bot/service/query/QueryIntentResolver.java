@@ -52,10 +52,10 @@ public class QueryIntentResolver {
         boolean fleetScoped = isFleetScopedIntent(intent);
         boolean global = !fleetScoped && isGlobalQuestion(normalizedQuestion, targetBranch != null);
 
-        // Option A: metric questions must be branch-specific.
-        // If user asks a metric without a branch (including "all branch ..."),
+        // Option A: metric questions must be branch-specific UNLESS explicitly global.
+        // If user asks a metric without a branch and without global markers,
         // force clarification instead of falling back to global overview.
-        if (targetBranch == null && isBranchMetricIntent(intent)) {
+        if (targetBranch == null && isBranchMetricIntent(intent) && !hasGlobalMarkers(normalizedQuestion)) {
             global = false;
         }
 
