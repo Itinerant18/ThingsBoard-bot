@@ -111,8 +111,8 @@ public class QueryIntentResolver {
 
     private static final java.util.Set<String> SKIP_FUZZY_WORDS = java.util.Set.of(
             "ACTIVE", "INACTIVE", "ONLINE", "OFFLINE", "STATUS", "WORKING", "DEVICE", "DEVICES",
-            "BRANCH", "BRANCHES", "CAMERA", "CAMERAS", "BATTERY", "ALARM", "ALARMS", "SYSTEM",
-            "HEALTH", "FAULT", "ERROR", "TOTAL", "COUNT", "MANY", "THERE", "HERE",
+            "BRANCH", "BRANCHES", "BRANCHS", "CAMERA", "CAMERAS", "BATTERY", "ALARM", "ALARMS", "SYSTEM",
+            "HEALTH", "FAULT", "ERROR", "TOTAL", "COUNT", "MANY", "THERE", "THEIR", "HERE",
             "PLEASE", "SHOW", "LIST", "GIVE", "WHAT", "WHICH", "WHERE", "WHEN", "WITH", "FROM"
     );
 
@@ -518,8 +518,13 @@ public class QueryIntentResolver {
                 || question.contains("active branch")
                 || question.contains("any inactive")
                 || question.contains("any active")
+                || question.contains("any offline")
+                || question.contains("any online")
                 || question.contains("any branch")
                 || question.contains("are there branch")
+                || question.contains("are their branch")
+                || question.contains("are there any")
+                || question.contains("are their any")
                 || isGlobalCountWithStatus(question);
     }
 
@@ -530,7 +535,8 @@ public class QueryIntentResolver {
      * single-branch context. Mirrors the router's classification of the same shape.
      */
     private boolean isGlobalCountWithStatus(String question) {
-        boolean countOrList = question.contains("how many") || question.contains("count");
+        boolean countOrList = question.contains("how many") || question.contains("count")
+                || question.contains("are there") || question.contains("are their");
         boolean statusWord = question.contains("offline") || question.contains("online")
                 || question.contains("inactive") || question.contains("active")
                 || question.contains("connected") || question.contains("disconnected");
