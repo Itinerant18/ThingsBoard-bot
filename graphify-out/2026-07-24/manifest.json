@@ -1,0 +1,2602 @@
+{
+  "mvnw": {
+    "mtime": 1772776599.2976146,
+    "ast_hash": "ab50dd89da7da2346b28003352eeeeeb",
+    "semantic_hash": ""
+  },
+  ".codex/hooks.json": {
+    "mtime": 1780133087.9092467,
+    "ast_hash": "b7940b17075648ef8d97c98d9b65e9b8",
+    "semantic_hash": ""
+  },
+  "frontend/package.json": {
+    "mtime": 1780296113.6145184,
+    "ast_hash": "604c133ab1c28aa65e98bb8474335c89",
+    "semantic_hash": ""
+  },
+  "frontend/postcss.config.js": {
+    "mtime": 1780296113.6145184,
+    "ast_hash": "9e94f5afd46d0b71c0f40431ba0394c2",
+    "semantic_hash": ""
+  },
+  "frontend/tailwind.config.ts": {
+    "mtime": 1784802467.2148468,
+    "ast_hash": "2c37797a91fb5f64c56d9185c565f5fd",
+    "semantic_hash": ""
+  },
+  "frontend/tsconfig.json": {
+    "mtime": 1780296113.6150625,
+    "ast_hash": "d0c4eed370045bf28dfa112142be33d3",
+    "semantic_hash": ""
+  },
+  "frontend/tsconfig.node.json": {
+    "mtime": 1780293661.1996841,
+    "ast_hash": "281e378713152cccc7860c818db55849",
+    "semantic_hash": ""
+  },
+  "frontend/vite.config.d.ts": {
+    "mtime": 1780296113.6150625,
+    "ast_hash": "0e1a67b4f5e8a7d0b4ce59225bb47e16",
+    "semantic_hash": ""
+  },
+  "frontend/vite.config.js": {
+    "mtime": 1781086488.246442,
+    "ast_hash": "3b4822932989597a45cb42f4bda8753c",
+    "semantic_hash": ""
+  },
+  "frontend/vite.config.ts": {
+    "mtime": 1780468937.575376,
+    "ast_hash": "4273c6acddbcad74a29fda60e33ba64e",
+    "semantic_hash": ""
+  },
+  "frontend/src/App.tsx": {
+    "mtime": 1784801557.905159,
+    "ast_hash": "adedc1587f1bde354488ba9d24acb27c",
+    "semantic_hash": ""
+  },
+  "frontend/src/main.tsx": {
+    "mtime": 1780293661.195114,
+    "ast_hash": "ecda11754ebaf69980159f3c76e1f2cf",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ChatInput.tsx": {
+    "mtime": 1784802428.841152,
+    "ast_hash": "d1bb3edaaee3036af6942873058fdacf",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ChatToggle.tsx": {
+    "mtime": 1784801600.3451097,
+    "ast_hash": "c6a88252514e473917afb5b2114c5f58",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ChatWindow.tsx": {
+    "mtime": 1784802418.8175788,
+    "ast_hash": "1e37b252f97250f3e24b9bc62c6442cd",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/MessageBubble.tsx": {
+    "mtime": 1784802443.160369,
+    "ast_hash": "d50ea9c0a327b38ef0e998445dcfd05d",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/TypingIndicator.tsx": {
+    "mtime": 1784802433.489923,
+    "ast_hash": "dfe956dae7fda32fa38503ed8294fece",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/WelcomeMessage.tsx": {
+    "mtime": 1784802424.9708595,
+    "ast_hash": "071dfc873ddd60aaf436f14be93a897f",
+    "semantic_hash": ""
+  },
+  "frontend/src/context/ChatContext.tsx": {
+    "mtime": 1781588150.5425131,
+    "ast_hash": "7700444b01e7ba8a63542742b6350020",
+    "semantic_hash": ""
+  },
+  "frontend/src/types/index.ts": {
+    "mtime": 1781162903.5120513,
+    "ast_hash": "3b525d661019fcbcb4aadabfb8c22ce7",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/ThingsBoardBotApplication.java": {
+    "mtime": 1772777210.3482292,
+    "ast_hash": "50f924b6f08a1608cc172b19b3a24349",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/client/OpenAIClient.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "3e9ccbd2a561ac1cbaf59aee4c3346eb",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/client/ThingsBoardClient.java": {
+    "mtime": 1781161561.727489,
+    "ast_hash": "2c62cad981e44a8c9efc55a15adc7385",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/client/UserAwareThingsBoardClient.java": {
+    "mtime": 1781160581.20106,
+    "ast_hash": "c7fe066d1bdbc97668cb9448ff2a6e70",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/CacheConfig.java": {
+    "mtime": 1772777218.5147834,
+    "ast_hash": "3d8a1a046db0eaadb602d99a12692cad",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/ChatbotConfig.java": {
+    "mtime": 1775192794.9152784,
+    "ast_hash": "d80706e80097312b02af80b39d7df1a7",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/CorsConfig.java": {
+    "mtime": 1780977545.3735244,
+    "ast_hash": "6c6a21e92bbe42c9e1b4c981cdc29153",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/CustomerConfig.java": {
+    "mtime": 1779685604.8559227,
+    "ast_hash": "24379bada48997885e3a3bdb236bb498",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/DatabaseConfig.java": {
+    "mtime": 1779685604.8595743,
+    "ast_hash": "1d18bcbcdfae603c24737c57efccc8c3",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/DatabaseInitializer.java": {
+    "mtime": 1779685604.8702433,
+    "ast_hash": "7e1071c1a55a1dfed93dbdc4c87e989f",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/JacksonConfig.java": {
+    "mtime": 1780892302.1481957,
+    "ast_hash": "4ddc525bba2b4cee84b7c5b3f3e2c5b5",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/OpenAIConfig.java": {
+    "mtime": 1773473477.3757772,
+    "ast_hash": "edc2cc7f65324d183a3c9bc132a3408d",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/RabbitMQConfig.java": {
+    "mtime": 1781161938.884782,
+    "ast_hash": "dac78dca542100059f4b8abaf9aa0921",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/RedisConfig.java": {
+    "mtime": 1779956332.6013575,
+    "ast_hash": "27d6d9213e5b0523518e7ff01980b397",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/ThingsBoardConfig.java": {
+    "mtime": 1777280867.2793906,
+    "ast_hash": "59da4d2b4fb914b53882b1b073e2e818",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/controller/ChatController.java": {
+    "mtime": 1781162408.4372692,
+    "ast_hash": "3c1aa436564c5dd46684554c76abf5bf",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/controller/DataController.java": {
+    "mtime": 1779690994.4799054,
+    "ast_hash": "9df53bfca1f70dab94776b8690d1bdb0",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/controller/HierarchyAdminController.java": {
+    "mtime": 1781162979.149127,
+    "ast_hash": "ac74f0a88102da7fc0036d5942a0ddb4",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/controller/ReplayController.java": {
+    "mtime": 1781161449.6114438,
+    "ast_hash": "b576ca81b1a3328f4b6595c24575dbb4",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/controller/WebhookController.java": {
+    "mtime": 1781161799.4257436,
+    "ast_hash": "7f6ba2f34c858e7fbd3dea02a80f896f",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/entity/BranchAncestorPath.java": {
+    "mtime": 1779685604.8811336,
+    "ast_hash": "85414510480ef2ce0ea8b0d448fdd0c3",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/entity/Customer.java": {
+    "mtime": 1781246686.165083,
+    "ast_hash": "212aaccac36403dcaf34f884c59d5be3",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/entity/DeviceEvent.java": {
+    "mtime": 1781161255.1141949,
+    "ast_hash": "80ec6b6ac1ffc46bdf5695c8ae972f6e",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/entity/HierarchyNode.java": {
+    "mtime": 1779685604.9021246,
+    "ast_hash": "f592fac46d40ae5ba9d07d656b3dc22b",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/exception/ContextOverflowException.java": {
+    "mtime": 1772777380.4431539,
+    "ast_hash": "5b47cd7dc3c34564f328a4c9eda66e4a",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/exception/GlobalExceptionHandler.java": {
+    "mtime": 1781160098.4114504,
+    "ast_hash": "100dc1a47309d8f85851f71c4ceeb321",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/exception/OpenAIException.java": {
+    "mtime": 1772777390.1640782,
+    "ast_hash": "8f992fbdf288edaa46cb8d3b1f6ce4e4",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/exception/ThingsBoardException.java": {
+    "mtime": 1772777382.322407,
+    "ast_hash": "ab99d4d2c820e0d9f1fb63d78e8f377d",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/AlertSummary.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "905bd652e68ec09286fa7be0a43d1a2f",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/BranchIdentity.java": {
+    "mtime": 1775192115.360868,
+    "ast_hash": "0211d146403efffc60b16453ec58b2fe",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/BranchSnapshot.java": {
+    "mtime": 1775192115.374378,
+    "ast_hash": "dca4a44aad5282e00b7e5e7aeb80d55b",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/BranchSubsystems.java": {
+    "mtime": 1775192115.374378,
+    "ast_hash": "fe13f076d661cac2a03e9c49845b60ef",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/CctvStatus.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "8669988b119f2a96c495d419db12bda1",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/GatewayStatus.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "cb05d417cd628067d0ddc8141e650fdf",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/HardwareHealth.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "bc3a0c4a195d84d9adfd922f29d9104e",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/NormalizedState.java": {
+    "mtime": 1775192115.360868,
+    "ast_hash": "91ce1eaf004484058d07433312ae6812",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/PowerStatus.java": {
+    "mtime": 1775192115.3733814,
+    "ast_hash": "7d9a4e510f1cf764d853ffb3f6fefe7c",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/domain/SubsystemStatus.java": {
+    "mtime": 1782210211.6100352,
+    "ast_hash": "59e71909e39df1f058a5ea630fb7130a",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/AnswerMetadata.java": {
+    "mtime": 1775192195.287189,
+    "ast_hash": "5447531f436eb378e6a1a5f1da735c33",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/ChartData.java": {
+    "mtime": 1772777239.1323645,
+    "ast_hash": "6a1aacf6b67d28c8b1329744973a13f8",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/ChatMessage.java": {
+    "mtime": 1773031074.1842992,
+    "ast_hash": "c970c84e64c59112f538777d6ee57eb0",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/ChatRequest.java": {
+    "mtime": 1772778224.1111348,
+    "ast_hash": "9cb96a9226ee7d49918904b22795e91b",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/ChatResponse.java": {
+    "mtime": 1775192295.2504425,
+    "ast_hash": "ed04c2f27651ec47b78509cb5a6972b6",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/DeviceIndexEntry.java": {
+    "mtime": 1781585727.4392433,
+    "ast_hash": "13aff5abbd11881a9e84ada10f73c41e",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/GlobalOverviewCounters.java": {
+    "mtime": 1777280867.298135,
+    "ast_hash": "d07e1e4dd17eb4d276d25bae9328a7b9",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/TbEventPayload.java": {
+    "mtime": 1779690994.480429,
+    "ast_hash": "c5ff57b8f1cd17e612874f4e0e0bf910",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/repository/BranchAncestorPathRepository.java": {
+    "mtime": 1779685604.90624,
+    "ast_hash": "695ffba86378760a438d82343b0a4591",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/repository/CustomerRepository.java": {
+    "mtime": 1779703877.8238447,
+    "ast_hash": "12d315214c76c5062577c5262988c947",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/repository/DeviceEventRepository.java": {
+    "mtime": 1780123409.694851,
+    "ast_hash": "880ee1445badeb6be6018ec140fa4d1f",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/repository/HierarchyNodeRepository.java": {
+    "mtime": 1779963744.961519,
+    "ast_hash": "73ef1da16dad1626c9a9f775c7f52e69",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/AncestorPathCache.java": {
+    "mtime": 1779690994.480429,
+    "ast_hash": "87ce6233b86f9b342f50325d8627e6a8",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/AncestorPathService.java": {
+    "mtime": 1779705610.8033223,
+    "ast_hash": "538168ed71bb1119d4a16ae6b5d5cf05",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/ChartService.java": {
+    "mtime": 1772787044.574211,
+    "ast_hash": "9f30761edabbd2a8cdd1f3eee9f3af1b",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/ChatMemoryService.java": {
+    "mtime": 1780977545.3745246,
+    "ast_hash": "5951bbb6404f21456875409e4f15db41",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/ChatService.java": {
+    "mtime": 1784027547.4534974,
+    "ast_hash": "708d5e728619948700bcebc7c6792f19",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/DataService.java": {
+    "mtime": 1777280462.8706803,
+    "ast_hash": "1ba88732653d1730193debe630f3155a",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/EventConsumerService.java": {
+    "mtime": 1781160865.925379,
+    "ast_hash": "de5c3c7d478f978c7b1bf4d46c390da8",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/EventParseService.java": {
+    "mtime": 1784797686.7758057,
+    "ast_hash": "ce020fd222fb575a46f844e7cd028389",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/EventWriteService.java": {
+    "mtime": 1781160851.4919024,
+    "ast_hash": "e3e76130f6e4fe10b27874dab197a5d9",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/IdempotencyService.java": {
+    "mtime": 1781160840.8923817,
+    "ast_hash": "6e885b9d9ad14a4b153e82ef0f2483e1",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/LuaScriptService.java": {
+    "mtime": 1781163085.9443786,
+    "ast_hash": "9c2aa09300cc8c07a95a34c6162fb374",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/RabbitMQQueueService.java": {
+    "mtime": 1782454372.5634122,
+    "ast_hash": "17d249f2476bf26784094abdf4daff1e",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/ReconciliationService.java": {
+    "mtime": 1779705646.0806773,
+    "ast_hash": "d5682fc72703afbd7cb32acf68b555b5",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/RedisCacheService.java": {
+    "mtime": 1781162704.5303473,
+    "ast_hash": "66ba7f33fbe208bdf1e94fb4493718c9",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/ReplayService.java": {
+    "mtime": 1781163098.8243668,
+    "ast_hash": "f12cfed26890a2296bbdbed35d154992",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/UserDataService.java": {
+    "mtime": 1782100963.4502578,
+    "ast_hash": "7956df81fa74437caefd7a87bf74974a",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/index/BranchIndexService.java": {
+    "mtime": 1782101020.2074761,
+    "ast_hash": "dfd55d840bd9bedf9d1b6ad33a26b58b",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/index/GlobalAggregatorService.java": {
+    "mtime": 1777280867.3093545,
+    "ast_hash": "8580c346f23640e4c9995e305f873fdb",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/normalization/BranchAliasIndex.java": {
+    "mtime": 1775199378.3498712,
+    "ast_hash": "966087a614e9fe36ce3c847051b76c69",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/normalization/BranchSnapshotMapper.java": {
+    "mtime": 1782210211.6100352,
+    "ast_hash": "b19e796c01f3d353defd3a04b8233250",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/normalization/FieldPrecedenceResolver.java": {
+    "mtime": 1781776758.9306648,
+    "ast_hash": "0fbfb7a1ce0677b42b2985b93148e945",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/normalization/FullDataPayloadParser.java": {
+    "mtime": 1775192115.3753784,
+    "ast_hash": "71f0325bb4f771125f1e3c70b52b7a9f",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/normalization/ValueNormalizer.java": {
+    "mtime": 1779776358.6425755,
+    "ast_hash": "c0d0cb192c0c3a1f1bc63fe87600f70c",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/AnswerTemplateService.java": {
+    "mtime": 1782210211.6100352,
+    "ast_hash": "1731f1541a2e311c6d94c978232f2b25",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/DeterministicAnswerService.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "6033f9d3a3c8a866148828864ff68e62",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/IntentKeyProfileRegistry.java": {
+    "mtime": 1780996705.3555477,
+    "ast_hash": "52ce444e2a6eb107c6717abe9206cee5",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/NodeNameResolver.java": {
+    "mtime": 1781585756.8273504,
+    "ast_hash": "c02146c8d2e53a3b81937240e86e4a43",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/QueryIntent.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "6287add486cfb2942395e6245a584292",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/QueryIntentResolver.java": {
+    "mtime": 1784027624.1523511,
+    "ast_hash": "fec6bbb9b870754409d24f439e671dbf",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/QueryRouterService.java": {
+    "mtime": 1781775959.8572254,
+    "ast_hash": "0288356e10d90eeb203eb2891f72ec45",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/RedisQueryService.java": {
+    "mtime": 1781585760.2412555,
+    "ast_hash": "956f974b760f3df6080314d4f2f826cd",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/ResolvedQuery.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "4126037f1ecc6303aae08052371d47bf",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/JwtParserUtil.java": {
+    "mtime": 1781585724.5757284,
+    "ast_hash": "db74f9d82ead03850ac0877d2bbb70d6",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/StructuredContextBuilder.java": {
+    "mtime": 1782212271.0291262,
+    "ast_hash": "c49d9e7ddcadb30b0f9a65d3603b9d90",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/ThingsBoardRequestContext.java": {
+    "mtime": 1780376836.6682034,
+    "ast_hash": "0f1adadd72c8040de839db1145e22960",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/ThingsBoardRequestFilter.java": {
+    "mtime": 1780376843.3112478,
+    "ast_hash": "ac77fcd74ccace2be45f1b5c3570d159",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/TokenCounterService.java": {
+    "mtime": 1775192781.387511,
+    "ast_hash": "2cb1dc79befd3bc40f1e3133bb66e284",
+    "semantic_hash": ""
+  },
+  "src/main/resources/scripts/update_counters.lua": {
+    "mtime": 1779690994.48199,
+    "ast_hash": "53a7cbaf4c9f08f43dcd9532937655c4",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/ThingsBoardBotApplicationTests.java": {
+    "mtime": 1779703993.0044634,
+    "ast_hash": "820442068bd1e34d269209d697751912",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/controller/ChatControllerTest.java": {
+    "mtime": 1775193081.0549233,
+    "ast_hash": "75cbbc0628f46575773a5ddd357e28b3",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/integration/GoldenQuestionAccuracyTest.java": {
+    "mtime": 1784027663.3501985,
+    "ast_hash": "d297a79ae64d559e149b89df69fb8af8",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/AncestorPathServiceTest.java": {
+    "mtime": 1779705677.0600586,
+    "ast_hash": "ade6bf7720b348d25f546847e085e2e6",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/ChatServiceTest.java": {
+    "mtime": 1784027574.1271245,
+    "ast_hash": "6183fd61d9b5f693593e8c6da91b5291",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/ReconciliationServiceTest.java": {
+    "mtime": 1779705686.17607,
+    "ast_hash": "8e6909d1c6b16c7949a00f6b9e13a817",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/ReplayServiceTest.java": {
+    "mtime": 1781161455.3633668,
+    "ast_hash": "dd997b91a3c43d5ea37cf99e064412f5",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/normalization/BranchSnapshotMapperTest.java": {
+    "mtime": 1775465541.2568865,
+    "ast_hash": "5d2450dc88048bb1c8df45bb8bd806a7",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/normalization/FullDataPayloadParserTest.java": {
+    "mtime": 1775192892.3812418,
+    "ast_hash": "01aaee58439514c958454b7c7f5cdf66",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/normalization/ValueNormalizerTest.java": {
+    "mtime": 1779776361.958149,
+    "ast_hash": "0f573ad3a9e1b8f9f75ea8c59f342fcd",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/DeterministicAnswerServiceTest.java": {
+    "mtime": 1782707846.0387232,
+    "ast_hash": "a8b86ed7909a3581d0097c5cfacb42ae",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/NodeNameResolverTest.java": {
+    "mtime": 1779704446.371376,
+    "ast_hash": "c62a5738212ba2e143dd8b640711145e",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/QueryIntentResolverTest.java": {
+    "mtime": 1783326750.0988355,
+    "ast_hash": "948857b6a6c9cf01b395531586a80d39",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/QueryRouterServiceTest.java": {
+    "mtime": 1781775970.8181806,
+    "ast_hash": "120a4b4bb1f40d2b29703b901caaaf9d",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/support/FixtureLoader.java": {
+    "mtime": 1775192884.7018392,
+    "ast_hash": "bd33f4b66af663bc974bc2519010ea0d",
+    "semantic_hash": ""
+  },
+  "src/test/resources/fixtures/branch_conflict_cases.json": {
+    "mtime": 1775192869.2062552,
+    "ast_hash": "b93b9a237c0267ba96940e8347b9c294",
+    "semantic_hash": ""
+  },
+  "src/test/resources/fixtures/full_data_fixture.json": {
+    "mtime": 1781777378.5876877,
+    "ast_hash": "4c73999cc1df8a93eb3aed9054846866",
+    "semantic_hash": ""
+  },
+  "src/test/resources/fixtures/golden_questions.json": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "a2898ca7479ec5db261f2c8231ab10c5",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1780977887.8696995,
+    "ast_hash": "818d4c7023b01add50d8ce0535ffcc07",
+    "semantic_hash": ""
+  },
+  "DEVELOPMENT.md": {
+    "mtime": 1784021718.6933956,
+    "ast_hash": "3f3f376a3aaa0bb68e5b5db3ae5c07d6",
+    "semantic_hash": ""
+  },
+  "docker-compose.yml": {
+    "mtime": 1781162233.9834843,
+    "ast_hash": "875e40bcac5157e9fbc49f8d23cfdfd9",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1782732675.9557562,
+    "ast_hash": "87d1aad2c1859390c01b895ebc998ed8",
+    "semantic_hash": ""
+  },
+  "frontend/index.html": {
+    "mtime": 1782819461.8794668,
+    "ast_hash": "d5a1887de889297430c51b51d4a15778",
+    "semantic_hash": ""
+  },
+  "frontend/README.md": {
+    "mtime": 1780293661.1844108,
+    "ast_hash": "27624cb3e5317e4866d1161b08d328f2",
+    "semantic_hash": ""
+  },
+  "frontend/src/vite-env.d.ts": {
+    "mtime": 1781160414.7339983,
+    "ast_hash": "60fe08311f0e03ab3596287bb55bda21",
+    "semantic_hash": ""
+  },
+  "frontend/logo/thingsboard_bot_logo.png": {
+    "mtime": 1780381486.0721676,
+    "ast_hash": "1c8c5d068ab9b0c9fcefe98bb89171c2",
+    "semantic_hash": ""
+  },
+  "frontend/src/assets/thingsboard_bot_logo.png": {
+    "mtime": 1780381486.0721676,
+    "ast_hash": "1c8c5d068ab9b0c9fcefe98bb89171c2",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/BotLogoSvg.tsx": {
+    "mtime": 1784802413.5014603,
+    "ast_hash": "9cc03274eb050572a3a17fc7fa739f28",
+    "semantic_hash": ""
+  },
+  "frontend/logo/thingsboard_bot_logo.svg": {
+    "mtime": 1780381831.744584,
+    "ast_hash": "6edd04be9339975b4d11bf6157385b7f",
+    "semantic_hash": ""
+  },
+  "frontend/src/assets/thingsboard_bot_logo.svg": {
+    "mtime": 1780381836.935891,
+    "ast_hash": "6edd04be9339975b4d11bf6157385b7f",
+    "semantic_hash": ""
+  },
+  ".antigravitycli/7b471072-ad62-490d-a6b0-653876fe60c2.json": {
+    "mtime": 1780468937.5568242,
+    "ast_hash": "f75cf3e7cbff8363bd933ed79661d513",
+    "semantic_hash": ""
+  },
+  "_- visual selection.svg": {
+    "mtime": 1780468937.566149,
+    "ast_hash": "22368236e0fe09c96422740788754906",
+    "semantic_hash": ""
+  },
+  ".mcp.json": {
+    "mtime": 1780977885.9244864,
+    "ast_hash": "4c7e6dd972023b352e71e3ec525b718c",
+    "semantic_hash": ""
+  },
+  ".opencode.json": {
+    "mtime": 1780977885.9479518,
+    "ast_hash": "8b2fd45ed3f0ce5bb5289efa1f583985",
+    "semantic_hash": ""
+  },
+  ".claude/settings.json": {
+    "mtime": 1780977887.8718565,
+    "ast_hash": "cbda800ae2159c48d6ad280b09abdbda",
+    "semantic_hash": ""
+  },
+  ".cursor/mcp.json": {
+    "mtime": 1780977885.934767,
+    "ast_hash": "4c7e6dd972023b352e71e3ec525b718c",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/AdminAuthFilter.java": {
+    "mtime": 1780977545.3735244,
+    "ast_hash": "3b9f78782d9d08726b1b9a635510c391",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/DotenvEnvironmentPostProcessor.java": {
+    "mtime": 1780977545.3735244,
+    "ast_hash": "8863e36e846bdf1eb22e1b586535c781",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/JwtParserInitializer.java": {
+    "mtime": 1781160449.6982398,
+    "ast_hash": "9b7da9d6da589fcf0168085a49d2e896",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/SecurityProperties.java": {
+    "mtime": 1781162033.4005768,
+    "ast_hash": "a97331f73eb6f972752a738dae8f346c",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/QueryRule.java": {
+    "mtime": 1780977545.3755243,
+    "ast_hash": "bfff979e16fe22c8f4e89d6a6ae83364",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/QueryRuleRegistry.java": {
+    "mtime": 1780977545.3755243,
+    "ast_hash": "d773eb2f8afef52d545ab97f4ec0f9e9",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/AccessControlHandler.java": {
+    "mtime": 1780977545.3755243,
+    "ast_hash": "5d2646e3fb29a1d06494674ac98794be",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/AlertHandler.java": {
+    "mtime": 1780977545.3755243,
+    "ast_hash": "ba2372855e9f00172936854db752b84d",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/AnswerHandler.java": {
+    "mtime": 1780977545.3765244,
+    "ast_hash": "5d9a4396af9208aba107224245559e08",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/AnswerSupport.java": {
+    "mtime": 1780996705.3562336,
+    "ast_hash": "5bdd7dc4c3519c3fa2d8e9e3fdeb3e1b",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/CctvHandler.java": {
+    "mtime": 1782210701.5032852,
+    "ast_hash": "55bea70f50a10bcbda0f496a551190b5",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/DeviceInventoryHandler.java": {
+    "mtime": 1780977545.3775246,
+    "ast_hash": "20d28a6bfea39a7c96aa7b4905c07d5e",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/DoorStatusHandler.java": {
+    "mtime": 1780978616.2241497,
+    "ast_hash": "fed47212b8af7140956c6a9da361ac95",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/FaultReasonHandler.java": {
+    "mtime": 1780977545.3775246,
+    "ast_hash": "31ac299d6680a76fc4173ea87f737d6f",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/GatewayStatusHandler.java": {
+    "mtime": 1780977545.3775246,
+    "ast_hash": "17bf799e09d6bc64ae7f33c676f92534",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/GlobalOverviewHandler.java": {
+    "mtime": 1782101627.0511968,
+    "ast_hash": "3f852566ee8e476ccae0edc0f5862721",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/NetworkStatusHandler.java": {
+    "mtime": 1782211706.5060828,
+    "ast_hash": "2942555e429e73e25ce5366e1b6e606c",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/PowerHandler.java": {
+    "mtime": 1780996705.3569276,
+    "ast_hash": "04ee5bb0195011a792f7fc8d22197ac4",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/SubsystemHandler.java": {
+    "mtime": 1782210211.6120417,
+    "ast_hash": "8cbb8eaf2985fbc032d3c6c6a6fbc901",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/tools/ThingsBoardBackupUtility.java": {
+    "mtime": 1780977545.3798504,
+    "ast_hash": "8969345ec8e8b5c9475fcc6efb76069c",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/tools/ThingsBoardTimescaleImporter.java": {
+    "mtime": 1782288617.250587,
+    "ast_hash": "a32aafa0b90abe6d90ee0f0b0fa204d7",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/HmacUtil.java": {
+    "mtime": 1780977545.3798504,
+    "ast_hash": "e7fae02579c7c84ab1cf2f1abdd24016",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/config/DotenvEnvironmentPostProcessorTest.java": {
+    "mtime": 1780977545.3810146,
+    "ast_hash": "f4ca4ffe3afb8adea7c7d0fe56505e4b",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/QueryRuleRegistryTest.java": {
+    "mtime": 1780977545.3810146,
+    "ast_hash": "f7630d6be25d25bd69f2f367523d7bd7",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/tools/ThingsBoardBackupUtilityTest.java": {
+    "mtime": 1780977545.3810146,
+    "ast_hash": "9dba2cf1c6c4f56d39fc92702b927807",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/util/JwtParserUtilTest.java": {
+    "mtime": 1781585762.4095905,
+    "ast_hash": "66890b499f6caf6b3b1435ae2faf9eee",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1781495700.1270108,
+    "ast_hash": "159bb863f755ce3ad7fe11d16c560f0d",
+    "semantic_hash": ""
+  },
+  "GEMINI.md": {
+    "mtime": 1780977887.870699,
+    "ast_hash": "f0c147986e95d13713104ff4dd18e655",
+    "semantic_hash": ""
+  },
+  ".claude/skills/debug-issue.md": {
+    "mtime": 1780977885.9691646,
+    "ast_hash": "83266930cd7096aee27fd30edc55c85f",
+    "semantic_hash": ""
+  },
+  ".claude/skills/explore-codebase.md": {
+    "mtime": 1780977885.9691646,
+    "ast_hash": "b70f59c577a3ce3a3e72d8c61ce3469a",
+    "semantic_hash": ""
+  },
+  ".claude/skills/refactor-safely.md": {
+    "mtime": 1780977885.9691646,
+    "ast_hash": "de0e5b1c85bd387821268d0f9411a778",
+    "semantic_hash": ""
+  },
+  ".claude/skills/review-changes.md": {
+    "mtime": 1780977885.9691646,
+    "ast_hash": "1ce0725b638aed739326a7687c7fffb0",
+    "semantic_hash": ""
+  },
+  "docs/RUNBOOKS.md": {
+    "mtime": 1780977545.3649683,
+    "ast_hash": "38e0f348ff56925acfb1d715f36d6bed",
+    "semantic_hash": ""
+  },
+  "docs/adr/0001-three-profile-deployment.md": {
+    "mtime": 1780977545.3654819,
+    "ast_hash": "c44d85cbe5fa6353e54b2748e29c0cf9",
+    "semantic_hash": ""
+  },
+  "docs/adr/0002-atomic-lua-counters.md": {
+    "mtime": 1780977545.3654819,
+    "ast_hash": "f03d23a3abd3e65b45d5484004ec57f5",
+    "semantic_hash": ""
+  },
+  "docs/adr/0003-unverified-jwt-claims.md": {
+    "mtime": 1780977545.3659952,
+    "ast_hash": "4dfaa90f6984c4d8b61ab7c67e100ea9",
+    "semantic_hash": ""
+  },
+  "src/main/resources/prompts/system-prompt.txt": {
+    "mtime": 1782210210.9957874,
+    "ast_hash": "5ae20f607a8da7a56a35761a25fe7f17",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/CoverageMatrixDeterministicTest.java": {
+    "mtime": 1780996705.3574522,
+    "ast_hash": "a5fca0e89298c1cc44c6873f43fb6eb9",
+    "semantic_hash": ""
+  },
+  "docs/coverage-matrix.md": {
+    "mtime": 1780996705.3517172,
+    "ast_hash": "a13126fb334b13d52b1d63261961a784",
+    "semantic_hash": ""
+  },
+  "docs/format-contract.md": {
+    "mtime": 1780996705.3522472,
+    "ast_hash": "d4a96f715d5c12bd69c3e960f4b7e0ee",
+    "semantic_hash": ""
+  },
+  ".claude/settings.local.json": {
+    "mtime": 1784802194.3390906,
+    "ast_hash": "2786d0dc3e985026d4921141433ce9f2",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ErrorBoundary.tsx": {
+    "mtime": 1781162850.7254682,
+    "ast_hash": "99d076928bbef6c7b82e742fced9d207",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/ContentSecurityPolicyFilter.java": {
+    "mtime": 1781162042.932901,
+    "ast_hash": "f0dd9e2f0620d2227e80ee96ca211877",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/SecurityStartupValidator.java": {
+    "mtime": 1781161786.3328228,
+    "ast_hash": "aeedde0c78d9fa70c0cc3b0bdcbb2c9e",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/TimescaleInitializer.java": {
+    "mtime": 1781161283.7549584,
+    "ast_hash": "0e3ae3d79429e8d11e72bab3bff15662",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/exception/UnprovisionedCustomerException.java": {
+    "mtime": 1781160038.3923905,
+    "ast_hash": "c330c592644128f4387df04317644def",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/CustomerMatcher.java": {
+    "mtime": 1781161574.3796422,
+    "ast_hash": "23acee1f402d74a1f9562b05e3bc8c13",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/CustomerSyncRunner.java": {
+    "mtime": 1781247300.0723886,
+    "ast_hash": "220518026c0c6cae268662f572a7ce64",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/StatusDeltaUtil.java": {
+    "mtime": 1781163056.450204,
+    "ast_hash": "34b67e4d9421de7bc2d9b953a8986cc8",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/ThingsBoardHostValidator.java": {
+    "mtime": 1781160547.842469,
+    "ast_hash": "c402dc8258d6e6d54ce276ff2b129e29",
+    "semantic_hash": ""
+  },
+  "src/main/resources/db/timescale/timescale_setup.sql": {
+    "mtime": 1781161266.5748897,
+    "ast_hash": "473aa3f130f81ad0f243cf9b75be3a44",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/controller/HierarchyCsvParseTest.java": {
+    "mtime": 1781162991.0683732,
+    "ast_hash": "87f88dbdad79b45202d16dcf7276602a",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/repository/DeviceEventRepositoryPostgresTest.java": {
+    "mtime": 1781161185.8611493,
+    "ast_hash": "451fe0df7a028fceade54072b77eb541",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/CustomerMatcherTest.java": {
+    "mtime": 1781161616.3520765,
+    "ast_hash": "a4af9bb608b9b579f08fe5c202e12121",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/UserDataServiceTest.java": {
+    "mtime": 1781585765.0995848,
+    "ast_hash": "c2a3db9459b9cc79e4bd18a960396795",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/util/StatusDeltaUtilTest.java": {
+    "mtime": 1781163110.2949007,
+    "ast_hash": "f1050230cbe009d5baddf27f6b6453e7",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/util/ThingsBoardHostValidatorTest.java": {
+    "mtime": 1781160600.959194,
+    "ast_hash": "b8325cdde0710aeaf829de6aab50f60f",
+    "semantic_hash": ""
+  },
+  "docs/data-refresh.md": {
+    "mtime": 1781170369.319636,
+    "ast_hash": "c8c8325a6f4824e11e33390e1893b929",
+    "semantic_hash": ""
+  },
+  "docs/deployment-topology.md": {
+    "mtime": 1781161984.7760992,
+    "ast_hash": "192c00123e39dd63afb94fc5ec971afa",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/EvaluationConfig.java": {
+    "mtime": 1781498403.945824,
+    "ast_hash": "5c27d1f1dfdbe6b8f317836ce397a4e6",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/EvaluationInput.java": {
+    "mtime": 1781498414.490945,
+    "ast_hash": "62c1dcd95aa6400d4aac3fbe118d75db",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/EvaluationIssue.java": {
+    "mtime": 1781498428.071605,
+    "ast_hash": "a57ce7a99eb140ebcca37922fd556e0d",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/EvaluationReport.java": {
+    "mtime": 1781498437.3834844,
+    "ast_hash": "214dc8663ce12e639ced089e9494660b",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/model/dto/FactualContradiction.java": {
+    "mtime": 1781498421.220163,
+    "ast_hash": "bb3520d1e677e149bb6dfa617d8f777d",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/ResponseEvaluationService.java": {
+    "mtime": 1781498471.1149914,
+    "ast_hash": "897c69211b9de34cc19a8dae68cade39",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/ResponseEvaluationServiceTest.java": {
+    "mtime": 1781498581.4438913,
+    "ast_hash": "f928f7279ba46f932f5c3c64ec664833",
+    "semantic_hash": ""
+  },
+  "src/main/resources/prompts/evaluation-prompt.txt": {
+    "mtime": 1781498383.880782,
+    "ast_hash": "4665d5b6778a864fcb44b7410d91c806",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/util/RegionalScopeUtil.java": {
+    "mtime": 1782103625.9867086,
+    "ast_hash": "4e44c0aa73629847d7c0112c8ca1285f",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/GlobalOverviewUnknownBucketTest.java": {
+    "mtime": 1782101683.8635755,
+    "ast_hash": "0b6983751146a173585f811dc2c3a92e",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/SubsystemFieldQueryTest.java": {
+    "mtime": 1782210211.6120417,
+    "ast_hash": "67a843e764aa03eeff7efb0a2b099413",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/tools/ImporterNodeTypeTest.java": {
+    "mtime": 1782123944.7494092,
+    "ast_hash": "f960a56552a5990d394393594f78ee8c",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/util/RegionalScopeUtilTest.java": {
+    "mtime": 1782103638.5068066,
+    "ast_hash": "9c349bedf317c9b5a1d3fb9fc73be605",
+    "semantic_hash": ""
+  },
+  "Thingsboard-Data/thingsboard_devices_backup.json": {
+    "mtime": 1784789663.5809064,
+    "ast_hash": "f5f367f6056fdc299fbf73a07104ec80",
+    "semantic_hash": ""
+  },
+  "Thingsboard-Data/qustions.txt": {
+    "mtime": 1782378369.1841586,
+    "ast_hash": "57ddd256c0f28f79f80e61e14ca5e2e0",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/DeviceIdentityHandler.java": {
+    "mtime": 1782211599.0588424,
+    "ast_hash": "76d7c4bdc2beabc356fbdbe9674c5993",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/FleetAnalyticsHandler.java": {
+    "mtime": 1782707802.674297,
+    "ast_hash": "505ece3082829728106f9f0789ef3264",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/HierarchyHandler.java": {
+    "mtime": 1782212777.778968,
+    "ast_hash": "5f737b52da573619e5cc025457c1f494",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/FleetAnalyticsFilterTest.java": {
+    "mtime": 1782216523.9853516,
+    "ast_hash": "8d5dedad855f7e4b2f603109ed0bcbb2",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/util/StructuredContextBuilderTest.java": {
+    "mtime": 1782212320.1314962,
+    "ast_hash": "024abb2b59163e9d22de3c98ff2a32bb",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/config/ExtractorConfig.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "2d84f58299b41fc0fb3f896ba3cfceef",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/ResponseFormat.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "e510a86326b1c755d83ec2692b6c4c21",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/ResponseFormatInstructions.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "ee0b336764168322031eab6ab219be36",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/extract/ExtractedIntent.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "9db5199f87469046a88ce205a634ebdc",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/extract/ExtractionResult.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "1d1fcd8bc8f1a0e7dcf5c0f02756c1bb",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/extract/ExtractionResultParser.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "3518d2b0b9f551d1a0fc5bad84836a40",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/extract/ExtractorShadowService.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "8fd8b70dc67a4830a4b88985fa7c2137",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/extract/IntentExtractor.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "8aaafdbd2ea870c4c1d6aa0f52c1b374",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/extract/LlmIntentExtractor.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "002d26c9c321f3ff6d51d66826ec1df0",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/glossary/GlossaryService.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "2a8a68cd76ddeb42f3015383e53b95f2",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/CapabilityReplyHandler.java": {
+    "mtime": 1784027524.0191286,
+    "ast_hash": "6459fdafc9f35d9de8f7faeb65ee916a",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/handler/GlossaryHandler.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "6e67d4a674537af5eae65b0eb7716181",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/orchestrate/MultiIntentOrchestrator.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "b379d926ae09ce5171d4e7da8c797f98",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/orchestrate/OrchestrationResult.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "0d70a885e1761c01cb62669365155c23",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/resolve/BranchDictionary.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "5ac205bd0eb9cd92e5ff0d89336efc4f",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/resolve/BranchDictionaryService.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "a0b3fa919c9eb6f548a22723576163f2",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/resolve/BranchEntry.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "fc027b50b5e2a64fe330276071301be2",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/resolve/BranchResolution.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "572fd938dd9223c90a6452bfdec5b224",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/resolve/FuzzyBranchResolver.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "07b5a915e0a737eecee7c47f416cef0d",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/resolve/ManualAliasTable.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "c00d5dd4e960dc1108a6f756f329eeea",
+    "semantic_hash": ""
+  },
+  "src/main/java/com/seple/ThingsBoard_Bot/service/query/safety/SafetyGateService.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "70a8ea3c2d27163fb5c58823f56e156f",
+    "semantic_hash": ""
+  },
+  "src/main/resources/glossary.json": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "052ebd3c44dafaed8adb3d16227245e5",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/bench/BenchScorecard.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "93396e3d17ae9e01e6edee5931025055",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/bench/ReleaseGateTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "2f37043ac5532504ecec293873098895",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/bench/TestBenchRunner.java": {
+    "mtime": 1784027659.3439348,
+    "ast_hash": "9a93d34a10c2a78f288d13c507cf879d",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/bench/ThresholdCalibrationSweep.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "fa14aba394e14d9d543151882749ef3c",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/bench/ThresholdCalibrationSweepTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "9d5f534a0a1d4e52036ba2450d65f848",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/integration/ExtractorBenchTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "9521ff4a367528d41aaf690de15fabd6",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/QueryIntentTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "48521aa2cc13c7b80234fa6d8df64f0c",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/ResponseFormatInstructionsTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "29afa5e044c5fdb8a0cb461606df0d81",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/extract/ExtractionResultParserTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "fc3ae4ed71b5319d3d190ea99fda2863",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/extract/ExtractorShadowServiceTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "309997b1fa8f2e43797b1552d77cc372",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/extract/LlmIntentExtractorTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "5b8c163d4d61d10774e54d17c6b065f5",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/glossary/GlossaryServiceTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "7b36e3a246b757b2a7a597dfce70e13a",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/handler/CapabilityReplyHandlerTest.java": {
+    "mtime": 1784027616.0109313,
+    "ast_hash": "bab39ffb3d8e68e88e62cc889ea2e395",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/handler/GlossaryHandlerTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "b85784a061bf97ec47ac1aa26cb15859",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/orchestrate/MultiIntentOrchestratorTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "b38d74718fc202cc59b395b4359417f4",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/resolve/BranchDictionaryServiceTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "1a533e6d84563928880b8216d7e7c86b",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/resolve/BranchDictionaryTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "3fbb9be130924f6828ef5338df843da3",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/resolve/FuzzyBranchResolverTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "40b4b9a69225d3c6dc3792c0dfd94c7a",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/resolve/ManualAliasTableTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "e18cb90465386d4ba72b11c6824d9e10",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/service/query/safety/SafetyGateServiceTest.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "93968e9a5080fa234346a0ba4c407893",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/support/MockSnapshotStore.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "57f5646f010ca812df2f808cca1dbf05",
+    "semantic_hash": ""
+  },
+  "src/test/java/com/seple/ThingsBoard_Bot/support/RecordedIntentExtractor.java": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "dcab30605fbb8a905ad2fe0181e18792",
+    "semantic_hash": ""
+  },
+  "src/test/resources/fixtures/bench_extractor_scenarios.json": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "69c12159284a91ac274438e9a234e1e3",
+    "semantic_hash": ""
+  },
+  "src/test/resources/fixtures/bench_safety_corpus.json": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "c5674b921eb60e65e1ae757ffd0a1589",
+    "semantic_hash": ""
+  },
+  "src/test/resources/fixtures/extractor_recordings.json": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "7b5e447440fe859337868263df8330e8",
+    "semantic_hash": ""
+  },
+  "src/main/resources/prompts/intent-extractor-prompt.txt": {
+    "mtime": 1783081617.1895244,
+    "ast_hash": "bcb234e467298a78e3a5ea99e3c84699",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/command-metadata.json": {
+    "mtime": 1784802194.2528367,
+    "ast_hash": "86266801588636b11e00372754118529",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/concept-seed.mjs": {
+    "mtime": 1784802194.2538378,
+    "ast_hash": "193f709eb3c4ebb332325c7c0c166aa5",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/context-signals.mjs": {
+    "mtime": 1784802194.2538378,
+    "ast_hash": "8bd2a915889d618613696fb39ea80a19",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/context.mjs": {
+    "mtime": 1784802194.2538378,
+    "ast_hash": "e0785dcadf71450532db1101c23d3fc1",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/critique-storage.mjs": {
+    "mtime": 1784802194.2548366,
+    "ast_hash": "bb6ba8768598212ec4bd90879160eca1",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detect-csp.mjs": {
+    "mtime": 1784802194.2548366,
+    "ast_hash": "02c5a9a8ad69f87d23af72bf580fd3f4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detect.mjs": {
+    "mtime": 1784802194.2548366,
+    "ast_hash": "11dbeb9341477d06d1a24c3ad1f37ac9",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/browser/injected/index.mjs": {
+    "mtime": 1784802194.2558348,
+    "ast_hash": "537f280b7a773562e1283b1bd0df161a",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/cli/main.mjs": {
+    "mtime": 1784802194.2558348,
+    "ast_hash": "82d40e51a9848f7a77f5671cd13a324e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/design-system.mjs": {
+    "mtime": 1784802194.2568357,
+    "ast_hash": "a4957cb54de4c7a65c137ad043db5527",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/detect-antipatterns-browser.js": {
+    "mtime": 1784802194.2568357,
+    "ast_hash": "362dd9a8dda3323528b259b44513b109",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/detect-antipatterns.mjs": {
+    "mtime": 1784802194.2578378,
+    "ast_hash": "1153e262200605dcc367717e5cb9958e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/engines/browser/detect-url.mjs": {
+    "mtime": 1784802194.2588377,
+    "ast_hash": "f9af42e6427614b46387ac30917af199",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/engines/regex/detect-text.mjs": {
+    "mtime": 1784802194.2593656,
+    "ast_hash": "9c436935cbf0398d7028795dddab83f4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/engines/static-html/css-cascade.mjs": {
+    "mtime": 1784802194.2593656,
+    "ast_hash": "41559f4ca21cd9b69ac6811a11922706",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/engines/static-html/detect-html.mjs": {
+    "mtime": 1784802194.260374,
+    "ast_hash": "af627ac2e5aa70362dadb81895dbb964",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/engines/visual/screenshot-contrast.mjs": {
+    "mtime": 1784802194.260374,
+    "ast_hash": "6312c6dbc048c4445f50e69f167a297d",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/findings.mjs": {
+    "mtime": 1784802194.2613738,
+    "ast_hash": "b90605bc2e93b95e4b73c0ef89cd1b57",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/node/file-system.mjs": {
+    "mtime": 1784802194.2613738,
+    "ast_hash": "21d55d864c78f1a6c20794551e3901d5",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/profile/profiler.mjs": {
+    "mtime": 1784802194.2623737,
+    "ast_hash": "88c5d2027852842be578edf349a0f9c8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/registry/antipatterns.mjs": {
+    "mtime": 1784802194.2623737,
+    "ast_hash": "0cae1794b92f0a3cf588434f50f887dd",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/rules/checks.mjs": {
+    "mtime": 1784802194.2633736,
+    "ast_hash": "710cd6f6ac92b51addc7eb42ac1d89e3",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/shared/color.mjs": {
+    "mtime": 1784802194.2633736,
+    "ast_hash": "2363d500ccf490f9ff285119b613276d",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/shared/constants.mjs": {
+    "mtime": 1784802194.2643735,
+    "ast_hash": "0920d754084e96e7590afda3c0ac1a2c",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/shared/fonts.mjs": {
+    "mtime": 1784802194.2643735,
+    "ast_hash": "5f06c512cc5316fb3f4f7116e33c7765",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/shared/inline-ignores.mjs": {
+    "mtime": 1784802194.2643735,
+    "ast_hash": "6e3e7e639661186078ea93a849f57c64",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/detector/shared/page.mjs": {
+    "mtime": 1784802194.2653735,
+    "ast_hash": "ab3a243b690b4f70c4ef639cdf970d82",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/doctor.mjs": {
+    "mtime": 1784802194.2653735,
+    "ast_hash": "7d6f1f53304ebb96294fd856a96212fa",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/generate-image.mjs": {
+    "mtime": 1784802194.2653735,
+    "ast_hash": "0f786b3b50c8a2acd24cf86b752ba709",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/hook-admin.mjs": {
+    "mtime": 1784802194.2663743,
+    "ast_hash": "5aa2db90e40ea9eb38bfe2d7f981a6e3",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/hook-before-edit.mjs": {
+    "mtime": 1784802194.2663743,
+    "ast_hash": "b87461628d48057213a895d8eb6c4d88",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/hook-lib.mjs": {
+    "mtime": 1784802194.2673736,
+    "ast_hash": "1335be509c639e0c5996ddf5f3e7fba7",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/hook.mjs": {
+    "mtime": 1784802194.2673736,
+    "ast_hash": "7cac30bc9f0f035b4d17a11635e990c6",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/artifact-schema.mjs": {
+    "mtime": 1784802194.2673736,
+    "ast_hash": "0ba59a6644319eb1f742f9a5c4d82e0d",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/composition-catalog.mjs": {
+    "mtime": 1784802194.2683792,
+    "ast_hash": "fc06a041f1fa9dff7171ded2534714eb",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/concept-catalog.mjs": {
+    "mtime": 1784802194.2683792,
+    "ast_hash": "6c92b20d82e7d4c4975ccc39a669a683",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/design-parser.mjs": {
+    "mtime": 1784802194.2693744,
+    "ast_hash": "d158b9b1742ff7bf726431595a4bbfb1",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/impeccable-config.mjs": {
+    "mtime": 1784802194.2693744,
+    "ast_hash": "b0593f05d4721103048554ab67095785",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/impeccable-paths.mjs": {
+    "mtime": 1784802194.2703724,
+    "ast_hash": "293c42942d0bb3de172bf8322cc41280",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/is-generated.mjs": {
+    "mtime": 1784802194.2703724,
+    "ast_hash": "edd718b1a4737edbf9631ff7f6f512ef",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/provider.mjs": {
+    "mtime": 1784802194.2703724,
+    "ast_hash": "a9e8ffaafb98f526965f533d4adf45b8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/staleness-deep.mjs": {
+    "mtime": 1784802194.2713718,
+    "ast_hash": "cb2c59b1bb27785d90fc938216ae395d",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/staleness-notice.mjs": {
+    "mtime": 1784802194.2713718,
+    "ast_hash": "7ed2e280a62c23321c06f9c65ef80dc2",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/staleness.mjs": {
+    "mtime": 1784802194.2723737,
+    "ast_hash": "42129f04441247498af59cbcbdcac3c4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/surface-briefs.mjs": {
+    "mtime": 1784802194.2723737,
+    "ast_hash": "c543b9067f5aa418616a2ec5cc9b8835",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/target-args.mjs": {
+    "mtime": 1784802194.2723737,
+    "ast_hash": "442e04a03b6ba43330a859a537a956b2",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/target-slug.mjs": {
+    "mtime": 1784802194.2733808,
+    "ast_hash": "505068be5e3a4eac97b29e44f8eef611",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/lib/template-extensions.mjs": {
+    "mtime": 1784802194.2733808,
+    "ast_hash": "bc11a020a962f77681a365694adc5df5",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-accept.mjs": {
+    "mtime": 1784802194.2799044,
+    "ast_hash": "890dc69c2a9449576309a073470cf2de",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-browser-dom.js": {
+    "mtime": 1784802194.2809167,
+    "ast_hash": "b96db5b10874366237a40305c5dc72a1",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-browser-session.js": {
+    "mtime": 1784802194.2809167,
+    "ast_hash": "5dec3dae6158050d69762fb79facaf48",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-browser.js": {
+    "mtime": 1784802194.2809167,
+    "ast_hash": "f369dbd3a909cfa9863cfda88f9deb1e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-commit-manual-edits.mjs": {
+    "mtime": 1784802194.2819145,
+    "ast_hash": "49b8219699a31d6c1977aaea812d87ae",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-complete.mjs": {
+    "mtime": 1784802194.2819145,
+    "ast_hash": "18ddd6db2567d7d385291b813d310518",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-copy-edit-agent.mjs": {
+    "mtime": 1784802194.2829137,
+    "ast_hash": "1c4926b56d5442775dab0138bf71a790",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-discard-manual-edits.mjs": {
+    "mtime": 1784802194.2829137,
+    "ast_hash": "bbd49a16f77178fc8e778759653dd4c5",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-inject.mjs": {
+    "mtime": 1784802194.283694,
+    "ast_hash": "c8d89b30ab8bbbab6387340d68a15454",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-insert.mjs": {
+    "mtime": 1784802194.283694,
+    "ast_hash": "a0ce4a29836987cc67cad70e630d5dcf",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-manual-edit-evidence.mjs": {
+    "mtime": 1784802194.283694,
+    "ast_hash": "2279d4132eac2ee253829e333e313c6a",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-poll.mjs": {
+    "mtime": 1784802194.284706,
+    "ast_hash": "243a7d2aac381206a8405b82b20c8eff",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-resume.mjs": {
+    "mtime": 1784802194.284706,
+    "ast_hash": "0791b79bb824ffc6b52fcec25c6982a7",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-server.mjs": {
+    "mtime": 1784802194.284706,
+    "ast_hash": "25fdd7a0861405c065369ae4dbd1c1c0",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-status.mjs": {
+    "mtime": 1784802194.2856946,
+    "ast_hash": "a5c3fd454328c6da4a5c2918dd3205cb",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-target.mjs": {
+    "mtime": 1784802194.2856946,
+    "ast_hash": "7a25beda7cdc4c5a6eb2a7f135ec50fd",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live-wrap.mjs": {
+    "mtime": 1784802194.2856946,
+    "ast_hash": "22e68849836e9446c7bfd5dd4c6984b4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live.mjs": {
+    "mtime": 1784802194.2866824,
+    "ast_hash": "5cf7af6d3bf7568e80593c8e13cfa916",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/browser-script-parts.mjs": {
+    "mtime": 1784802194.2733808,
+    "ast_hash": "fc7fd981a98a65f20055f3ac9409a67d",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/completion.mjs": {
+    "mtime": 1784802194.2743742,
+    "ast_hash": "8f22aa2c6e51f33aa445658462ff4bfb",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/event-validation.mjs": {
+    "mtime": 1784802194.2743742,
+    "ast_hash": "9bb629b8c395791e56553f8a0a4c788e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/generation-preflight.mjs": {
+    "mtime": 1784802194.2753818,
+    "ast_hash": "5bef484a475dcd224b88af62be00ec1b",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/insert-ui.mjs": {
+    "mtime": 1784802194.2753818,
+    "ast_hash": "b6c5c82e14218c0c1b1e66f0851bff3f",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/manual-apply.mjs": {
+    "mtime": 1784802194.2763815,
+    "ast_hash": "043d0a1a7a4a373178648502bbe7da81",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/manual-edit-routes.mjs": {
+    "mtime": 1784802194.2763815,
+    "ast_hash": "5f801f9370461d1faa9ae4cde85a96be",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/manual-edits-buffer.mjs": {
+    "mtime": 1784802194.2763815,
+    "ast_hash": "a36834f2a77dd6a81ee324ef4f6f8baa",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/poll-lanes.mjs": {
+    "mtime": 1784802194.2773738,
+    "ast_hash": "4005c93bf0be4681a805f70e19a9630d",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/session-store.mjs": {
+    "mtime": 1784802194.2773738,
+    "ast_hash": "3ebd1f08f956ca405cf7391f0884fdf6",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/source-lock.mjs": {
+    "mtime": 1784802194.2773738,
+    "ast_hash": "8683d8ae7634519b542fde4c0fd64cb8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/source-search.mjs": {
+    "mtime": 1784802194.2783809,
+    "ast_hash": "2cfa4372f6401aa0c367949c7944e389",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/svelte-component.mjs": {
+    "mtime": 1784802194.2783809,
+    "ast_hash": "b23495379a1527dbb9c7c3171041819e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/sveltekit-adapter.mjs": {
+    "mtime": 1784802194.2783809,
+    "ast_hash": "66e07d2c07827af6099ce81a442bd66e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/ui-core.mjs": {
+    "mtime": 1784802194.2793832,
+    "ast_hash": "fd7d2bdbdab291957cffacfce95a19d1",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/live/vocabulary.mjs": {
+    "mtime": 1784802194.2799044,
+    "ast_hash": "e7e5650764fceb61f2197769c7f5864e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/modern-screenshot.umd.js": {
+    "mtime": 1784802194.2871592,
+    "ast_hash": "4fe5f9e490ab4f107afc707d7eafc819",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/palette.mjs": {
+    "mtime": 1784802194.2871592,
+    "ast_hash": "a1811eb32e4c10858a39b0fa680189de",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/pin.mjs": {
+    "mtime": 1784802194.2871592,
+    "ast_hash": "e99bc166cdd53d501a4b31aaaedc5ecc",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/serve-question.mjs": {
+    "mtime": 1784802194.2881727,
+    "ast_hash": "c7daf913eba463a459b307d05e88db0a",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/scripts/surface-brief.mjs": {
+    "mtime": 1784802194.2881727,
+    "ast_hash": "bd262c22ff8818ae370bafcf99b2ad8a",
+    "semantic_hash": ""
+  },
+  ".cursor/hooks.json": {
+    "mtime": 1784802194.3396833,
+    "ast_hash": "69bbe2171d002559579223b22f919780",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/command-metadata.json": {
+    "mtime": 1784802194.3018675,
+    "ast_hash": "86266801588636b11e00372754118529",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/concept-seed.mjs": {
+    "mtime": 1784802194.3028662,
+    "ast_hash": "193f709eb3c4ebb332325c7c0c166aa5",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/context-signals.mjs": {
+    "mtime": 1784802194.303357,
+    "ast_hash": "8bd2a915889d618613696fb39ea80a19",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/context.mjs": {
+    "mtime": 1784802194.3038313,
+    "ast_hash": "e0785dcadf71450532db1101c23d3fc1",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/critique-storage.mjs": {
+    "mtime": 1784802194.3038313,
+    "ast_hash": "bb6ba8768598212ec4bd90879160eca1",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detect-csp.mjs": {
+    "mtime": 1784802194.3038313,
+    "ast_hash": "02c5a9a8ad69f87d23af72bf580fd3f4",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detect.mjs": {
+    "mtime": 1784802194.3048408,
+    "ast_hash": "11dbeb9341477d06d1a24c3ad1f37ac9",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/browser/injected/index.mjs": {
+    "mtime": 1784802194.3048408,
+    "ast_hash": "537f280b7a773562e1283b1bd0df161a",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/cli/main.mjs": {
+    "mtime": 1784802194.3058398,
+    "ast_hash": "82d40e51a9848f7a77f5671cd13a324e",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/design-system.mjs": {
+    "mtime": 1784802194.3058398,
+    "ast_hash": "a4957cb54de4c7a65c137ad043db5527",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/detect-antipatterns-browser.js": {
+    "mtime": 1784802194.3068333,
+    "ast_hash": "362dd9a8dda3323528b259b44513b109",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/detect-antipatterns.mjs": {
+    "mtime": 1784802194.3068333,
+    "ast_hash": "1153e262200605dcc367717e5cb9958e",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/engines/browser/detect-url.mjs": {
+    "mtime": 1784802194.3078406,
+    "ast_hash": "f9af42e6427614b46387ac30917af199",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/engines/regex/detect-text.mjs": {
+    "mtime": 1784802194.3085337,
+    "ast_hash": "9c436935cbf0398d7028795dddab83f4",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/engines/static-html/css-cascade.mjs": {
+    "mtime": 1784802194.3085337,
+    "ast_hash": "41559f4ca21cd9b69ac6811a11922706",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/engines/static-html/detect-html.mjs": {
+    "mtime": 1784802194.3095527,
+    "ast_hash": "af627ac2e5aa70362dadb81895dbb964",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/engines/visual/screenshot-contrast.mjs": {
+    "mtime": 1784802194.3095527,
+    "ast_hash": "6312c6dbc048c4445f50e69f167a297d",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/findings.mjs": {
+    "mtime": 1784802194.3095527,
+    "ast_hash": "b90605bc2e93b95e4b73c0ef89cd1b57",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/node/file-system.mjs": {
+    "mtime": 1784802194.3105507,
+    "ast_hash": "21d55d864c78f1a6c20794551e3901d5",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/profile/profiler.mjs": {
+    "mtime": 1784802194.3105507,
+    "ast_hash": "88c5d2027852842be578edf349a0f9c8",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/registry/antipatterns.mjs": {
+    "mtime": 1784802194.3115513,
+    "ast_hash": "0cae1794b92f0a3cf588434f50f887dd",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/rules/checks.mjs": {
+    "mtime": 1784802194.3115513,
+    "ast_hash": "710cd6f6ac92b51addc7eb42ac1d89e3",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/shared/color.mjs": {
+    "mtime": 1784802194.31255,
+    "ast_hash": "2363d500ccf490f9ff285119b613276d",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/shared/constants.mjs": {
+    "mtime": 1784802194.31255,
+    "ast_hash": "0920d754084e96e7590afda3c0ac1a2c",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/shared/fonts.mjs": {
+    "mtime": 1784802194.313544,
+    "ast_hash": "5f06c512cc5316fb3f4f7116e33c7765",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/shared/inline-ignores.mjs": {
+    "mtime": 1784802194.313544,
+    "ast_hash": "6e3e7e639661186078ea93a849f57c64",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/detector/shared/page.mjs": {
+    "mtime": 1784802194.313544,
+    "ast_hash": "ab3a243b690b4f70c4ef639cdf970d82",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/doctor.mjs": {
+    "mtime": 1784802194.314545,
+    "ast_hash": "7d6f1f53304ebb96294fd856a96212fa",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/generate-image.mjs": {
+    "mtime": 1784802194.314545,
+    "ast_hash": "0f786b3b50c8a2acd24cf86b752ba709",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/hook-admin.mjs": {
+    "mtime": 1784802194.3155437,
+    "ast_hash": "5aa2db90e40ea9eb38bfe2d7f981a6e3",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/hook-before-edit.mjs": {
+    "mtime": 1784802194.3155437,
+    "ast_hash": "b87461628d48057213a895d8eb6c4d88",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/hook-lib.mjs": {
+    "mtime": 1784802194.3155437,
+    "ast_hash": "1335be509c639e0c5996ddf5f3e7fba7",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/hook.mjs": {
+    "mtime": 1784802194.3165438,
+    "ast_hash": "7cac30bc9f0f035b4d17a11635e990c6",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/artifact-schema.mjs": {
+    "mtime": 1784802194.3165438,
+    "ast_hash": "0ba59a6644319eb1f742f9a5c4d82e0d",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/composition-catalog.mjs": {
+    "mtime": 1784802194.3175428,
+    "ast_hash": "fc06a041f1fa9dff7171ded2534714eb",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/concept-catalog.mjs": {
+    "mtime": 1784802194.3175428,
+    "ast_hash": "6c92b20d82e7d4c4975ccc39a669a683",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/design-parser.mjs": {
+    "mtime": 1784802194.3175428,
+    "ast_hash": "d158b9b1742ff7bf726431595a4bbfb1",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/impeccable-config.mjs": {
+    "mtime": 1784802194.3185494,
+    "ast_hash": "b0593f05d4721103048554ab67095785",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/impeccable-paths.mjs": {
+    "mtime": 1784802194.3185494,
+    "ast_hash": "293c42942d0bb3de172bf8322cc41280",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/is-generated.mjs": {
+    "mtime": 1784802194.3195422,
+    "ast_hash": "edd718b1a4737edbf9631ff7f6f512ef",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/provider.mjs": {
+    "mtime": 1784802194.3201427,
+    "ast_hash": "18ee27284342400b566512870eb9a844",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/staleness-deep.mjs": {
+    "mtime": 1784802194.3201427,
+    "ast_hash": "cb2c59b1bb27785d90fc938216ae395d",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/staleness-notice.mjs": {
+    "mtime": 1784802194.3201427,
+    "ast_hash": "7ed2e280a62c23321c06f9c65ef80dc2",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/staleness.mjs": {
+    "mtime": 1784802194.321221,
+    "ast_hash": "42129f04441247498af59cbcbdcac3c4",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/surface-briefs.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "c543b9067f5aa418616a2ec5cc9b8835",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/target-args.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "442e04a03b6ba43330a859a537a956b2",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/target-slug.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "505068be5e3a4eac97b29e44f8eef611",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/lib/template-extensions.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "bc11a020a962f77681a365694adc5df5",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-accept.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "890dc69c2a9449576309a073470cf2de",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-browser-dom.js": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "b96db5b10874366237a40305c5dc72a1",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-browser-session.js": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "5dec3dae6158050d69762fb79facaf48",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-browser.js": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "f369dbd3a909cfa9863cfda88f9deb1e",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-commit-manual-edits.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "49b8219699a31d6c1977aaea812d87ae",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-complete.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "18ddd6db2567d7d385291b813d310518",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-copy-edit-agent.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "1c4926b56d5442775dab0138bf71a790",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-discard-manual-edits.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "bbd49a16f77178fc8e778759653dd4c5",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-inject.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "c8d89b30ab8bbbab6387340d68a15454",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-insert.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "a0ce4a29836987cc67cad70e630d5dcf",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-manual-edit-evidence.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "2279d4132eac2ee253829e333e313c6a",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-poll.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "243a7d2aac381206a8405b82b20c8eff",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-resume.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "0791b79bb824ffc6b52fcec25c6982a7",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-server.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "25fdd7a0861405c065369ae4dbd1c1c0",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-status.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "a5c3fd454328c6da4a5c2918dd3205cb",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-target.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "7a25beda7cdc4c5a6eb2a7f135ec50fd",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live-wrap.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "22e68849836e9446c7bfd5dd4c6984b4",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "5cf7af6d3bf7568e80593c8e13cfa916",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/browser-script-parts.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "fc7fd981a98a65f20055f3ac9409a67d",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/completion.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "8f22aa2c6e51f33aa445658462ff4bfb",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/event-validation.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "9bb629b8c395791e56553f8a0a4c788e",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/generation-preflight.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "5bef484a475dcd224b88af62be00ec1b",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/insert-ui.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "b6c5c82e14218c0c1b1e66f0851bff3f",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/manual-apply.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "043d0a1a7a4a373178648502bbe7da81",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/manual-edit-routes.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "5f801f9370461d1faa9ae4cde85a96be",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/manual-edits-buffer.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "a36834f2a77dd6a81ee324ef4f6f8baa",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/poll-lanes.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "4005c93bf0be4681a805f70e19a9630d",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/session-store.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "3ebd1f08f956ca405cf7391f0884fdf6",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/source-lock.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "8683d8ae7634519b542fde4c0fd64cb8",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/source-search.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "2cfa4372f6401aa0c367949c7944e389",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/svelte-component.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "b23495379a1527dbb9c7c3171041819e",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/sveltekit-adapter.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "66e07d2c07827af6099ce81a442bd66e",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/ui-core.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "fd7d2bdbdab291957cffacfce95a19d1",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/live/vocabulary.mjs": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "e7e5650764fceb61f2197769c7f5864e",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/modern-screenshot.umd.js": {
+    "mtime": 1784802194.3213727,
+    "ast_hash": "4fe5f9e490ab4f107afc707d7eafc819",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/palette.mjs": {
+    "mtime": 1784802194.3368204,
+    "ast_hash": "a1811eb32e4c10858a39b0fa680189de",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/pin.mjs": {
+    "mtime": 1784802194.3369174,
+    "ast_hash": "e99bc166cdd53d501a4b31aaaedc5ecc",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/serve-question.mjs": {
+    "mtime": 1784802194.337443,
+    "ast_hash": "c7daf913eba463a459b307d05e88db0a",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/scripts/surface-brief.mjs": {
+    "mtime": 1784802194.337443,
+    "ast_hash": "bd262c22ff8818ae370bafcf99b2ad8a",
+    "semantic_hash": ""
+  },
+  "pom.xml": {
+    "mtime": 1783081617.1426284,
+    "ast_hash": "15382e24bd734a983146d3122b500a55",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/SKILL.md": {
+    "mtime": 1784802194.2881727,
+    "ast_hash": "c2b82874bcb14f6f1f942df7a03e2289",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/adapt.md": {
+    "mtime": 1784802194.2386239,
+    "ast_hash": "93ac74ec6fc9fcff285f627e74f78771",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/adapt.native.md": {
+    "mtime": 1784802194.2399836,
+    "ast_hash": "83199ca5ed98a15fe6951d5485b7cfa8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/android.md": {
+    "mtime": 1784802194.2399836,
+    "ast_hash": "ef4911df81f96b6556ebc1a7ac9c7ada",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/animate.md": {
+    "mtime": 1784802194.2399836,
+    "ast_hash": "3172886d97345329c2bdb1b513af2d00",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/audit.md": {
+    "mtime": 1784802194.2409852,
+    "ast_hash": "9c8128208f9479b7f3c8d8174682ef56",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/audit.native.md": {
+    "mtime": 1784802194.2409852,
+    "ast_hash": "bd9df4f9a8a4a7bec0da0531996b5188",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/bolder.md": {
+    "mtime": 1784802194.241986,
+    "ast_hash": "eb91770e460c5bd34e8b140865fbc3c9",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/clarify.md": {
+    "mtime": 1784802194.241986,
+    "ast_hash": "3f9b6ded202ec0b912807451daaf1d5c",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/colorize.md": {
+    "mtime": 1784802194.241986,
+    "ast_hash": "99e051670d4153052b96ee844008d012",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/craft-floor.md": {
+    "mtime": 1784802194.242992,
+    "ast_hash": "ed388ecb5d796b87e30977a49f6a11d4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/craft.md": {
+    "mtime": 1784802194.242992,
+    "ast_hash": "9075911f45c58c15a720f8188b2738f4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/critique.md": {
+    "mtime": 1784802194.2438347,
+    "ast_hash": "01e874e70cd51d7f79d2fa8b46f15b7f",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/delight.md": {
+    "mtime": 1784802194.2438347,
+    "ast_hash": "e10166bb38cadd52ee69fb78226e1322",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/distill.md": {
+    "mtime": 1784802194.2448368,
+    "ast_hash": "385c6c8bb79eefc8f14e0713515aadb6",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/doctor.md": {
+    "mtime": 1784802194.2448368,
+    "ast_hash": "374bd1e2b589d9df0fa9baac17f0ea9e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/document.md": {
+    "mtime": 1784802194.2448368,
+    "ast_hash": "e0fcbde2d0f225b6f4f0bc00ba3efaf9",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/extract.md": {
+    "mtime": 1784802194.2458372,
+    "ast_hash": "85e31dfecff207358c2ac0e335085245",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/harden.md": {
+    "mtime": 1784802194.2458372,
+    "ast_hash": "55bee3482c5a7cdccc0fea9151b3b884",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/hooks.md": {
+    "mtime": 1784802194.2468364,
+    "ast_hash": "654bdaeae915a84a212bb1b11156d502",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/init.md": {
+    "mtime": 1784802194.2468364,
+    "ast_hash": "6dd4095005d3c90012353ad8ac044e48",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/ios.md": {
+    "mtime": 1784802194.2468364,
+    "ast_hash": "acb0cb16ded572058bd0ae5779cf4bf3",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/layout.md": {
+    "mtime": 1784802194.247837,
+    "ast_hash": "1d630484da0514bb4f5e7352ba08b6db",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/live.md": {
+    "mtime": 1784802194.247837,
+    "ast_hash": "30f194beb0a5d8cf46167135df23e1d2",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/new-work.md": {
+    "mtime": 1784802194.247837,
+    "ast_hash": "d6e2a797edaa1ce0972e52f69701783c",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/onboard.md": {
+    "mtime": 1784802194.2488437,
+    "ast_hash": "7095aaea9e2994e37afb3cf1743bc092",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/operate.md": {
+    "mtime": 1784802194.2488437,
+    "ast_hash": "53a569b985749058f7b178a32e0a157f",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/optimize.md": {
+    "mtime": 1784802194.2498364,
+    "ast_hash": "d01f252b7e5cb35b8443d57eaad40b58",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/overdrive.md": {
+    "mtime": 1784802194.2498364,
+    "ast_hash": "69805c2e170fec83fa5207513b059236",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/polish.md": {
+    "mtime": 1784802194.2498364,
+    "ast_hash": "35e3fcfa004821bdb6fdcd301cdab96e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/quieter.md": {
+    "mtime": 1784802194.2508435,
+    "ast_hash": "f37016cf8f81d8fb33f506ab926f0f99",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/routing.md": {
+    "mtime": 1784802194.2508435,
+    "ast_hash": "09e3b2453b824630ec33e2fc553cacd8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/shape.md": {
+    "mtime": 1784802194.2518377,
+    "ast_hash": "ecf5345d56452d10cd2c9203a7512704",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/typeset.md": {
+    "mtime": 1784802194.2518377,
+    "ast_hash": "9b66dd9278240182829bf8bdaed6b3ba",
+    "semantic_hash": ""
+  },
+  ".claude/skills/impeccable/reference/visualize.md": {
+    "mtime": 1784802194.2528367,
+    "ast_hash": "854cdbe8a566cabe7bf87d420bfa4a83",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/SKILL.md": {
+    "mtime": 1784802194.337992,
+    "ast_hash": "6750ff5f128df9dcf2378c3e0864fb19",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/adapt.md": {
+    "mtime": 1784802194.289168,
+    "ast_hash": "93ac74ec6fc9fcff285f627e74f78771",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/adapt.native.md": {
+    "mtime": 1784802194.2901607,
+    "ast_hash": "83199ca5ed98a15fe6951d5485b7cfa8",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/android.md": {
+    "mtime": 1784802194.2901607,
+    "ast_hash": "ef4911df81f96b6556ebc1a7ac9c7ada",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/animate.md": {
+    "mtime": 1784802194.2901607,
+    "ast_hash": "3172886d97345329c2bdb1b513af2d00",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/audit.md": {
+    "mtime": 1784802194.2911644,
+    "ast_hash": "9c8128208f9479b7f3c8d8174682ef56",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/audit.native.md": {
+    "mtime": 1784802194.2911644,
+    "ast_hash": "bd9df4f9a8a4a7bec0da0531996b5188",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/bolder.md": {
+    "mtime": 1784802194.2918582,
+    "ast_hash": "484a895fbfb345df61b89f8ebe7eb26c",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/clarify.md": {
+    "mtime": 1784802194.2918582,
+    "ast_hash": "3f9b6ded202ec0b912807451daaf1d5c",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/colorize.md": {
+    "mtime": 1784802194.292861,
+    "ast_hash": "99e051670d4153052b96ee844008d012",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/craft-floor.md": {
+    "mtime": 1784802194.292861,
+    "ast_hash": "ed388ecb5d796b87e30977a49f6a11d4",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/craft.md": {
+    "mtime": 1784802194.292861,
+    "ast_hash": "9075911f45c58c15a720f8188b2738f4",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/critique.md": {
+    "mtime": 1784802194.2938604,
+    "ast_hash": "0007a34a82bea5e6845185cada6c7547",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/delight.md": {
+    "mtime": 1784802194.2938604,
+    "ast_hash": "e10166bb38cadd52ee69fb78226e1322",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/distill.md": {
+    "mtime": 1784802194.2938604,
+    "ast_hash": "427da8be4c7912aef2441766c06d1f02",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/doctor.md": {
+    "mtime": 1784802194.29486,
+    "ast_hash": "237292a3179ae23d4c4700170c1564b2",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/document.md": {
+    "mtime": 1784802194.29486,
+    "ast_hash": "af6e9c6664f74b6d0486342dee77b800",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/extract.md": {
+    "mtime": 1784802194.29486,
+    "ast_hash": "29b884dd3d347d98c43bde900891673b",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/harden.md": {
+    "mtime": 1784802194.2958672,
+    "ast_hash": "55bee3482c5a7cdccc0fea9151b3b884",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/hooks.md": {
+    "mtime": 1784802194.2958672,
+    "ast_hash": "78ab68eea158368278732ad690a3f546",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/init.md": {
+    "mtime": 1784802194.2958672,
+    "ast_hash": "d0abae49fdf3d0836b9801c4cf02a965",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/ios.md": {
+    "mtime": 1784802194.2968597,
+    "ast_hash": "acb0cb16ded572058bd0ae5779cf4bf3",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/layout.md": {
+    "mtime": 1784802194.2968597,
+    "ast_hash": "69dced85c6552b48953db87fba68e2b4",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/live.md": {
+    "mtime": 1784802194.2968597,
+    "ast_hash": "ac1c120e396a704ccc9a64255009f927",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/new-work.md": {
+    "mtime": 1784802194.2978706,
+    "ast_hash": "6e98e8dbcec771f7bd6da03690e0c468",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/onboard.md": {
+    "mtime": 1784802194.2978706,
+    "ast_hash": "7095aaea9e2994e37afb3cf1743bc092",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/operate.md": {
+    "mtime": 1784802194.29886,
+    "ast_hash": "53a569b985749058f7b178a32e0a157f",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/optimize.md": {
+    "mtime": 1784802194.29886,
+    "ast_hash": "d01f252b7e5cb35b8443d57eaad40b58",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/overdrive.md": {
+    "mtime": 1784802194.2998595,
+    "ast_hash": "0e9f726c3a13ac67c83f1569bfd536d4",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/polish.md": {
+    "mtime": 1784802194.2998595,
+    "ast_hash": "cca478966b9bbd75e996253648e73a53",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/quieter.md": {
+    "mtime": 1784802194.2998595,
+    "ast_hash": "719d23e0cafb1b445e99b836ce8406df",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/routing.md": {
+    "mtime": 1784802194.3008664,
+    "ast_hash": "e7af128c360b432ef37b974b1f5bae08",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/shape.md": {
+    "mtime": 1784802194.3008664,
+    "ast_hash": "ecf5345d56452d10cd2c9203a7512704",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/typeset.md": {
+    "mtime": 1784802194.3008664,
+    "ast_hash": "7b86a0efbab6685c93c2986fd33f2848",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/impeccable/reference/visualize.md": {
+    "mtime": 1784802194.3018675,
+    "ast_hash": "854cdbe8a566cabe7bf87d420bfa4a83",
+    "semantic_hash": ""
+  },
+  "codebase_deep_dive.md": {
+    "mtime": 1784791859.566682,
+    "ast_hash": "9874e841c198b228916f65a6f680d485",
+    "semantic_hash": ""
+  },
+  "src/main/resources/docs/SWatch360_Navigation_Guide.md": {
+    "mtime": 1784026829.2814822,
+    "ast_hash": "2521e5185c5fe520667fbe5c7d7e4076",
+    "semantic_hash": ""
+  },
+  "src/main/resources/prompts/navigation-system-prompt.txt": {
+    "mtime": 1784027518.8873043,
+    "ast_hash": "773d7e0b6e332c56e05f9860197aba9b",
+    "semantic_hash": ""
+  }
+}

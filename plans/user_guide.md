@@ -8,6 +8,7 @@ there is nothing else to navigate to. Ask it a question, get an answer.
 
 **Live device/branch status** — ask about any branch by name (typos and shorthand are
 tolerated, see below):
+
 - Battery voltage, AC voltage, system current, battery low/health
 - Gateway status, network status, network operator
 - CCTV: camera online/offline counts, HDD errors/info, recording info, disconnect history
@@ -17,6 +18,7 @@ tolerated, see below):
 - Last-reported time / staleness
 
 **Fleet-wide questions:**
+
 - "List all branches" / global overview (online/offline counts)
 - Hierarchy: "list all zones", "which branches are under NBG East", "which zone owns Malda Town"
 - "Compare Malda Town and Bhubaneswar", "rank branches by alarm count", "which branches are offline"

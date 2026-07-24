@@ -2598,5 +2598,2605 @@
     "mtime": 1784027518.8873043,
     "ast_hash": "773d7e0b6e332c56e05f9860197aba9b",
     "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.mcp.json": {
+    "mtime": 1782715862.3667703,
+    "ast_hash": "4c7e6dd972023b352e71e3ec525b718c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.opencode.json": {
+    "mtime": 1782715862.3687818,
+    "ast_hash": "8b2fd45ed3f0ce5bb5289efa1f583985",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\mvnw": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "ab50dd89da7da2346b28003352eeeeeb",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.antigravitycli\\7b471072-ad62-490d-a6b0-653876fe60c2.json": {
+    "mtime": 1782715862.34971,
+    "ast_hash": "f75cf3e7cbff8363bd933ed79661d513",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\settings.json": {
+    "mtime": 1782715862.34971,
+    "ast_hash": "cbda800ae2159c48d6ad280b09abdbda",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\settings.local.json": {
+    "mtime": 1783052707.146892,
+    "ast_hash": "4253ab55b461626b5a0ad1d0322ea945",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\command-metadata.json": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "bbc144be80de0ee05449928525f42807",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\concept-seed.mjs": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "d73418fcfd9700325bcfd5a3cf318cd3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\context-signals.mjs": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "6bf085228b3218b14641da9de9f6d2bf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\context.mjs": {
+    "mtime": 1784872239.861024,
+    "ast_hash": "74320a8eaf1a27c540e8bcb39d137073",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\critique-storage.mjs": {
+    "mtime": 1784872239.861024,
+    "ast_hash": "dbdbe224c6899f3a09300d5961726636",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detect-csp.mjs": {
+    "mtime": 1784872239.8619244,
+    "ast_hash": "0d3243060e66ba0d0a64684f9684ecc7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detect.mjs": {
+    "mtime": 1784872239.8624277,
+    "ast_hash": "db2157bcff7ab1b222d68cf96cb8643c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\doctor.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "7060bd907c66013d750cbf848b61a6e7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\generate-image.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "e212a5648d5e2a1633b2887c7418bd66",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\hook-admin.mjs": {
+    "mtime": 1784872239.8781831,
+    "ast_hash": "213491e3730730d622e1c75bb7554373",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\hook-before-edit.mjs": {
+    "mtime": 1784872239.8781831,
+    "ast_hash": "f62a3692c4b11729f83040ddb10a63af",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\hook-lib.mjs": {
+    "mtime": 1784872239.8781831,
+    "ast_hash": "bd9572ff37cbd2762f29af85f889cde4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\hook.mjs": {
+    "mtime": 1784872239.8781831,
+    "ast_hash": "0a501a23ed90fe68c2a1b18c1fccae9c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-accept.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "32c789cf87599cc6ae0fa751deb14cb1",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-browser-dom.js": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "656396b407de7a87e8504534205c22a8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-browser-session.js": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "e54c01fe1a8287f757161759beaab916",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-browser.js": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "7e41189728d64aba0f0cef7125d35e5e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-commit-manual-edits.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "fda0e130ca7be8bdd7aa57cb7019a08b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-complete.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "a2f91c3e7472a780140f53c2f302732b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-copy-edit-agent.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "842c2d638c2b19f4d3e5d66910cec96d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-discard-manual-edits.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "2b0dccb3508c68f81c5d904b35b63f2e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-inject.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "87936d0c2d9ab65bba575ed4cb629494",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-insert.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "6bb36de3540d8818f830b07869567f00",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-manual-edit-evidence.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "284cf9f8ba5dc25c3e52d963081ae266",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-poll.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "9025fdad0a3c19ddd648c6138bbfd032",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-resume.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "4eec0ec754244e0cfbbc3c21992fc951",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-server.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "9880e6e9b47cd8efedec0b2048508485",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-status.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "67fad715d141e952cb7d7d8a800a49e7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-target.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "db2415b3826586d0eca0eb2d9c16a3dc",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live-wrap.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "f6bd92f6a9fba2deb59f29179d1a4aed",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "7b1ed3d64866a28171be7ac73a5355a9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\modern-screenshot.umd.js": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "c6afaf6ebceb162206f6a2e5b0ed653c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\palette.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "f3993c742ed03e79b5144cd89e998359",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\pin.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "cd7bd4b11543ef50e25808e0f212bc5c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\serve-question.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "a3f60f2faed5451ac4391df7a87509d3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\surface-brief.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "260688296b81a47f6d14707512b4187f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\design-system.mjs": {
+    "mtime": 1784872239.8644304,
+    "ast_hash": "54a586211813767ae5060ca68b790aa5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\detect-antipatterns-browser.js": {
+    "mtime": 1784872239.8661752,
+    "ast_hash": "463d62e75d11a0f425a578dcfc488f20",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\detect-antipatterns.mjs": {
+    "mtime": 1784872239.8661752,
+    "ast_hash": "439940136576ddf7e90e970839c04442",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\findings.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "ca42bcafb1f4edf640921465f04c1a27",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\browser\\injected\\index.mjs": {
+    "mtime": 1784872239.8624277,
+    "ast_hash": "b988c45f0bb2fc2532769df7fb137f33",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\cli\\main.mjs": {
+    "mtime": 1784872239.8624277,
+    "ast_hash": "14015efb98b5b89385cb8577853fc9bc",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\engines\\browser\\detect-url.mjs": {
+    "mtime": 1784872239.8681781,
+    "ast_hash": "d8da6c7d322e928ec6a78f9a9b0272ac",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\engines\\regex\\detect-text.mjs": {
+    "mtime": 1784872239.8681781,
+    "ast_hash": "b443e33ae53c343cf7af090310589cee",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\engines\\static-html\\css-cascade.mjs": {
+    "mtime": 1784872239.8681781,
+    "ast_hash": "e10cf3829fad68692453a408104dd73f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\engines\\static-html\\detect-html.mjs": {
+    "mtime": 1784872239.8681781,
+    "ast_hash": "d655c02f03c57b98dbf26e6b94693597",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\engines\\visual\\screenshot-contrast.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "136f756b3cc7cab36af45530ac6280d5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\node\\file-system.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "bd8b39310fcf89a4d5d3737990c4ba9a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\profile\\profiler.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "59f176f3d3c19ad42d3f805fbec35dcf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\registry\\antipatterns.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "cfda6ac31863d63f52609a04fd334510",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\rules\\checks.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "9ec23c1c4572091bd696c95761703902",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\shared\\color.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "314ef3951c3c749c87db398c6b1650ad",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\shared\\constants.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "b39883b66dc3b9a059ed242679af34ab",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\shared\\fonts.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "5af5b2936c10c00be8e068e0af82d46e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\shared\\inline-ignores.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "70ad7f306018d436630c8b02fe430c8e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\detector\\shared\\page.mjs": {
+    "mtime": 1784872239.870181,
+    "ast_hash": "7d121e7fa277cc7d9ed6cae6b585fad5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\artifact-schema.mjs": {
+    "mtime": 1784872239.880187,
+    "ast_hash": "08e71835632281a4545a0eed65e9887f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\composition-catalog.mjs": {
+    "mtime": 1784872239.880187,
+    "ast_hash": "9c893a40cc231212e221651bce1607fd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\concept-catalog.mjs": {
+    "mtime": 1784872239.880187,
+    "ast_hash": "55e76774bbe490d2536dfa8ec3deb9ad",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\design-parser.mjs": {
+    "mtime": 1784872239.880187,
+    "ast_hash": "fdcf11a07fa1027b656b96d20a17db95",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\impeccable-config.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "af5d3eb56e5fbc00a3879110a63d699b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\impeccable-paths.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "e27817cc976528d2e3efad1b957afc72",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\is-generated.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "81ada1894b5f562b0993fdff1756d82c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\provider.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "f2a3c0c1611c6b94e02fa8c1a53c2bd6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\staleness-deep.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "402ea7557fca0f76814480d3cd7fa7aa",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\staleness-notice.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "ad64d8c76b150f6545b2a142a7e09184",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\staleness.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "4a00763410988ac065caa3fb822e98b2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\surface-briefs.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "e13ffe3b9f5cb151335b9ca630ab727a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\target-args.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "22b24f790f4f868d3c6e38130a9d456b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\target-slug.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "8c2f8d80f4b723066927a3ca41b54811",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\lib\\template-extensions.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "ec6d61cc8ab98882760edeb41d4de19e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\browser-script-parts.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "961f526408c3589fe314cb4307381f0c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\completion.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "66811f7f615670f6a8a908fb50a9f570",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\event-validation.mjs": {
+    "mtime": 1784872239.881931,
+    "ast_hash": "df5fd3691f244d150967fbb31a4890e0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\generation-preflight.mjs": {
+    "mtime": 1784872239.897642,
+    "ast_hash": "1483acf3b220a738c389e3ce5629a09e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\insert-ui.mjs": {
+    "mtime": 1784872239.897642,
+    "ast_hash": "5188117fb81c573c6a3fb76edb0adb82",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\manual-apply.mjs": {
+    "mtime": 1784872239.897642,
+    "ast_hash": "a4ddf358a24befc0817af447b7c85e89",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\manual-edit-routes.mjs": {
+    "mtime": 1784872239.897642,
+    "ast_hash": "ec1bfbcf0fb307d73f5618ef65defb83",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\manual-edits-buffer.mjs": {
+    "mtime": 1784872239.897642,
+    "ast_hash": "4872d613fa18ce4d95fdba872ff625f0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\poll-lanes.mjs": {
+    "mtime": 1784872239.897642,
+    "ast_hash": "c09e74a3d6e31481a287fd8084e2416c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\session-store.mjs": {
+    "mtime": 1784872239.897642,
+    "ast_hash": "62f78a5e1af565e536fd0859e17d92a6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\source-lock.mjs": {
+    "mtime": 1784872239.897642,
+    "ast_hash": "b62afcd29776e0192167a7cf29746d12",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\source-search.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "e373ac7df284789fe15e15e950c2b7bc",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\svelte-component.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "47c6dbaa11d4e13a7b86cb81dffce756",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\sveltekit-adapter.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "9670ee70a95b9501eccde7c279686894",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\ui-core.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "6c899e42f730d3b83e29235958149bc3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\scripts\\live\\vocabulary.mjs": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "4138f17e588cf9d940b635347006fbc5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.codex\\hooks.json": {
+    "mtime": 1782715862.366262,
+    "ast_hash": "b7940b17075648ef8d97c98d9b65e9b8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\hooks.json": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "5b373c588841955d893f4114651ff1d3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\mcp.json": {
+    "mtime": 1782715862.3667703,
+    "ast_hash": "4c7e6dd972023b352e71e3ec525b718c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\command-metadata.json": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "bbc144be80de0ee05449928525f42807",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\concept-seed.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "d73418fcfd9700325bcfd5a3cf318cd3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\context-signals.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "6bf085228b3218b14641da9de9f6d2bf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\context.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "74320a8eaf1a27c540e8bcb39d137073",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\critique-storage.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "dbdbe224c6899f3a09300d5961726636",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detect-csp.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "0d3243060e66ba0d0a64684f9684ecc7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detect.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "db2157bcff7ab1b222d68cf96cb8643c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\doctor.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "7060bd907c66013d750cbf848b61a6e7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\generate-image.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "e212a5648d5e2a1633b2887c7418bd66",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\hook-admin.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "213491e3730730d622e1c75bb7554373",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\hook-before-edit.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "f62a3692c4b11729f83040ddb10a63af",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\hook-lib.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "bd9572ff37cbd2762f29af85f889cde4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\hook.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "0a501a23ed90fe68c2a1b18c1fccae9c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-accept.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "32c789cf87599cc6ae0fa751deb14cb1",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-browser-dom.js": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "656396b407de7a87e8504534205c22a8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-browser-session.js": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "e54c01fe1a8287f757161759beaab916",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-browser.js": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "7e41189728d64aba0f0cef7125d35e5e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-commit-manual-edits.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "fda0e130ca7be8bdd7aa57cb7019a08b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-complete.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "a2f91c3e7472a780140f53c2f302732b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-copy-edit-agent.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "842c2d638c2b19f4d3e5d66910cec96d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-discard-manual-edits.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "2b0dccb3508c68f81c5d904b35b63f2e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-inject.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "87936d0c2d9ab65bba575ed4cb629494",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-insert.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "6bb36de3540d8818f830b07869567f00",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-manual-edit-evidence.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "284cf9f8ba5dc25c3e52d963081ae266",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-poll.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "9025fdad0a3c19ddd648c6138bbfd032",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-resume.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "4eec0ec754244e0cfbbc3c21992fc951",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-server.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "9880e6e9b47cd8efedec0b2048508485",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-status.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "67fad715d141e952cb7d7d8a800a49e7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-target.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "db2415b3826586d0eca0eb2d9c16a3dc",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live-wrap.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "f6bd92f6a9fba2deb59f29179d1a4aed",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "7b1ed3d64866a28171be7ac73a5355a9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\modern-screenshot.umd.js": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "c6afaf6ebceb162206f6a2e5b0ed653c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\palette.mjs": {
+    "mtime": 1784872239.965758,
+    "ast_hash": "f3993c742ed03e79b5144cd89e998359",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\pin.mjs": {
+    "mtime": 1784872239.965758,
+    "ast_hash": "cd7bd4b11543ef50e25808e0f212bc5c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\serve-question.mjs": {
+    "mtime": 1784872239.9667974,
+    "ast_hash": "a3f60f2faed5451ac4391df7a87509d3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\surface-brief.mjs": {
+    "mtime": 1784872239.9667974,
+    "ast_hash": "260688296b81a47f6d14707512b4187f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\design-system.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "54a586211813767ae5060ca68b790aa5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\detect-antipatterns-browser.js": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "463d62e75d11a0f425a578dcfc488f20",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\detect-antipatterns.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "439940136576ddf7e90e970839c04442",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\findings.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "ca42bcafb1f4edf640921465f04c1a27",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\browser\\injected\\index.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "b988c45f0bb2fc2532769df7fb137f33",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\cli\\main.mjs": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "14015efb98b5b89385cb8577853fc9bc",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\engines\\browser\\detect-url.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "d8da6c7d322e928ec6a78f9a9b0272ac",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\engines\\regex\\detect-text.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "b443e33ae53c343cf7af090310589cee",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\engines\\static-html\\css-cascade.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "e10cf3829fad68692453a408104dd73f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\engines\\static-html\\detect-html.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "d655c02f03c57b98dbf26e6b94693597",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\engines\\visual\\screenshot-contrast.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "136f756b3cc7cab36af45530ac6280d5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\node\\file-system.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "bd8b39310fcf89a4d5d3737990c4ba9a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\profile\\profiler.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "59f176f3d3c19ad42d3f805fbec35dcf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\registry\\antipatterns.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "cfda6ac31863d63f52609a04fd334510",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\rules\\checks.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "9ec23c1c4572091bd696c95761703902",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\shared\\color.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "314ef3951c3c749c87db398c6b1650ad",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\shared\\constants.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "b39883b66dc3b9a059ed242679af34ab",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\shared\\fonts.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "5af5b2936c10c00be8e068e0af82d46e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\shared\\inline-ignores.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "70ad7f306018d436630c8b02fe430c8e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\detector\\shared\\page.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "7d121e7fa277cc7d9ed6cae6b585fad5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\artifact-schema.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "08e71835632281a4545a0eed65e9887f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\composition-catalog.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "9c893a40cc231212e221651bce1607fd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\concept-catalog.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "55e76774bbe490d2536dfa8ec3deb9ad",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\design-parser.mjs": {
+    "mtime": 1784872239.9291096,
+    "ast_hash": "fdcf11a07fa1027b656b96d20a17db95",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\impeccable-config.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "af5d3eb56e5fbc00a3879110a63d699b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\impeccable-paths.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "e27817cc976528d2e3efad1b957afc72",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\is-generated.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "81ada1894b5f562b0993fdff1756d82c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\provider.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "6b3b1f75b1538328a68932d9346d1ab6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\staleness-deep.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "402ea7557fca0f76814480d3cd7fa7aa",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\staleness-notice.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "ad64d8c76b150f6545b2a142a7e09184",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\staleness.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "4a00763410988ac065caa3fb822e98b2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\surface-briefs.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "e13ffe3b9f5cb151335b9ca630ab727a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\target-args.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "22b24f790f4f868d3c6e38130a9d456b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\target-slug.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "8c2f8d80f4b723066927a3ca41b54811",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\lib\\template-extensions.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "ec6d61cc8ab98882760edeb41d4de19e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\browser-script-parts.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "961f526408c3589fe314cb4307381f0c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\completion.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "66811f7f615670f6a8a908fb50a9f570",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\event-validation.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "df5fd3691f244d150967fbb31a4890e0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\generation-preflight.mjs": {
+    "mtime": 1784872239.9448051,
+    "ast_hash": "1483acf3b220a738c389e3ce5629a09e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\insert-ui.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "5188117fb81c573c6a3fb76edb0adb82",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\manual-apply.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "a4ddf358a24befc0817af447b7c85e89",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\manual-edit-routes.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "ec1bfbcf0fb307d73f5618ef65defb83",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\manual-edits-buffer.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "4872d613fa18ce4d95fdba872ff625f0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\poll-lanes.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "c09e74a3d6e31481a287fd8084e2416c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\session-store.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "62f78a5e1af565e536fd0859e17d92a6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\source-lock.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "b62afcd29776e0192167a7cf29746d12",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\source-search.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "e373ac7df284789fe15e15e950c2b7bc",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\svelte-component.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "47c6dbaa11d4e13a7b86cb81dffce756",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\sveltekit-adapter.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "9670ee70a95b9501eccde7c279686894",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\ui-core.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "6c899e42f730d3b83e29235958149bc3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\scripts\\live\\vocabulary.mjs": {
+    "mtime": 1784872239.960439,
+    "ast_hash": "4138f17e588cf9d940b635347006fbc5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\package.json": {
+    "mtime": 1782715862.4128752,
+    "ast_hash": "604c133ab1c28aa65e98bb8474335c89",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\postcss.config.js": {
+    "mtime": 1782715862.4128752,
+    "ast_hash": "9e94f5afd46d0b71c0f40431ba0394c2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\tailwind.config.ts": {
+    "mtime": 1782716051.4695988,
+    "ast_hash": "e79085907eedacc6f13930f6b9f6c72a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\tsconfig.json": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "d0c4eed370045bf28dfa112142be33d3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\tsconfig.node.json": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "281e378713152cccc7860c818db55849",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\vite.config.d.ts": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "0e1a67b4f5e8a7d0b4ce59225bb47e16",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\vite.config.js": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "3b4822932989597a45cb42f4bda8753c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\vite.config.ts": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "4273c6acddbcad74a29fda60e33ba64e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\App.tsx": {
+    "mtime": 1784872240.0071719,
+    "ast_hash": "a7379049b7b4791e72016f1835e41ef0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\main.tsx": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "ecda11754ebaf69980159f3c76e1f2cf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\vite-env.d.ts": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "60fe08311f0e03ab3596287bb55bda21",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\components\\BotLogoSvg.tsx": {
+    "mtime": 1784872240.0071719,
+    "ast_hash": "740d67a7e95aadb6e3680d887bc20dee",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\components\\ChatInput.tsx": {
+    "mtime": 1784872240.0110304,
+    "ast_hash": "7f26895454e3ce040904216ad81c56e5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\components\\ChatToggle.tsx": {
+    "mtime": 1784872240.0110304,
+    "ast_hash": "b0720c18c392564b3a981a500c7f3dd2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\components\\ChatWindow.tsx": {
+    "mtime": 1784872240.0110304,
+    "ast_hash": "1eb0ecdc22ef031dbc79e17ffa5f62b8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\components\\ErrorBoundary.tsx": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "3d23432a11bfc5c52a2a01776c8b6434",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\components\\MessageBubble.tsx": {
+    "mtime": 1784872240.0110304,
+    "ast_hash": "666c293a8902f6d659657936f0c35d47",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\components\\TypingIndicator.tsx": {
+    "mtime": 1784872240.0110304,
+    "ast_hash": "50ef0052b1f53d5331c94b86f4f0aa99",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\components\\WelcomeMessage.tsx": {
+    "mtime": 1784872240.0110304,
+    "ast_hash": "92dbcb8e16fef927f8cc8e8297a8fe2f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\context\\ChatContext.tsx": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "7700444b01e7ba8a63542742b6350020",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\types\\index.ts": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "3b525d661019fcbcb4aadabfb8c22ce7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\ThingsBoardBotApplication.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "c063fb6eedb9e3884568c5d33bd78e83",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\client\\OpenAIClient.java": {
+    "mtime": 1783059290.1979804,
+    "ast_hash": "3e9ccbd2a561ac1cbaf59aee4c3346eb",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\client\\ThingsBoardClient.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "2c62cad981e44a8c9efc55a15adc7385",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\client\\UserAwareThingsBoardClient.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "c7fe066d1bdbc97668cb9448ff2a6e70",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\AdminAuthFilter.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "3b9f78782d9d08726b1b9a635510c391",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\CacheConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "3d8a1a046db0eaadb602d99a12692cad",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\ChatbotConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "6092cd708ff33e3159a46deb7170dc3f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\ContentSecurityPolicyFilter.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "e4595d7ec339689e4e95a29e93fa3a87",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\CorsConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "6c6a21e92bbe42c9e1b4c981cdc29153",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\CustomerConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "24379bada48997885e3a3bdb236bb498",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\DatabaseConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "1d18bcbcdfae603c24737c57efccc8c3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\DatabaseInitializer.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "7e1071c1a55a1dfed93dbdc4c87e989f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\DotenvEnvironmentPostProcessor.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "8863e36e846bdf1eb22e1b586535c781",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\EvaluationConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "ea9505c0d00a96239c04cf78d66999f9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\ExtractorConfig.java": {
+    "mtime": 1783059301.5355406,
+    "ast_hash": "65e5a079fd9ff386b758462cb892c53c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\JacksonConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "4ddc525bba2b4cee84b7c5b3f3e2c5b5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\JwtParserInitializer.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "9b7da9d6da589fcf0168085a49d2e896",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\OpenAIConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "edc2cc7f65324d183a3c9bc132a3408d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\RabbitMQConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "dac78dca542100059f4b8abaf9aa0921",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\RedisConfig.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "27d6d9213e5b0523518e7ff01980b397",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\SecurityProperties.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "a97331f73eb6f972752a738dae8f346c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\SecurityStartupValidator.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "086dc55d24dc503fa36e17b9a0e5babf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\ThingsBoardConfig.java": {
+    "mtime": 1784872371.9892485,
+    "ast_hash": "b9fd3aeb6c4f2e5c36d204ca5a644e34",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\config\\TimescaleInitializer.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "fd741e3a0b7d8c0256e0789b20e4c29c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\ChatController.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "3c1aa436564c5dd46684554c76abf5bf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\DataController.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "9df53bfca1f70dab94776b8690d1bdb0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\HierarchyAdminController.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "af7dec9307d75469698dc9514b806da8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\ReplayController.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "8c81230ade34a0550acba2a874820767",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\controller\\WebhookController.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "7f6ba2f34c858e7fbd3dea02a80f896f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\entity\\BranchAncestorPath.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "85414510480ef2ce0ea8b0d448fdd0c3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\entity\\Customer.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "212aaccac36403dcaf34f884c59d5be3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\entity\\DeviceEvent.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "80ec6b6ac1ffc46bdf5695c8ae972f6e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\entity\\HierarchyNode.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "f592fac46d40ae5ba9d07d656b3dc22b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\ContextOverflowException.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "5b47cd7dc3c34564f328a4c9eda66e4a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\GlobalExceptionHandler.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "100dc1a47309d8f85851f71c4ceeb321",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\OpenAIException.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "8f992fbdf288edaa46cb8d3b1f6ce4e4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\ThingsBoardException.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "ab99d4d2c820e0d9f1fb63d78e8f377d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\exception\\UnprovisionedCustomerException.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "e66683c81f87711520bfab358487ec70",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\AlertSummary.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "4ee6c4e367e4a7afa748fa6a1d96c627",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\BranchIdentity.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "0f1c0dc50080d0877d4d0481dd10c26e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\BranchSnapshot.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "acd1f377b5860afeef29c91cbe7020ef",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\BranchSubsystems.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "7dc73180d04a796f8b9513b80ba2dba5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\CctvStatus.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "0665d9969dd0b45ed01cf3ac363c845b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\GatewayStatus.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "26251a90b88d3d6f50d0d946cb492ed0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\HardwareHealth.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "df88a74af45e599334f043661d7880bf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\NormalizedState.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "385d13dcfb4ce8d1962a78eaf0d0d847",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\PowerStatus.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "01a36d3fc42f1daf350202bee800c0b8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\domain\\SubsystemStatus.java": {
+    "mtime": 1782715862.428429,
+    "ast_hash": "59e71909e39df1f058a5ea630fb7130a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\AnswerMetadata.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "eb1a6f3624ce99253832eafa776f03d5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\ChartData.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "6a1aacf6b67d28c8b1329744973a13f8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\ChatMessage.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "c970c84e64c59112f538777d6ee57eb0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\ChatRequest.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "9cb96a9226ee7d49918904b22795e91b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\ChatResponse.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "9f67e7593dcd0fd0a92da14f6e687777",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\DeviceIndexEntry.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "13aff5abbd11881a9e84ada10f73c41e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\EvaluationInput.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "97cc60eedb50e407bbac9fc821ce768e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\EvaluationIssue.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "fde1adad5ba8f8c942a3333f0d2af35d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\EvaluationReport.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "35902f910ad5958193b93719b9e32e9e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\FactualContradiction.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "b84bda85e97e81c0304185113de0a395",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\GlobalOverviewCounters.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "d07e1e4dd17eb4d276d25bae9328a7b9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\model\\dto\\TbEventPayload.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "c5ff57b8f1cd17e612874f4e0e0bf910",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\repository\\BranchAncestorPathRepository.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "695ffba86378760a438d82343b0a4591",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\repository\\CustomerRepository.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "12d315214c76c5062577c5262988c947",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\repository\\DeviceEventRepository.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "880ee1445badeb6be6018ec140fa4d1f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\repository\\HierarchyNodeRepository.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "73ef1da16dad1626c9a9f775c7f52e69",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\AncestorPathCache.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "87ce6233b86f9b342f50325d8627e6a8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\AncestorPathService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "f15a87852c4b97ca538176c3cc7b2bec",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ChartService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "9f30761edabbd2a8cdd1f3eee9f3af1b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ChatMemoryService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "5951bbb6404f21456875409e4f15db41",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ChatService.java": {
+    "mtime": 1784872371.9902494,
+    "ast_hash": "0e7e9f108c94c08470041467b48f9a34",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\CustomerMatcher.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "bbf396516dfa78122c3aa8a36c6caf11",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\CustomerSyncRunner.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "617200edf048a6ae1baea1a19e3de176",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\DataService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "1ba88732653d1730193debe630f3155a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\EventConsumerService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "de5c3c7d478f978c7b1bf4d46c390da8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\EventParseService.java": {
+    "mtime": 1784872240.1710656,
+    "ast_hash": "ce020fd222fb575a46f844e7cd028389",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\EventWriteService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "e3e76130f6e4fe10b27874dab197a5d9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\IdempotencyService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "6e885b9d9ad14a4b153e82ef0f2483e1",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\LuaScriptService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "9c2aa09300cc8c07a95a34c6162fb374",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\RabbitMQQueueService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "17d249f2476bf26784094abdf4daff1e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ReconciliationService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "52feea97ed831e2d2961ad93321b78ca",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\RedisCacheService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "66ba7f33fbe208bdf1e94fb4493718c9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ReplayService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "e9301485c64181bdb3a1c4a1bbcf86b6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\ResponseEvaluationService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "31e364254161915d70b3ead190029309",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\UserDataService.java": {
+    "mtime": 1784872371.9912484,
+    "ast_hash": "2fa493d6cbf17556e6b1cdddc16d3dfd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\index\\BranchIndexService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "dfd55d840bd9bedf9d1b6ad33a26b58b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\index\\GlobalAggregatorService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "8580c346f23640e4c9995e305f873fdb",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\BranchAliasIndex.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "60f3cb144a15a1d62729bd4f0ac139a8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\BranchSnapshotMapper.java": {
+    "mtime": 1784872240.1710656,
+    "ast_hash": "4249fbc08c0901694b4743ecb798ec1c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\FieldPrecedenceResolver.java": {
+    "mtime": 1784872371.9919994,
+    "ast_hash": "bba615698871c4e6c0c060c39fcdb974",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\FullDataPayloadParser.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "42809f11c5f4e09f00b5164d048ca357",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\ValueNormalizer.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "bac06f428bd8ef9dfa2c39306dab60c5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\AnswerTemplateService.java": {
+    "mtime": 1784872240.1710656,
+    "ast_hash": "4bc35a389a7daa9ae22ce8a30cad168b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\DeterministicAnswerService.java": {
+    "mtime": 1783061295.0903633,
+    "ast_hash": "6033f9d3a3c8a866148828864ff68e62",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\IntentKeyProfileRegistry.java": {
+    "mtime": 1784872240.1710656,
+    "ast_hash": "a201d6ae08d65e63e385d413a53e6d43",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\NodeNameResolver.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "95adcbc16acc33229f7b31b4ddc101e0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryIntent.java": {
+    "mtime": 1783060756.6879294,
+    "ast_hash": "6287add486cfb2942395e6245a584292",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryIntentResolver.java": {
+    "mtime": 1784872371.9923012,
+    "ast_hash": "38dedd20b67acb0f47acf8c1d51700d7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRouterService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "0288356e10d90eeb203eb2891f72ec45",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRule.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "bfff979e16fe22c8f4e89d6a6ae83364",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRuleRegistry.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "d773eb2f8afef52d545ab97f4ec0f9e9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\RedisQueryService.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "7fe4c323aed359286e12dc601a57f0fb",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\ResolvedQuery.java": {
+    "mtime": 1783059696.1922894,
+    "ast_hash": "4126037f1ecc6303aae08052371d47bf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\ResponseFormat.java": {
+    "mtime": 1783054942.2841554,
+    "ast_hash": "81bfac28fb9f943cc9d5ca2671f20795",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\ResponseFormatInstructions.java": {
+    "mtime": 1783059836.1673043,
+    "ast_hash": "7ec860bcedaa692a31948fbae3efbf5d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\ExtractedIntent.java": {
+    "mtime": 1783059086.9641924,
+    "ast_hash": "224632af6fa7b1860bd5c3b2eb4590dc",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\ExtractionResult.java": {
+    "mtime": 1783059094.6964054,
+    "ast_hash": "ceb63436d201ffd76d3c9f684a115753",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\ExtractionResultParser.java": {
+    "mtime": 1783059129.492254,
+    "ast_hash": "3e87a137c157314162294894841c4037",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\ExtractorShadowService.java": {
+    "mtime": 1783059472.3252242,
+    "ast_hash": "ab2a518da54191687b9e7823ca0a26b9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\IntentExtractor.java": {
+    "mtime": 1783059104.1511352,
+    "ast_hash": "a8300d37c1dc7596a22a3d544716dba9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\LlmIntentExtractor.java": {
+    "mtime": 1783059320.6882052,
+    "ast_hash": "84c57f5ab6610ee928e59ddf09c334e8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\glossary\\GlossaryService.java": {
+    "mtime": 1783060722.120453,
+    "ast_hash": "5c0c09982e06c7f3b84a5dbf335a31ec",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\AccessControlHandler.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "5d2646e3fb29a1d06494674ac98794be",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\AlertHandler.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "ba2372855e9f00172936854db752b84d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\AnswerHandler.java": {
+    "mtime": 1782715862.4442854,
+    "ast_hash": "5d9a4396af9208aba107224245559e08",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\AnswerSupport.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "5bdd7dc4c3519c3fa2d8e9e3fdeb3e1b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\CapabilityReplyHandler.java": {
+    "mtime": 1784098615.077344,
+    "ast_hash": "6459fdafc9f35d9de8f7faeb65ee916a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\CctvHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "55bea70f50a10bcbda0f496a551190b5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\DeviceIdentityHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "76d7c4bdc2beabc356fbdbe9674c5993",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\DeviceInventoryHandler.java": {
+    "mtime": 1784872371.993392,
+    "ast_hash": "d128a50e8c3c1b72a98daecd84db2273",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\DoorStatusHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "fed47212b8af7140956c6a9da361ac95",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\FaultReasonHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "31ac299d6680a76fc4173ea87f737d6f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\FleetAnalyticsHandler.java": {
+    "mtime": 1783052669.9159977,
+    "ast_hash": "5f05d51c342ddd0db38fc75688929813",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\GatewayStatusHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "17bf799e09d6bc64ae7f33c676f92534",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\GlobalOverviewHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "3f852566ee8e476ccae0edc0f5862721",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\GlossaryHandler.java": {
+    "mtime": 1783060737.4181657,
+    "ast_hash": "5fa4f1ee2bbfc00406d42bbafdd72208",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\HierarchyHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "c4a6ee053e91892859dd8667b082fbba",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\NetworkStatusHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "2942555e429e73e25ce5366e1b6e606c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\PowerHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "04ee5bb0195011a792f7fc8d22197ac4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\SubsystemHandler.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "8cbb8eaf2985fbc032d3c6c6a6fbc901",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\orchestrate\\MultiIntentOrchestrator.java": {
+    "mtime": 1783060980.058747,
+    "ast_hash": "637468f4dda59699127849f466fab930",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\orchestrate\\OrchestrationResult.java": {
+    "mtime": 1783059652.0186427,
+    "ast_hash": "46c4fe12f509e38046f35b431eaeb170",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\BranchDictionary.java": {
+    "mtime": 1783057340.3554208,
+    "ast_hash": "116cd11ffdf3983ee4a1526d2f063ec9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\BranchDictionaryService.java": {
+    "mtime": 1783057353.516178,
+    "ast_hash": "178fd54d29157a3027523a3e0eb0338e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\BranchEntry.java": {
+    "mtime": 1783057175.9147933,
+    "ast_hash": "81128a2e4773072aeb8061c73d969099",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\BranchResolution.java": {
+    "mtime": 1783057480.4520133,
+    "ast_hash": "033efd8ff6f9970d1fa0a07ae898440f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\FuzzyBranchResolver.java": {
+    "mtime": 1783057570.0028832,
+    "ast_hash": "c83eb77df4e4264bfc77a48f50eaffb0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\ManualAliasTable.java": {
+    "mtime": 1783057320.090611,
+    "ast_hash": "d67319dbf144980a4b7be14d100ae4bb",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\safety\\SafetyGateService.java": {
+    "mtime": 1783061230.057721,
+    "ast_hash": "0ab26f57648ae82f6e43944f2dec89d9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\tools\\ThingsBoardBackupUtility.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "8969345ec8e8b5c9475fcc6efb76069c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\tools\\ThingsBoardTimescaleImporter.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "a32aafa0b90abe6d90ee0f0b0fa204d7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\HmacUtil.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "e7fae02579c7c84ab1cf2f1abdd24016",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\JwtParserUtil.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "db74f9d82ead03850ac0877d2bbb70d6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\RegionalScopeUtil.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "992353971ada1c751da99d363fa34a51",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\StatusDeltaUtil.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "a2a9ab626d67446b304e9a7b3061a1b9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\StructuredContextBuilder.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "a82abe0a57c7bcd55b98b387b9ef849a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\ThingsBoardHostValidator.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "2ec01b5b9ceaf6c8fe7ec255248752e9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\ThingsBoardRequestContext.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "289268c35a4f7c6aeaa2e1af644a85db",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\ThingsBoardRequestFilter.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "a8d155863f38281a6f0df0eb375ccc05",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\java\\com\\seple\\ThingsBoard_Bot\\util\\TokenCounterService.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "afdef2124bda484f29616f07e7e72278",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\resources\\glossary.json": {
+    "mtime": 1783060701.6073349,
+    "ast_hash": "5a19e5ae060accb52c7882e02014f772",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\resources\\db\\timescale\\timescale_setup.sql": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "176702e610d5ccbffdc5def7f5b31093",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\resources\\scripts\\update_counters.lua": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "53a7cbaf4c9f08f43dcd9532937655c4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\ThingsBoardBotApplicationTests.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "d9452e640648215f2f80f53cf9518265",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\bench\\BenchScorecard.java": {
+    "mtime": 1783062246.0321112,
+    "ast_hash": "712584b2a8b23f499c0494a880fbd022",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\bench\\ReleaseGateTest.java": {
+    "mtime": 1783062289.942716,
+    "ast_hash": "88a97fd5d770a01cfc042348ef66e6e2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\bench\\TestBenchRunner.java": {
+    "mtime": 1784098615.077344,
+    "ast_hash": "9a93d34a10c2a78f288d13c507cf879d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\bench\\ThresholdCalibrationSweep.java": {
+    "mtime": 1783062679.267956,
+    "ast_hash": "2889887de1826546b1721169d2fe9a91",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\bench\\ThresholdCalibrationSweepTest.java": {
+    "mtime": 1783062690.4179585,
+    "ast_hash": "ab2cc2fb73dbc6f9659f762214e88121",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\config\\DotenvEnvironmentPostProcessorTest.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "f4ca4ffe3afb8adea7c7d0fe56505e4b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\controller\\ChatControllerTest.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "a60f5c390a15bf5da4551a867f554537",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\controller\\HierarchyCsvParseTest.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "c98d10a0735115cbd53cfed103b9cbfa",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\integration\\ExtractorBenchTest.java": {
+    "mtime": 1783061332.0569274,
+    "ast_hash": "6144ab6868ad88990f06e2dc5db0775c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\integration\\GoldenQuestionAccuracyTest.java": {
+    "mtime": 1784098615.077344,
+    "ast_hash": "d297a79ae64d559e149b89df69fb8af8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\repository\\DeviceEventRepositoryPostgresTest.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "bbf670a5b56ebd193e730dc684f159fb",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\AncestorPathServiceTest.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "6c09bd09c813682db163e192280522e4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\ChatServiceTest.java": {
+    "mtime": 1784098615.077344,
+    "ast_hash": "6183fd61d9b5f693593e8c6da91b5291",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\CustomerMatcherTest.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "3c48e67995838e3c23c3e4fbf5a90faf",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\ReconciliationServiceTest.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "57ca3e17caac4e4753afe42c21ecd2ae",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\ReplayServiceTest.java": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "7f1f3348263a2ebe219e29993c1c768e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\ResponseEvaluationServiceTest.java": {
+    "mtime": 1782715862.4763558,
+    "ast_hash": "d5d84c529b4138afbca472f6080e0199",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\UserDataServiceTest.java": {
+    "mtime": 1782715862.4763558,
+    "ast_hash": "700703855b0f71d9334e7c9a57c88822",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\BranchSnapshotMapperTest.java": {
+    "mtime": 1782715862.4763558,
+    "ast_hash": "9bb075c711dda6c48d290804c37e61e1",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\FullDataPayloadParserTest.java": {
+    "mtime": 1782715862.4763558,
+    "ast_hash": "0ec7a0f912b7bc026149e8036cdaafd6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\normalization\\ValueNormalizerTest.java": {
+    "mtime": 1782715862.4763558,
+    "ast_hash": "f6db545443b9231b72dad3e4b4ec92ae",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\CoverageMatrixDeterministicTest.java": {
+    "mtime": 1782715862.4763558,
+    "ast_hash": "a5fca0e89298c1cc44c6873f43fb6eb9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\DeterministicAnswerServiceTest.java": {
+    "mtime": 1783052669.9180102,
+    "ast_hash": "a8b86ed7909a3581d0097c5cfacb42ae",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\FleetAnalyticsFilterTest.java": {
+    "mtime": 1782715862.479516,
+    "ast_hash": "9f7e94ae6551c06610f455194a4a3ffd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\GlobalOverviewUnknownBucketTest.java": {
+    "mtime": 1782715862.479516,
+    "ast_hash": "226e3749d12f3b9216ec1af0181d8225",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\NodeNameResolverTest.java": {
+    "mtime": 1782715862.4809463,
+    "ast_hash": "fcbd520e349b02393dbf5275cbedd820",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryIntentResolverTest.java": {
+    "mtime": 1784018105.462848,
+    "ast_hash": "948857b6a6c9cf01b395531586a80d39",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryIntentTest.java": {
+    "mtime": 1783054983.735884,
+    "ast_hash": "6cececceaa6058655d91dcf515f55858",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRouterServiceTest.java": {
+    "mtime": 1782715862.4809463,
+    "ast_hash": "120a4b4bb1f40d2b29703b901caaaf9d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\QueryRuleRegistryTest.java": {
+    "mtime": 1782715862.4809463,
+    "ast_hash": "f7630d6be25d25bd69f2f367523d7bd7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\ResponseFormatInstructionsTest.java": {
+    "mtime": 1783059862.6369002,
+    "ast_hash": "e062bef4b1e343ed2b11356ecb21f5f7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\SubsystemFieldQueryTest.java": {
+    "mtime": 1782715862.4809463,
+    "ast_hash": "67a843e764aa03eeff7efb0a2b099413",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\ExtractionResultParserTest.java": {
+    "mtime": 1783059202.9391208,
+    "ast_hash": "a3c9da081210839028e5cdfcb9c3e962",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\ExtractorShadowServiceTest.java": {
+    "mtime": 1783059575.2800615,
+    "ast_hash": "efdeb63a21277c5358f63ca0cfeaa604",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\extract\\LlmIntentExtractorTest.java": {
+    "mtime": 1783059345.0623524,
+    "ast_hash": "4a91194d5052c63b197649d34c437459",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\glossary\\GlossaryServiceTest.java": {
+    "mtime": 1783060846.2974713,
+    "ast_hash": "7b3742058c9041093f4b27903c0cac24",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\CapabilityReplyHandlerTest.java": {
+    "mtime": 1784098615.077344,
+    "ast_hash": "bab39ffb3d8e68e88e62cc889ea2e395",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\handler\\GlossaryHandlerTest.java": {
+    "mtime": 1783060860.4597287,
+    "ast_hash": "49e9c28c60fc0e384e87f19d825d7b05",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\orchestrate\\MultiIntentOrchestratorTest.java": {
+    "mtime": 1783061003.0746603,
+    "ast_hash": "24f505ffe5aa2d3de1afb9dba3629063",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\BranchDictionaryServiceTest.java": {
+    "mtime": 1783057363.3105557,
+    "ast_hash": "dd460f7202c3874388d8180a50d0e22a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\BranchDictionaryTest.java": {
+    "mtime": 1783057233.3324323,
+    "ast_hash": "885b98b0b0dc81ba65b563f5671e5957",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\FuzzyBranchResolverTest.java": {
+    "mtime": 1783057581.306047,
+    "ast_hash": "80efb048cc2084fa995ced99ad847c8d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\resolve\\ManualAliasTableTest.java": {
+    "mtime": 1783057380.7882314,
+    "ast_hash": "fd376b8aa4a8a68782583c293d015768",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\service\\query\\safety\\SafetyGateServiceTest.java": {
+    "mtime": 1783062328.0112665,
+    "ast_hash": "8d6dd343adb03e5fc35469f60c1fe779",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\support\\FixtureLoader.java": {
+    "mtime": 1782715862.4829576,
+    "ast_hash": "65f71a20418561b76267268e9b63fd66",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\support\\MockSnapshotStore.java": {
+    "mtime": 1783054951.2556276,
+    "ast_hash": "cf37117bdaf258c804fc7657b92075d3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\support\\RecordedIntentExtractor.java": {
+    "mtime": 1783059956.7402513,
+    "ast_hash": "806c4edf3f70eac519862d02f41d9d13",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\tools\\ImporterNodeTypeTest.java": {
+    "mtime": 1782715862.4829576,
+    "ast_hash": "4157c953459a61371a29b76de38feb6d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\tools\\ThingsBoardBackupUtilityTest.java": {
+    "mtime": 1782715862.4829576,
+    "ast_hash": "9dba2cf1c6c4f56d39fc92702b927807",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\JwtParserUtilTest.java": {
+    "mtime": 1782715862.4829576,
+    "ast_hash": "66890b499f6caf6b3b1435ae2faf9eee",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\RegionalScopeUtilTest.java": {
+    "mtime": 1782715862.484968,
+    "ast_hash": "8bfdae2ac8306c197866a73d6737bedd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\StatusDeltaUtilTest.java": {
+    "mtime": 1782715862.484968,
+    "ast_hash": "e84e90e74e981c3879a82ac51ae1b42e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\StructuredContextBuilderTest.java": {
+    "mtime": 1782715862.484968,
+    "ast_hash": "7071adf9e52da81168cab5117c44662a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\java\\com\\seple\\ThingsBoard_Bot\\util\\ThingsBoardHostValidatorTest.java": {
+    "mtime": 1782715862.484968,
+    "ast_hash": "36837ff98e46cbb91e99825e48f6b081",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\bench_extractor_scenarios.json": {
+    "mtime": 1783062216.2114992,
+    "ast_hash": "482a9628bc9aa1ddd7a20e5b76d07b13",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\bench_safety_corpus.json": {
+    "mtime": 1783062203.7100146,
+    "ast_hash": "03f46d4cd2cf671a43df2bfb0f72f1ac",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\branch_conflict_cases.json": {
+    "mtime": 1782715862.484968,
+    "ast_hash": "45bc7d374f002fa23a887ccee7b5bcd1",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\extractor_recordings.json": {
+    "mtime": 1783062226.3120677,
+    "ast_hash": "e108347c50127735bda952473188b4e7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\full_data_fixture.json": {
+    "mtime": 1782715862.488987,
+    "ast_hash": "4c73999cc1df8a93eb3aed9054846866",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\test\\resources\\fixtures\\golden_questions.json": {
+    "mtime": 1783062189.2730732,
+    "ast_hash": "3386b7a0b8fa00e05cb42347698c6b82",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\Thingsboard-Data\\thingsboard_devices_backup.json": {
+    "mtime": 1784872371.9880438,
+    "ast_hash": "069e9e6ede4ee77e32e4b9407e144246",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\AGENTS.md": {
+    "mtime": 1782715862.3687818,
+    "ast_hash": "818d4c7023b01add50d8ce0535ffcc07",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\CLAUDE.md": {
+    "mtime": 1782715862.3687818,
+    "ast_hash": "159bb863f755ce3ad7fe11d16c560f0d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\codebase_deep_dive.md": {
+    "mtime": 1784872240.0071719,
+    "ast_hash": "ed40298f80b5be17daec67042d3ee99a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\DEVELOPMENT.md": {
+    "mtime": 1783052669.568762,
+    "ast_hash": "3f3f376a3aaa0bb68e5b5db3ae5c07d6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docker-compose.yml": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "cc511b1897f9e340807c4f2af91e13c2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\GEMINI.md": {
+    "mtime": 1782715862.3687818,
+    "ast_hash": "f0c147986e95d13713104ff4dd18e655",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\README.md": {
+    "mtime": 1783052669.5697696,
+    "ast_hash": "87d1aad2c1859390c01b895ebc998ed8",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\Understanding ThingsBoard-Bot Architecture.md": {
+    "mtime": 1784872240.0071719,
+    "ast_hash": "51b4fd82382ec1f7469bf08ecdc64149",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\debug-issue.md": {
+    "mtime": 1782715862.34971,
+    "ast_hash": "83266930cd7096aee27fd30edc55c85f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\explore-codebase.md": {
+    "mtime": 1782715862.34971,
+    "ast_hash": "b70f59c577a3ce3a3e72d8c61ce3469a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\refactor-safely.md": {
+    "mtime": 1782715862.364999,
+    "ast_hash": "de0e5b1c85bd387821268d0f9411a778",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\review-changes.md": {
+    "mtime": 1782715862.364999,
+    "ast_hash": "1ce0725b638aed739326a7687c7fffb0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\SKILL.md": {
+    "mtime": 1784872239.844137,
+    "ast_hash": "2f440cfb24b8147db030619ee9cab2a4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\adapt.md": {
+    "mtime": 1784872239.8451366,
+    "ast_hash": "40e19459017df6999e2d0e3359edb4cd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\adapt.native.md": {
+    "mtime": 1784872239.8451366,
+    "ast_hash": "9299acb931f92ba1593df9a07cda849e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\android.md": {
+    "mtime": 1784872239.8461342,
+    "ast_hash": "0db9c635c7b9f380a297417267d91fc6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\animate.md": {
+    "mtime": 1784872239.8461342,
+    "ast_hash": "dcb75c522fa4df87a95f7955b5f97128",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\audit.md": {
+    "mtime": 1784872239.8471425,
+    "ast_hash": "c7928c922e15c8cd5a523e9958fcaee3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\audit.native.md": {
+    "mtime": 1784872239.8471425,
+    "ast_hash": "6a070d2cfc526029aa8111ce14c6c352",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\bolder.md": {
+    "mtime": 1784872239.8481424,
+    "ast_hash": "eb71d9a49863a1236b7f0bac02e99055",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\clarify.md": {
+    "mtime": 1784872239.8481424,
+    "ast_hash": "3763b3dbb5e5d9f00b4d82f00664e3b4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\colorize.md": {
+    "mtime": 1784872239.8481424,
+    "ast_hash": "8ce0379650affa0d86fcd85c5b10379a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\craft-floor.md": {
+    "mtime": 1784872239.8491423,
+    "ast_hash": "d79ea3e71ef9f0121e8a7ddf993821dd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\craft.md": {
+    "mtime": 1784872239.8491423,
+    "ast_hash": "d27896066a5b2752e31873c3772e2803",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\critique.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "8a170f8e853a05ca26e74a8c7ce8ea80",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\delight.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "a32b99a19de5c15fa3df42f6f01396d5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\distill.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "90ab73e57529ca0be6949003e7ac9aea",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\doctor.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "ba6406d9e3d776d926177cf0bda9a7a0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\document.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "ecde121382c4fbafecfbe92c2061e0fd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\extract.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "d23c667a410f3fa1fe518286de8d556e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\harden.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "f8fe702d0b63affd440d0eee06436f68",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\hooks.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "16ca0e735de0b2cc3c375983ea844b59",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\init.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "58d9f74533abf5c78c4c7173970de699",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\ios.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "121b4eacc201d0a933c979b1a3fef615",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\layout.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "d95ee967b454a57f7fd2608bd440cd70",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\live.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "d533142d4ec56c573885dce8ddabb08e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\new-work.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "076d76a7f05986582f8791af6ac43fce",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\onboard.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "b26a00ed39ddec9588f99ca40898e73d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\operate.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "e1c02f0c6823fef3c2a7b0c50aa9da04",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\optimize.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "37f6c5e1cc54a51ed4c9233992d95bb4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\overdrive.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "86f1a83b2e0181cbc97c7284faec5739",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\polish.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "6a9050235b395940398f76c0803369e3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\quieter.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "18cdd6030511c6e00db91a2197432b8c",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\routing.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "a1ec305a58df598fe5433f7d4eee2ded",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\shape.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "6fdc5a047039048759c1c40d21297f37",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\typeset.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "6c8e6317a21fcdfd9f4cda770a1833c3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.claude\\skills\\impeccable\\reference\\visualize.md": {
+    "mtime": 1784872239.850135,
+    "ast_hash": "5ca62ca421b8febf9a1cec1ef90ed232",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\SKILL.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "f5f3878ec521b03f43499e8a52547f99",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\adapt.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "40e19459017df6999e2d0e3359edb4cd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\adapt.native.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "9299acb931f92ba1593df9a07cda849e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\android.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "0db9c635c7b9f380a297417267d91fc6",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\animate.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "dcb75c522fa4df87a95f7955b5f97128",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\audit.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "c7928c922e15c8cd5a523e9958fcaee3",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\audit.native.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "6a070d2cfc526029aa8111ce14c6c352",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\bolder.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "97d172fc7852b472698410c4fdb964ff",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\clarify.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "3763b3dbb5e5d9f00b4d82f00664e3b4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\colorize.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "8ce0379650affa0d86fcd85c5b10379a",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\craft-floor.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "d79ea3e71ef9f0121e8a7ddf993821dd",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\craft.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "d27896066a5b2752e31873c3772e2803",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\critique.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "cbbe559dde98376680e8c8491732b99f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\delight.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "a32b99a19de5c15fa3df42f6f01396d5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\distill.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "c59abfe68408efbc162a16d010014923",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\doctor.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "e7d1fc0062a6a5d1dfafdcfeb32c579f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\document.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "de280bfde371a2ef0aee526c0a5501eb",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\extract.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "d30c02b26387b4d37a8123e455d4387e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\harden.md": {
+    "mtime": 1784872239.9008465,
+    "ast_hash": "f8fe702d0b63affd440d0eee06436f68",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\hooks.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "d3efb31e4a86e2c5046efe2c45e9ffed",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\init.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "857098c225e18f40a693d836d3d4120f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\ios.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "121b4eacc201d0a933c979b1a3fef615",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\layout.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "a85765a556868b7dc5d263d0de059969",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\live.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "5efbbf14a5be22e48175fd2db2ea4b05",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\new-work.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "260acf7b0d38f6ceb636c1d28e96759b",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\onboard.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "b26a00ed39ddec9588f99ca40898e73d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\operate.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "e1c02f0c6823fef3c2a7b0c50aa9da04",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\optimize.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "37f6c5e1cc54a51ed4c9233992d95bb4",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\overdrive.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "3c1c63764995ecee86be0201d51513d7",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\polish.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "cf8fe034da24f2ebd768d93cc13eb965",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\quieter.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "80f923a45ce033afbdcf9254bf0c926d",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\routing.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "ca3fdd980380cf8be7b94bdfb133902f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\shape.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "6fdc5a047039048759c1c40d21297f37",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\typeset.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "3af6dc8981278c74c95fdea8f255cd7e",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\.cursor\\skills\\impeccable\\reference\\visualize.md": {
+    "mtime": 1784872239.9134116,
+    "ast_hash": "5ca62ca421b8febf9a1cec1ef90ed232",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docs\\coverage-matrix.md": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "a13126fb334b13d52b1d63261961a784",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docs\\data-refresh.md": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "45084992d4b78baad90ce246a0ddb1a9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docs\\deployment-topology.md": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "8061536ccd3114abde4bd13a3902a105",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docs\\format-contract.md": {
+    "mtime": 1782715862.4122932,
+    "ast_hash": "d4a96f715d5c12bd69c3e960f4b7e0ee",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docs\\RUNBOOKS.md": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "38e0f348ff56925acfb1d715f36d6bed",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docs\\adr\\0001-three-profile-deployment.md": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "c44d85cbe5fa6353e54b2748e29c0cf9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docs\\adr\\0002-atomic-lua-counters.md": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "f03d23a3abd3e65b45d5484004ec57f5",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\docs\\adr\\0003-unverified-jwt-claims.md": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "4dfaa90f6984c4d8b61ab7c67e100ea9",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\index.html": {
+    "mtime": 1783052669.618071,
+    "ast_hash": "d5a1887de889297430c51b51d4a15778",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\README.md": {
+    "mtime": 1782715862.4128752,
+    "ast_hash": "27624cb3e5317e4866d1161b08d328f2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\resources\\docs\\SWatch360_Navigation_Guide.md": {
+    "mtime": 1784098615.077344,
+    "ast_hash": "2521e5185c5fe520667fbe5c7d7e4076",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\resources\\prompts\\evaluation-prompt.txt": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "a9dd8bfd0e0a2d38ecc955f21928f165",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\resources\\prompts\\intent-extractor-prompt.txt": {
+    "mtime": 1783059169.5271513,
+    "ast_hash": "6e8e965d237d8baef209db658183db16",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\resources\\prompts\\navigation-system-prompt.txt": {
+    "mtime": 1784098615.077344,
+    "ast_hash": "baac88505fb5729011f47b5aa2f9281f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\src\\main\\resources\\prompts\\system-prompt.txt": {
+    "mtime": 1782715862.460385,
+    "ast_hash": "5ae20f607a8da7a56a35761a25fe7f17",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\Thingsboard-Data\\qustions.txt": {
+    "mtime": 1782715862.3707922,
+    "ast_hash": "57ddd256c0f28f79f80e61e14ca5e2e0",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\_- visual selection.svg": {
+    "mtime": 1782715862.407902,
+    "ast_hash": "22368236e0fe09c96422740788754906",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\logo\\thingsboard_bot_logo.png": {
+    "mtime": 1782715862.4128752,
+    "ast_hash": "1c8c5d068ab9b0c9fcefe98bb89171c2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\logo\\thingsboard_bot_logo.svg": {
+    "mtime": 1782715862.4128752,
+    "ast_hash": "8eee256b2f8fad0f259982d04e28e04f",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\assets\\thingsboard_bot_logo.png": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "1c8c5d068ab9b0c9fcefe98bb89171c2",
+    "semantic_hash": ""
+  },
+  "C:\\workspace\\ThingsBoard-Bot\\frontend\\src\\assets\\thingsboard_bot_logo.svg": {
+    "mtime": 1782715862.4176269,
+    "ast_hash": "8eee256b2f8fad0f259982d04e28e04f",
+    "semantic_hash": ""
   }
 }
