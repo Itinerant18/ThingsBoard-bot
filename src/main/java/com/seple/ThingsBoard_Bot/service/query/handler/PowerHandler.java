@@ -17,6 +17,7 @@ public class PowerHandler implements AnswerHandler {
     private final AnswerSupport support;
     private final GlobalOverviewHandler globalOverviewHandler;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public PowerHandler(AnswerTemplateService answerTemplateService, AnswerSupport support, GlobalOverviewHandler globalOverviewHandler) {
         this.answerTemplateService = answerTemplateService;
         this.support = support;

@@ -18,6 +18,7 @@ public class DeviceInventoryHandler implements AnswerHandler {
     private final AnswerSupport support;
     private final GlobalOverviewHandler globalOverviewHandler;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public DeviceInventoryHandler(AnswerTemplateService answerTemplateService, AnswerSupport support, GlobalOverviewHandler globalOverviewHandler) {
         this.answerTemplateService = answerTemplateService;
         this.support = support;
