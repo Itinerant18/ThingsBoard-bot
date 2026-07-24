@@ -233,7 +233,8 @@ public class UserDataService {
         deviceMap.put("branchName", matchedNode.getDisplayName());
         deviceMap.put("device_type", "default");
         
-        Map<Object, Object> redisState = redisCacheService.getDeviceState(matchedNode.getCustomerId(), deviceId);
+        final String effectiveCustomerId = matchedNode.getCustomerId();
+        Map<Object, Object> redisState = redisCacheService.getDeviceState(effectiveCustomerId, deviceId);
         if (redisState != null) {
             redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
         }
@@ -243,13 +244,13 @@ public class UserDataService {
                 Map<String, Object> liveTelemetry = userAwareThingsBoardClient.getTelemetry(userToken, deviceId);
                 if (liveTelemetry != null && !liveTelemetry.isEmpty()) {
                     liveTelemetry.forEach(deviceMap::put);
-                    liveTelemetry.forEach((k, v) -> redisCacheService.updateDeviceState(matchedNode.getCustomerId(), deviceId, k, String.valueOf(v)));
+                    liveTelemetry.forEach((k, v) -> redisCacheService.updateDeviceState(effectiveCustomerId, deviceId, k, String.valueOf(v)));
                 }
                 for (String scope : List.of("SERVER_SCOPE", "SHARED_SCOPE", "CLIENT_SCOPE")) {
                     Map<String, Object> liveAttrs = userAwareThingsBoardClient.getAttributes(userToken, scope, deviceId);
                     if (liveAttrs != null && !liveAttrs.isEmpty()) {
                         liveAttrs.forEach(deviceMap::put);
-                        liveAttrs.forEach((k, v) -> redisCacheService.updateDeviceState(matchedNode.getCustomerId(), deviceId, k, String.valueOf(v)));
+                        liveAttrs.forEach((k, v) -> redisCacheService.updateDeviceState(effectiveCustomerId, deviceId, k, String.valueOf(v)));
                     }
                 }
             } catch (Exception e) {
@@ -354,6 +355,8 @@ public class UserDataService {
         if ("ALL".equals(customerId)) {
             customerId = matched.getCustomerId();
         }
+        final String effectiveCustomerId = customerId;
+
         Map<String, Object> raw = new HashMap<>();
         raw.put("device_id", matched.getDeviceId());
         raw.put("device_name", matched.getBranchName());
@@ -363,7 +366,7 @@ public class UserDataService {
         raw.put("device_type", matched.getDeviceType());
 
         // Fetch state from Redis cache
-        Map<Object, Object> redisState = redisCacheService.getDeviceState(customerId, matched.getDeviceId());
+        Map<Object, Object> redisState = redisCacheService.getDeviceState(effectiveCustomerId, matched.getDeviceId());
         if (redisState != null) {
             redisState.forEach((k, v) -> raw.put(String.valueOf(k), v));
         }
@@ -375,13 +378,13 @@ public class UserDataService {
                 Map<String, Object> liveTelemetry = userAwareThingsBoardClient.getTelemetry(userToken, deviceId);
                 if (liveTelemetry != null && !liveTelemetry.isEmpty()) {
                     liveTelemetry.forEach(raw::put);
-                    liveTelemetry.forEach((k, v) -> redisCacheService.updateDeviceState(customerId, deviceId, k, String.valueOf(v)));
+                    liveTelemetry.forEach((k, v) -> redisCacheService.updateDeviceState(effectiveCustomerId, deviceId, k, String.valueOf(v)));
                 }
                 for (String scope : List.of("SERVER_SCOPE", "SHARED_SCOPE", "CLIENT_SCOPE")) {
                     Map<String, Object> liveAttrs = userAwareThingsBoardClient.getAttributes(userToken, scope, deviceId);
                     if (liveAttrs != null && !liveAttrs.isEmpty()) {
                         liveAttrs.forEach(raw::put);
-                        liveAttrs.forEach((k, v) -> redisCacheService.updateDeviceState(customerId, deviceId, k, String.valueOf(v)));
+                        liveAttrs.forEach((k, v) -> redisCacheService.updateDeviceState(effectiveCustomerId, deviceId, k, String.valueOf(v)));
                     }
                 }
                 log.info("⚡ [LIVE-FETCH] Fetched real-time ThingsBoard data for device {} ({})", matched.getBranchName(), deviceId);
