@@ -35,7 +35,7 @@ public class DeviceInventoryHandler implements AnswerHandler {
         BranchSnapshot branch = query.getTargetBranch();
         if (branch == null) {
             if (query.getIntent() == QueryIntent.OFFLINE_DEVICES || query.getIntent() == QueryIntent.ACTIVE_DEVICES) {
-                return globalOverviewHandler.answer(snapshots, customerId);
+                return globalOverviewHandler.answerGatewayOverview(snapshots, customerId);
             }
             return null;
         }

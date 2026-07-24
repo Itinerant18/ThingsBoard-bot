@@ -82,7 +82,7 @@ public class GlobalOverviewHandler implements AnswerHandler {
 
     // ==================== Gateway overview (default) ====================
 
-    private String answerGatewayOverview(List<BranchSnapshot> snapshots, String customerId) {
+    public String answerGatewayOverview(List<BranchSnapshot> snapshots, String customerId) {
         if (snapshots == null || snapshots.isEmpty()) {
             return answerTemplateService.renderGlobalOverview(List.of(), List.of(), List.of());
         }

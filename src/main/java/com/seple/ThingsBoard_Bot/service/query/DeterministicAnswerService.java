@@ -58,11 +58,12 @@ public class DeterministicAnswerService {
 
     private static List<AnswerHandler> defaultHandlers(AnswerTemplateService ats) {
         AnswerSupport support = new AnswerSupport();
+        GlobalOverviewHandler goh = new GlobalOverviewHandler(ats);
         return List.of(
-                new GlobalOverviewHandler(ats),
+                goh,
                 new GatewayStatusHandler(ats, support),
                 new PowerHandler(ats, support),
-                new DeviceInventoryHandler(ats, support),
+                new DeviceInventoryHandler(ats, support, goh),
                 new NetworkStatusHandler(support),
                 new CctvHandler(ats, support),
                 new AlertHandler(ats),
