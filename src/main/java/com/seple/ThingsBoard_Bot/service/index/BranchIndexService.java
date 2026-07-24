@@ -176,7 +176,11 @@ public class BranchIndexService {
                 .replaceAll("\\s+", " ")
                 .trim();
         String compact = normalized.replace(" ", "");
-        return new ArrayList<>(Set.of(branchName, normalized, compact));
+        Set<String> set = new java.util.LinkedHashSet<>();
+        set.add(branchName);
+        set.add(normalized);
+        set.add(compact);
+        return new ArrayList<>(set);
     }
 
     private String cacheKey(String userToken) {
