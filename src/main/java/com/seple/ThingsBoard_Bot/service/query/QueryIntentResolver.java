@@ -201,7 +201,7 @@ public class QueryIntentResolver {
         // Verbs indicating request to find/navigate/see
         boolean hasNavVerb = clean.contains("NAVIGATE") || clean.contains("GO TO") 
                 || clean.contains("FIND") || clean.contains("OPEN") 
-                || clean.contains("VIEW") || clean.contains("ACCESS") 
+                || containsWord(clean, "VIEW") || clean.contains("ACCESS") 
                 || clean.contains("GUIDE") || clean.contains("WHERE IS THE")
                 || clean.contains("WHERE DO I FIND") || clean.contains("WHERE CAN I FIND")
                 || clean.contains("HOW TO GO") || clean.contains("HOW DO I GO")
