@@ -136,14 +136,16 @@ public class GlobalOverviewHandler implements AnswerHandler {
         }
 
         StringBuilder b = new StringBuilder();
-        b.append("**Total: ").append(onlineCount).append(" Online | ").append(offlineCount).append(" Offline");
+        b.append("**Gateway Status Across All Branches:**\n\n");
+        b.append("- **").append(onlineCount).append(" Branches** have active/working **Online** Gateways.\n");
+        b.append("- **").append(offlineCount).append(" Branches** are explicitly **Offline / Down**.\n");
         if (unknownCount > 0) {
-            b.append(" | ").append(unknownCount).append(" Unknown");
+            b.append("- **").append(unknownCount).append(" Branches** are **Unresponsive / Not Reporting** (no live gateway telemetry).\n");
         }
-        b.append("**\nFor your question about all branches, here is the current branch-level status.");
+        b.append("\n");
         appendBucket(b, "Online", onlineCount, groupedOnline, false);
-        appendBucket(b, "Offline", offlineCount, groupedOffline, true);
-        appendBucket(b, "Unknown", unknownCount, groupedUnknown, false);
+        appendBucket(b, "Offline / Down", offlineCount, groupedOffline, true);
+        appendBucket(b, "Unresponsive / Not Reporting", unknownCount, groupedUnknown, true);
         return b.toString();
     }
 
