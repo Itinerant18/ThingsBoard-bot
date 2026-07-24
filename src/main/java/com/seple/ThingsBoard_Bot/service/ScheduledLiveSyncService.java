@@ -39,8 +39,8 @@ public class ScheduledLiveSyncService {
     private final RedisCacheService redisCacheService;
     private final ReplayService replayService;
 
-    @Scheduled(fixedDelayString = "${iotchatbot.thingsboard.scheduled-sync-interval-ms:300000}",
-               initialDelayString = "${iotchatbot.thingsboard.scheduled-sync-interval-ms:300000}")
+    @Scheduled(fixedDelayString = "${iotchatbot.thingsboard.scheduled-sync-interval-ms:60000}",
+               initialDelayString = "${iotchatbot.thingsboard.scheduled-sync-initial-delay-ms:5000}")
     public void syncAllCustomers() {
         if (!config.isScheduledSyncEnabled()) {
             return;
