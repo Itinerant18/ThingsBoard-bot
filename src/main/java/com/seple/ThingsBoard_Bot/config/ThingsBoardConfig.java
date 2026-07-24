@@ -29,6 +29,11 @@ public class ThingsBoardConfig {
     private boolean twoStepFetchEnabled = false;
     private boolean liveFetchEnabled = true;
     private boolean aggregatorEnabled = false;
+    // Background poll of every device's latest telemetry from ThingsBoard into Redis, so global/fleet
+    // queries (which read the Redis snapshot, not a per-query live fetch) stay fresh even where the
+    // webhook stream is absent (local dev) or drops fields. Off by default; enable in the read JVM.
+    private boolean scheduledSyncEnabled = false;
+    private int scheduledSyncIntervalMs = 300000;
     private int retryAttempts = 3;
     private long retryBackoffMs = 300L;
 

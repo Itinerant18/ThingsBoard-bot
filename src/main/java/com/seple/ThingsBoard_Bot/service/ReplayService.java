@@ -117,7 +117,21 @@ public class ReplayService {
                         .put(event.getField(), value);
         }
 
-        // Step 6: Compute node and global counters in memory
+        // Steps 6-7: compute counters and push to Redis (shared with the scheduled live sync).
+        rebuildRedisFromDeviceStates(customerId, deviceStates, deviceNodeIds, deviceBranchNames);
+
+        log.info("[REPLAY] Replay complete for customer: {}", customerId);
+    }
+
+    /**
+     * Compute node/global online counters from a device→field→value map and push both the raw device
+     * states and the counters to Redis as one pipelined batch. Shared by DB replay and the scheduled
+     * live sync so both produce identical Redis layout (keyed by tbDeviceId) and counter semantics.
+     */
+    public void rebuildRedisFromDeviceStates(String customerId,
+                                             Map<String, Map<String, String>> deviceStates,
+                                             Map<String, String> deviceNodeIds,
+                                             Map<String, String> deviceBranchNames) {
         Map<String, Map<String, Integer>> nodeCounters = new HashMap<>();
         Map<String, Integer> globalCounters = new HashMap<>();
 
@@ -152,12 +166,9 @@ public class ReplayService {
             }
         }
 
-        // Step 7: Push aggregated states & counters to Redis in a single pipelined batch
-        log.info("[REPLAY] Writing pipelined bulk data to Redis. Devices={}, NodeCounters={}", 
+        log.info("[REPLAY] Writing pipelined bulk data to Redis. Devices={}, NodeCounters={}",
                  deviceStates.size(), nodeCounters.size());
         redisCacheService.writeBulkData(customerId, deviceStates, deviceNodeIds, deviceBranchNames, nodeCounters, globalCounters);
-
-        log.info("[REPLAY] Replay complete for customer: {}", customerId);
     }
 
     /** Stops the local event consumer during replay so live events don't race the rebuild. */
