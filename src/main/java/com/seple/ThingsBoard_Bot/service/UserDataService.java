@@ -237,6 +237,26 @@ public class UserDataService {
         if (redisState != null) {
             redisState.forEach((k, v) -> deviceMap.put(String.valueOf(k), v));
         }
+
+        if (thingsBoardConfig.isLiveFetchEnabled() && userToken != null && !userToken.isBlank()) {
+            try {
+                Map<String, Object> liveTelemetry = userAwareThingsBoardClient.getTelemetry(userToken, deviceId);
+                if (liveTelemetry != null && !liveTelemetry.isEmpty()) {
+                    liveTelemetry.forEach(deviceMap::put);
+                    liveTelemetry.forEach((k, v) -> redisCacheService.updateDeviceState(matchedNode.getCustomerId(), deviceId, k, String.valueOf(v)));
+                }
+                for (String scope : List.of("SERVER_SCOPE", "SHARED_SCOPE", "CLIENT_SCOPE")) {
+                    Map<String, Object> liveAttrs = userAwareThingsBoardClient.getAttributes(userToken, scope, deviceId);
+                    if (liveAttrs != null && !liveAttrs.isEmpty()) {
+                        liveAttrs.forEach(deviceMap::put);
+                        liveAttrs.forEach((k, v) -> redisCacheService.updateDeviceState(matchedNode.getCustomerId(), deviceId, k, String.valueOf(v)));
+                    }
+                }
+            } catch (Exception e) {
+                log.warn("⚠️ [LIVE-FETCH] Failed to fetch live ThingsBoard data for device {}: {}", deviceId, e.getMessage());
+            }
+        }
+
         enrichStaleness(deviceMap);
 
         log.info("✅ Found device {} in user local DB scope", deviceId);
@@ -347,9 +367,36 @@ public class UserDataService {
         if (redisState != null) {
             redisState.forEach((k, v) -> raw.put(String.valueOf(k), v));
         }
+
+        // Live fetch directly from ThingsBoard API for real-time accuracy
+        if (thingsBoardConfig.isLiveFetchEnabled() && userToken != null && !userToken.isBlank()) {
+            try {
+                String deviceId = matched.getDeviceId();
+                Map<String, Object> liveTelemetry = userAwareThingsBoardClient.getTelemetry(userToken, deviceId);
+                if (liveTelemetry != null && !liveTelemetry.isEmpty()) {
+                    liveTelemetry.forEach(raw::put);
+                    liveTelemetry.forEach((k, v) -> redisCacheService.updateDeviceState(customerId, deviceId, k, String.valueOf(v)));
+                }
+                for (String scope : List.of("SERVER_SCOPE", "SHARED_SCOPE", "CLIENT_SCOPE")) {
+                    Map<String, Object> liveAttrs = userAwareThingsBoardClient.getAttributes(userToken, scope, deviceId);
+                    if (liveAttrs != null && !liveAttrs.isEmpty()) {
+                        liveAttrs.forEach(raw::put);
+                        liveAttrs.forEach((k, v) -> redisCacheService.updateDeviceState(customerId, deviceId, k, String.valueOf(v)));
+                    }
+                }
+                log.info("⚡ [LIVE-FETCH] Fetched real-time ThingsBoard data for device {} ({})", matched.getBranchName(), deviceId);
+            } catch (Exception e) {
+                log.warn("⚠️ [LIVE-FETCH] Failed to fetch live ThingsBoard data for device {}, fallback to Redis: {}", matched.getDeviceId(), e.getMessage());
+            }
+        }
+
         enrichStaleness(raw);
 
         return branchSnapshotMapper.map(raw);
+    }
+
+    public boolean isLiveFetchEnabled() {
+        return thingsBoardConfig.isLiveFetchEnabled();
     }
 
     public String detectUnauthorizedBranchName(String question, String userToken) {

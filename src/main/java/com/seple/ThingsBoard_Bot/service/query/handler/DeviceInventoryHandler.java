@@ -32,6 +32,12 @@ public class DeviceInventoryHandler implements AnswerHandler {
     public String handle(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
         BranchSnapshot branch = query.getTargetBranch();
         if (branch == null) {
+            if (query.getIntent() == QueryIntent.OFFLINE_DEVICES) {
+                return answerGlobalOfflineBranches(snapshots);
+            }
+            if (query.getIntent() == QueryIntent.ACTIVE_DEVICES) {
+                return answerGlobalActiveBranches(snapshots);
+            }
             return null;
         }
         return switch (query.getIntent()) {
@@ -41,6 +47,72 @@ public class DeviceInventoryHandler implements AnswerHandler {
             case CONNECTED_DEVICES -> answerConnectedDevices(branch);
             default -> null;
         };
+    }
+
+    private String answerGlobalOfflineBranches(List<BranchSnapshot> snapshots) {
+        if (snapshots == null || snapshots.isEmpty()) {
+            return "**No branch data available.**";
+        }
+        List<String> offline = new java.util.ArrayList<>();
+        List<String> unknown = new java.util.ArrayList<>();
+        for (BranchSnapshot snapshot : snapshots) {
+            if (snapshot.getIdentity() == null || snapshot.getIdentity().getBranchName() == null) continue;
+            NormalizedState state = snapshot.getGateway().getState();
+            String name = snapshot.getIdentity().getBranchName();
+            if (state == NormalizedState.OFFLINE || state == NormalizedState.FAULT) {
+                offline.add(name);
+            } else if (state == NormalizedState.UNKNOWN) {
+                unknown.add(name);
+            }
+        }
+        java.util.Collections.sort(offline);
+        java.util.Collections.sort(unknown);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("**Inactive / Offline Branches Summary:**\n");
+        sb.append("Total Offline: ").append(offline.size());
+        if (!unknown.isEmpty()) {
+            sb.append(" | Unknown: ").append(unknown.size());
+        }
+        sb.append("\n\n");
+
+        if (!offline.isEmpty()) {
+            sb.append("### 🔴 Offline Branches (").append(offline.size()).append("):\n");
+            for (String b : offline) {
+                sb.append("- ").append(b).append("\n");
+            }
+        }
+        if (!unknown.isEmpty()) {
+            sb.append("\n### ❓ Unknown Status Branches (").append(unknown.size()).append("):\n");
+            for (String b : unknown) {
+                sb.append("- ").append(b).append("\n");
+            }
+        }
+        if (offline.isEmpty() && unknown.isEmpty()) {
+            return "**All branches are currently active and online!**";
+        }
+        return sb.toString();
+    }
+
+    private String answerGlobalActiveBranches(List<BranchSnapshot> snapshots) {
+        if (snapshots == null || snapshots.isEmpty()) {
+            return "**No branch data available.**";
+        }
+        List<String> online = new java.util.ArrayList<>();
+        for (BranchSnapshot snapshot : snapshots) {
+            if (snapshot.getIdentity() == null || snapshot.getIdentity().getBranchName() == null) continue;
+            if (snapshot.getGateway().getState() == NormalizedState.ONLINE) {
+                online.add(snapshot.getIdentity().getBranchName());
+            }
+        }
+        java.util.Collections.sort(online);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("**Active / Online Branches Summary (").append(online.size()).append(" Online):**\n\n");
+        for (String b : online) {
+            sb.append("- ").append(b).append("\n");
+        }
+        return sb.toString();
     }
 
     private String answerFaultDevices(BranchSnapshot branch) {

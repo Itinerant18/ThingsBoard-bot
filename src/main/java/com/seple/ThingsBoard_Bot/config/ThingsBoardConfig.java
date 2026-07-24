@@ -27,6 +27,7 @@ public class ThingsBoardConfig {
     private int syncIntervalSeconds = 60;
     private boolean entityQueryEnabled = true;
     private boolean twoStepFetchEnabled = false;
+    private boolean liveFetchEnabled = true;
     private boolean aggregatorEnabled = false;
     private int retryAttempts = 3;
     private long retryBackoffMs = 300L;

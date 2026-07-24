@@ -342,13 +342,13 @@ public class QueryIntentResolver {
         if (question.contains("FAULT DEVICE") || (question.contains("FAULTY") && question.contains("DEVICE"))) {
             return QueryIntent.FAULT_DEVICES;
         }
-        if (question.contains("OFFLINE DEVICE") || (question.contains("OFFLINE") && question.contains("DEVICE"))) {
+        if (question.contains("OFFLINE") || question.contains("INACTIVE") || question.contains("DOWN") || question.contains("UNHEALTHY")) {
             return QueryIntent.OFFLINE_DEVICES;
         }
         if (question.contains("CONNECTED DEVICE") || (question.contains("ALL DEVICES") && question.contains("CONNECTED"))) {
             return QueryIntent.CONNECTED_DEVICES;
         }
-        if ((question.contains("ACTIVE DEVICE") || (question.contains("ACTIVE") && question.contains("DEVICE")))
+        if ((question.contains("ACTIVE DEVICE") || question.contains("ACTIVE BRANCH") || (question.contains("ACTIVE") && (question.contains("DEVICE") || question.contains("BRANCH"))))
                 && !question.contains("INACTIVE")) {
             return QueryIntent.ACTIVE_DEVICES;
         }

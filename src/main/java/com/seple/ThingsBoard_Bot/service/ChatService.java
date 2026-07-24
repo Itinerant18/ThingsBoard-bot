@@ -443,7 +443,7 @@ public class ChatService {
 
             // Phase-2 two-step retrieval:
             // resolve branch against lightweight index first, then lazy-load that single branch by intent.
-            if (twoStepEnabled && resolvedQuery.getTargetBranch() != null && !resolvedQuery.isGlobal()
+            if ((twoStepEnabled || userDataService.isLiveFetchEnabled()) && resolvedQuery.getTargetBranch() != null && !resolvedQuery.isGlobal()
                     && resolvedQuery.getTargetBranch().getIdentity() != null) {
                 String branchKey = resolvedQuery.getTargetBranch().getIdentity().getTechnicalId();
                 BranchSnapshot hydrated = userDataService.getBranchSnapshotForIntent(userToken, branchKey, resolvedQuery.getIntent());

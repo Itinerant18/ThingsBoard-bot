@@ -18,10 +18,19 @@ public class FieldPrecedenceResolver {
     }
 
     public ResolvedField resolveGatewayState(Map<String, Object> raw) {
-        // gateway_sts (ThingsBoard serverAttribute) is the ONLY authoritative gateway status.
-        // If the device does not carry gateway_sts, the state is UNKNOWN — we do not guess from
-        // operational flags. Devices that do carry it report their real value.
-        return resolveFirstState(raw, List.of("gateway_sts"));
+        // gateway_sts (ThingsBoard serverAttribute) is the primary authoritative gateway status.
+        // Fall back to other status attributes (active, gateway_status, gwHealth, etc.) if gateway_sts is absent.
+        return resolveFirstState(raw, List.of(
+                "gateway_sts",
+                "gateway_status",
+                "gatewayStatus",
+                "rock_gateway_status",
+                "gwHealth",
+                "status",
+                "active",
+                "cctv_sts",
+                "ias_sts"
+        ));
     }
 
     public ResolvedField resolveSubsystemState(Map<String, Object> raw, String primaryField, String... fallbacks) {
