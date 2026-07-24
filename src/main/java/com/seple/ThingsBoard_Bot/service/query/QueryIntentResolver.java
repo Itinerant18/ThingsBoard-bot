@@ -287,6 +287,14 @@ public class QueryIntentResolver {
         if (hierarchyIntent != null) {
             return hierarchyIntent;
         }
+        // Fleet-wide per-subsystem overview: "CCTV/IAS/FAS/BAS/TLS/ACS status of all branches". An
+        // explicit fleet marker plus a subsystem keyword is a per-subsystem roll-up across every
+        // branch, not a single-branch question — it must win over an accidental fuzzy branch match
+        // (e.g. "BAS" ~ branch "BASTA") and over the single-branch CCTV/subsystem keyword returns
+        // below. The subsystem is carried on ResolvedQuery.targetSystem (set via detectSubsystem).
+        if (isFleetSubsystemOverview(question)) {
+            return QueryIntent.GLOBAL_OVERVIEW;
+        }
         // Category (device-type) health breakdown across the fleet -- only when no single branch is
         // the focus, so it doesn't steal a per-branch gateway/battery question.
         if (!hasTargetBranch && isCategoryHealthQuestion(question)) {
@@ -704,6 +712,19 @@ public class QueryIntentResolver {
         ).contains(word);
     }
 
+    /**
+     * A fleet marker ("all"/"every branch"/"overview") combined with a named subsystem. Gateway is
+     * intentionally excluded (detectSubsystem returns null for it) so plain "gateway status of all
+     * branches" keeps flowing to the existing gateway global overview.
+     */
+    private boolean isFleetSubsystemOverview(String question) {
+        boolean fleetMarker = containsWord(question, "ALL")
+                || question.contains("OVERVIEW")
+                || question.contains("EVERY BRANCH")
+                || question.contains("EACH BRANCH");
+        return fleetMarker && detectSubsystem(question) != null;
+    }
+
     private String detectSubsystem(String normalizedQuestion) {
         if (normalizedQuestion.contains("IAS") || normalizedQuestion.contains("INTRUSION")) {
             return "ias";
@@ -714,7 +735,7 @@ public class QueryIntentResolver {
         if (normalizedQuestion.contains("FAS") || normalizedQuestion.contains("FIRE")) {
             return "fas";
         }
-        if (normalizedQuestion.contains("TIME LOCK")) {
+        if (normalizedQuestion.contains("TIME LOCK") || containsWord(normalizedQuestion, "TLS")) {
             return "timeLock";
         }
         if (normalizedQuestion.contains("ACCESS CONTROL") || normalizedQuestion.contains("ACS")) {

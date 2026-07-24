@@ -566,4 +566,41 @@ class QueryIntentResolverTest {
         org.junit.jupiter.api.Assertions.assertFalse(QueryIntentResolver.containsWord("FACADE VOLT", "AC"));
         org.junit.jupiter.api.Assertions.assertFalse(QueryIntentResolver.containsWord("HVAC VOLT", "AC"));
     }
+
+    @Test
+    void cctvStatusOfAllBranchesRoutesToFleetOverview() {
+        ResolvedQuery r = resolver.resolve("Current CCTV status of all branches", snapshots, null);
+        assertEquals(QueryIntent.GLOBAL_OVERVIEW, r.getIntent());
+        assertEquals("cctv", r.getTargetSystem());
+    }
+
+    @Test
+    void basStatusOfAllBranchesRoutesToFleetOverviewNotFuzzyBranch() {
+        // "BAS" must not be hijacked by a fuzzy branch match (e.g. BASTA); "all branches" forces fleet.
+        ResolvedQuery r = resolver.resolve("Current BAS status of all branches", snapshots, null);
+        assertEquals(QueryIntent.GLOBAL_OVERVIEW, r.getIntent());
+        assertEquals("bas", r.getTargetSystem());
+    }
+
+    @Test
+    void tlsStatusOfAllBranchesMapsToTimeLockOverview() {
+        ResolvedQuery r = resolver.resolve("Current TLS status of all branches", snapshots, null);
+        assertEquals(QueryIntent.GLOBAL_OVERVIEW, r.getIntent());
+        assertEquals("timeLock", r.getTargetSystem());
+    }
+
+    @Test
+    void singleBranchCctvStillRoutesToBranchNotFleet() {
+        ResolvedQuery r = resolver.resolve("What is the CCTV status of Tarakeshwar?", snapshots, null);
+        assertEquals(QueryIntent.CCTV_STATUS, r.getIntent());
+        assertNotNull(r.getTargetBranch());
+    }
+
+    @Test
+    void gatewayAllBranchesStaysGatewayOverviewWithNoSubsystem() {
+        ResolvedQuery r = resolver.resolve("Current gateway status of all branches", snapshots, null);
+        assertEquals(QueryIntent.GLOBAL_OVERVIEW, r.getIntent());
+        // gateway is not a per-subsystem target — targetSystem stays null so the handler uses gateway.
+        org.junit.jupiter.api.Assertions.assertNull(r.getTargetSystem());
+    }
 }
