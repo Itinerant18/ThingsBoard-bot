@@ -18,9 +18,16 @@ public class FieldPrecedenceResolver {
     }
 
     public ResolvedField resolveGatewayState(Map<String, Object> raw) {
-        // gateway_sts (ThingsBoard serverAttribute) is the primary authoritative gateway status.
-        // Fall back to other status attributes (active, gateway_status, gwHealth, etc.) if gateway_sts is absent.
+        // Order matters: try the fields devices actually emit first.
+        //  - status_device_gateway_status: derived authoritative status ("Online"/"Offline"/"Fault").
+        //  - gatewayStatus_SYSTEM ON: flattened system-on flag ("true"/"false").
+        // The legacy primaries (gateway_sts/gateway_status) are absent on current fleet payloads, and
+        // the bare "gatewayStatus" is a JSON blob ({"SYSTEM ON":"true",...}) that toState() cannot
+        // classify — it resolves to UNKNOWN and is skipped, so the real keys must come first or every
+        // branch falls into the Unknown bucket despite being online.
         return resolveFirstState(raw, List.of(
+                "status_device_gateway_status",
+                "gatewayStatus_SYSTEM ON",
                 "gateway_sts",
                 "gateway_status",
                 "gatewayStatus",
