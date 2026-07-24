@@ -62,7 +62,7 @@ public class DeterministicAnswerService {
         return List.of(
                 goh,
                 new GatewayStatusHandler(ats, support),
-                new PowerHandler(ats, support),
+                new PowerHandler(ats, support, goh),
                 new DeviceInventoryHandler(ats, support, goh),
                 new NetworkStatusHandler(support),
                 new CctvHandler(ats, support),

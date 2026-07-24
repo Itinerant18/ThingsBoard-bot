@@ -271,7 +271,7 @@ public class GlobalOverviewHandler implements AnswerHandler {
      * Extracted so the gateway and per-subsystem overviews classify identically. Hierarchy is cached
      * per customer for 5 minutes.
      */
-    private Map<String, String> resolveGroupHeaders(List<BranchSnapshot> snapshots, String customerId) {
+    public Map<String, String> resolveGroupHeaders(List<BranchSnapshot> snapshots, String customerId) {
         CachedHierarchy cached = hierarchyCache.get(customerId);
         if (cached == null || cached.isExpired()) {
             List<HierarchyNode> allNodes = hierarchyNodeRepository.findByCustomerId(customerId);

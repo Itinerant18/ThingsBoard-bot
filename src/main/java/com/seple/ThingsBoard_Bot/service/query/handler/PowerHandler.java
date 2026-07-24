@@ -15,10 +15,16 @@ public class PowerHandler implements AnswerHandler {
 
     private final AnswerTemplateService answerTemplateService;
     private final AnswerSupport support;
+    private final GlobalOverviewHandler globalOverviewHandler;
 
-    public PowerHandler(AnswerTemplateService answerTemplateService, AnswerSupport support) {
+    public PowerHandler(AnswerTemplateService answerTemplateService, AnswerSupport support, GlobalOverviewHandler globalOverviewHandler) {
         this.answerTemplateService = answerTemplateService;
         this.support = support;
+        this.globalOverviewHandler = globalOverviewHandler;
+    }
+
+    public PowerHandler(AnswerTemplateService answerTemplateService, AnswerSupport support) {
+        this(answerTemplateService, support, null);
     }
 
     @Override
@@ -32,7 +38,7 @@ public class PowerHandler implements AnswerHandler {
     public String handle(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
         BranchSnapshot branch = query.getTargetBranch();
         if (branch == null) {
-            return null;
+            return answerGlobalPowerOverview(query, snapshots, customerId);
         }
         return switch (query.getIntent()) {
             case BATTERY_VOLTAGE -> answerTemplateService.renderMetric(branch, "Battery Voltage Reading",
@@ -97,6 +103,51 @@ public class PowerHandler implements AnswerHandler {
                 + ", the Power Status is " + (isOn ? "ON" : "OFF")
                 + ". AC Mains: " + acStr
                 + ", Battery Backup: " + batteryStr + ".**";
+    }
+
+    private String answerGlobalPowerOverview(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
+        if (snapshots == null || snapshots.isEmpty()) {
+            return "**No branch data available.**";
+        }
+        java.util.Map<String, String> groupHeaders = globalOverviewHandler != null 
+                ? globalOverviewHandler.resolveGroupHeaders(snapshots, customerId) 
+                : java.util.Map.of();
+
+        java.util.Map<String, java.util.List<BranchSnapshot>> grouped = new java.util.TreeMap<>();
+        for (BranchSnapshot snapshot : snapshots) {
+            if (snapshot.getIdentity() == null || snapshot.getIdentity().getBranchName() == null) continue;
+            String header = groupHeaders.getOrDefault(snapshot.getIdentity().getBranchName(), "Other");
+            grouped.computeIfAbsent(header, k -> new java.util.ArrayList<>()).add(snapshot);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("**Battery & Power Status Across All Branches (").append(snapshots.size()).append(" branches):**\n\n");
+
+        for (java.util.Map.Entry<String, java.util.List<BranchSnapshot>> entry : grouped.entrySet()) {
+            sb.append("- **").append(entry.getKey()).append("**\n");
+            for (BranchSnapshot branch : entry.getValue()) {
+                String name = support.branchName(branch);
+                Double battery = branch.getPower() != null ? branch.getPower().getBatteryVoltage() : null;
+                Double ac = branch.getPower() != null ? branch.getPower().getAcVoltage() : null;
+                Boolean mains = branch.getPower() != null ? branch.getPower().getMainsOn() : null;
+
+                sb.append("  - **").append(name).append("**:");
+                if (battery != null) {
+                    sb.append(" Battery: **").append(trimDouble(battery)).append("V DC**");
+                } else {
+                    sb.append(" Battery: N/A");
+                }
+                if (ac != null) {
+                    sb.append(" | AC: ").append(trimDouble(ac)).append("V AC");
+                } else if (Boolean.TRUE.equals(mains)) {
+                    sb.append(" | AC Mains: ON");
+                } else if (Boolean.FALSE.equals(mains)) {
+                    sb.append(" | AC Mains: OFF");
+                }
+                sb.append("\n");
+            }
+        }
+        return sb.toString().trim();
     }
 
     private String trimDouble(Double value) {
