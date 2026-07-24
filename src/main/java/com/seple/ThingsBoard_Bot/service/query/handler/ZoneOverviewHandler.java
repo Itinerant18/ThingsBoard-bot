@@ -89,6 +89,9 @@ public class ZoneOverviewHandler implements AnswerHandler {
         String question = query.getOriginalQuestion().toUpperCase(Locale.ROOT);
 
         // Determine what type of data the user is asking about.
+        if (isPowerQuestion(question)) {
+            return renderPowerOverview(zoneLabel, zoneSnapshots);
+        }
         if (isSubsystemQuestion(question)) {
             return renderSubsystemOverview(zoneLabel, zoneSnapshots, question);
         }
@@ -289,10 +292,25 @@ public class ZoneOverviewHandler implements AnswerHandler {
             return false;
         }
         String upper = value.toUpperCase(Locale.ROOT).trim();
-        return upper.equals(fullFilter)
+        if (upper.equals(fullFilter)
                 || upper.equals(nameOnly)
                 || upper.endsWith(" " + nameOnly)
-                || upper.contains(nameOnly);
+                || upper.contains(nameOnly)) {
+            return true;
+        }
+        String normValue = normalizeKey(upper);
+        String normFilter = normalizeKey(nameOnly);
+        if (normValue.equals(normFilter) || normValue.contains(normFilter) || normFilter.contains(normValue)) {
+            return true;
+        }
+        if (normFilter.length() > 3) {
+            String stemFilter = normFilter.replaceAll("A$", "");
+            String stemValue = normValue.replaceAll("A$", "");
+            if (stemValue.equals(stemFilter) || stemValue.contains(stemFilter) || stemFilter.contains(stemValue)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // --- Renderers ---
@@ -423,7 +441,41 @@ public class ZoneOverviewHandler implements AnswerHandler {
         return sb.toString().trim();
     }
 
+    private String renderPowerOverview(String zoneName, List<BranchSnapshot> snapshots) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("**").append(zoneName).append(" — Battery & Power Status (").append(snapshots.size()).append(" branches):**\n\n");
+        for (BranchSnapshot snapshot : snapshots) {
+            String name = support.branchName(snapshot);
+            Double batteryVoltage = snapshot.getPower() != null ? snapshot.getPower().getBatteryVoltage() : null;
+            Double acVoltage = snapshot.getPower() != null ? snapshot.getPower().getAcVoltage() : null;
+            Boolean mainsOn = snapshot.getPower() != null ? snapshot.getPower().getMainsOn() : null;
+
+            sb.append("- **").append(name).append("**:");
+            if (batteryVoltage != null) {
+                String vStr = batteryVoltage % 1 == 0 ? String.valueOf(batteryVoltage.longValue()) : String.valueOf(batteryVoltage);
+                sb.append(" Battery: **").append(vStr).append("V DC**");
+            } else {
+                sb.append(" Battery: N/A");
+            }
+
+            if (acVoltage != null) {
+                String acStr = acVoltage % 1 == 0 ? String.valueOf(acVoltage.longValue()) : String.valueOf(acVoltage);
+                sb.append(" | AC Mains: ").append(acStr).append("V AC");
+            } else if (Boolean.TRUE.equals(mainsOn)) {
+                sb.append(" | AC Mains: ON");
+            } else if (Boolean.FALSE.equals(mainsOn)) {
+                sb.append(" | AC Mains: OFF");
+            }
+            sb.append("\n");
+        }
+        return sb.toString().trim();
+    }
+
     // --- Subsystem detection (mirrors QueryIntentResolver.detectSubsystem) ---
+
+    private boolean isPowerQuestion(String question) {
+        return question.contains("BATTERY") || question.contains("VOLTAGE") || question.contains("POWER") || question.contains("MAINS");
+    }
 
     private String detectSubsystem(String question) {
         if (question.contains("IAS") || question.contains("INTRUSION")) return "ias";
