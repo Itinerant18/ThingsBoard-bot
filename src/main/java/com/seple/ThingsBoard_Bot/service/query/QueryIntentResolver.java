@@ -99,6 +99,13 @@ public class QueryIntentResolver {
                 .build();
     }
 
+    private static final java.util.Set<String> SKIP_FUZZY_WORDS = java.util.Set.of(
+            "ACTIVE", "INACTIVE", "ONLINE", "OFFLINE", "STATUS", "WORKING", "DEVICE", "DEVICES",
+            "BRANCH", "BRANCHES", "CAMERA", "CAMERAS", "BATTERY", "ALARM", "ALARMS", "SYSTEM",
+            "HEALTH", "FAULT", "ERROR", "TOTAL", "COUNT", "MANY", "THERE", "HERE",
+            "PLEASE", "SHOW", "LIST", "GIVE", "WHAT", "WHICH", "WHERE", "WHEN", "WITH", "FROM"
+    );
+
     /**
      * Scores every 1-3 word window of the question against the branch dictionary and returns
      * the best fuzzy resolution, or null when nothing clears the suggestion floor. The
@@ -115,7 +122,7 @@ public class QueryIntentResolver {
         for (int start = 0; start < words.length; start++) {
             for (int len = 1; len <= 3 && start + len <= words.length; len++) {
                 String window = String.join(" ", java.util.Arrays.copyOfRange(words, start, start + len));
-                if (window.length() < 2) {
+                if (window.length() < 2 || SKIP_FUZZY_WORDS.contains(window.toUpperCase(java.util.Locale.ROOT))) {
                     continue;
                 }
                 BranchResolution candidate = fuzzyBranchResolver.resolve(window, dictionary);
