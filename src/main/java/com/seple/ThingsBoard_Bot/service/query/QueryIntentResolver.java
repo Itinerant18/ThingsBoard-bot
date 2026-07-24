@@ -262,9 +262,18 @@ public class QueryIntentResolver {
         return compactAlias.length() >= 6 && compactQuestion.contains(compactAlias);
     }
 
+    private static final java.util.Set<String> RESERVED_ALIAS_WORDS = java.util.Set.of(
+            "ACTIVE", "INACTIVE", "ONLINE", "OFFLINE", "STATUS", "WORKING", "DEVICE", "DEVICES",
+            "BRANCH", "BRANCHES", "BRANCHS", "CAMERA", "CAMERAS", "BATTERY", "ALARM", "ALARMS", "SYSTEM",
+            "HEALTH", "FAULT", "ERROR", "TOTAL", "COUNT", "GATEWAY", "TEST"
+    );
+
     private boolean isWeakAlias(String alias) {
         String normalizedAlias = branchAliasIndex.normalize(alias);
-        return normalizedAlias.length() < 4;
+        if (normalizedAlias.length() < 4) {
+            return true;
+        }
+        return RESERVED_ALIAS_WORDS.contains(normalizedAlias);
     }
 
     private QueryIntent detectIntent(String normalizedQuestion, boolean hasTargetBranch) {
