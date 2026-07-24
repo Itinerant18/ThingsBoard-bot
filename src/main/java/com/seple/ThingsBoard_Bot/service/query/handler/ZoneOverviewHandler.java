@@ -205,8 +205,15 @@ public class ZoneOverviewHandler implements AnswerHandler {
         }
         CachedHierarchy cached = hierarchyCache.get(customerId);
         if (cached == null || cached.isExpired()) {
-            List<HierarchyNode> allNodes = hierarchyNodeRepository.findByCustomerId(customerId);
-            List<BranchAncestorPath> allPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+            List<HierarchyNode> allNodes;
+            List<BranchAncestorPath> allPaths;
+            if ("ALL".equals(customerId)) {
+                allNodes = hierarchyNodeRepository.findAll();
+                allPaths = branchAncestorPathRepository.findAll();
+            } else {
+                allNodes = hierarchyNodeRepository.findByCustomerId(customerId);
+                allPaths = branchAncestorPathRepository.findByCustomerId(customerId);
+            }
             cached = new CachedHierarchy(allPaths, allNodes);
             hierarchyCache.put(customerId, cached);
         }
