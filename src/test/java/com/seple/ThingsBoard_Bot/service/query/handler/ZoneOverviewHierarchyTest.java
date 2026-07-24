@@ -71,4 +71,55 @@ class ZoneOverviewHierarchyTest {
         assertTrue(answer.contains("ARAMBAGH"), answer);
         assertFalse(answer.contains("FARAWAY"), "only ZO HOWRAH branches: " + answer);
     }
+
+    @Test
+    void multiZoneSlashListMatchesBranchesInAnyListedZone() {
+        ZoneOverviewHandler handler = new ZoneOverviewHandler(new AnswerSupport());
+
+        HierarchyNodeRepository nodeRepo = mock(HierarchyNodeRepository.class);
+        BranchAncestorPathRepository pathRepo = mock(BranchAncestorPathRepository.class);
+
+        HierarchyNode howrahLeaf = HierarchyNode.builder()
+                .nodeId("ARAMBAGH").displayName("BRANCH ARAMBAGH").isLeaf(true).build();
+        HierarchyNode barasatLeaf = HierarchyNode.builder()
+                .nodeId("BAGULA").displayName("BRANCH BAGULA").isLeaf(true).build();
+        HierarchyNode nasikLeaf = HierarchyNode.builder()
+                .nodeId("SAVEDI").displayName("BRANCH SAVEDI").isLeaf(true).build();
+        HierarchyNode howrah = HierarchyNode.builder()
+                .nodeId("ZO_HOWRAH").displayName("ZO HOWRAH").nodeType("ZO").isLeaf(false).build();
+        HierarchyNode barasat = HierarchyNode.builder()
+                .nodeId("ZO_BARASAT").displayName("ZO BARASAT").nodeType("ZO").isLeaf(false).build();
+        HierarchyNode nasik = HierarchyNode.builder()
+                .nodeId("ZO_NASIK").displayName("ZO NASIK").nodeType("ZO").isLeaf(false).build();
+
+        when(nodeRepo.findByCustomerId("BOI"))
+                .thenReturn(List.of(howrahLeaf, barasatLeaf, nasikLeaf, howrah, barasat, nasik));
+        when(pathRepo.findByCustomerId("BOI")).thenReturn(List.of(
+                BranchAncestorPath.builder().branchNodeId("ARAMBAGH").ancestorPath(new String[]{"ZO_HOWRAH"}).build(),
+                BranchAncestorPath.builder().branchNodeId("BAGULA").ancestorPath(new String[]{"ZO_BARASAT"}).build(),
+                BranchAncestorPath.builder().branchNodeId("SAVEDI").ancestorPath(new String[]{"ZO_NASIK"}).build()));
+        ReflectionTestUtils.setField(handler, "hierarchyNodeRepository", nodeRepo);
+        ReflectionTestUtils.setField(handler, "branchAncestorPathRepository", pathRepo);
+
+        ResolvedQuery query = ResolvedQuery.builder()
+                .intent(QueryIntent.ZONE_OVERVIEW)
+                // Prefix written once, zones slash-separated.
+                .zoneFilter("ZO HOWRAH/BARASAT/NASIK")
+                .originalQuestion("Current gateway status of all branches for ZO Howrah/Barasat/Nasik")
+                .build();
+
+        List<BranchSnapshot> snapshots = List.of(
+                branchNoZoneTelemetry("BRANCH ARAMBAGH", NormalizedState.ONLINE),   // HOWRAH
+                branchNoZoneTelemetry("BRANCH BAGULA", NormalizedState.OFFLINE),    // BARASAT
+                branchNoZoneTelemetry("BRANCH SAVEDI", NormalizedState.ONLINE),     // NASIK
+                branchNoZoneTelemetry("BRANCH FARAWAY", NormalizedState.ONLINE));   // no zone
+
+        String answer = handler.handle(query, snapshots, "BOI");
+
+        assertFalse(answer.contains("No branches found"), answer);
+        assertTrue(answer.contains("ARAMBAGH"), answer);
+        assertTrue(answer.contains("BAGULA"), answer);
+        assertTrue(answer.contains("SAVEDI"), answer);
+        assertFalse(answer.contains("FARAWAY"), "branch in no listed zone must be excluded: " + answer);
+    }
 }

@@ -79,40 +79,76 @@ public class ZoneOverviewHandler implements AnswerHandler {
             return "**Could not determine which zone you are asking about. Please specify the zone name (e.g., ZO Howrah).**";
         }
 
-        // Filter snapshots to only branches under this zone.
+        // Filter snapshots to only branches under this zone (or any zone in a multi-zone list).
         List<BranchSnapshot> zoneSnapshots = filterByZone(snapshots, zoneFilter, customerId);
+        String zoneLabel = zoneDisplayLabel(zoneFilter);
         if (zoneSnapshots.isEmpty()) {
-            return "**No branches found under " + zoneFilter + " in your scope.**";
+            return "**No branches found under " + zoneLabel + " in your scope.**";
         }
 
         String question = query.getOriginalQuestion().toUpperCase(Locale.ROOT);
 
         // Determine what type of data the user is asking about.
         if (isSubsystemQuestion(question)) {
-            return renderSubsystemOverview(zoneFilter, zoneSnapshots, question);
+            return renderSubsystemOverview(zoneLabel, zoneSnapshots, question);
         }
         if (isOfflineQuestion(question)) {
-            return renderOfflineBranches(zoneFilter, zoneSnapshots);
+            return renderOfflineBranches(zoneLabel, zoneSnapshots);
         }
         if (isOnlineQuestion(question)) {
-            return renderOnlineBranches(zoneFilter, zoneSnapshots);
+            return renderOnlineBranches(zoneLabel, zoneSnapshots);
         }
         // Default: gateway status overview for the zone.
-        return renderGatewayOverview(zoneFilter, zoneSnapshots);
+        return renderGatewayOverview(zoneLabel, zoneSnapshots);
     }
 
     // --- Filtering ---
 
+    /** One requested zone: its full form ("ZO HOWRAH") and bare name ("HOWRAH") for matching. */
+    private record ZoneSpec(String fullFilter, String nameOnly) {}
+
+    /**
+     * Parse a zone filter into one or more zone specs. Supports a slash-separated multi-zone list
+     * where the prefix is written once, e.g. "ZO Howrah/Barasat/Siliguri" -> ZO HOWRAH, ZO BARASAT,
+     * ZO SILIGURI. A single zone parses to a one-element list (unchanged behaviour).
+     */
+    private List<ZoneSpec> parseZoneSpecs(String zoneFilter) {
+        String upper = zoneFilter.toUpperCase(Locale.ROOT).trim();
+        String prefix = "";
+        String remainder = upper;
+        for (String p : new String[]{"ZO", "ZONE", "NBG"}) {
+            if (upper.startsWith(p + " ")) {
+                prefix = p;
+                remainder = upper.substring(p.length()).trim();
+                break;
+            }
+        }
+        List<ZoneSpec> specs = new ArrayList<>();
+        for (String piece : remainder.split("/")) {
+            String name = piece.trim();
+            if (name.isEmpty()) {
+                continue;
+            }
+            String full = prefix.isEmpty() ? name : prefix + " " + name;
+            specs.add(new ZoneSpec(full, name));
+        }
+        if (specs.isEmpty()) {
+            specs.add(new ZoneSpec(upper, upper));
+        }
+        return specs;
+    }
+
+    /** Readable label for the requested zones, e.g. "ZO HOWRAH, ZO BARASAT". */
+    private String zoneDisplayLabel(String zoneFilter) {
+        List<String> names = new ArrayList<>();
+        for (ZoneSpec spec : parseZoneSpecs(zoneFilter)) {
+            names.add(spec.fullFilter());
+        }
+        return String.join(", ", names);
+    }
+
     private List<BranchSnapshot> filterByZone(List<BranchSnapshot> snapshots, String zoneFilter, String customerId) {
-        String upperFilter = zoneFilter.toUpperCase(Locale.ROOT);
-        // Strip the prefix for matching (e.g., "ZO HOWRAH" -> "HOWRAH",
-        // "NBG EAST" -> "EAST") so we can also match raw values that don't
-        // include the prefix.
-        String nameOnly = upperFilter
-                .replaceFirst("^ZO\\s+", "")
-                .replaceFirst("^ZONE\\s+", "")
-                .replaceFirst("^NBG\\s+", "")
-                .trim();
+        List<ZoneSpec> specs = parseZoneSpecs(zoneFilter);
 
         // Primary source: hierarchy ancestor names (covers every branch). Falls back to the sparse
         // zo/nbg telemetry keys when the hierarchy repos aren't available (e.g. unit tests).
@@ -120,21 +156,30 @@ public class ZoneOverviewHandler implements AnswerHandler {
 
         List<BranchSnapshot> result = new ArrayList<>();
         for (BranchSnapshot snapshot : snapshots) {
-            if (matchesByHierarchy(snapshot, ancestorNames, upperFilter, nameOnly)) {
+            if (matchesByHierarchy(snapshot, ancestorNames, specs)) {
                 result.add(snapshot);
                 continue;
             }
             String zo = zoneOf(snapshot);
             String nbg = nbgOf(snapshot);
-            if (matchesZone(zo, upperFilter, nameOnly) || matchesZone(nbg, upperFilter, nameOnly)) {
+            if (matchesAnyZone(zo, specs) || matchesAnyZone(nbg, specs)) {
                 result.add(snapshot);
             }
         }
         return result;
     }
 
+    private boolean matchesAnyZone(String value, List<ZoneSpec> specs) {
+        for (ZoneSpec spec : specs) {
+            if (matchesZone(value, spec.fullFilter(), spec.nameOnly())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean matchesByHierarchy(BranchSnapshot snapshot, Map<String, Set<String>> ancestorNames,
-                                       String upperFilter, String nameOnly) {
+                                       List<ZoneSpec> specs) {
         if (snapshot.getIdentity() == null || snapshot.getIdentity().getBranchName() == null) {
             return false;
         }
@@ -143,7 +188,7 @@ public class ZoneOverviewHandler implements AnswerHandler {
             return false;
         }
         for (String ancestor : ancestors) {
-            if (matchesZone(ancestor, upperFilter, nameOnly)) {
+            if (matchesAnyZone(ancestor, specs)) {
                 return true;
             }
         }
