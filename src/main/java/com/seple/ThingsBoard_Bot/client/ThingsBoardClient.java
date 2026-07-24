@@ -74,14 +74,19 @@ public class ThingsBoardClient {
         }
     }
 
-    private HttpHeaders getAuthHeaders() {
+    public String getValidToken() {
         if (jwtToken == null || System.currentTimeMillis() >= tokenExpiryTime) {
             log.info("Token expired or missing, re-authenticating...");
             authenticate();
         }
+        return jwtToken;
+    }
+
+    private HttpHeaders getAuthHeaders() {
+        String token = getValidToken();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Authorization", "Bearer " + jwtToken);
+        headers.set("X-Authorization", "Bearer " + token);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
     }
