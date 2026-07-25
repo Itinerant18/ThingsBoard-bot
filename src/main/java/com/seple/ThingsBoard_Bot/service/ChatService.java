@@ -366,8 +366,11 @@ public class ChatService {
                                         + "I can't follow instructions embedded in questions.");
                     }
                     if (top.intent() == QueryIntent.OUT_OF_SCOPE) {
+                        String boundary = com.seple.ThingsBoard_Bot.service.query.NotTracked
+                                .messageFor(request.getQuestion());
                         return cannedAnswer(sessionId, request, "OUT_OF_SCOPE",
-                                "That's outside what I can help with. Ask me about your branches' device "
+                                boundary != null ? boundary
+                                        : "That's outside what I can help with. Ask me about your branches' device "
                                         + "status, power, CCTV, alarms, or related monitoring data.");
                     }
 
