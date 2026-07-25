@@ -101,10 +101,16 @@ public class DeterministicAnswerService {
     }
 
     public String answer(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
+        List<BranchSnapshot> effectiveSnapshots = snapshots;
+        if (query != null && query.getTargetBranch() == null && snapshots != null) {
+            effectiveSnapshots = snapshots.stream()
+                    .filter(BranchSnapshot::isOperationalBranch)
+                    .toList();
+        }
         QueryIntent intent = query.getIntent();
         for (AnswerHandler handler : handlers) {
             if (handler.supports(intent)) {
-                return handler.handle(query, snapshots, customerId);
+                return handler.handle(query, effectiveSnapshots, customerId);
             }
         }
         // GENERAL_LLM (and any unhandled intent) -> defer to the LLM path.
