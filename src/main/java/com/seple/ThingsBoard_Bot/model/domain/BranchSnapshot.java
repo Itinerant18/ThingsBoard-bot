@@ -49,16 +49,11 @@ public class BranchSnapshot {
                 || normName.contains("PLAYBACK") || normTech.contains("PLAYBACK")
                 || normName.contains("RECORDING_IDS") || normTech.contains("RECORDING_IDS")
                 || normName.contains("ZOHO") || normTech.contains("ZOHO")
-                || normName.contains("SBI LHO") || normTech.contains("SBI LHO")
                 || normName.contains("SEPLE") || normTech.contains("SEPLE")
                 || normName.contains("SEPL-") || normTech.contains("SEPL-")
                 || normName.contains("SDF-") || normTech.contains("SDF-")
                 || normName.contains("-DX") || normTech.contains("-DX")
-                || normName.contains("MCC") || normTech.contains("MCC")
-                || normName.endsWith("-BAS") || normTech.endsWith("-BAS")
-                || normName.startsWith("CANARA-") || normTech.startsWith("CANARA-")
-                || normName.startsWith("BOB-") || normTech.startsWith("BOB-")
-                || normName.startsWith("PNB") || normTech.startsWith("PNB")) {
+                || normName.endsWith("-BAS") || normTech.endsWith("-BAS")) {
             return false;
         }
 
