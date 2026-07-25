@@ -24,13 +24,21 @@ jobs:
           port: 22
           script_stop: true
           script: |
-            echo "🚀 Starting automated deployment on AWS..."
+            echo "📊 Disk usage before cleanup:"
+            df -h /
+            echo "🧹 Freeing disk space (Docker prune + logs)..."
+            docker system prune -af --volumes || true
+            docker volume prune -f || true
+            sudo journalctl --vacuum-size=50M || true
+            find /tmp -type f -mtime +1 -delete || true
+            echo "📊 Disk usage after cleanup:"
+            df -h /
+            echo "🚀 Starting deployment on AWS..."
             cd ~/ThingsBoard-Bot
             git fetch origin main
             git reset --hard origin/main
-            echo "🧹 Clearing unused Docker cache..."
-            docker system prune -af
             echo "📦 Building and restarting containers..."
-            docker compose down
+            docker compose down --remove-orphans
             docker compose up -d --build
             echo "✅ Deployment successful!"
+
