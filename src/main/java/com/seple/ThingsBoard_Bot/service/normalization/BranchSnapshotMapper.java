@@ -213,7 +213,7 @@ public class BranchSnapshotMapper {
         }
 
         if (total == null) {
-            String recInfo = choose(raw, "Hikvision_NVR_CameraRecInfo", "rock_VIDEOdETAILS");
+            String recInfo = choose(raw, "Hikvision_NVR_CameraRecInfo", "rock_VIDEOdETAILS", "Dahua_NVR_CameraRecInfo", "CP_Plus_NVR_CameraRecInfo", "CameraRecInfo");
             if (recInfo != null && recInfo.startsWith("[")) {
                 try {
                     JsonNode node = objectMapper.readTree(recInfo);
@@ -233,6 +233,39 @@ public class BranchSnapshotMapper {
                     }
                 } catch (Exception ignored) {
                 }
+            }
+        }
+
+        if (total == null) {
+            int maxCh = 0;
+            int disconnectedCount = 0;
+            for (String key : raw.keySet()) {
+                if (key.toUpperCase().contains("CAMERA DISCONNECT CH ")) {
+                    try {
+                        String chNumStr = key.replaceAll("(?i).*CAMERA DISCONNECT CH\\s*", "").trim();
+                        int chNum = Integer.parseInt(chNumStr);
+                        if (chNum > maxCh) {
+                            maxCh = chNum;
+                        }
+                        String val = String.valueOf(raw.get(key)).trim();
+                        if ("true".equalsIgnoreCase(val) || "1".equals(val) || "yes".equalsIgnoreCase(val)) {
+                            disconnectedCount++;
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+            if (maxCh > 0) {
+                total = maxCh;
+                online = Math.max(0, maxCh - disconnectedCount);
+            }
+        }
+
+        if (total == null) {
+            int cctvCount = valueNormalizer.toInt(choose(raw, "count_camera", "no_of_connected_cctv", "cctv_count", "no_of_cameras", "total_cameras", "Hikvision_NVR_NoOfCameras"), 0);
+            if (cctvCount > 0) {
+                total = cctvCount;
+                online = cctvCount;
             }
         }
 
