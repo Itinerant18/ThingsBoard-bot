@@ -170,11 +170,9 @@ public class ThingsBoardTimescaleImporter {
             for (JsonNode device : rootNode) {
                 String deviceId = device.path("id").asText();
                 String deviceName = device.path("name").asText(); // E.g., BOI-MALDATOWN
-                
-                String customerId = "BOI";
-                if (deviceName.contains("-")) {
-                    customerId = deviceName.split("-")[0].toUpperCase();
-                }
+
+                // Tenant from the authoritative full_path key, not a name-guess defaulting to BOI.
+                String customerId = deriveCustomerId(deviceName, extractFullPath(device));
 
                 // Try to find a timestamp inside telemetry or serverAttributes
                 Instant eventTimestamp = now;
@@ -292,6 +290,47 @@ public class ThingsBoardTimescaleImporter {
         }
     }
 
+    /**
+     * Bank/customer code, derived from the authoritative {@code full_path} key
+     * (e.g. "BANK OF INDIA → NBG EAST → ZO HOWRAH → BRANCH LILUAH") rather than guessed from the
+     * device name. Keyword → code, most-specific first. This is what keeps a device out of the wrong
+     * tenant's scope — a "PNB PATNA" device is CANARA/PNB/etc. by its path, never silently BOI.
+     */
+    private static final java.util.List<String[]> BANK_KEYWORDS = java.util.List.of(
+            new String[]{"BANK OF INDIA", "BOI"},
+            new String[]{"CANARA", "CANARA"},
+            new String[]{"STATE BANK OF INDIA", "SBI"},
+            new String[]{"BANK OF BARODA", "BOB"},
+            new String[]{"PUNJAB NATIONAL", "PNB"});
+
+    private static String extractFullPath(JsonNode device) {
+        String fp = device.path("telemetry").path("full_path").asText("").trim();
+        if (fp.isEmpty()) {
+            fp = device.path("serverAttributes").path("full_path").asText("").trim();
+        }
+        return fp;
+    }
+
+    /**
+     * Resolve the tenant from the {@code full_path} key first (authoritative), then the device-name
+     * prefix, and only "UNKNOWN" if neither identifies a bank — never a silent "BOI" default, which
+     * previously bucketed every non-hyphenated name (PNB/SBI/ZO/CC) into BOI's scope.
+     */
+    private static String deriveCustomerId(String deviceName, String fullPath) {
+        if (fullPath != null && !fullPath.isEmpty()) {
+            String first = fullPath.split("→|->")[0].trim().toUpperCase();
+            for (String[] kw : BANK_KEYWORDS) {
+                if (first.contains(kw[0])) {
+                    return kw[1];
+                }
+            }
+        }
+        if (deviceName != null && deviceName.contains("-")) {
+            return deviceName.split("-")[0].toUpperCase();
+        }
+        return "UNKNOWN";
+    }
+
     private static class Node {
         String nodeId;
         String customerId;
@@ -311,11 +350,9 @@ public class ThingsBoardTimescaleImporter {
         for (JsonNode device : rootNode) {
             String deviceId = device.path("id").asText();
             String deviceName = device.path("name").asText(); // E.g., BOI-MALDATOWN
-            
-            String customerId = "BOI";
-            if (deviceName.contains("-")) {
-                customerId = deviceName.split("-")[0].toUpperCase();
-            }
+
+            // Tenant from the authoritative full_path key, not a name-guess defaulting to BOI.
+            String customerId = deriveCustomerId(deviceName, extractFullPath(device));
             activeCustomers.add(customerId);
 
             JsonNode serverAttrs = device.path("serverAttributes");
