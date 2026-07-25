@@ -52,7 +52,8 @@ public class BranchSnapshot {
                 || normName.contains("SBI LHO") || normTech.contains("SBI LHO")
                 || normName.contains("SEPLE") || normTech.contains("SEPLE")
                 || normName.contains("SEPL-") || normTech.contains("SEPL-")
-                || normName.contains("SDF-") || normTech.contains("SDF-")) {
+                || normName.contains("SDF-") || normTech.contains("SDF-")
+                || normName.startsWith("CANARA-") || normTech.startsWith("CANARA-")) {
             return false;
         }
 

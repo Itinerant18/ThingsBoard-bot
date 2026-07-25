@@ -18,6 +18,22 @@ public class FieldPrecedenceResolver {
     }
 
     public ResolvedField resolveGatewayState(Map<String, Object> raw) {
+        // Authoritative ThingsBoard connection status attribute
+        for (String key : List.of("active", "serverAttributes_active", "device_active", "gateway_active")) {
+            Object activeObj = raw.get(key);
+            if (activeObj == null) {
+                activeObj = findInNestedJson(raw, key);
+            }
+            if (activeObj != null) {
+                String activeStr = String.valueOf(activeObj).trim();
+                if ("false".equalsIgnoreCase(activeStr) || "0".equals(activeStr) || "offline".equalsIgnoreCase(activeStr)) {
+                    return new ResolvedField(NormalizedState.OFFLINE, key, activeStr);
+                } else if ("true".equalsIgnoreCase(activeStr) || "1".equals(activeStr) || "online".equalsIgnoreCase(activeStr)) {
+                    return new ResolvedField(NormalizedState.ONLINE, key, activeStr);
+                }
+            }
+        }
+
         return resolveFirstState(raw, List.of(
                 "status_device_gateway_status",
                 "statusbox_system_healthy",
@@ -30,7 +46,6 @@ public class FieldPrecedenceResolver {
                 "gatewayStatus_status",
                 "rock_gateway_status",
                 "status",
-                "active",
                 "statusbox_system_on",
                 "system_status_statusbox_system_on",
                 "gatewayStatus_SYSTEM ON"
