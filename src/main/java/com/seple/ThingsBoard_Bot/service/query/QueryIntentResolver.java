@@ -301,6 +301,30 @@ public class QueryIntentResolver {
                 return knowledgeIntent;
             }
         }
+        // User and Audit Log intents (global)
+        if (!hasTargetBranch) {
+            if (question.contains("USER") || question.contains("LOGGED IN") || question.contains("EMAIL") || question.contains("ROLES") || question.contains("AUTHORITY")) {
+                // Must ensure it doesn't collide with ACCESS CONTROL USER COUNT
+                if (!question.contains("ACCESS CONTROL")) {
+                    return QueryIntent.USER_QUERY;
+                }
+            }
+            if (question.contains("AUDIT") || question.contains("LOG") || question.contains("ACTION") || question.contains("CONFIG CHANGE")) {
+                return QueryIntent.AUDIT_LOG_QUERY;
+            }
+        }
+        
+        // Historical and Uptime intents
+        if (question.contains("DAY OVER DAY") || question.contains("DAY-OVER-DAY") || (question.contains("CHANGE") && question.contains("YESTERDAY"))) {
+            return QueryIntent.DAY_OVER_DAY_TREND;
+        }
+        if (question.contains("UPTIME")) {
+            return QueryIntent.UPTIME_QUERY;
+        }
+        if ((question.contains("WENT OFFLINE") || question.contains("BECAME OFFLINE") || question.contains("DISCONNECTED")) 
+            && (question.contains("YESTERDAY") || question.contains("LAST 24") || question.contains("PAST 24") || question.contains("RECENTLY"))) {
+            return QueryIntent.HISTORICAL_OFFLINE_QUERY;
+        }
         // Data quality questions ("what % have IMEI", "data completeness", "data quality")
         if (isDataQualityQuestion(question)) {
             return QueryIntent.DATA_QUALITY;

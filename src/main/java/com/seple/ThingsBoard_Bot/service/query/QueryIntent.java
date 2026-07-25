@@ -52,7 +52,12 @@ public enum QueryIntent {
     CONCEPT_EXPLAIN,
     GLOSSARY,
     OUT_OF_SCOPE,
-    REFUSAL;
+    REFUSAL,
+    USER_QUERY,
+    AUDIT_LOG_QUERY,
+    HISTORICAL_OFFLINE_QUERY,
+    UPTIME_QUERY,
+    DAY_OVER_DAY_TREND;
 
     /**
      * Knowledge intents are answered from static content (glossary/capability replies) and are

@@ -20,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seple.ThingsBoard_Bot.config.ThingsBoardConfig;
+import com.seple.ThingsBoard_Bot.model.domain.TbAuditLog;
+import com.seple.ThingsBoard_Bot.model.domain.TbUser;
 import com.seple.ThingsBoard_Bot.util.ThingsBoardRequestContext;
 
 import lombok.extern.slf4j.Slf4j;
@@ -531,6 +533,80 @@ public class UserAwareThingsBoardClient {
             log.error("Failed to fetch raw telemetry for device {}: {}", deviceId, e.getMessage());
         }
         return new HashMap<>();
+    }
+
+    // ==================== Users & Audit Logs ====================
+
+    public List<TbUser> fetchUsers(String userToken, String customerId, int pageSize) {
+        String url;
+        if ("ALL".equals(customerId) || "BOI".equals(customerId)) {
+            url = getThingsBoardUrl() + "/api/tenant/users?pageSize=" + pageSize + "&page=0";
+        } else {
+            url = getThingsBoardUrl() + "/api/customer/" + customerId + "/users?pageSize=" + pageSize + "&page=0";
+        }
+
+        List<TbUser> users = new ArrayList<>();
+        try {
+            HttpEntity<Void> entity = new HttpEntity<>(getHeaders(userToken));
+            ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                JsonNode json = objectMapper.readTree(response.getBody());
+                JsonNode dataArray = json.path("data");
+                if (dataArray.isArray()) {
+                    for (JsonNode userNode : dataArray) {
+                        String id = userNode.path("id").path("id").asText(null);
+                        String email = userNode.path("email").asText(null);
+                        String firstName = userNode.path("firstName").asText(null);
+                        String lastName = userNode.path("lastName").asText(null);
+                        String authority = userNode.path("authority").asText(null);
+                        long createdTime = userNode.path("createdTime").asLong(0L);
+                        users.add(new TbUser(id, email, firstName, lastName, authority, createdTime));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not fetch users for customer {}: {}", customerId, e.getMessage());
+        }
+        return users;
+    }
+
+    public List<TbAuditLog> fetchAuditLogs(String userToken, long startTime, long endTime, int pageSize) {
+        String url = getThingsBoardUrl()
+                + "/api/audit/logs?pageSize=" + pageSize
+                + "&page=0"
+                + "&sortProperty=createdTime"
+                + "&sortOrder=DESC"
+                + "&startTime=" + startTime
+                + "&endTime=" + endTime;
+
+        List<TbAuditLog> logs = new ArrayList<>();
+        try {
+            HttpEntity<Void> entity = new HttpEntity<>(getHeaders(userToken));
+            ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                JsonNode json = objectMapper.readTree(response.getBody());
+                JsonNode dataArray = json.path("data");
+                if (dataArray.isArray()) {
+                    for (JsonNode logNode : dataArray) {
+                        String id = logNode.path("id").path("id").asText(null);
+                        long createdTime = logNode.path("createdTime").asLong(0L);
+                        String entityId = logNode.path("entityId").path("id").asText(null);
+                        String entityType = logNode.path("entityId").path("entityType").asText(null);
+                        String entityName = logNode.path("entityName").asText(null);
+                        String userId = logNode.path("userId").path("id").asText(null);
+                        String userName = logNode.path("userName").asText(null);
+                        String actionType = logNode.path("actionType").asText(null);
+                        String actionStatus = logNode.path("actionStatus").asText(null);
+                        JsonNode actionData = logNode.path("actionData");
+
+                        logs.add(new TbAuditLog(id, createdTime, entityId, entityType, entityName, userId, userName, actionType, actionStatus, actionData));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not fetch audit logs: {}", e.getMessage());
+        }
+        return logs;
     }
 
     private <T> ResponseEntity<T> exchangeWithRetry(String url, HttpMethod method, HttpEntity<?> entity,

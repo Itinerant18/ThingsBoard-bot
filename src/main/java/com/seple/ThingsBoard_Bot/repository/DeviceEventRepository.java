@@ -51,4 +51,25 @@ public interface DeviceEventRepository extends JpaRepository<DeviceEvent, Long> 
     List<DeviceEvent> findLatestEventsForEachBranch(
             @Param("customerId") String customerId,
             @Param("field") String field);
+
+    @Query("SELECT e FROM DeviceEvent e WHERE e.customerId = :customerId AND e.field = 'active' AND e.newValue = 'false' AND e.eventTime BETWEEN :startTime AND :endTime ORDER BY e.eventTime DESC")
+    List<DeviceEvent> findOfflineEvents(
+            @Param("customerId") String customerId,
+            @Param("startTime") Instant startTime,
+            @Param("endTime") Instant endTime);
+
+    @Query("SELECT e FROM DeviceEvent e WHERE e.customerId = :customerId AND e.branchNodeId = :branchNodeId AND e.field = :field AND e.eventTime BETWEEN :startTime AND :endTime ORDER BY e.eventTime ASC")
+    List<DeviceEvent> findStateChanges(
+            @Param("customerId") String customerId,
+            @Param("branchNodeId") String branchNodeId,
+            @Param("field") String field,
+            @Param("startTime") Instant startTime,
+            @Param("endTime") Instant endTime);
+
+    @Query(value = "SELECT * FROM device_events WHERE customer_id = :customerId AND branch_node_id = :branchNodeId AND field = :field AND event_time < :startTime ORDER BY event_time DESC LIMIT 1", nativeQuery = true)
+    Optional<DeviceEvent> findLatestStateBefore(
+            @Param("customerId") String customerId,
+            @Param("branchNodeId") String branchNodeId,
+            @Param("field") String field,
+            @Param("startTime") Instant startTime);
 }

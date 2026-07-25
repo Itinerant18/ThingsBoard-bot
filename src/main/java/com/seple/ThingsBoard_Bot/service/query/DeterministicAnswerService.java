@@ -85,7 +85,11 @@ public class DeterministicAnswerService {
                 new com.seple.ThingsBoard_Bot.service.query.handler.GlossaryHandler(
                         new com.seple.ThingsBoard_Bot.service.query.glossary.GlossaryService(
                                 new org.springframework.core.io.ClassPathResource("glossary.json"))),
-                new com.seple.ThingsBoard_Bot.service.query.handler.CapabilityReplyHandler());
+                new com.seple.ThingsBoard_Bot.service.query.handler.CapabilityReplyHandler(),
+                new com.seple.ThingsBoard_Bot.service.query.handler.UserQueryHandler(null),
+                new com.seple.ThingsBoard_Bot.service.query.handler.AuditLogQueryHandler(null),
+                new com.seple.ThingsBoard_Bot.service.query.handler.HistoricalQueryHandler(null),
+                new com.seple.ThingsBoard_Bot.service.query.handler.UptimeQueryHandler(null));
     }
 
     public String answer(ResolvedQuery query, List<BranchSnapshot> snapshots) {

@@ -19,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seple.ThingsBoard_Bot.config.ThingsBoardConfig;
+import com.seple.ThingsBoard_Bot.model.domain.TbAuditLog;
+import com.seple.ThingsBoard_Bot.model.domain.TbUser;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -400,6 +402,96 @@ public class ThingsBoardClient {
             log.warn("Could not fetch alarms for device {}: {}", deviceId, e.getMessage());
         }
         return alarms;
+    }
+
+    // ==================== Users & Audit Logs ====================
+
+    /**
+     * Fetches users for a given customer from ThingsBoard.
+     *
+     * @param customerId Customer ID or 'ALL'/'BOI' if admin
+     * @param pageSize   Number of users to fetch
+     * @return List of parsed users
+     */
+    public List<TbUser> fetchUsers(String customerId, int pageSize) {
+        String url;
+        if ("ALL".equals(customerId) || "BOI".equals(customerId)) {
+            // If it's a tenant admin or legacy fallback, fetch tenant users
+            url = config.getUrl() + "/api/tenant/users?pageSize=" + pageSize + "&page=0";
+        } else {
+            url = config.getUrl() + "/api/customer/" + customerId + "/users?pageSize=" + pageSize + "&page=0";
+        }
+
+        List<TbUser> users = new ArrayList<>();
+        try {
+            HttpEntity<Void> entity = new HttpEntity<>(getAuthHeaders());
+            ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                JsonNode json = objectMapper.readTree(response.getBody());
+                JsonNode dataArray = json.path("data");
+                if (dataArray.isArray()) {
+                    for (JsonNode userNode : dataArray) {
+                        String id = userNode.path("id").path("id").asText(null);
+                        String email = userNode.path("email").asText(null);
+                        String firstName = userNode.path("firstName").asText(null);
+                        String lastName = userNode.path("lastName").asText(null);
+                        String authority = userNode.path("authority").asText(null);
+                        long createdTime = userNode.path("createdTime").asLong(0L);
+                        users.add(new TbUser(id, email, firstName, lastName, authority, createdTime));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not fetch users for customer {}: {}", customerId, e.getMessage());
+        }
+        return users;
+    }
+
+    /**
+     * Fetches audit logs from ThingsBoard.
+     *
+     * @param startTime Start timestamp
+     * @param endTime   End timestamp
+     * @param pageSize  Max number of logs to fetch
+     * @return List of parsed audit logs
+     */
+    public List<TbAuditLog> fetchAuditLogs(long startTime, long endTime, int pageSize) {
+        String url = config.getUrl()
+                + "/api/audit/logs?pageSize=" + pageSize
+                + "&page=0"
+                + "&sortProperty=createdTime"
+                + "&sortOrder=DESC"
+                + "&startTime=" + startTime
+                + "&endTime=" + endTime;
+
+        List<TbAuditLog> logs = new ArrayList<>();
+        try {
+            HttpEntity<Void> entity = new HttpEntity<>(getAuthHeaders());
+            ResponseEntity<String> response = exchangeWithRetry(url, HttpMethod.GET, entity, String.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                JsonNode json = objectMapper.readTree(response.getBody());
+                JsonNode dataArray = json.path("data");
+                if (dataArray.isArray()) {
+                    for (JsonNode logNode : dataArray) {
+                        String id = logNode.path("id").path("id").asText(null);
+                        long createdTime = logNode.path("createdTime").asLong(0L);
+                        String entityId = logNode.path("entityId").path("id").asText(null);
+                        String entityType = logNode.path("entityId").path("entityType").asText(null);
+                        String entityName = logNode.path("entityName").asText(null);
+                        String userId = logNode.path("userId").path("id").asText(null);
+                        String userName = logNode.path("userName").asText(null);
+                        String actionType = logNode.path("actionType").asText(null);
+                        String actionStatus = logNode.path("actionStatus").asText(null);
+                        JsonNode actionData = logNode.path("actionData");
+
+                        logs.add(new TbAuditLog(id, createdTime, entityId, entityType, entityName, userId, userName, actionType, actionStatus, actionData));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not fetch audit logs: {}", e.getMessage());
+        }
+        return logs;
     }
 
     // ==================== History (for Charts) ====================
