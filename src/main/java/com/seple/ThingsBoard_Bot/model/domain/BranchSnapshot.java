@@ -43,13 +43,16 @@ public class BranchSnapshot {
         }
 
         if (normName.contains("DEMO") || normTech.contains("DEMO")
-                || normName.contains("TESTGATEWAY") || normTech.contains("TESTGATEWAY")
-                || normName.contains("ZOHO") || normTech.contains("ZOHO")
+                || normName.contains("TEST") || normTech.contains("TEST")
+                || normName.contains("KAFKA") || normTech.contains("KAFKA")
+                || normName.contains("ARCHITECTURE") || normTech.contains("ARCHITECTURE")
+                || normName.contains("PLAYBACK") || normTech.contains("PLAYBACK")
                 || normName.contains("RECORDING_IDS") || normTech.contains("RECORDING_IDS")
+                || normName.contains("ZOHO") || normTech.contains("ZOHO")
                 || normName.contains("SBI LHO") || normTech.contains("SBI LHO")
-                || normName.endsWith(" TEST") || normTech.endsWith(" TEST")
-                || normName.equals("TEST") || normTech.equals("TEST")
-                || normName.equals("DEMO") || normTech.equals("DEMO")) {
+                || normName.contains("SEPLE") || normTech.contains("SEPLE")
+                || normName.contains("SEPL-") || normTech.contains("SEPL-")
+                || normName.contains("SDF-") || normTech.contains("SDF-")) {
             return false;
         }
 

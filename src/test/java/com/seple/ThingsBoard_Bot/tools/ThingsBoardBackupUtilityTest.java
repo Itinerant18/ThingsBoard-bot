@@ -11,6 +11,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import com.seple.ThingsBoard_Bot.service.normalization.ValueNormalizer;
+import com.seple.ThingsBoard_Bot.service.normalization.FieldPrecedenceResolver;
+import com.seple.ThingsBoard_Bot.service.normalization.BranchSnapshotMapper;
+import com.seple.ThingsBoard_Bot.service.query.AnswerTemplateService;
+
 class ThingsBoardBackupUtilityTest {
 
     private ThingsBoardBackupUtility utility;
