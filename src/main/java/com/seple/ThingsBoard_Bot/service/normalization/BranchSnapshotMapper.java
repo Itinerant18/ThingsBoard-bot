@@ -179,11 +179,12 @@ public class BranchSnapshotMapper {
         Integer online = null;
         String hddStatus = null;
 
-        String cameraDetails = choose(raw, "rock_CAMERAdETAILS", "CAMERAdETAILS", "CAMERA_DETAILS");
+        // 1. Try CAMERAdETAILS / rock_CAMERAdETAILS array
+        String cameraDetails = findJsonStringInRaw(raw, "rock_CAMERAdETAILS", "CAMERAdETAILS", "CAMERA_DETAILS", "CAMERADETAILS");
         if (cameraDetails != null && cameraDetails.startsWith("[")) {
             try {
                 JsonNode node = objectMapper.readTree(cameraDetails);
-                if (node.isArray()) {
+                if (node.isArray() && !node.isEmpty()) {
                     int totalCount = 0;
                     int onlineCount = 0;
                     for (JsonNode camera : node) {
@@ -198,45 +199,74 @@ public class BranchSnapshotMapper {
                             status = camera.path("status").asText();
                         } else if (camera.has("Active Status")) {
                             status = camera.path("Active Status").asText();
+                        } else if (camera.has("active_status")) {
+                            status = camera.path("active_status").asText();
                         } else if (camera.has("camera_status")) {
                             status = camera.path("camera_status").asText();
                         }
-                        if ("active".equalsIgnoreCase(status) || "online".equalsIgnoreCase(status)) {
+                        if (status == null || "active".equalsIgnoreCase(status) || "online".equalsIgnoreCase(status) || "on".equalsIgnoreCase(status) || "1".equals(status) || "true".equalsIgnoreCase(status)) {
                             onlineCount++;
                         }
                     }
-                    total = totalCount;
-                    online = onlineCount;
+                    if (totalCount > 0) {
+                        total = totalCount;
+                        online = onlineCount;
+                    }
                 }
             } catch (Exception ignored) {
             }
         }
 
-        if (total == null) {
-            String recInfo = choose(raw, "Hikvision_NVR_CameraRecInfo", "rock_VIDEOdETAILS", "Dahua_NVR_CameraRecInfo", "CP_Plus_NVR_CameraRecInfo", "CameraRecInfo");
-            if (recInfo != null && recInfo.startsWith("[")) {
-                try {
-                    JsonNode node = objectMapper.readTree(recInfo);
-                    if (node.isArray() && !node.isEmpty()) {
-                        int totalCount = node.size();
-                        int onlineCount = 0;
-                        for (JsonNode entry : node) {
-                            if (entry != null && entry.isObject()) {
-                                int duration = entry.path("total_duration").asInt(0);
-                                if (duration > 0) {
-                                    onlineCount++;
-                                }
+        // 2. Try VIDEOdETAILS / SdRecINFO / Hikvision_NVR_CameraRecInfo array if total is null or less than recInfo array
+        String recInfo = findJsonStringInRaw(raw, "rock_VIDEOdETAILS", "VIDEOdETAILS", "rock_SdRecINFO", "SdRecINFO", "Hikvision_NVR_CameraRecInfo", "Dahua_NVR_CameraRecInfo", "CP_Plus_NVR_CameraRecInfo", "CameraRecInfo");
+        if (recInfo != null && recInfo.startsWith("[")) {
+            try {
+                JsonNode node = objectMapper.readTree(recInfo);
+                if (node.isArray() && !node.isEmpty()) {
+                    int totalCount = node.size();
+                    int onlineCount = 0;
+                    for (JsonNode entry : node) {
+                        if (entry != null && entry.isObject()) {
+                            int duration = entry.path("total_duration").asInt(entry.path("total_recording_days").asInt(0));
+                            String startTime = entry.path("start_time").asText("N/A");
+                            if (duration > 0 || (!"N/A".equalsIgnoreCase(startTime) && !startTime.isBlank())) {
+                                onlineCount++;
                             }
                         }
+                    }
+                    if (total == null || totalCount > total) {
                         total = totalCount;
                         online = onlineCount > 0 ? onlineCount : totalCount;
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+        // 3. Try dexter_config camera_ip array if total is still null or 0
+        if (total == null || total <= 0) {
+            String dexterConfigStr = findJsonStringInRaw(raw, "dexter_config");
+            if (dexterConfigStr != null && dexterConfigStr.startsWith("{")) {
+                try {
+                    JsonNode cfgNode = objectMapper.readTree(dexterConfigStr);
+                    JsonNode integration = cfgNode.path("integration");
+                    if (integration.isArray()) {
+                        for (JsonNode nvr : integration) {
+                            JsonNode cameraIps = nvr.path("camera_ip");
+                            if (cameraIps.isArray() && !cameraIps.isEmpty()) {
+                                total = cameraIps.size();
+                                online = cameraIps.size();
+                                break;
+                            }
+                        }
                     }
                 } catch (Exception ignored) {
                 }
             }
         }
 
-        if (total == null) {
+        // 4. Try channel disconnect keys (CAMERA DISCONNECT CH X)
+        if (total == null || total <= 0) {
             int maxCh = 0;
             int disconnectedCount = 0;
             for (String key : raw.keySet()) {
@@ -261,7 +291,8 @@ public class BranchSnapshotMapper {
             }
         }
 
-        if (total == null) {
+        // 5. Try direct count integer attributes
+        if (total == null || total <= 0) {
             int cctvCount = valueNormalizer.toInt(choose(raw, "count_camera", "no_of_connected_cctv", "cctv_count", "no_of_cameras", "total_cameras", "Hikvision_NVR_NoOfCameras"), 0);
             if (cctvCount > 0) {
                 total = cctvCount;
@@ -334,6 +365,36 @@ public class BranchSnapshotMapper {
 
     private String stringValue(Object value) {
         return value == null ? null : String.valueOf(value);
+    }
+
+    private String findJsonStringInRaw(Map<String, Object> raw, String... candidateKeys) {
+        String val = choose(raw, candidateKeys);
+        if (val != null) {
+            return val;
+        }
+        // Check inside nested JSON strings (e.g. "rock", "dexter_config", "cameraStatus")
+        for (String parentKey : List.of("rock", "dexter_config", "cameraStatus", "gatewayStatus", "ticketStatus", "rockAI")) {
+            Object parentValObj = raw.get(parentKey);
+            if (parentValObj == null) continue;
+            String parentVal = String.valueOf(parentValObj).trim();
+            if (parentVal.startsWith("{")) {
+                try {
+                    JsonNode parentNode = objectMapper.readTree(parentVal);
+                    for (String candidate : candidateKeys) {
+                        if (parentNode.has(candidate)) {
+                            JsonNode child = parentNode.get(candidate);
+                            if (child.isTextual()) {
+                                return child.asText();
+                            } else if (child.isArray() || child.isObject()) {
+                                return child.toString();
+                            }
+                        }
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+        return null;
     }
 
     private void addAlias(Set<String> aliasSet, String value) {
