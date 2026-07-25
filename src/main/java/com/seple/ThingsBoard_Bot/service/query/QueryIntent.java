@@ -57,7 +57,8 @@ public enum QueryIntent {
     AUDIT_LOG_QUERY,
     HISTORICAL_OFFLINE_QUERY,
     UPTIME_QUERY,
-    DAY_OVER_DAY_TREND;
+    DAY_OVER_DAY_TREND,
+    DEVICE_HARDWARE;
 
     /**
      * Knowledge intents are answered from static content (glossary/capability replies) and are

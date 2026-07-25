@@ -14,6 +14,7 @@ import com.seple.ThingsBoard_Bot.service.query.handler.AnswerHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.AnswerSupport;
 import com.seple.ThingsBoard_Bot.service.query.handler.CctvHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DataQualityHandler;
+import com.seple.ThingsBoard_Bot.service.query.handler.DeviceHardwareHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DeviceIdentityHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DeviceInventoryHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.DoorStatusHandler;
@@ -24,6 +25,7 @@ import com.seple.ThingsBoard_Bot.service.query.handler.GlobalOverviewHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.HierarchyHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.InstantBriefingHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.NetworkStatusHandler;
+import com.seple.ThingsBoard_Bot.service.query.handler.OutOfScopeHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.PowerHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.SubsystemHandler;
 import com.seple.ThingsBoard_Bot.service.query.handler.ZoneOverviewHandler;
@@ -75,6 +77,8 @@ public class DeterministicAnswerService {
                 new AccessControlHandler(support),
                 new FaultReasonHandler(support),
                 new DeviceIdentityHandler(support),
+                new DeviceHardwareHandler(support),
+                new OutOfScopeHandler(),
                 new HierarchyHandler(support),
                 new FleetAnalyticsHandler(support),
                 new ZoneOverviewHandler(support),

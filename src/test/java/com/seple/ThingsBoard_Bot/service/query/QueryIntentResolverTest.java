@@ -52,6 +52,36 @@ class QueryIntentResolverTest {
     }
 
     @Test
+    void routesHardwareAndFirmwareToDeviceHardware() {
+        assertEquals(QueryIntent.DEVICE_HARDWARE,
+                resolver.resolve("What is the CPU and disk utilization across all devices?", snapshots, null).getIntent());
+        assertEquals(QueryIntent.DEVICE_HARDWARE,
+                resolver.resolve("What is the current firmware version of all gateway devices?", snapshots, null).getIntent());
+    }
+
+    @Test
+    void routesIssueQuestionToFaultReason() {
+        assertEquals(QueryIntent.FAULT_REASON,
+                resolver.resolve("Which branches are reporting an issue?", snapshots, null).getIntent());
+    }
+
+    @Test
+    void routesOldestAlarmToAlarmDetail() {
+        assertEquals(QueryIntent.ALARM_DETAIL,
+                resolver.resolve("What is the oldest currently active alarm?", snapshots, null).getIntent());
+    }
+
+    @Test
+    void routesAbsentDataToOutOfScope() {
+        assertEquals(QueryIntent.OUT_OF_SCOPE,
+                resolver.resolve("What is the current storage status of S-Vault?", snapshots, null).getIntent());
+        assertEquals(QueryIntent.OUT_OF_SCOPE,
+                resolver.resolve("What is the current MTTR for active alarms?", snapshots, null).getIntent());
+        assertEquals(QueryIntent.OUT_OF_SCOPE,
+                resolver.resolve("Which FGMO region has the most branches?", snapshots, null).getIntent());
+    }
+
+    @Test
     void shouldResolveTypoBranchNameThroughFuzzyFallback() {
         // "Tarakeswar" (missing H) has no exact alias variant - fuzzy fallback must recover it.
         ResolvedQuery resolved = resolver.resolve("What is Tarakeswar battery voltage?", snapshots, null);

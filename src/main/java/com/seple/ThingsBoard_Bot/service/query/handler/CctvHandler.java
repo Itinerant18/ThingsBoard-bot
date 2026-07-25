@@ -329,7 +329,31 @@ public class CctvHandler implements AnswerHandler {
                 b.append("  - ").append(br).append("\n");
             }
         }
+        // Cross-check against the NVR's own precomputed low-duration list. Cameras there carry no
+        // resolvable channel/IP (cameraIP is "N/A"), so we report the count only, not which camera.
+        int vendorFlagged = 0;
+        for (BranchSnapshot s : snapshots) {
+            vendorFlagged += countLowDurationCameras(s.getRawData());
+        }
+        if (vendorFlagged > 0) {
+            b.append("\n_NVR-flagged low-duration cameras (vendor's own list): ")
+                    .append(vendorFlagged).append(" — camera IDs not resolvable._\n");
+        }
         return b.toString();
+    }
+
+    /** Count entries in the device's precomputed {@code lowDurationCameras} array. */
+    private int countLowDurationCameras(Map<String, Object> raw) {
+        Object rawList = raw.get("lowDurationCameras");
+        if (rawList == null) {
+            return 0;
+        }
+        try {
+            JsonNode node = objectMapper.readTree(String.valueOf(rawList));
+            return node.isArray() ? node.size() : 0;
+        } catch (Exception ignored) {
+            return 0;
+        }
     }
 
     private String answerCameraDisconnectHistory(ResolvedQuery query) {

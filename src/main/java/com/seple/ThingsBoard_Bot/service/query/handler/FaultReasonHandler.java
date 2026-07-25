@@ -29,10 +29,17 @@ public class FaultReasonHandler implements AnswerHandler {
     public String handle(ResolvedQuery query, List<BranchSnapshot> snapshots, String customerId) {
         BranchSnapshot branch = query.getTargetBranch();
         if (branch == null) {
-            return null;
+            return answerFleetIssues(snapshots);
         }
         Map<String, Object> raw = branch.getRawData();
         List<String> reasons = new ArrayList<>();
+
+        // Device_Issue is the device's own current-issue string (e.g. "battery_low", "hdd_error",
+        // "camera_tampered"), populated on most devices — the most direct fault signal we have.
+        String issue = support.firstNonBlank(raw, "Device_Issue");
+        if (issue != null) {
+            reasons.add(readable(issue));
+        }
 
         if (support.isTrue(raw.get("ticketStatus_FAS_FAULT")) || support.isTrue(raw.get("fireAlarmSystem_fault"))
                 || support.isTrue(raw.get("fire_alarm_system_fault"))) {
@@ -58,5 +65,31 @@ public class FaultReasonHandler implements AnswerHandler {
 
         return "**For Branch " + support.branchName(branch) + ", there is a fault indication because "
                 + String.join(", ", reasons) + ".**";
+    }
+
+    /** Fleet: which branches are reporting a device-level issue, and what. */
+    private String answerFleetIssues(List<BranchSnapshot> snapshots) {
+        if (snapshots == null || snapshots.isEmpty()) {
+            return "No branches are in scope.";
+        }
+        List<String> lines = new ArrayList<>();
+        for (BranchSnapshot s : snapshots) {
+            String issue = support.firstNonBlank(s.getRawData(), "Device_Issue");
+            if (issue != null) {
+                lines.add("- **" + support.branchName(s) + "** — " + readable(issue));
+            }
+        }
+        if (lines.isEmpty()) {
+            return "✅ No branches are currently reporting a device issue.";
+        }
+        StringBuilder b = new StringBuilder("### ⚠️ Branches Reporting an Issue (")
+                .append(lines.size()).append(")\n\n");
+        lines.forEach(l -> b.append(l).append("\n"));
+        return b.toString();
+    }
+
+    /** "battery_low" -> "battery low"; the raw Device_Issue token is snake_case. */
+    private static String readable(String issue) {
+        return issue.trim().replace('_', ' ');
     }
 }

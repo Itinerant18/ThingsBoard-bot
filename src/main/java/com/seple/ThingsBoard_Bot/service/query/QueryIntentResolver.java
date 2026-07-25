@@ -301,6 +301,13 @@ public class QueryIntentResolver {
                 return knowledgeIntent;
             }
         }
+        // Capability boundary: questions whose data we never have (S-Vault, platform self-metrics,
+        // FGMO, branch master-data, MTTR/MTTA/SLA-breach timing) get a specific "not tracked" reply
+        // (OutOfScopeHandler) rather than a hallucinated LLM answer. Keywords are narrow so an
+        // answerable question is never stolen (plain "TAT"/alarm age is not matched here).
+        if (NotTracked.matches(question)) {
+            return QueryIntent.OUT_OF_SCOPE;
+        }
         // User and Audit Log intents (global)
         if (!hasTargetBranch) {
             if (question.contains("USER") || question.contains("LOGGED IN") || question.contains("EMAIL") || question.contains("ROLES") || question.contains("AUTHORITY")) {
@@ -406,6 +413,28 @@ public class QueryIntentResolver {
                 || question.contains("LAST REPORT") || question.contains("LAST SEEN")
                 || question.contains("LAST ACTIVITY") || question.contains("STALE")) {
             return QueryIntent.LAST_REPORTED;
+        }
+        // Device-local gateway (RPi) hardware: CPU / memory / disk / temperature, and firmware/OTA
+        // version. Gated so it doesn't steal CCTV questions ("HARDWARE"/"DISK" only when no NVR/DVR/
+        // camera context). S-Vault disk questions were already routed to OUT_OF_SCOPE above.
+        boolean cctvCtxHw = question.contains("NVR") || question.contains("DVR")
+                || question.contains("CCTV") || question.contains("CAMERA");
+        if (question.contains("FIRMWARE") || question.contains("SOFTWARE VERSION")
+                || question.contains("CPU") || question.contains("MEMORY") || containsWord(question, "RAM")
+                || question.contains("TEMPERATURE")
+                || (question.contains("HARDWARE") && !cctvCtxHw)
+                || (question.contains("DISK") && !cctvCtxHw
+                        && (question.contains("UTIL") || question.contains("SPACE") || question.contains("USAGE")))) {
+            return QueryIntent.DEVICE_HARDWARE;
+        }
+        // Device-level current-issue string (Device_Issue): "which branches are reporting an issue",
+        // "what issue is BRANCH reporting". Answered by FaultReasonHandler (single-branch or fleet).
+        // Narrow phrasings only — bare "issue" would wrongly steal "network issues", "IMEI issues",
+        // "security issues" (those belong to NETWORK_STATUS/DATA_QUALITY/LLM). "Why is X showing an
+        // issue" already routes to FAULT_REASON via the WHY check above.
+        if (question.contains("REPORTING AN ISSUE") || question.contains("REPORTING A PROBLEM")
+                || question.contains("WHAT ISSUE") || question.contains("DEVICE ISSUE")) {
+            return QueryIntent.FAULT_REASON;
         }
         if (question.contains("DOOR")) {
             return QueryIntent.DOOR_STATUS;
@@ -1012,6 +1041,14 @@ public class QueryIntentResolver {
         boolean hasBreakdown = question.contains("SEVERITY") || question.contains("BREAKDOWN")
                 || question.contains("DISTRIBUTION") || question.contains("WHAT TYPE")
                 || question.contains("WHAT KIND") || question.contains("ALARM TYPE");
-        return hasBreakdown && hasAlarmContext;
+        if (hasBreakdown && hasAlarmContext) return true;
+
+        // Age / recency of active alarms — answered from the alarm's createdTime (now - created).
+        // "oldest alarm", "how long has ... alarm been active", "alarms in the last hour/24h".
+        boolean hasAge = question.contains("OLDEST") || question.contains("LONGEST")
+                || question.contains("HOW LONG") || question.contains("LAST HOUR")
+                || question.contains("PAST HOUR") || question.contains("LAST 24") || question.contains("PAST 24")
+                || question.contains("TRIGGERED IN") || question.contains("WERE TRIGGERED");
+        return hasAge && hasAlarmContext;
     }
 }

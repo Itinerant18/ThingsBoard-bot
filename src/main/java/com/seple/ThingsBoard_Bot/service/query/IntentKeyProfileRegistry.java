@@ -28,6 +28,9 @@ public class IntentKeyProfileRegistry {
                     "ticketStatus_IAS_FAULT", "ticketStatus_FAS_FAULT", "BASfaultCOUNT", "ticketStatus_TLS_TAMPER",
                     "ticketStatus_ACS_TAMPER", "ticketStatus_IAS_ACTIVATE", "ticketStatus_FAS_ACTIVATE",
                     "ticketStatus_TLS_DOOR_OPEN", "ticketStatus_ACS_DOOR_OPEN");
+            case DEVICE_HARDWARE -> List.of("cpu", "memory", "disk", "temperature",
+                    "target_sw_version", "sw_state", "sw_version");
+            case FAULT_REASON -> List.of("Device_Issue");
             case DOOR_STATUS -> List.of("timeLockDoor", "accessControlDoor");
             case ACCESS_CONTROL_USER_COUNT -> List.of("accessControlTotalUsers", "totalUsers", "registeredUsers", "accessControlUserCount");
             case ACCESS_CONTROL_DEVICE_INFO -> List.of("accessControlModel", "biometricModel", "acsModel", "accessControlFirmware",

@@ -78,6 +78,12 @@ public class AlarmDetailHandler implements AnswerHandler {
         if (isTypeBreakdown(question)) {
             return renderTypeBreakdown(scope, targetBranch);
         }
+        if (isAgeQuestion(question)) {
+            return renderOldest(scope, targetBranch);
+        }
+        if (isRecentQuestion(question)) {
+            return renderRecent(scope, targetBranch, question);
+        }
         if (isBranchListing(question)) {
             return renderBranchesWithSeverity(scope, severityFilter);
         }
@@ -172,6 +178,87 @@ public class AlarmDetailHandler implements AnswerHandler {
         return sb.toString();
     }
 
+    /** Oldest / longest-active alarms — ranked by createdTime, each with its age (now - created). */
+    private String renderOldest(List<BranchSnapshot> scope, BranchSnapshot singleBranch) {
+        List<ActiveAlarm> alarms = flatten(scope).stream()
+                .filter(a -> a.createdTime() > 0)
+                .sorted(java.util.Comparator.comparingLong(ActiveAlarm::createdTime))
+                .toList();
+        String scopeLabel = singleBranch != null ? support.branchName(singleBranch) : "Fleet";
+        if (alarms.isEmpty()) {
+            return "✅ No active alarms with a timestamp found for " + scopeLabel + ".";
+        }
+        long now = System.currentTimeMillis();
+        StringBuilder sb = new StringBuilder("### ⏱️ Oldest Active Alarms (among fetched) — ")
+                .append(scopeLabel).append("\n\n");
+        sb.append("| # | Type | Severity | Branch | Age | Raised |\n");
+        sb.append("|---|------|----------|--------|-----|--------|\n");
+        int i = 1;
+        for (ActiveAlarm a : alarms) {
+            String branch = a.deviceName() != null ? a.deviceName() : a.deviceId();
+            sb.append("| ").append(i++).append(" | ").append(a.type())
+              .append(" | ").append(a.severityLabel()).append(" | ").append(branch)
+              .append(" | ").append(age(now - a.createdTime()))
+              .append(" | ").append(TS_FMT.format(Instant.ofEpochMilli(a.createdTime()))).append(" |\n");
+            if (i > 10) break;
+        }
+        return sb.toString();
+    }
+
+    /** Alarms raised within a recent window (last hour, or last 24h). */
+    private String renderRecent(List<BranchSnapshot> scope, BranchSnapshot singleBranch, String question) {
+        boolean hourly = question.contains("HOUR");
+        long windowMs = hourly ? 60L * 60 * 1000 : 24L * 60 * 60 * 1000;
+        long cutoff = System.currentTimeMillis() - windowMs;
+        String windowLabel = hourly ? "last hour" : "last 24 hours";
+
+        List<ActiveAlarm> recent = flatten(scope).stream()
+                .filter(a -> a.createdTime() >= cutoff)
+                .sorted(java.util.Comparator.comparingLong(ActiveAlarm::createdTime).reversed())
+                .toList();
+        String scopeLabel = singleBranch != null ? support.branchName(singleBranch) : "Fleet";
+        StringBuilder sb = new StringBuilder("### 🕒 Alarms in the ").append(windowLabel)
+                .append(" — ").append(scopeLabel).append("\n\n");
+        if (recent.isEmpty()) {
+            sb.append("✅ No alarms were raised in the ").append(windowLabel).append(".");
+            return sb.toString();
+        }
+        sb.append("**").append(recent.size()).append(" alarm(s):**\n\n");
+        sb.append("| Type | Severity | Branch | Raised |\n|------|----------|--------|--------|\n");
+        int i = 0;
+        for (ActiveAlarm a : recent) {
+            String branch = a.deviceName() != null ? a.deviceName() : a.deviceId();
+            sb.append("| ").append(a.type()).append(" | ").append(a.severityLabel())
+              .append(" | ").append(branch)
+              .append(" | ").append(TS_FMT.format(Instant.ofEpochMilli(a.createdTime()))).append(" |\n");
+            if (++i >= 20) break;
+        }
+        return sb.toString();
+    }
+
+    private List<ActiveAlarm> flatten(List<BranchSnapshot> scope) {
+        List<ActiveAlarm> all = new ArrayList<>();
+        for (BranchSnapshot snap : scope) {
+            AlertSummary a = snap.getAlerts();
+            if (a != null && a.getTopAlarms() != null) {
+                all.addAll(a.getTopAlarms());
+            }
+        }
+        return all;
+    }
+
+    /** Human-readable duration from millis, e.g. "3d 4h", "5h 12m", "8m". */
+    private static String age(long ms) {
+        if (ms < 0) ms = 0;
+        long mins = ms / 60000;
+        long days = mins / 1440;
+        long hours = (mins % 1440) / 60;
+        long m = mins % 60;
+        if (days > 0) return days + "d " + hours + "h";
+        if (hours > 0) return hours + "h " + m + "m";
+        return m + "m";
+    }
+
     private String renderAlarmList(List<BranchSnapshot> scope, String severityFilter, BranchSnapshot singleBranch) {
         List<ActiveAlarm> alarms = new ArrayList<>();
         for (BranchSnapshot snap : scope) {
@@ -249,6 +336,17 @@ public class AlarmDetailHandler implements AnswerHandler {
     private boolean isBranchListing(String question) {
         return question.contains("WHICH BRANCH") || question.contains("WHAT BRANCH")
                 || question.contains("BRANCHES WITH") || question.contains("BRANCHES HAVE");
+    }
+
+    private boolean isAgeQuestion(String question) {
+        return question.contains("OLDEST") || question.contains("LONGEST")
+                || question.contains("HOW LONG");
+    }
+
+    private boolean isRecentQuestion(String question) {
+        return question.contains("LAST HOUR") || question.contains("PAST HOUR")
+                || question.contains("LAST 24") || question.contains("PAST 24")
+                || question.contains("TRIGGERED IN") || question.contains("WERE TRIGGERED");
     }
 
     private boolean matchesSeverity(AlertSummary a, String severityFilter) {
