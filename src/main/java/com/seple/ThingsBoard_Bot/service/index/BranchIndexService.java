@@ -36,6 +36,7 @@ public class BranchIndexService {
     private final HierarchyNodeRepository hierarchyNodeRepository;
     private final UserAwareThingsBoardClient userAwareThingsBoardClient;
     private final BranchAncestorPathRepository branchAncestorPathRepository;
+    private final com.seple.ThingsBoard_Bot.config.SecurityProperties securityProperties;
     private final ConcurrentHashMap<String, List<DeviceIndexEntry>> indexByUser = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Long> lastAccess = new ConcurrentHashMap<>();
 
@@ -46,12 +47,29 @@ public class BranchIndexService {
                               CustomerRepository customerRepository,
                               HierarchyNodeRepository hierarchyNodeRepository,
                               UserAwareThingsBoardClient userAwareThingsBoardClient,
-                              BranchAncestorPathRepository branchAncestorPathRepository) {
+                              BranchAncestorPathRepository branchAncestorPathRepository,
+                              com.seple.ThingsBoard_Bot.config.SecurityProperties securityProperties) {
         this.thingsBoardConfig = thingsBoardConfig;
         this.customerRepository = customerRepository;
         this.hierarchyNodeRepository = hierarchyNodeRepository;
         this.userAwareThingsBoardClient = userAwareThingsBoardClient;
         this.branchAncestorPathRepository = branchAncestorPathRepository;
+        this.securityProperties = securityProperties;
+    }
+
+    /**
+     * Resolution failure handler, consistent with {@code UserDataService.unmappedCustomer}. Fails
+     * closed (throws → HTTP 403) when strict customer mapping is enabled (the default), otherwise
+     * falls back to BOI for local dev only, with a loud warning.
+     */
+    private String unmappedCustomer(String tbCustomerId) {
+        if (securityProperties.isStrictCustomerMappingEnabled()) {
+            throw new com.seple.ThingsBoard_Bot.exception.UnprovisionedCustomerException(
+                    tbCustomerId == null ? "<no customerId claim>" : tbCustomerId);
+        }
+        log.warn("[SECURITY] No customer mapping for tbCustomerId {} — defaulting index to BOI. "
+                + "UNSAFE in production; strict customer mapping is the default.", tbCustomerId);
+        return "BOI";
     }
 
     public List<DeviceIndexEntry> getIndex(String userToken) {
@@ -67,7 +85,7 @@ public class BranchIndexService {
 
     public List<DeviceIndexEntry> refreshIndex(String userToken) {
         boolean isTenantAdmin = userToken == null || userToken.isBlank() || JwtParserUtil.hasScope(userToken, "TENANT_ADMIN");
-        String customerId = "BOI";
+        String customerId;
         List<HierarchyNode> nodes;
 
         if (isTenantAdmin) {
@@ -76,12 +94,14 @@ public class BranchIndexService {
                     .filter(n -> Boolean.TRUE.equals(n.getIsLeaf()))
                     .collect(Collectors.toList());
         } else {
+            // Tenant is resolved from the caller's token, never hardcoded. An unmapped customer
+            // fails closed (strict, the default) so a mis-mapped user can't be shown BOI's branches.
             String tbCustomerId = JwtParserUtil.extractCustomerId(userToken);
-            if (tbCustomerId != null) {
-                customerId = customerRepository.findByTbCustomerId(tbCustomerId)
-                        .map(com.seple.ThingsBoard_Bot.entity.Customer::getCustomerId)
-                        .orElse("BOI");
-            }
+            customerId = (tbCustomerId != null)
+                    ? customerRepository.findByTbCustomerId(tbCustomerId)
+                            .map(com.seple.ThingsBoard_Bot.entity.Customer::getCustomerId)
+                            .orElseGet(() -> unmappedCustomer(tbCustomerId))
+                    : unmappedCustomer(null);
             nodes = hierarchyNodeRepository.findByCustomerIdAndIsLeaf(customerId, true);
         }
 

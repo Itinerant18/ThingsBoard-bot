@@ -515,6 +515,9 @@ public class UserDataService {
         String customerId = resolveCustomerIdPrefix(userToken);
         if ("ALL".equals(customerId)) {
             customerId = findCustomerIdForDevice(deviceId);
+            if (customerId == null) {
+                return null; // device not mapped to a tenant — no data rather than wrong tenant
+            }
         }
         return redisCacheService.getDeviceState(customerId, deviceId);
     }
@@ -523,6 +526,9 @@ public class UserDataService {
         String customerId = resolveCustomerIdPrefix(userToken);
         if ("ALL".equals(customerId)) {
             customerId = findCustomerIdForDevice(deviceId);
+            if (customerId == null) {
+                return null; // device not mapped to a tenant — no data rather than wrong tenant
+            }
         }
         return redisCacheService.getDeviceState(customerId, deviceId);
     }
@@ -570,7 +576,9 @@ public class UserDataService {
             }
         } catch (IllegalArgumentException ignored) {
         }
-        return "BOI"; // Fallback
+        // Device not mapped to any tenant — return null so the caller reports no data, rather than
+        // defaulting to a hardcoded tenant and reading the wrong tenant's state.
+        return null;
     }
 
     /**

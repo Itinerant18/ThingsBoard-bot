@@ -38,12 +38,13 @@ public class SecurityProperties {
     private String jwtSigningKey = "";
 
     /**
-     * When {@code true}, a request whose ThingsBoard customer has no internal mapping is rejected
-     * (fail closed) instead of silently falling back to the "BOI" tenant. Default {@code false}
-     * preserves local-dev behaviour; production MUST set this to {@code true} to enforce tenant
-     * isolation. Bound from {@code IOTCHATBOT_SECURITY_STRICT_CUSTOMER_MAPPING}.
+     * When {@code true} (the default), a request whose ThingsBoard customer has no internal mapping
+     * is rejected (fail closed) instead of silently falling back to the "BOI" tenant — the tenant is
+     * always resolved from the caller's token, never hardcoded. Set to {@code false} only for local
+     * dev where a single-tenant BOI fallback is acceptable. Bound from
+     * {@code IOTCHATBOT_SECURITY_STRICT_CUSTOMER_MAPPING}.
      */
-    private boolean strictCustomerMapping = false;
+    private boolean strictCustomerMapping = true;
 
     /**
      * When {@code true}, the application refuses to start unless a JWT signing key is configured,

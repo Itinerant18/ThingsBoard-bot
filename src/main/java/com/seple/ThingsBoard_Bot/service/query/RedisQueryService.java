@@ -34,9 +34,15 @@ public class RedisQueryService {
 
     public long getNodeCounter(String customerId, String nodeId, String counterName) {
         if ("ALL".equals(customerId)) {
-            customerId = hierarchyNodeRepository.findById(nodeId)
+            // Resolve the node's real tenant; if unknown, return no counter rather than defaulting
+            // to a hardcoded tenant (which would read the wrong tenant's counts).
+            String resolved = hierarchyNodeRepository.findById(nodeId)
                     .map(com.seple.ThingsBoard_Bot.entity.HierarchyNode::getCustomerId)
-                    .orElse("BOI");
+                    .orElse(null);
+            if (resolved == null) {
+                return 0;
+            }
+            customerId = resolved;
         }
         Map<Object, Object> counters = redisCacheService.getNodeCounters(customerId, nodeId);
         if (counters != null && counters.containsKey(counterName)) {
