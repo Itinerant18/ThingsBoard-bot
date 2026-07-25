@@ -144,7 +144,18 @@ public class DeviceInventoryHandler implements AnswerHandler {
     }
 
     private String answerConnectedDevices(BranchSnapshot branch) {
+        String countStr = support.firstNonBlank(branch.getRawData(),
+                "statusbox_no_of_connected_device", "system_status_statusbox_no_of_connected_device");
         List<String> connectedDevices = support.installedSystems(branch);
+        
+        if (countStr != null) {
+            if (!connectedDevices.isEmpty()) {
+                return "**For Branch " + support.branchName(branch) + ", Connected Devices Count: " + countStr
+                        + " (" + String.join(", ", connectedDevices) + ").**";
+            }
+            return "**For Branch " + support.branchName(branch) + ", Connected Devices Count: " + countStr + ".**";
+        }
+
         if (connectedDevices.isEmpty()) {
             return "**For Branch " + support.branchName(branch)
                     + ", no connected devices are currently identified.**";

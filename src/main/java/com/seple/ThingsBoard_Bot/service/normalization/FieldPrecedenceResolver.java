@@ -27,6 +27,10 @@ public class FieldPrecedenceResolver {
         // branch falls into the Unknown bucket despite being online.
         return resolveFirstState(raw, List.of(
                 "status_device_gateway_status",
+                "statusbox_system_healthy",
+                "system_status_statusbox_system_healthy",
+                "statusbox_system_on",
+                "system_status_statusbox_system_on",
                 "gatewayStatus_SYSTEM ON",
                 "gateway_sts",
                 "gateway_status",
@@ -75,7 +79,7 @@ public class FieldPrecedenceResolver {
     }
 
     public Boolean resolveMainsOn(Map<String, Object> raw) {
-        for (String key : List.of("MAINS ON", "gatewayStatus_MAINS ON", "system_status_statusbox_mains_on")) {
+        for (String key : List.of("statusbox_mains_on", "system_status_statusbox_mains_on", "MAINS ON", "gatewayStatus_MAINS ON")) {
             Object val = raw.get(key);
             if (val != null) {
                 Boolean bool = valueNormalizer.toBoolean(String.valueOf(val));

@@ -279,4 +279,25 @@ public class AnswerSupport {
         }
         return false;
     }
+
+    public String resolveBatteryStatus(Map<String, Object> raw) {
+        if (raw == null) {
+            return "N/A";
+        }
+        Boolean batteryLow = resolveBoolean(raw, "statusbox_battery_low", "system_status_statusbox_battery_low", "BATTERY LOW", "gatewayStatus_BATTERY LOW");
+        Boolean batteryReverse = resolveBoolean(raw, "statusbox_battery_reverse", "system_status_statusbox_battery_reverse", "BATTERY REVERSE", "gatewayStatus_BATTERY REVERSE");
+
+        boolean isLow = Boolean.TRUE.equals(batteryLow);
+        boolean isReverse = Boolean.TRUE.equals(batteryReverse);
+
+        if (isLow && isReverse) {
+            return "Low & Reverse";
+        } else if (isReverse) {
+            return "Reverse";
+        } else if (isLow) {
+            return "Low";
+        } else {
+            return "OK";
+        }
+    }
 }

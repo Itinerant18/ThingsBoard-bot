@@ -56,46 +56,53 @@ public class PowerHandler implements AnswerHandler {
     }
 
     private String answerBatteryLowStatus(BranchSnapshot branch) {
-        Boolean batteryLow = support.resolveBoolean(branch.getRawData(), "BATTERY LOW", "gatewayStatus_BATTERY LOW",
-                "system_status_statusbox_battery_low", "ticketStatus_BATTERY_LOW");
-        if (Boolean.TRUE.equals(batteryLow)) {
-            return "**For Branch " + support.branchName(branch)
-                    + ", Battery Low Status is WARNING ACTIVE.**";
-        }
-        if (Boolean.FALSE.equals(batteryLow)) {
+        String battStatus = support.resolveBatteryStatus(branch.getRawData());
+        if ("OK".equals(battStatus)) {
             return "**For Branch " + support.branchName(branch)
                     + ", Battery Low Status is NORMAL. No low battery warning is active.**";
         }
-        return "**For Branch " + support.branchName(branch) + ", Battery Low Status is N/A.**";
+        return "**For Branch " + support.branchName(branch)
+                + ", Battery Low Status is WARNING ACTIVE. Status: " + battStatus + ".**";
     }
 
     private String answerBatteryHealth(BranchSnapshot branch) {
         Double voltage = branch.getPower().getBatteryVoltage();
         if (voltage != null) {
+            String battStatus = support.resolveBatteryStatus(branch.getRawData());
+            String healthLabel = "OK".equals(battStatus) ? "HEALTHY" : battStatus;
             String vStr = trimDouble(voltage);
-            return "**For Branch " + support.branchName(branch) + ", the Battery Status is HEALTHY. Voltage: " + vStr + "V DC.**";
+            return "**For Branch " + support.branchName(branch) + ", the Battery Status is " + healthLabel + ". Voltage: " + vStr + "V DC.**";
         }
         return "**For Branch " + support.branchName(branch) + ", the Battery Status is not available.**";
     }
 
     private String answerPowerStatus(BranchSnapshot branch) {
-        com.seple.ThingsBoard_Bot.model.domain.PowerStatus power = branch.getPower();
-        Double batteryVoltage = power.getBatteryVoltage();
-        Double acVoltage = power.getAcVoltage();
-        Boolean mainsOn = power.getMainsOn();
+        Boolean systemOn = support.resolveBoolean(branch.getRawData(),
+                "statusbox_system_on", "system_status_statusbox_system_on", "gatewayStatus_SYSTEM ON", "SYSTEM ON");
+        Boolean mainsOn = support.resolveBoolean(branch.getRawData(),
+                "statusbox_mains_on", "system_status_statusbox_mains_on", "gatewayStatus_MAINS ON", "MAINS ON");
+
+        Double batteryVoltage = branch.getPower().getBatteryVoltage();
+        Double acVoltage = branch.getPower().getAcVoltage();
 
         boolean isOn;
-        if (mainsOn != null) {
-            isOn = mainsOn;
+        if (systemOn != null) {
+            isOn = systemOn;
+        } else if (mainsOn != null) {
+            isOn = mainsOn && (acVoltage == null || acVoltage > 0);
         } else {
             isOn = (acVoltage != null && acVoltage > 0);
         }
 
         String acStr;
-        if (isOn) {
-            acStr = acVoltage != null ? trimDouble(acVoltage) + "V AC" : "N/A";
-        } else {
+        if (Boolean.FALSE.equals(mainsOn) || (acVoltage != null && acVoltage == 0.0)) {
             acStr = "Offline";
+        } else if (acVoltage != null && acVoltage > 0) {
+            acStr = trimDouble(acVoltage) + "V AC";
+        } else if (Boolean.TRUE.equals(mainsOn)) {
+            acStr = "ON";
+        } else {
+            acStr = isOn ? "N/A" : "Offline";
         }
 
         String batteryStr = batteryVoltage != null ? trimDouble(batteryVoltage) + "V DC" : "N/A";
