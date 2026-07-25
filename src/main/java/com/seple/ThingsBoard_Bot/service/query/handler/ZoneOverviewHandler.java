@@ -424,15 +424,35 @@ public class ZoneOverviewHandler implements AnswerHandler {
         String subsystemLabel = subsystemLabel(subsystem);
 
         Map<String, List<String>> grouped = new TreeMap<>();
+        Map<String, Integer> nameCounts = new HashMap<>();
+        for (BranchSnapshot snapshot : snapshots) {
+            String bName = support.branchName(snapshot);
+            nameCounts.put(bName, nameCounts.getOrDefault(bName, 0) + 1);
+        }
+
         for (BranchSnapshot snapshot : snapshots) {
             String name = support.branchName(snapshot);
-            SubsystemStatus status = support.subsystemByTarget(snapshot, subsystem);
-            String stateLabel;
-            if (status == null) {
-                stateLabel = "N/A";
-            } else {
-                stateLabel = support.formatState(status.getState());
+            if (nameCounts.getOrDefault(name, 0) > 1 && snapshot.getIdentity() != null && snapshot.getIdentity().getTechnicalId() != null) {
+                name = name + " [" + snapshot.getIdentity().getTechnicalId() + "]";
             }
+
+            SubsystemStatus status = support.subsystemByTarget(snapshot, subsystem);
+            NormalizedState state = status != null ? status.getState() : NormalizedState.UNKNOWN;
+
+            // Dynamic Subsystem Fallback: infer state when explicit sts key is UNKNOWN or absent
+            if (state == NormalizedState.UNKNOWN) {
+                if ("cctv".equalsIgnoreCase(subsystem)) {
+                    if (snapshot.getCctv() != null && snapshot.getCctv().getOnlineCameraCount() != null && snapshot.getCctv().getOnlineCameraCount() > 0) {
+                        state = NormalizedState.ONLINE;
+                    } else if (snapshot.getGateway() != null && snapshot.getGateway().getState() == NormalizedState.OFFLINE) {
+                        state = NormalizedState.OFFLINE;
+                    }
+                } else if (snapshot.getGateway() != null && snapshot.getGateway().getState() == NormalizedState.OFFLINE) {
+                    state = NormalizedState.OFFLINE;
+                }
+            }
+
+            String stateLabel = support.formatState(state);
             grouped.computeIfAbsent(stateLabel, k -> new ArrayList<>()).add(name);
         }
 

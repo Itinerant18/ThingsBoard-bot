@@ -51,12 +51,47 @@ public class BranchSnapshotMapper {
                 .accessControl(buildSubsystem("Access Control", raw, "accessControl_sts"))
                 .build();
 
+        CctvStatus cctv = buildCctv(raw, subsystems.getCctv());
+
+        // Dynamic Subsystem Fallback: Infer CCTV state when explicit cctv_sts key is UNKNOWN or absent
+        if (subsystems.getCctv().getState() == NormalizedState.UNKNOWN) {
+            NormalizedState inferredCctvState = NormalizedState.UNKNOWN;
+            if (cctv.getOnlineCameraCount() != null && cctv.getOnlineCameraCount() > 0) {
+                inferredCctvState = NormalizedState.ONLINE;
+            } else if (gateway.getState() == NormalizedState.OFFLINE) {
+                inferredCctvState = NormalizedState.OFFLINE;
+            }
+            if (inferredCctvState != NormalizedState.UNKNOWN) {
+                SubsystemStatus updatedCctv = SubsystemStatus.builder()
+                        .systemName(subsystems.getCctv().getSystemName())
+                        .state(inferredCctvState)
+                        .installed(true)
+                        .rawValue(subsystems.getCctv().getRawValue())
+                        .health(subsystems.getCctv().getHealth())
+                        .sourceFieldUsed(subsystems.getCctv().getSourceFieldUsed())
+                        .powerStatus(subsystems.getCctv().getPowerStatus())
+                        .systemStatus(subsystems.getCctv().getSystemStatus())
+                        .logStatus(subsystems.getCctv().getLogStatus())
+                        .healthStatus(subsystems.getCctv().getHealthStatus())
+                        .build();
+
+                subsystems = BranchSubsystems.builder()
+                        .cctv(updatedCctv)
+                        .ias(subsystems.getIas())
+                        .bas(subsystems.getBas())
+                        .fas(subsystems.getFas())
+                        .timeLock(subsystems.getTimeLock())
+                        .accessControl(subsystems.getAccessControl())
+                        .build();
+            }
+        }
+
         return BranchSnapshot.builder()
                 .identity(identity)
                 .gateway(gateway)
                 .power(power)
                 .subsystems(subsystems)
-                .cctv(buildCctv(raw, subsystems.getCctv()))
+                .cctv(cctv)
                 .alerts(buildAlerts(raw))
                 .hardware(buildHardware(raw))
                 .rawSourceWarnings(warnings)
