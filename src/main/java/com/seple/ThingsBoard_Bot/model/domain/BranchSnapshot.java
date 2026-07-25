@@ -53,7 +53,10 @@ public class BranchSnapshot {
                 || normName.contains("SEPLE") || normTech.contains("SEPLE")
                 || normName.contains("SEPL-") || normTech.contains("SEPL-")
                 || normName.contains("SDF-") || normTech.contains("SDF-")
-                || normName.startsWith("CANARA-") || normTech.startsWith("CANARA-")) {
+                || normName.contains("-DX") || normTech.contains("-DX")
+                || normName.endsWith("-BAS") || normTech.endsWith("-BAS")
+                || normName.startsWith("CANARA-") || normTech.startsWith("CANARA-")
+                || normName.startsWith("BOB-") || normTech.startsWith("BOB-")) {
             return false;
         }
 
