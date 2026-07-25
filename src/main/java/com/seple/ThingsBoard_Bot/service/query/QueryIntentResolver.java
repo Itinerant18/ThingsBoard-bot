@@ -455,7 +455,9 @@ public class QueryIntentResolver {
         if (question.contains("OFFLINE") || question.contains("INACTIVE") || question.contains("DOWN") || question.contains("UNHEALTHY")) {
             return QueryIntent.OFFLINE_DEVICES;
         }
-        if (question.contains("CONNECTED DEVICE") || (question.contains("ALL DEVICES") && question.contains("CONNECTED"))) {
+        if (question.contains("CONNECTED DEVICE") || question.contains("CONNECTED DEVICES")
+                || (question.contains("CONNECTED") && (question.contains("DEVICE") || question.contains("DEVICES")))
+                || (question.contains("ALL DEVICES") && question.contains("CONNECTED"))) {
             return QueryIntent.CONNECTED_DEVICES;
         }
         if ((question.contains("ACTIVE DEVICE") || question.contains("ACTIVE BRANCH") || (question.contains("ACTIVE") && (question.contains("DEVICE") || question.contains("BRANCH"))))
@@ -504,6 +506,11 @@ public class QueryIntentResolver {
         }
         if ((question.contains("CCTV") || question.contains("CAMERA")) && question.contains("RECORD")) {
             return QueryIntent.CCTV_RECORDING_INFO;
+        }
+        if ((question.contains("CCTV") || question.contains("CAMERA"))
+                && (question.contains("COUNT") || question.contains("HOW MANY") || question.contains("NUMBER")
+                    || question.contains("CONNECTED") || question.contains("TOTAL") || question.contains("ONLINE") || question.contains("ACTIVE"))) {
+            return QueryIntent.CCTV_STATUS;
         }
         if (question.contains("HOW MANY") && question.contains("CAMERA")) {
             return QueryIntent.CCTV_STATUS;
