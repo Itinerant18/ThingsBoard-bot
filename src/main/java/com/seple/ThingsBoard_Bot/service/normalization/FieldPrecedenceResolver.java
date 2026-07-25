@@ -18,29 +18,22 @@ public class FieldPrecedenceResolver {
     }
 
     public ResolvedField resolveGatewayState(Map<String, Object> raw) {
-        // Order matters: try the fields devices actually emit first.
-        //  - status_device_gateway_status: derived authoritative status ("Online"/"Offline"/"Fault").
-        //  - gatewayStatus_SYSTEM ON: flattened system-on flag ("true"/"false").
-        // The legacy primaries (gateway_sts/gateway_status) are absent on current fleet payloads, and
-        // the bare "gatewayStatus" is a JSON blob ({"SYSTEM ON":"true",...}) that toState() cannot
-        // classify — it resolves to UNKNOWN and is skipped, so the real keys must come first or every
-        // branch falls into the Unknown bucket despite being online.
         return resolveFirstState(raw, List.of(
                 "status_device_gateway_status",
                 "statusbox_system_healthy",
                 "system_status_statusbox_system_healthy",
-                "statusbox_system_on",
-                "system_status_statusbox_system_on",
-                "gatewayStatus_SYSTEM ON",
+                "rock_healthyStatus",
+                "healthyStatus",
+                "gwHealth",
                 "gateway_sts",
                 "gateway_status",
-                "gatewayStatus",
+                "gatewayStatus_status",
                 "rock_gateway_status",
-                "gwHealth",
                 "status",
                 "active",
-                "cctv_sts",
-                "ias_sts"
+                "statusbox_system_on",
+                "system_status_statusbox_system_on",
+                "gatewayStatus_SYSTEM ON"
         ));
     }
 
@@ -95,6 +88,9 @@ public class FieldPrecedenceResolver {
         for (String key : candidates) {
             Object rawValue = raw.get(key);
             if (rawValue == null) {
+                rawValue = findInNestedJson(raw, key);
+            }
+            if (rawValue == null) {
                 continue;
             }
             String value = String.valueOf(rawValue);
@@ -104,6 +100,29 @@ public class FieldPrecedenceResolver {
             }
         }
         return new ResolvedField(NormalizedState.UNKNOWN, null, null);
+    }
+
+    private Object findInNestedJson(Map<String, Object> raw, String targetKey) {
+        if (raw == null) return null;
+        for (String parentKey : List.of("rock", "gatewayStatus", "system_status", "ticketStatus", "rockAI")) {
+            Object parentObj = raw.get(parentKey);
+            if (parentObj == null) continue;
+            String parentStr = String.valueOf(parentObj).trim();
+            if (parentStr.startsWith("{")) {
+                try {
+                    com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                    com.fasterxml.jackson.databind.JsonNode node = mapper.readTree(parentStr);
+                    if (node.has(targetKey)) {
+                        com.fasterxml.jackson.databind.JsonNode valNode = node.get(targetKey);
+                        if (valNode.isTextual() || valNode.isBoolean() || valNode.isNumber()) {
+                            return valNode.asText();
+                        }
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+        return null;
     }
 
     public record ResolvedField(NormalizedState state, String sourceField, String rawValue) {
