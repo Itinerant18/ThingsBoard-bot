@@ -1,16 +1,22 @@
-from app.query.contracts import Answer, Handler, RequestContext
-from app.query.extract import LlmIntentExtractor
-from app.query.handlers import AlarmDetail, DeviceInventory, GlobalOverview, SubsystemStatus
+from typing import Protocol
+
+from app.query.contracts import Answer, ExtractedIntent, Handler, RequestContext
+from app.query.extract import KeywordIntentExtractor
+from app.query.handlers import AlarmDetail, DeviceInventory, GlobalOverview, MetricHandler
+
+
+class _Extractor(Protocol):
+    async def extract(self, question: str) -> ExtractedIntent: ...
 
 
 class QueryOrchestrator:
-    def __init__(self) -> None:
-        self.extractor = LlmIntentExtractor()
+    def __init__(self, extractor: "_Extractor | None" = None) -> None:
+        self.extractor: _Extractor = extractor or KeywordIntentExtractor()
         self.handlers: list[Handler] = [
             GlobalOverview(),
             DeviceInventory(),
             AlarmDetail(),
-            SubsystemStatus(),
+            MetricHandler(),
         ]
 
     async def ask(self, question: str, ctx: RequestContext) -> Answer:

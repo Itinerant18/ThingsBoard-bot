@@ -20,12 +20,20 @@ class LlmClient:
         return self._client
 
     async def complete(
-        self, system: str, messages: list[dict[str, str]], max_tokens: int | None = None
+        self,
+        system: str,
+        messages: list[dict[str, str]],
+        max_tokens: int | None = None,
+        temperature: float | None = None,
     ) -> str:
+        kwargs: dict[str, Any] = {}
+        if temperature is not None:
+            kwargs["temperature"] = temperature
         response = await self.client.chat.completions.create(
             model=self._settings.openai_model,
             messages=cast(Iterable[Any], [{"role": "system", "content": system}, *messages]),
             max_tokens=max_tokens or self._settings.llm_max_tokens,
+            **kwargs,
         )
         return response.choices[0].message.content or ""
 

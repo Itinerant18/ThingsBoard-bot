@@ -34,7 +34,7 @@ class RequestContext:
 
 
 class Handler(Protocol):
-    intent: str
-
+    # Dispatch is by can_handle(); a handler may serve one intent (with a class-level
+    # `intent` attr) or many (MetricHandler), so the protocol requires only the methods.
     async def can_handle(self, intent: ExtractedIntent) -> bool: ...
     async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer: ...

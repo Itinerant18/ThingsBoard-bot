@@ -11,6 +11,9 @@ from app.clients.thingsboard import ThingsBoardClient
 from app.config import Settings, get_settings
 from app.db.session import build_engine
 from app.db.timescale import initialize_timescale
+from app.llm.client import LlmClient
+from app.llm.intent import LlmIntentExtractor
+from app.query.extract import KeywordIntentExtractor
 from app.query.orchestrate import QueryOrchestrator
 
 
@@ -27,7 +30,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             await initialize_timescale(engine)
         app.state.redis = await create_redis(test_settings.redis_url)
         app.state.tb = ThingsBoardClient(test_settings)
-        app.state.orchestrator = QueryOrchestrator()
+        keyword_extractor = KeywordIntentExtractor()
+        extractor = (
+            LlmIntentExtractor(LlmClient(test_settings), keyword_extractor)
+            if test_settings.openai_api_key
+            else keyword_extractor
+        )
+        app.state.orchestrator = QueryOrchestrator(extractor)
         try:
             yield
         finally:
