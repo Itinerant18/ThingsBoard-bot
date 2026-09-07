@@ -1,4 +1,4 @@
-# ThingsBoard AI IoT Assistant (SAI) 
+# ThingsBoard AI IoT Assistant (SAI-chatbot) 
 
 <div align="center">
 
