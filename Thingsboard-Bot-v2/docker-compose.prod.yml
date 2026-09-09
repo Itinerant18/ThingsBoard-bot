@@ -117,7 +117,9 @@ volumes:
     name: thingsboard-bot_caddy_config
     external: true
 
+# Name pinned (Caddy resolves `chatbot` on it) but NOT external: `docker system prune`
+# in deploy.yml removes any network no container is using, so an external declaration
+# fails every deploy that starts from a stopped stack. Compose recreating it is free.
 networks:
   default:
     name: thingsboard-bot_default
-    external: true
