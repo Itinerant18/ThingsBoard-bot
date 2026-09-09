@@ -127,3 +127,19 @@ For deep-dive documentation on specific systems, refer to the `docs/` directory:
 * **[Codebase Analysis](docs/Codebase-Analysis/CODEBASE_ANALYSIS.md)**: Detailed breakdown of architectural patterns, scopes, data flow, and gotchas.
 * **[PRD](docs/PRD/product_requirements_document.md)**: Product Requirements Document.
 * **[FAQ System Prompt](docs/Question%20&%20Answer/thingsboard-chatbot-faq.md)**: Details on expected chatbot Q&A handling and rules.
+
+###
+
+* **<http://localhost:8083/ui/>**—
+
+Served by FastAPI itself (same-origin with chat endpoints, so no CORS setup needed). Content = frontend/dist, the Vite build the Dockerfile produced in its node stage.
+
+Other endpoints same port:
+
+* <http://localhost:8083/docs> — Swagger`
+* <http://localhost:8083/health>
+* <http://localhost:15672> — RabbitMQ management UI (guest/guest)
+
+### Caddyfile
+
+Reverse proxy config for production (handles SSE).
