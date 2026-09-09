@@ -61,7 +61,6 @@ src/main/resources/static/*.css
 src/main/resources/static/index.html
 pnpm-lock.yaml
 yarn.lock
-package-lock.json
 # Added by code-review-graph
 .code-review-graph/
 
