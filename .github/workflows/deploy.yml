@@ -27,8 +27,9 @@ jobs:
             echo "📊 Disk usage before cleanup:"
             df -h /
             echo "🧹 Freeing disk space (Docker prune + logs)..."
-            docker system prune -af --volumes || true
-            docker volume prune -f || true
+            # NOT --volumes: postgres_data lives on this box now, and a prune between
+            # `compose down` and `up` would delete the telemetry history.
+            docker system prune -af || true
             sudo journalctl --vacuum-size=50M || true
             find /tmp -type f -mtime +1 -delete || true
             echo "📊 Disk usage after cleanup:"
@@ -38,7 +39,9 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             echo "📦 Building and restarting containers..."
-            docker compose down --remove-orphans
-            docker compose up -d --build
+            cd Thingsboard-Bot-v2
+            docker compose -f docker-compose.prod.yml down --remove-orphans
+            docker compose -f docker-compose.prod.yml up -d --build
+            docker compose -f docker-compose.prod.yml exec -T chatbot alembic upgrade head
             echo "✅ Deployment successful!"
 

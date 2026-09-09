@@ -42,6 +42,25 @@ services:
       timeout: 3s
       retries: 5
 
+  # Was Tiger Cloud; moved here 2026-09-09 — ~890 h/month of managed compute for a DB
+  # that only stores history. shared_buffers is capped because this shares a 2 GB box:
+  # Postgres sizes its default off total RAM and would crowd out the app under sync load.
+  postgres:
+    image: timescale/timescaledb:latest-pg16
+    container_name: chatbot-v2-postgres
+    restart: always
+    command: postgres -c shared_buffers=256MB -c max_connections=40
+    environment:
+      POSTGRES_USER: thingsboard
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: thingsboard_chat
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thingsboard -d thingsboard_chat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   chatbot:
     build:
       context: .
@@ -56,6 +75,8 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+      postgres:
+        condition: service_healthy
 
   consumer:
     image: thingsboard-bot-v2:latest
@@ -65,6 +86,8 @@ services:
     restart: always
     depends_on:
       redis:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
 
   # Adopted from the old Java project's compose, which held nothing else. The named
@@ -86,6 +109,7 @@ services:
 
 volumes:
   redis_data:
+  postgres_data:
   caddy_data:
     name: thingsboard-bot_caddy_data
     external: true
