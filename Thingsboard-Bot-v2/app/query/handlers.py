@@ -1,16 +1,20 @@
+import logging
+import re
 from collections import Counter
 from collections.abc import Awaitable, Callable
-from typing import Any, Protocol
+from datetime import UTC, datetime
+from typing import Any, ClassVar, Protocol
 
-from sqlalchemy import select
-
-from app.clients.thingsboard import UserAwareThingsBoardClient, require_uuid
+from app.auth.scope_resolver import resolved_scope
+from app.auth.tb_acl import PermissionCheckUnavailable, SessionExpired, caller_identity
+from app.clients.thingsboard import UserAwareThingsBoardClient
 from app.config import Settings
-from app.db.models import DeviceEvent
-from app.hierarchy.scope import ScopedBranches, branch_scope, extract_region
+from app.hierarchy.scope import ScopedBranches
 from app.normalization import build_snapshot
+from app.normalization.flatten import expand_containers, request_keys
 from app.normalization.snapshot import BranchSnapshot
-from app.query import cctv
+from app.query import cctv, derived, history
+from app.query.alarm_answers import IST, AlarmRecord, format_alarm_answer, normalize_alarm
 from app.query.answer_support import (
     LADDER_KEYS,
     first_non_blank,
@@ -19,8 +23,49 @@ from app.query.answer_support import (
     resolve_subsystem_alarm,
     resolve_subsystem_fault,
 )
+from app.query.area_rollup import area_of_branch, rank_areas, roll_up, unrecorded_metric
+from app.query.audit import (
+    AuditScope,
+    filter_entries,
+    format_audit_answer,
+    normalize_entries,
+    window_bounds,
+)
+from app.query.cctv_fleet import (
+    aggregate_cctv,
+    branch_recording_rows,
+    format_cctv_fleet,
+    rank_cctv_branches,
+)
 from app.query.contracts import Answer, ExtractedIntent, RequestContext
+from app.query.disclosure import REFUSAL
+from app.query.fleet_health import (
+    _LISTING_RE,
+    aggregate_fleet_health,
+    branch_rows,
+    category_listing,
+    format_fleet_health,
+    normalize_category,
+    rank_branches,
+)
+from app.query.hierarchy_answers import (
+    area_device_filter,
+    format_hierarchy_answer,
+    load_scoped_tree,
+)
 from app.query.key_profiles import keys_for
+from app.query.uptime import (
+    ASKS_FAULT_HISTORY,
+    ASKS_UPTIME,
+    build_report,
+    format_fault_answer,
+    format_uptime_answer,
+)
+from app.query.users import format_user_answer, normalize_users
+from app.query.uuids import is_uuid as _is_uuid
+from app.tasks.live_sync import load_fleet_states
+
+logger = logging.getLogger(__name__)
 
 # Callable that resolves the caller's authorized branch set. Injectable so handlers
 # are unit-testable without a live DB/Redis.
@@ -28,17 +73,569 @@ ScopeFn = Callable[[RequestContext], Awaitable[ScopedBranches]]
 
 
 async def _default_scope(ctx: RequestContext) -> ScopedBranches:
-    if not ctx.tenant.prefix:
-        return ScopedBranches(branch_node_ids=[], tb_device_ids=[])
-    return await branch_scope(
-        ctx.db, ctx.tenant.prefix, extract_region(ctx.tenant.claims), ctx.redis
+    """Chat's scope, from the same resolver the HTTP endpoints use.
+
+    This deliberately does NOT call branch_scope() directly. It used to, which meant
+    the chat path and app/deps.py built the same security boundary twice — so a fix
+    to one silently missed the other. PermissionCheckUnavailable propagates to the
+    orchestrator, which turns it into a refusal message.
+    """
+    return await resolved_scope(ctx.db, ctx.redis, ctx.tenant, ctx.tb.settings)
+
+
+def _requested_device(intent: ExtractedIntent, scoped_ids: list[str]) -> tuple[str | None, bool]:
+    """(device_id, refuse) for a fleet handler.
+
+    A device_id that is not a UUID did not come from the caller naming a device — it
+    is a word the extractor scraped after "device", as in "device category". Ignore
+    it and answer fleet-wide rather than refusing.
+    """
+    requested = intent.device_id
+    if not requested or not _is_uuid(requested):
+        return None, False
+    return (requested, False) if requested in scoped_ids else (None, True)
+
+
+def _name_the_branch(answer: Answer, intent: ExtractedIntent) -> Answer:
+    """Prefix a per-device answer with the branch the question named.
+
+    "What is the status of CCTV channel 15 at BALLYBAZAR?" answered "CCTV status is
+    FAULT; 16/16 cameras online." The device WAS resolved correctly — the answer just
+    never said which one, so it is indistinguishable from a fleet-wide reply. Same
+    reasoning as _scoped_to, which the fleet handlers already use and MetricHandler
+    never did.
+    """
+    if not intent.node_name or answer.structured.get("error"):
+        return answer
+    if intent.node_name.lower() in answer.text.lower():
+        return answer
+    answer.text = f"{intent.node_name} — {answer.text}"
+    answer.structured.setdefault("scoped_to", intent.node_name)
+    return answer
+
+
+_ASKS_HIERARCHY = re.compile(
+    r"\bzones?\b|\bregions?\b|\bnbg\b|\bfgmo\b|\bcircles?\b|\bhierarch|\bbelongs? to\b"
+    r"|\bsub-?areas?\b"
+)
+# "branch" alone is not enough — "battery voltage of Liluah branch" is a metric
+# question. It counts only when the question is also asking to count or to list.
+_BRANCH_LISTING = re.compile(
+    r"\bbranch(?:es)?\b.*\b(?:how many|list|all|count|per|each|total)\b"
+    r"|\b(?:how many|list|all|count|per|each|total)\b.*\bbranch(?:es)?\b"
+)
+
+
+# Words that make a question about a MEASUREMENT rather than the shape of the tree.
+# The hierarchy answer must stand down for these — it can count branches, not alarms.
+_ASKS_A_METRIC = re.compile(
+    r"\balarms?\b|\bincidents?\b|\balerts?\b|\bcameras?\b|\bchannels?\b|\brecording\b"
+    r"|\bcompliance\b|\bhealth\b|\boffline\b|\bonline\b|\bfaults?\b|\bfaulty\b"
+    r"|\buptime\b|\btat\b|\bperformance\b|\bbattery\b|\bvoltage\b|\btemperature\b"
+    # "users" is a metric here too: "which zone has the most users" is a count of
+    # people, which the hierarchy cannot give — it counts branches.
+    r"|\bstorage\b|\busers?\b|\blogins?\b|\bconcentration\b"
+)
+
+
+async def _hierarchy_answer(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """format_hierarchy_answer's reply, when the question is really about structure.
+
+    Zone and region questions reach three different handlers depending on how the
+    extractor classifies them — "how many branches under the WEST II zone" landed on
+    GlobalOverview and got a device count, "list all branches" landed on
+    DeviceInventory and got the 98-name dump. The formatter could answer both all
+    along. Rather than teach each handler the hierarchy, they all ask here first.
+    """
+    if ctx.db is None or not ctx.tenant.prefix:
+        return None
+    question = intent.raw_question.lower()
+    if not (_ASKS_HIERARCHY.search(question) or _BRANCH_LISTING.search(question)):
+        return None
+    # Structure only. Moving this to the chokepoint meant it began seeing EVERY
+    # question rather than only the ones routed to an inventory handler, and its
+    # trigger is broad enough to swallow metric questions that were being answered
+    # correctly elsewhere: "which branch has the highest alarm count" matches
+    # branch + count and came back "98 branch(es) in your authorized scope".
+    # A question naming a measurement is not asking about the shape of the tree.
+    if _ASKS_A_METRIC.search(question):
+        return None
+    scoped = await _default_scope(ctx)
+    tree = await load_scoped_tree(
+        ctx.db, ctx.tenant.prefix, scoped.branch_node_ids, scoped.tb_device_ids
     )
+    if not tree.nodes:
+        return None
+    text, structured = format_hierarchy_answer(tree, intent.raw_question)
+    return Answer(text, structured, [{"type": "hierarchy", "resource": "scoped-branches"}])
+
+
+async def _category_listing(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """"Show me all IAS devices" — the branches where one subsystem is deployed.
+
+    Reached from the inventory handlers, which is where the extractor sends these.
+    Guarded on the question naming a subsystem AND asking to list, so the fleet-state
+    read stays off the path of every other inventory question.
+    """
+    question = intent.raw_question.lower()
+    if not ctx.tenant.prefix:
+        return None
+    if normalize_category(None, question) is None or not _LISTING_RE.search(question):
+        return None
+    scoped = await _default_scope(ctx)
+    states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, scoped.tb_device_ids)
+    if not states:
+        return None
+    snapshots = {device_id: build_snapshot(raw) for device_id, raw in states.items()}
+    listed = category_listing(
+        aggregate_fleet_health(snapshots, scoped.tb_device_ids), intent.raw_question
+    )
+    if listed is None:
+        return None
+    text, rows = listed
+    return Answer(
+        text,
+        {"category_branches": rows[:50], "count": len(rows)},
+        [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+    )
+
+
+_ASKS_GEO = re.compile(
+    r"\bmap\b|\blatitude\b|\blongitude\b|\bcoordinates?\b|\bgeograph"
+    r"|\bwhere are\b.*\blocated\b|\blocated\b.*\bgeograph"
+)
+_ASKS_COORDS = re.compile(r"\blatitude\b|\blongitude\b|\bcoordinates?\b")
+# "How many devices are at each branch?" and "show me the branch report" want a
+# number PER branch. The hierarchy answered with a count OF branches.
+_ASKS_PER_BRANCH = re.compile(
+    r"\b(?:how many|number of|count)\b.*\bdevices?\b.*\b(?:each|per|every)\b.*\bbranch"
+    r"|\bdevices?\b.*\b(?:per|each)\b.*\bbranch"
+    r"|\bbranch report\b|\bper-?branch (?:report|summary|breakdown)\b"
+)
+
+
+async def _geo_answer(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """Branch coordinates, or the map view.
+
+    Lifted out of DeviceInventory. The same question reached GlobalOverview on a later
+    run and fell through, because which handler the extractor picks is not stable.
+    """
+    question = intent.raw_question.lower()
+    if not ctx.tenant.prefix or not _ASKS_GEO.search(question):
+        return None
+    scoped = await _default_scope(ctx)
+    states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, scoped.tb_device_ids)
+    markers: list[dict[str, Any]] = []
+    for device_id, raw in states.items():
+        lat = first_non_blank(raw, "lat1", "lat")
+        lon = first_non_blank(raw, "lon1", "lon")
+        try:
+            latitude = float(lat) if lat is not None else None
+            longitude = float(lon) if lon is not None else None
+        except (TypeError, ValueError):
+            continue
+        if latitude is None or longitude is None:
+            continue
+        snapshot = build_snapshot(raw)
+        markers.append(
+            {
+                "device_id": device_id,
+                "branch": snapshot.identity.branch_name
+                or snapshot.identity.technical_id
+                or device_id,
+                "latitude": latitude,
+                "longitude": longitude,
+                "status": snapshot.gateway.state.value,
+            }
+        )
+    if not markers:
+        return Answer(
+            "No branch with current map coordinates is visible in your authorized scope.",
+            {"map_markers": []},
+            [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+        )
+    suffix = " (showing first 20)" if len(markers) > 20 else ""
+    if _ASKS_COORDS.search(question):
+        # 51 of 98 branches report 20.5937, 78.9629 — the geographic centre of India,
+        # ThingsBoard's default when a device has no real position. Listing it as the
+        # branch's location invents data, so the branches that carry a position are
+        # separated from the ones that do not.
+        # ponytail: "shared by more than 5 branches" identifies the default without
+        # hardcoding it, so it holds for a tenant whose default differs. Tighten if a
+        # bank genuinely has 6 branches at one address.
+        tally = Counter((m["latitude"], m["longitude"]) for m in markers)
+        placed = [m for m in markers if tally[(m["latitude"], m["longitude"])] <= 5]
+        unplaced = len(markers) - len(placed)
+        if not placed:
+            return Answer(
+                f"None of the {len(markers)} branches in your scope carries its own "
+                "coordinates — they all report the same default position, so I cannot "
+                "give you a per-branch location.",
+                {"map_markers": markers, "placed": 0, "unplaced": unplaced},
+                [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+            )
+        listed = "; ".join(
+            f"{m['branch']} {m['latitude']}, {m['longitude']}" for m in placed[:20]
+        )
+        more = " (showing first 20)" if len(placed) > 20 else ""
+        tail = (
+            f" The other {unplaced} report a shared default position rather than their "
+            "own, so no coordinate is recorded for them."
+            if unplaced
+            else ""
+        )
+        return Answer(
+            f"Coordinates for {len(placed)} branch(es): {listed}{more}.{tail}",
+            {"map_markers": markers, "placed": len(placed), "unplaced": unplaced},
+            [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+        )
+    summary = ", ".join(f"{marker['branch']} ({marker['status']})" for marker in markers[:20])
+    return Answer(
+        f"Branches visible on the map: {summary}{suffix}.",
+        {"map_markers": markers},
+        [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+    )
+
+
+async def _per_branch_counts(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """Modules deployed at each branch.
+
+    aggregate_fleet_health already walks every branch and records its modules while
+    summing them, so this is the same read the fleet answers make - no extra call.
+    """
+    if not ctx.tenant.prefix or not _ASKS_PER_BRANCH.search(intent.raw_question.lower()):
+        return None
+    scoped = await _default_scope(ctx)
+    states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, scoped.tb_device_ids)
+    if not states:
+        return None
+    snapshots = {device_id: build_snapshot(raw) for device_id, raw in states.items()}
+    summary = aggregate_fleet_health(snapshots, scoped.tb_device_ids)
+    counts = [(branch, len(modules)) for branch, modules in summary.branches.items()]
+    counts.sort(key=lambda pair: (-pair[1], pair[0]))
+    rows = [{"branch": branch, "modules": modules} for branch, modules in counts]
+    if not rows:
+        return None
+    shown = ", ".join(f"{r['branch']}: {r['modules']}" for r in rows[:20])
+    more = f" (showing first 20 of {len(rows)})" if len(rows) > 20 else ""
+    return Answer(
+        f"Modules deployed per branch: {shown}{more}.",
+        {"per_branch_modules": rows},
+        [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+    )
+
+
+_AREA_SUPERLATIVE = re.compile(r"\bzones?\b|\bzonal\b|\bzo\b|\bregions?\b|\bnbg\b|\bfgmo\b|\bcircles?\b")
+_AREA_RANKS = re.compile(r"\bworst\b|\bbest\b|\bmost\b|\bleast\b|\bfewest\b|\bhighest\b|\blowest\b")
+
+
+async def area_ranking(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """"Which zone has the worst overall health?" - rank areas, not branches.
+
+    The per-branch rows and the branch-to-area mapping both already existed;
+    nothing joined them. No ThingsBoard call is added: this reads the same fleet
+    snapshot the health and CCTV answers read.
+    """
+    question = intent.raw_question.lower()
+    if ctx.db is None or not ctx.tenant.prefix:
+        return None
+    if not (_AREA_SUPERLATIVE.search(question) and _AREA_RANKS.search(question)):
+        return None
+    scoped = await _default_scope(ctx)
+
+    # Say so rather than summing something adjacent and calling it the answer.
+    decline = unrecorded_metric(question)
+    if decline is not None:
+        return Answer(decline, {"unavailable": "metric_not_recorded"})
+
+    tree = await load_scoped_tree(
+        ctx.db, ctx.tenant.prefix, scoped.branch_node_ids, scoped.tb_device_ids
+    )
+    if not tree.nodes:
+        return None
+    states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, scoped.tb_device_ids)
+    if not states:
+        return None
+    area_of = area_of_branch(tree, intent.raw_question)
+
+    snapshots = {device_id: build_snapshot(raw) for device_id, raw in states.items()}
+    rows = branch_rows(aggregate_fleet_health(snapshots, scoped.tb_device_ids))
+    if normalize_category(None, question) == "cctv" or "camera" in question or "record" in question:
+        expanded = {device_id: expand_containers(raw) for device_id, raw in states.items()}
+        rows = branch_recording_rows(aggregate_cctv(expanded))
+
+    ranked = rank_areas(roll_up(rows, area_of), intent.raw_question)
+    if ranked is None:
+        return None
+    sentence, area_rows = ranked
+    return Answer(
+        sentence,
+        {"ranked_areas": area_rows[:20]},
+        [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+    )
+
+
+_ASKS_RECENTLY_ADDED = re.compile(
+    r"\b(?:last|latest|newest|recently|most recent)\b.{0,40}\b(?:device|added|provisioned|onboarded|installed)\b"
+    r"|\b(?:device|devices)\b.{0,30}\b(?:recently|newly)\b.{0,20}\b(?:added|provisioned|onboarded)\b"
+)
+
+
+_RANKS_A_BRANCH = re.compile(
+    r"\bwhich branch\b.*\b(?:worst|best|most|least|fewest|highest|lowest)\b"
+    r"|\b(?:worst|best|most|least|fewest|highest|lowest)\b.*\bbranch\b"
+)
+
+
+async def _branch_ranking(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """"Which branch has the worst overall performance?" — rank the branches.
+
+    rank_branches has existed since dc51c66 but only FleetHealth could reach it, and
+    the extractor sends these to DeviceInventory, which answered with the 98-name
+    inventory dump. Runs after area_ranking, so a question naming a zone still gets
+    the zone.
+    """
+    question = intent.raw_question.lower()
+    if not ctx.tenant.prefix or not _RANKS_A_BRANCH.search(question):
+        return None
+    decline = unrecorded_metric(question)
+    if decline is not None:
+        return Answer(decline, {"unavailable": "metric_not_recorded"})
+    scoped = await _default_scope(ctx)
+    states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, scoped.tb_device_ids)
+    if not states:
+        return None
+    snapshots = {device_id: build_snapshot(raw) for device_id, raw in states.items()}
+    ranked = rank_branches(aggregate_fleet_health(snapshots, scoped.tb_device_ids), question)
+    if ranked is None:
+        return None
+    sentence, rows = ranked
+    return Answer(
+        sentence,
+        {"ranked_branches": rows[:10]},
+        [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+    )
+
+
+def _ist_stamp(created_ms: int) -> str:
+    """ThingsBoard's epoch-millis createdTime, in the timezone operators read."""
+    return datetime.fromtimestamp(created_ms / 1000, UTC).astimezone(IST).strftime(
+        "%Y-%m-%d %H:%M IST"
+    )
+
+
+async def _recently_added(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """"What was the last device added?" - from createdTime, already in the payload.
+
+    ThingsBoard returns createdTime on every device object and the client already
+    sorts by it in five places; nothing read the value. Fetched with the CALLER's
+    token and intersected with the resolved scope, so it cannot widen access.
+    """
+    question = intent.raw_question.lower()
+    if not ctx.tenant.prefix or not _ASKS_RECENTLY_ADDED.search(question):
+        return None
+    if not ctx.tenant.user_token:
+        return None
+    identity = await caller_identity(ctx.tb.settings, ctx.tenant.user_token, ctx.redis)
+    if not identity.customer_id:
+        return None
+    scoped = await _default_scope(ctx)
+    allowed = set(scoped.tb_device_ids)
+    client = UserAwareThingsBoardClient(ctx.tb.settings, ctx.tenant.user_token)
+    try:
+        body = await client.devices(identity.customer_id)
+    finally:
+        await client.close()
+    rows = body.get("data", []) if isinstance(body, dict) else body
+    devices: list[tuple[int, str]] = [
+        (int(row["createdTime"]), str(row.get("name") or ""))
+        for row in (rows if isinstance(rows, list) else [])
+        if isinstance(row, dict)
+        and str((row.get("id") or {}).get("id")) in allowed
+        and row.get("createdTime")
+    ]
+    if not devices:
+        return None
+    devices.sort(reverse=True)
+    structured = [
+        {"name": name, "created": _ist_stamp(created)} for created, name in devices[:20]
+    ]
+    # "Which devices were recently added" wants several; "what was the LAST device
+    # added" wants one. Both phrasings appear in the FAQ.
+    if re.search(r"\b(?:which|list)\b", question) and not re.search(
+        r"\b(?:the last|latest|newest)\b", question
+    ):
+        listed = "; ".join(f"{name} ({_ist_stamp(created)})" for created, name in devices[:10])
+        return Answer(
+            f"Most recently added device(s) in your scope: {listed}.",
+            {"recently_added": structured},
+            [{"type": "thingsboard-devices", "resource": "scoped-branches"}],
+        )
+    newest_ms, newest_name = devices[0]
+    return Answer(
+        f"The most recently added device in your scope is {newest_name}, "
+        f"created {_ist_stamp(newest_ms)}.",
+        {"recently_added": structured},
+        [{"type": "thingsboard-devices", "resource": "scoped-branches"}],
+    )
+
+
+_ASKS_PANEL_BRAND = re.compile(r"\b(?:panel|integration|integrated with|configured with)\b")
+_NAMES_A_BRAND = re.compile(r"\b(amc|dsc|trisim|seple)\b", re.IGNORECASE)
+
+
+async def _panel_brand(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """Branches whose panel integration is a named brand.
+
+    dexter_config.brand is already in the fleet snapshot (fetch_device_fields pulls
+    every attribute scope, and snapshot._JSON_PARENTS expands the container), so no
+    ThingsBoard call is added.
+
+    SECURITY: only brand and branch are read. dexter_config also carries
+    modem_parameter with user_name, password, client_id and access_token, and the
+    raw object must never reach an answer. Asking for the container by name is
+    refused upstream by disclosure._CREDENTIAL_RE.
+    """
+    question = intent.raw_question.lower()
+    if not ctx.tenant.prefix or not _ASKS_PANEL_BRAND.search(question):
+        return None
+    named = _NAMES_A_BRAND.search(question)
+    if named is None:
+        return None
+    wanted = named.group(1).upper()
+    scoped = await _default_scope(ctx)
+    states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, scoped.tb_device_ids)
+    if not states:
+        return None
+    matches: list[dict[str, Any]] = []
+    seen_brands: set[str] = set()
+    for raw in states.values():
+        expanded = expand_containers(raw)
+        brand = expanded.get("dexter_config.brand")
+        if not brand:
+            continue
+        brand_text = str(brand).strip().upper()
+        seen_brands.add(brand_text)
+        if brand_text == wanted:
+            branch = str(expanded.get("dexter_config.branch") or build_snapshot(raw).identity.branch_name or "")
+            matches.append({"branch": branch, "brand": brand_text})
+    if not matches:
+        # Honest decline, same pattern as SLA and risk grade. Naming what IS present
+        # keeps it useful instead of a dead end.
+        present = ", ".join(sorted(seen_brands)) or "none"
+        return Answer(
+            f"No device in your scope reports a {wanted} panel integration. "
+            f"The panel brands recorded across your branches are: {present}.",
+            {"brand": wanted, "matches": 0, "brands_present": sorted(seen_brands)},
+            [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+        )
+    listed = ", ".join(sorted({str(m["branch"]) for m in matches if m["branch"]})[:15])
+    return Answer(
+        f"{len(matches)} branch(es) report a {wanted} panel integration: {listed}.",
+        {"brand": wanted, "matches": len(matches), "branches": matches[:50]},
+        [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+    )
+
+
+def _unplaced_note(scoped: ScopedBranches) -> str:
+    """Disclose devices ThingsBoard authorizes that the hierarchy cannot place.
+
+    Verified in the run-6 audit: ThingsBoard authorized 100 devices and the answer
+    said 98, with nothing to indicate the difference. Not naming an unplaceable device
+    is correct; implying it does not exist is not.
+    """
+    if not scoped.unplaced_devices:
+        return ""
+    count = scoped.unplaced_devices
+    return (
+        f" A further {count} device(s) are authorized for you in ThingsBoard but are "
+        "not present in your branch hierarchy, so I cannot name or report on them — "
+        "they are missing from the hierarchy import, not from your access."
+    )
+
+
+async def _uptime_answer(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """Monthly uptime and fault history from the mainDevices*/mainCCTVFault attributes.
+
+    These arrive in the fleet snapshot already — fetch_device_fields pulls every
+    attribute scope — so nothing new is fetched here. Until now nothing read them and
+    every uptime question was declined as data we do not hold. We do hold it, for part
+    of the fleet, and the answer says which part.
+    """
+    question = intent.raw_question.lower()
+    if not ctx.tenant.prefix:
+        return None
+    if not (ASKS_UPTIME.search(question) or ASKS_FAULT_HISTORY.search(question)):
+        return None
+    scoped = await _default_scope(ctx)
+    states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, scoped.tb_device_ids)
+    if not states:
+        return None
+    report = build_report(states)
+    for formatter in (format_uptime_answer, format_fault_answer):
+        result = formatter(report, intent.raw_question)
+        if result is not None:
+            text, structured = result
+            return Answer(
+                text, structured, [{"type": "fleet-snapshot", "resource": "scoped-branches"}]
+            )
+    return None
+
+
+async def shared_answer(intent: ExtractedIntent, ctx: RequestContext) -> Answer | None:
+    """Answers that belong to no single handler, tried before dispatch.
+
+    ARCHITECTURAL INVARIANT (docs/ARCHITECTURE-chokepoint.md): behaviour more than one
+    handler could need lives HERE, not in a handler. Four regressions came from
+    breaking it - resolved_scope, the credential guard, area_ranking, and the geo
+    block, which answered correctly in one run and fell through in the next because
+    the extractor routed the question to a different handler.
+
+    Order is specific-to-general. A question that names an area AND asks to rank wants
+    the ranking, not the hierarchy summary that would also match it.
+    """
+    if not ctx.tenant.prefix:
+        return None
+    ranked = await area_ranking(intent, ctx)
+    if ranked is not None:
+        return ranked
+    branch_ranked = await _branch_ranking(intent, ctx)
+    if branch_ranked is not None:
+        return branch_ranked
+    for candidate in (
+        _uptime_answer,
+        _geo_answer,
+        _recently_added,
+        _panel_brand,
+        _per_branch_counts,
+        _category_listing,
+        _hierarchy_answer,
+    ):
+        answer = await candidate(intent, ctx)
+        if answer is not None:
+            return answer
+    return None
+
+
+def _scoped_to(intent: ExtractedIntent, requested: str | None, area_name: str | None) -> str | None:
+    """The place an answer was narrowed to, for echoing back to the caller.
+
+    An answer that silently applied a filter is indistinguishable from one that
+    ignored it.
+    """
+    if area_name:
+        return area_name
+    if requested and intent.node_name:
+        return intent.node_name
+    return None
 
 
 class GlobalOverview:
     """Fleet overview, answered from the caller's SCOPED hierarchy set — never the
     raw ThingsBoard inventory. Counting live TB devices with the service token would
-    leak every region of the customer to a region-scoped caller."""
+    leak every region of the customer to a region-scoped caller. When the scheduled
+    live sync has populated fleet snapshots, the answer adds real online/offline
+    counts (computed over the scoped devices only)."""
 
     intent = "global_overview"
 
@@ -55,16 +652,48 @@ class GlobalOverview:
             )
         scoped = await self._scope_fn(ctx)
         count = len(scoped.tb_device_ids)
+        states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, scoped.tb_device_ids)
+        if not states:
+            return Answer(
+                f"You have {count} device(s) in your authorized scope.",
+                {"device_count": count},
+                [{"type": "hierarchy", "resource": "scoped-branches"}],
+            )
+        tally = Counter(build_snapshot(raw).gateway.state.value for raw in states.values())
+        online = tally.get("ONLINE", 0)
+        offline = tally.get("OFFLINE", 0)
+        other = len(states) - online - offline
+        text = (
+            f"You have {count} device(s) in your authorized scope: "
+            f"{online} online, {offline} offline"
+        )
+        # Same disclosure as the inventory answer; this handler states its own count.
+        if other:
+            text += f", {other} in other states"
+        if count > len(states):
+            text += f" ({count - len(states)} with no recent data)"
         return Answer(
-            f"You have {count} device(s) in your authorized scope.",
-            {"device_count": count},
-            [{"type": "hierarchy", "resource": "scoped-branches"}],
+            text + "." + _unplaced_note(scoped),
+            {
+                "device_count": count,
+                "online": online,
+                "offline": offline,
+                "other": other,
+                "no_data": count - len(states),
+                "unplaced_devices": scoped.unplaced_devices,
+            },
+            [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
         )
 
 
 class DeviceInventory:
     """Device list, scoped to the caller's hierarchy. Leaf node_id == the branch/device
-    name, so branch_node_ids is the authorized name list — no TB call needed."""
+    name, so branch_node_ids is the authorized name list — no TB call needed.
+
+    That last clause was only true after resolved_scope started applying ThingsBoard's
+    ACL to branch_node_ids as well. Before that it named 104 branches to a caller
+    ThingsBoard authorized for 100.
+    """
 
     intent = "device_inventory"
 
@@ -80,45 +709,597 @@ class DeviceInventory:
                 "Your token is not mapped to a customer, so I cannot retrieve device inventory."
             )
         scoped = await self._scope_fn(ctx)
+        question = intent.raw_question.lower()
+        # The gate already resolved a branch name out of the question and the
+        # orchestrator put it on the intent — this handler was throwing it away and
+        # printing the whole inventory. "Is there a NASIK branch currently active?"
+        # answered with 104 branch names, NASIK among them.
+        # Membership is tested on tb_device_ids because that is the ACL-filtered list.
+        if intent.node_name and intent.device_id in set(scoped.tb_device_ids):
+            return Answer(
+                f"Yes — {intent.node_name} is one of the {len(scoped.tb_device_ids)} "
+                "branches in your authorized scope.",
+                {
+                    "branch": intent.node_name,
+                    "device_id": intent.device_id,
+                    "in_scope": True,
+                },
+                [{"type": "hierarchy", "resource": "scoped-branches"}],
+            )
+        if "region" in question and "active" in question:
+            if ctx.tenant.region:
+                return Answer(
+                    f"One region is active in your current scope: {ctx.tenant.region}.",
+                    {"active_regions": [ctx.tenant.region], "count": 1},
+                    [{"type": "authorization-scope", "resource": "current-user"}],
+                )
+            return Answer(
+                "No single region is selected; your current scope is customer-wide.",
+                {"active_regions": [], "count": 0, "customer_wide": True},
+                [{"type": "authorization-scope", "resource": "current-user"}],
+            )
         names = scoped.branch_node_ids
         shown = ", ".join(names[:10]) or "none"
         suffix = " (showing first 10)" if len(names) > 10 else ""
         return Answer(
-            f"You have {len(names)} branch device(s) in scope: {shown}{suffix}.",
-            {"devices": names},
+            f"You have {len(names)} branch device(s) in scope: {shown}{suffix}."
+            + _unplaced_note(scoped),
+            {"devices": names, "unplaced_devices": scoped.unplaced_devices},
             [{"type": "hierarchy", "resource": "scoped-branches"}],
         )
 
 
-class AlarmDetail:
-    intent = "alarm_detail"
+class FleetHealth:
+    """Scoped dashboard-style health across deployed device categories."""
+
+    intent = "fleet_health"
+
+    def __init__(self, scope_fn: ScopeFn = _default_scope) -> None:
+        self._scope_fn = scope_fn
 
     async def can_handle(self, intent: ExtractedIntent) -> bool:
         return intent.name == self.intent
 
     async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
-        rows = (
-            (
-                await ctx.db.execute(
-                    select(DeviceEvent.event_type)
-                    .where(
-                        DeviceEvent.tenant_id == ctx.tenant.tenant_id,
-                        DeviceEvent.event_type.in_(["alarm", "alert", "fault"]),
-                    )
-                    .limit(100)
-                )
+        if not ctx.tenant.prefix:
+            return Answer(
+                "Your token is not mapped to a customer, so I cannot retrieve fleet health."
             )
-            .scalars()
-            .all()
+        scoped = await self._scope_fn(ctx)
+        device_ids = scoped.tb_device_ids
+        requested, refuse = _requested_device(intent, device_ids)
+        if refuse:
+            return Answer("That device is not in your authorized scope.")
+        if requested:
+            device_ids = [requested]
+        # "health status of all devices in the EAST zone" — narrow to the named area.
+        # Intersected with the scope, never substituted for it.
+        area_ids, area_name = await area_device_filter(
+            ctx.db,
+            ctx.tenant.prefix,
+            scoped.branch_node_ids,
+            intent.raw_question,
+            scoped.tb_device_ids,
         )
-        counts = Counter(rows)
-        if not counts:
-            return Answer("I found no recorded alarm events for this tenant.", {"alarms": {}})
-        summary = ", ".join(f"{kind}: {count}" for kind, count in counts.items())
+        if area_ids is not None:
+            allowed = set(device_ids)
+            device_ids = [device_id for device_id in area_ids if device_id in allowed]
+            if not device_ids:
+                return Answer(
+                    f"No device under {area_name} is in your authorized scope.",
+                    {"area": area_name, "fleet_health": None},
+                )
+        states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, device_ids)
+        snapshots = {device_id: build_snapshot(raw) for device_id, raw in states.items()}
+        summary = aggregate_fleet_health(snapshots, device_ids)
+        scoped_to = _scoped_to(intent, requested, area_name)
+        # "Which branch has the worst overall health?" was answered with the fleet
+        # aggregate, which names no branch at all. Rank the per-branch rows the
+        # aggregate was already computing and discarding. Returns None for questions
+        # that are genuinely about the fleet, so the summary below still serves them.
+        ranked = rank_branches(summary, intent.raw_question)
+        if ranked is not None:
+            sentence, rows = ranked
+            if scoped_to:
+                sentence = f"{scoped_to} — {sentence}"
+            return Answer(
+                sentence,
+                {"area": area_name, "ranked_branches": rows[:10], "fleet_health": summary.to_dict()},
+                [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+            )
+        text = format_fleet_health(summary, intent.raw_question, intent.subsystem)
+        if scoped_to:
+            text = f"{scoped_to} — {text}"
         return Answer(
-            f"Recorded alarms: {summary}.",
-            {"alarms": dict(counts)},
-            [{"type": "device_event", "resource": "tenant-scoped"}],
+            text,
+            {"area": area_name, "fleet_health": summary.to_dict()},
+            [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+        )
+
+
+class CctvFleet:
+    """Recording compliance and camera inventory across every branch in scope."""
+
+    intent = "cctv_fleet"
+
+    def __init__(self, scope_fn: ScopeFn = _default_scope) -> None:
+        self._scope_fn = scope_fn
+
+    async def can_handle(self, intent: ExtractedIntent) -> bool:
+        return intent.name == self.intent
+
+    async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
+        if not ctx.tenant.prefix:
+            return Answer(
+                "Your token is not mapped to a customer, so I cannot retrieve CCTV reports."
+            )
+        scoped = await self._scope_fn(ctx)
+        device_ids = scoped.tb_device_ids
+        requested, refuse = _requested_device(intent, device_ids)
+        if refuse:
+            return Answer("That device is not in your authorized scope.")
+        if requested:
+            device_ids = [requested]
+        states = await load_fleet_states(ctx.redis, ctx.tenant.prefix, device_ids)
+        # The NVR payloads arrive as JSON container strings from Redis; the dotted
+        # paths the parsers read only exist after expansion.
+        expanded = {device_id: expand_containers(raw) for device_id, raw in states.items()}
+        fleet = aggregate_cctv(expanded)
+        # Same pattern as FleetHealth: rank the per-branch rows the fleet summary was
+        # already holding, before falling through to the descriptive answer.
+        ranked = rank_cctv_branches(fleet, intent.raw_question)
+        if ranked is not None:
+            sentence, rows = ranked
+            named = _scoped_to(intent, requested, None)
+            return Answer(
+                f"{named} — {sentence}" if named else sentence,
+                {"ranked_branches": rows},
+                [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+            )
+        text = format_cctv_fleet(fleet, intent.raw_question)
+        scoped_to = _scoped_to(intent, requested, None)
+        if scoped_to:
+            text = f"{scoped_to} — {text}"
+        return Answer(
+            text,
+            {"cctv_fleet": fleet.to_dict()},
+            [{"type": "fleet-snapshot", "resource": "scoped-branches"}],
+        )
+
+
+class CredentialRefusal:
+    """Refuses secrets outright. Deliberately the simplest handler here: it reads no
+    data, calls nothing, and has no branch that could answer."""
+
+    intent = "credential_refusal"
+
+    async def can_handle(self, intent: ExtractedIntent) -> bool:
+        return intent.name == self.intent
+
+    async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
+        logger.info("[DISCLOSURE] refused a credential request")
+        return Answer(REFUSAL, {"refused": "credentials"})
+
+
+class UnavailableTelemetry:
+    """Says plainly that a metric is not collected.
+
+    Grading 769 live answers found the bot NEVER declines — asked for firmware
+    versions or S-Vault disk usage it substituted some unrelated real number, or
+    demanded a device id that would not have produced the data either. Deflecting is
+    worse than refusing: an operator can act on "we don't collect that" and cannot
+    act on a confidently wrong figure.
+    """
+
+    intent = "unavailable_telemetry"
+
+    # The subsystem acronyms an operator asks about. Six lines beats deflecting to an
+    # unrelated device count, and the mapping already exists in the extractor.
+    _GLOSSARY: ClassVar[dict[str, str]] = {
+        "ias": "IAS — Integrated Alarm System",
+        "bas": "BAS — Burglar (Intrusion) Alarm System",
+        "fas": "FAS — Fire Alarm System",
+        "tls": "TLS — Time Lock System",
+        "acs": "ACS — Access Control System",
+        "nbg": "NBG — National Banking Group, the regional tier above a zone",
+        "fgmo": "FGMO — Field General Manager's Office, used interchangeably with NBG",
+        "zo": "ZO — Zonal Office",
+        "boi": "BOI — Bank of India",
+        "tat": "TAT — Turnaround Time, how long an alarm stayed open",
+        "nvr": "NVR — Network Video Recorder",
+        "dvr": "DVR — Digital Video Recorder",
+    }
+
+    # What the question asked for -> what we would need to start collecting.
+    _SUBJECTS = (
+        # "uptime" is NO LONGER declined here: mainDevicesOnTimeData carries monthly
+        # uptime and downtime minutes, and _uptime_answer runs at the chokepoint
+        # before dispatch. It still declines honestly when no branch in scope
+        # publishes the attribute, which is the accurate statement rather than a
+        # blanket "we do not hold it".
+        ("disk utilization", "S-Vault disk usage"),
+        ("s-vault", "S-Vault contents"),
+        ("svault", "S-Vault contents"),
+        ("ingestion rate", "message ingestion rate"),
+        ("address", "branch postal addresses"),
+        ("pincode", "branch postal codes"),
+        ("pin code", "branch postal codes"),
+        ("phone", "branch phone numbers"),
+        ("contact", "branch contact details"),
+        ("manager", "branch manager names"),
+        ("escalation matrix", "an escalation matrix"),
+        ("patch level", "OS patch levels"),
+    )
+
+    async def can_handle(self, intent: ExtractedIntent) -> bool:
+        return intent.name == self.intent
+
+    async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
+        text = intent.raw_question.lower()
+
+        if "stand for" in text or "what does" in text:
+            hits = [
+                meaning
+                for token, meaning in self._GLOSSARY.items()
+                if re.search(rf"\b{token}\b", text)
+            ]
+            if hits:
+                return Answer("; ".join(hits) + ".", {"glossary": hits})
+
+        if re.search(r"\bwhat should i do\b|\bprocedure for\b|\bhow do i\b", text):
+            return Answer(
+                "I report what the fleet is doing; I do not hold your response "
+                "procedures or runbooks. I can tell you the current state — which "
+                "devices are faulty or offline, which alarms are open and for how "
+                "long — to inform whatever your procedure says.",
+                {"unavailable": "operational runbooks"},
+            )
+
+        if re.search(r"\btrend\b|\bcompared to yesterday\b|\bover (?:the )?(?:past|last)\b", text):
+            return Answer(
+                "I answer on the current state, not on change over time — this build "
+                "has no trend layer, so I would be inventing the comparison. Device "
+                "history is being recorded, so trends are possible later; today I can "
+                "give you the position right now.",
+                {"unavailable": "historical trend"},
+            )
+
+        subject = next(
+            (label for needle, label in self._SUBJECTS if needle in text),
+            "that measurement",
+        )
+        return Answer(
+            f"I do not hold {subject} — it is not among the telemetry this fleet "
+            "publishes to ThingsBoard, so I would be guessing. I can answer on device "
+            "health, CCTV recording and inventory, alarms, users, audit activity and "
+            "the branch hierarchy.",
+            {"unavailable": subject},
+        )
+
+
+class HierarchyInfo:
+    """Structure of the caller's organization tree — regions, zones, branch counts.
+
+    Built outward from the branches the caller may already read, never from every
+    node carrying the customer prefix: the shape of a bank's network is itself
+    information, and loading by prefix would show a region-scoped user the zones
+    and branch counts of regions ThingsBoard does not authorize them for.
+    """
+
+    intent = "hierarchy_info"
+
+    def __init__(self, scope_fn: ScopeFn = _default_scope) -> None:
+        self._scope_fn = scope_fn
+
+    async def can_handle(self, intent: ExtractedIntent) -> bool:
+        return intent.name == self.intent
+
+    async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
+        if not ctx.tenant.prefix:
+            return Answer(
+                "Your token is not mapped to a customer, so I cannot retrieve the hierarchy."
+            )
+        scoped = await self._scope_fn(ctx)
+        tree = await load_scoped_tree(
+            ctx.db, ctx.tenant.prefix, scoped.branch_node_ids, scoped.tb_device_ids
+        )
+        text, structured = format_hierarchy_answer(tree, intent.raw_question)
+        return Answer(text, structured, [{"type": "hierarchy", "resource": "scoped-branches"}])
+
+
+class UserDirectory:
+    """Who is registered, under the caller's OWN customer only.
+
+    SECURITY: the customer id comes from ThingsBoard's answer to "who is this token",
+    never from the question and never from the local hierarchy. The tenant-wide user
+    endpoint returns every bank's staff in one page, so a customer-scoped caller must
+    never reach it — this handler is the only place that decision is made.
+    """
+
+    intent = "user_directory"
+
+    def __init__(
+        self,
+        identity_fn: Callable[[RequestContext], Awaitable[Any]] | None = None,
+        client_factory: Callable[[Settings, str], Any] = UserAwareThingsBoardClient,
+    ) -> None:
+        self._identity_fn = identity_fn or self._default_identity
+        self._client_factory = client_factory
+
+    @staticmethod
+    async def _default_identity(ctx: RequestContext) -> Any:
+        return await caller_identity(ctx.tb.settings, ctx.tenant.user_token or "", ctx.redis)
+
+    async def can_handle(self, intent: ExtractedIntent) -> bool:
+        return intent.name == self.intent
+
+    async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
+        if not ctx.tenant.user_token:
+            return Answer("A user token is required to read the user directory.")
+        identity = await self._identity_fn(ctx)
+
+        client = self._client_factory(ctx.tb.settings, ctx.tenant.user_token)
+        try:
+            if identity.is_tenant_admin:
+                body = await client.tenant_users()
+                scope_label = "this ThingsBoard tenant"
+            elif identity.customer_id:
+                body = await client.customer_users(identity.customer_id)
+                scope_label = "your customer account"
+            else:
+                # Authenticated but assigned to no customer: authorized for no directory.
+                return Answer(
+                    "Your ThingsBoard account is not assigned to a customer, so there is "
+                    "no user directory I can show you.",
+                    {"scope": "none", "users": []},
+                )
+        finally:
+            await client.close()
+
+        rows = body.get("data", []) if isinstance(body, dict) else body
+        users = normalize_users(rows if isinstance(rows, list) else [])
+        text, structured = format_user_answer(users, intent.raw_question, scope_label)
+        return Answer(
+            text, structured, [{"type": "thingsboard-users", "resource": scope_label}]
+        )
+
+
+class AuditLog:
+    """Audit activity, filtered down to the caller.
+
+    ThingsBoard has no per-customer audit endpoint, so the tenant-wide stream is read
+    with an administrator credential and then reduced to what the caller may see. The
+    ALLOW-LIST is built from the caller's own token — their customer's user list and
+    their authorized device ids — never from the administrator's view, because a
+    filter built from the admin's data would leak exactly what it is meant to stop.
+
+    Failure to build the allow-list raises PermissionCheckUnavailable, which the
+    orchestrator turns into a refusal. It must never degrade into "no filter".
+    """
+
+    intent = "audit_log"
+
+    # A question with no period gets a week — long enough to answer "recently",
+    # short enough that the page cap is rarely reached.
+    DEFAULT_WINDOW_HOURS = 24 * 7
+
+    def __init__(
+        self,
+        identity_fn: Callable[[RequestContext], Awaitable[Any]] | None = None,
+        client_factory: Callable[[Settings, str], Any] = UserAwareThingsBoardClient,
+        scope_fn: ScopeFn = _default_scope,
+    ) -> None:
+        self._identity_fn = identity_fn or UserDirectory._default_identity
+        self._client_factory = client_factory
+        self._scope_fn = scope_fn
+
+    async def can_handle(self, intent: ExtractedIntent) -> bool:
+        return intent.name == self.intent
+
+    async def _caller_scope(
+        self, ctx: RequestContext, identity: Any, client: Any
+    ) -> AuditScope:
+        """Allow-list, from the CALLER's token only."""
+        try:
+            body = await client.customer_users(identity.customer_id)
+        except Exception as exc:
+            # No allow-list means no basis to show anything. Refuse rather than
+            # fall through to an unfiltered stream.
+            raise PermissionCheckUnavailable("could not resolve the caller's users") from exc
+        rows = body.get("data", []) if isinstance(body, dict) else body
+        user_ids = {
+            str((row.get("id") or {}).get("id"))
+            for row in (rows if isinstance(rows, list) else [])
+            if isinstance(row, dict) and isinstance(row.get("id"), dict)
+        }
+        scoped = await self._scope_fn(ctx)
+        return AuditScope(
+            customer_id=identity.customer_id,
+            user_ids=frozenset(user_ids),
+            device_ids=frozenset(scoped.tb_device_ids),
+        )
+
+    async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
+        if not ctx.tenant.user_token:
+            return Answer("A user token is required to read audit logs.")
+        identity = await self._identity_fn(ctx)
+        window = intent.window
+        hours = window.hours if window is not None else self.DEFAULT_WINDOW_HOURS
+        label = window.label if window is not None else "the last week"
+        start_ts, end_ts = window_bounds(hours)
+
+        if identity.is_tenant_admin:
+            # A tenant admin is entitled to the whole stream; read it under their own
+            # token so ThingsBoard, not this service, enforces that.
+            client = self._client_factory(ctx.tb.settings, ctx.tenant.user_token)
+            try:
+                body = await client.audit_logs(start_ts, end_ts)
+            finally:
+                await client.close()
+            scope = AuditScope(unrestricted=True)
+            scope_label = "this ThingsBoard tenant"
+        elif identity.customer_id:
+            caller_client = self._client_factory(ctx.tb.settings, ctx.tenant.user_token)
+            try:
+                scope = await self._caller_scope(ctx, identity, caller_client)
+            finally:
+                await caller_client.close()
+            # Only now, with the allow-list already built, read the tenant stream.
+            body = await ctx.tb.audit_logs(start_ts, end_ts)
+            scope_label = "your customer account"
+        else:
+            return Answer(
+                "Your ThingsBoard account is not assigned to a customer, so there is no "
+                "audit activity I can attribute to you.",
+                {"scope": "none", "entries": []},
+            )
+
+        rows = body.get("data", []) if isinstance(body, dict) else body
+        truncated = bool(isinstance(body, dict) and body.get("truncated"))
+        visible = filter_entries(normalize_entries(rows if isinstance(rows, list) else []), scope)
+        logger.info(
+            "[AUDIT] scope=%s fetched=%d visible=%d",
+            scope_label,
+            len(rows) if isinstance(rows, list) else 0,
+            len(visible),
+        )
+        text, structured = format_audit_answer(
+            visible,
+            intent.raw_question,
+            scope_label,
+            label,
+            scope=scope,
+            truncated=truncated,
+        )
+        return Answer(text, structured, [{"type": "thingsboard-audit", "resource": scope_label}])
+
+
+class AlarmDetail:
+    intent = "alarm_detail"
+
+    def __init__(
+        self,
+        scope_fn: ScopeFn = _default_scope,
+        client_factory: Callable[[Settings, str], Any] = UserAwareThingsBoardClient,
+    ) -> None:
+        self._scope_fn = scope_fn
+        self._client_factory = client_factory
+
+    async def can_handle(self, intent: ExtractedIntent) -> bool:
+        return intent.name == self.intent
+
+    async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
+        if not ctx.tenant.prefix:
+            return Answer(
+                "Your token is not mapped to a customer, so I cannot retrieve alarms."
+            )
+        if not ctx.tenant.user_token:
+            return Answer("A user token is required to read alarm data.")
+        scoped = await self._scope_fn(ctx)
+        device_ids = scoped.tb_device_ids
+        requested, refuse = _requested_device(intent, device_ids)
+        if refuse:
+            return Answer("That device is not in your authorized scope.")
+        if requested:
+            device_ids = [requested]
+        # "active alerts in the EAST zone" — narrow to the named area, intersected
+        # with the scope so it can only ever subtract devices.
+        area_ids, area_name = await area_device_filter(
+            ctx.db,
+            ctx.tenant.prefix,
+            scoped.branch_node_ids,
+            intent.raw_question,
+            scoped.tb_device_ids,
+        )
+        if area_ids is not None:
+            allowed = set(device_ids)
+            device_ids = [device_id for device_id in area_ids if device_id in allowed]
+            if not device_ids:
+                return Answer(
+                    f"No device under {area_name} is in your authorized scope.",
+                    {"area": area_name, "alarms": []},
+                )
+        if not device_ids:
+            return Answer("No branches are imported for your authorized scope yet.")
+
+        client = self._client_factory(ctx.tb.settings, ctx.tenant.user_token)
+        try:
+            if requested:
+                bodies = [await client.alarms(requested)]
+            else:
+                # Two reads, not one per device. ThingsBoard scopes /api/alarms to the
+                # caller, so ~100 per-device calls collapse into these.
+                #
+                # ACTIVE is fetched separately and WHOLE: measured on production it is
+                # 152 rows against 3,481 total, so it fits well inside the page cap.
+                # Taking the open alarms out of a truncated recent-history window is how
+                # "the oldest active alarm" silently becomes "the oldest one we happened
+                # to read".
+                bodies = [
+                    await client.all_alarms(search_status="ACTIVE"),
+                    await client.all_alarms(search_status="ANY"),
+                ]
+        except Exception as exc:
+            logger.warning("alarm fetch failed", exc_info=True)
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            if status in (401, 403):
+                # A dead token is not an outage; telling the user to retry wastes the
+                # one failure that always needs them to sign in again.
+                raise SessionExpired(f"thingsboard returned {status}") from exc
+            return Answer(
+                "I could not reach ThingsBoard alarm data just now. Please retry.",
+                {"error": "thingsboard_unavailable"},
+            )
+        finally:
+            await client.close()
+
+        allowed = set(device_ids)
+        branch_names = (
+            dict(zip(scoped.tb_device_ids, scoped.branch_node_ids, strict=True))
+            if len(scoped.tb_device_ids) == len(scoped.branch_node_ids)
+            else {}
+        )
+        alarms: list[AlarmRecord] = []
+        seen: set[str] = set()
+        truncated = False
+        for body in bodies:
+            truncated = truncated or bool(isinstance(body, dict) and body.get("truncated"))
+            rows = body.get("data", []) if isinstance(body, dict) else body
+            if not isinstance(rows, list):
+                continue
+            for raw in rows:
+                if not isinstance(raw, dict):
+                    continue
+                originator = raw.get("originator")
+                device_id = (
+                    originator.get("id") if isinstance(originator, dict) else originator
+                ) or requested
+                # The fleet endpoint returns everything ThingsBoard authorizes, which
+                # can be wider than this caller's regional scope. Narrow, never widen.
+                if device_id is None or str(device_id) not in allowed:
+                    continue
+                alarm = normalize_alarm(raw, str(device_id), branch_names.get(str(device_id)))
+                if alarm is not None and alarm.alarm_id not in seen:
+                    seen.add(alarm.alarm_id)
+                    alarms.append(alarm)
+
+        text, structured = format_alarm_answer(
+            alarms, intent.raw_question, truncated=truncated
+        )
+        scoped_to = _scoped_to(intent, requested, area_name)
+        if scoped_to:
+            text = f"{scoped_to} — {text}"
+            structured["area"] = scoped_to
+        if truncated:
+            text += (
+                " ThingsBoard holds more alarm history than one read returns, so the "
+                "resolved entries above cover only the most recent portion of it."
+            )
+            structured["truncated"] = True
+        return Answer(
+            text,
+            structured,
+            [{"type": "thingsboard-alarms", "resource": "scoped-devices"}],
         )
 
 
@@ -143,6 +1324,19 @@ METRIC_INTENTS = frozenset(
         "cctv_recording_info",
         "device_hardware",
         "subsystem_status",
+        # Added with the key-doc slice; all answered by derived.py computations.
+        "network_status",
+        "sos_status",
+        "connected_devices",
+        "door_status",
+        "cctv_storage",
+        "cctv_camera_count",
+        "cctv_camera_info",
+        "cctv_sd_recording",
+        "cctv_tamper_count",
+        "bas_panel_info",
+        "bas_power_status",
+        "bas_zone_info",
     }
 )
 
@@ -170,12 +1364,23 @@ async def _load_raw(client: _TbClient, device_id: str, keys: list[str]) -> dict[
             for item in attrs:
                 if isinstance(item, dict) and "key" in item:
                     raw[str(item["key"])] = item.get("value")
-    series = await client.telemetry(device_id, keys=",".join(keys) if keys else None)
+    # Dotted paths are our addressing scheme, not ThingsBoard keys — ask for the
+    # container ("gateway"), not "gateway.powerStatus", which matches nothing.
+    wanted = request_keys(keys)
+    series = await client.telemetry(device_id, keys=",".join(wanted) if wanted else None)
     if isinstance(series, dict):
         for key, points in series.items():
             if isinstance(points, list) and points and isinstance(points[0], dict):
-                raw[str(key)] = points[0].get("value")
-    return raw
+                value = points[0].get("value")
+                # A null telemetry reading must NOT erase a good attribute value.
+                # Requesting keys explicitly makes ThingsBoard answer for keys that
+                # have no timeseries at all — it returns {"gateway": [{"value": null}]}
+                # — which used to overwrite the populated `gateway` attribute object
+                # with None, so every subsystem read came back empty.
+                if value is None and raw.get(str(key)) is not None:
+                    continue
+                raw[str(key)] = value
+    return expand_containers(raw)
 
 
 class MetricHandler:
@@ -200,14 +1405,19 @@ class MetricHandler:
 
     async def handle(self, intent: ExtractedIntent, ctx: RequestContext) -> Answer:
         device_id = intent.device_id
+        # The extractor scrapes device_id from `(?:device|asset)\s+(\w+)`, so ordinary
+        # question words arrive here as ids: "What NVR models are deployed?" produced
+        # "'models' is not a valid device id." Echoing a word out of the user's own
+        # sentence back at them as a rejected identifier is nonsense, and it happened
+        # on 13 real questions. A non-UUID never came from the caller naming a device.
+        if device_id and not _is_uuid(device_id):
+            device_id = None
         if not device_id:
             return Answer(
-                "Name a device to check — for example, 'battery voltage of device <uuid>'."
+                "That question needs a branch — name one (for example 'battery voltage "
+                "of Liluah') and I will answer for it. For a fleet-wide view, ask about "
+                "device health, CCTV recording, or alarms across all branches."
             )
-        try:
-            require_uuid(device_id, "device_id")
-        except ValueError:
-            return Answer(f"'{device_id}' is not a valid device id.")
         if not ctx.tenant.prefix:
             return Answer("Your token is not mapped to a customer, so I cannot scope device data.")
 
@@ -221,6 +1431,14 @@ class MetricHandler:
         if not ctx.tenant.user_token:
             return Answer("A user token is required to read device data.")
 
+        # A question about a PERIOD is answered from device_telemetry rather than a
+        # live ThingsBoard fetch — ThingsBoard keeps no history for attributes, so our
+        # hypertable is the only place the past exists.
+        if intent.window is not None:
+            historical = await _history_answer(intent, ctx, device_id)
+            if historical is not None:
+                return historical
+
         # Intent's key profile + every answer-layer ladder key, so nothing under-imports.
         key_set = set(keys_for(intent.name)) | LADDER_KEYS
         if intent.name.startswith("cctv"):
@@ -229,11 +1447,98 @@ class MetricHandler:
         client = self._client_factory(ctx.tb.settings, ctx.tenant.user_token)
         try:
             raw = await _load_raw(client, device_id, keys)
+        except Exception as exc:
+            # A ThingsBoard failure (expired/invalid caller token, TB down) must read as
+            # an answer, not a 500 through the chat pipeline.
+            logger.warning("device fetch failed for %s", device_id, exc_info=True)
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            if status in (401, 403):
+                return Answer(
+                    "ThingsBoard rejected your token for that device — it may have expired. "
+                    "Sign in again and retry.",
+                    {"error": "thingsboard_auth", "device_id": device_id},
+                )
+            return Answer(
+                "I could not reach ThingsBoard for that device just now. Please retry.",
+                {"error": "thingsboard_unavailable", "device_id": device_id},
+            )
         finally:
             await client.close()
         raw.setdefault("device_id", device_id)
 
-        return _format_metric(intent, build_snapshot(raw), device_id)
+        return _name_the_branch(_format_metric(intent, build_snapshot(raw), device_id), intent)
+
+
+async def _history_answer(
+    intent: ExtractedIntent, ctx: RequestContext, device_id: str
+) -> Answer | None:
+    """Answer from device_telemetry over the requested window.
+
+    Returns None when the intent has no historical series worth summarising, so the
+    caller falls through to the normal latest-value path rather than refusing.
+
+    Scope is already enforced: MetricHandler.handle() verified device_id is in the
+    caller's ThingsBoard-bounded scope before calling this.
+    """
+    window = intent.window
+    if window is None:
+        return None
+    src = [{"type": "device_telemetry", "resource": f"device:{device_id}"}]
+
+    numeric_key = history.NUMERIC_KEY_FOR_INTENT.get(intent.name)
+    if numeric_key:
+        summary = await history.numeric_summary(ctx.db, device_id, numeric_key, window.hours)
+        if summary is None:
+            return Answer(
+                f"I have no recorded {numeric_key.replace('_', ' ')} for that device over "
+                f"{window.label}.",
+                {"key": numeric_key, "window_hours": window.hours, "samples": 0},
+                src,
+            )
+        return Answer(
+            f"{numeric_key.replace('_', ' ').title()} over {window.label}: "
+            f"min {summary.minimum:g}, avg {summary.average:g}, max {summary.maximum:g} "
+            f"({summary.samples} readings, latest {summary.latest:g}).",
+            {
+                "key": summary.key,
+                "window_hours": window.hours,
+                "samples": summary.samples,
+                "min": summary.minimum,
+                "avg": summary.average,
+                "max": summary.maximum,
+                "latest": summary.latest,
+            },
+            src,
+        )
+
+    status_key = history.STATUS_KEY_FOR_INTENT.get(intent.name)
+    if status_key:
+        status = await history.status_summary(ctx.db, device_id, status_key, window.hours)
+        if status is None:
+            return Answer(
+                f"I have no recorded {status_key} history for that device over {window.label}.",
+                {"key": status_key, "window_hours": window.hours, "samples": 0},
+                src,
+            )
+        # distinct==1 means it never changed, which is the useful answer for a status.
+        changed = (
+            "it did not change"
+            if status.distinct_values <= 1
+            else f"it took {status.distinct_values} different values"
+        )
+        return Answer(
+            f"Over {window.label} there were {status.samples} readings of {status_key} and "
+            f"{changed}. Latest: {status.latest}.",
+            {
+                "key": status.key,
+                "window_hours": window.hours,
+                "samples": status.samples,
+                "distinct_values": status.distinct_values,
+                "latest": status.latest,
+            },
+            src,
+        )
+    return None
 
 
 def _source(device_id: str) -> list[dict[str, str]]:
@@ -308,10 +1613,32 @@ def _format_metric(intent: ExtractedIntent, snap: BranchSnapshot, device_id: str
                 {"cctv_state": c.state.value},
                 src,
             )
+        # Live cameras outrank a stale status attribute. Production printed
+        # "CCTV status is NOT_INSTALLED; 15/16 cameras online." — two halves of one
+        # sentence contradicting each other, leaving the operator to guess which to
+        # believe. The camera tally is direct evidence; cctv_sts is a cached field
+        # that goes stale, so when they disagree the evidence wins and the stale
+        # status is reported as what it is rather than as fact.
+        online = c.online_camera_count or 0
+        contradicts = online > 0 and c.state.value in ("NOT_INSTALLED", "UNKNOWN")
+        if contradicts:
+            text = (
+                f"{online}/{c.camera_count} cameras are online, so CCTV is present and "
+                f"reporting — though its status attribute still reads "
+                f"{c.state.value}, which is stale."
+            )
+        else:
+            text = (
+                f"CCTV status is {c.state.value}; {online}/{c.camera_count} cameras online."
+            )
         return Answer(
-            f"CCTV status is {c.state.value}; {c.online_camera_count}/{c.camera_count} "
-            "cameras online.",
-            {"cctv_state": c.state.value, "online": c.online_camera_count, "total": c.camera_count},
+            text,
+            {
+                "cctv_state": c.state.value,
+                "online": c.online_camera_count,
+                "total": c.camera_count,
+                "status_contradicts_cameras": contradicts,
+            },
             src,
         )
 
@@ -372,6 +1699,93 @@ def _format_metric(intent: ExtractedIntent, snap: BranchSnapshot, device_id: str
             {"cpu": h.cpu, "memory": h.memory, "disk": h.disk, "temperature": h.temperature},
             src,
         )
+
+    # --- intents computed from the key doc rather than a snapshot field ---------
+    raw = snap.raw_data
+
+    if name == "network_status":
+        net = derived.network_status(raw)
+        return Answer(
+            f"Network is {net['status']} (operator: {net['operator']}).", net, src
+        )
+
+    if name == "sos_status":
+        sos = derived.sos_status(raw)
+        if sos is None:
+            return Answer("SOS status is not being reported for this device.", {}, src)
+        return Answer(f"SOS status: {sos}.", {"sos_status": sos}, src)
+
+    if name == "connected_devices":
+        count = derived.connected_devices(raw)
+        if count is None:
+            return Answer("Connected-device count is not being reported.", {}, src)
+        return Answer(f"{count} device(s) connected.", {"connected_devices": count}, src)
+
+    if name == "door_status":
+        doors = derived.door_status(raw)
+        parts = [f"{k.replace('_', ' ')}: {v}" for k, v in doors.items() if v]
+        if not parts:
+            return Answer("No door status is being reported for this device.", doors, src)
+        return Answer("Door status — " + ", ".join(parts) + ".", doors, src)
+
+    if name == "cctv_storage":
+        total = derived.hdd_total_capacity(raw)
+        free = derived.hdd_free_space(raw)
+        if total is None:
+            return Answer("No CCTV storage capacity is being reported.", {}, src)
+        text = f"CCTV storage: {total:g} total"
+        if free is not None:
+            text += f", {free:g} free"
+        return Answer(
+            text + f" across {len(derived.hdd_rows(raw))} disk(s).",
+            {"total_capacity": total, "free_space": free},
+            src,
+        )
+
+    if name == "cctv_camera_count":
+        count = derived.camera_count(raw)
+        return Answer(f"{count} camera(s) on this device.", {"camera_count": count}, src)
+
+    if name == "cctv_camera_info":
+        rows = derived.camera_rows(raw)
+        return Answer(derived.summarize("Camera information", rows), {"cameras": rows}, src)
+
+    if name == "cctv_sd_recording":
+        rows = derived.sd_recording_rows(raw)
+        return Answer(
+            derived.summarize("SD recording information", rows), {"sd_recording": rows}, src
+        )
+
+    if name == "cctv_tamper_count":
+        tamper = derived.camera_tamper_count(raw)
+        disconnect = derived.camera_disconnect_count(raw)
+        return Answer(
+            f"Camera tamper count: {tamper if tamper is not None else 'not reported'}, "
+            f"disconnect count: {disconnect if disconnect is not None else 'not reported'}.",
+            {"tamper_count": tamper, "disconnect_count": disconnect},
+            src,
+        )
+
+    if name == "bas_panel_info":
+        panel = derived.bas_panel(raw)
+        device = derived.bas_device(raw)
+        parts = [f"{k.replace('_', ' ')}: {v}" for k, v in {**panel, **device}.items() if v]
+        if not parts:
+            return Answer("No BAS panel information is being reported.", {}, src)
+        return Answer(
+            "BAS panel — " + ", ".join(parts) + ".", {"panel": panel, "device": device}, src
+        )
+
+    if name == "bas_power_status":
+        power = derived.bas_power(raw)
+        parts = [f"{k.replace('_', ' ')}: {v}" for k, v in power.items() if v]
+        if not parts:
+            return Answer("No BAS power status is being reported.", power, src)
+        return Answer("BAS power — " + ", ".join(parts) + ".", power, src)
+
+    if name == "bas_zone_info":
+        zones = derived.bas_zones(raw)
+        return Answer(derived.summarize("BAS zone information", zones), {"zones": zones}, src)
 
     if name == "subsystem_status":
         return _format_subsystem(intent, snap, src)

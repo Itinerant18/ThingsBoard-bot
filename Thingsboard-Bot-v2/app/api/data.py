@@ -1,11 +1,16 @@
+import logging
+import time
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from app.auth.jwt import TenantContext
 from app.clients.thingsboard import UserAwareThingsBoardClient, require_uuid
 from app.deps import current_tenant, scoped_branches, user_tb_client
 from app.hierarchy.scope import ScopedBranches
+from app.query.charts import DEFAULT_WINDOW_HOURS, MAX_WINDOW_HOURS, chart_from_history
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(tags=["data"])
 
@@ -72,6 +77,30 @@ async def telemetry(
 ) -> object:
     enforce_device_scope(device_id, branches)
     return await user_tb.telemetry(device_id)
+
+
+@router.get("/device/{device_id}/chart")
+async def chart(
+    device_id: str,
+    tenant: Annotated[TenantContext, Depends(current_tenant)],
+    branches: Annotated[ScopedBranches, Depends(scoped_branches)],
+    user_tb: Annotated[UserAwareThingsBoardClient, Depends(user_tb_client)],
+    key: Annotated[str, Query(min_length=1, max_length=128)],
+    hours: Annotated[int, Query(ge=1, le=MAX_WINDOW_HOURS)] = DEFAULT_WINDOW_HOURS,
+) -> object:
+    """Historical series for one telemetry key, Chart.js-shaped (Java ChartService)."""
+    enforce_device_scope(device_id, branches)
+    if "," in key:
+        raise HTTPException(status_code=400, detail="One key per chart")
+    end_ts = int(time.time() * 1000)
+    start_ts = end_ts - hours * 3_600_000
+    try:
+        history = await user_tb.telemetry(device_id, keys=key, start_ts=start_ts, end_ts=end_ts)
+    except Exception:
+        # Java parity: chart errors degrade to an empty series, not a 500.
+        logger.warning("chart history fetch failed for %s/%s", device_id, key, exc_info=True)
+        history = {}
+    return chart_from_history(key, history)
 
 
 @router.get("/device/{device_id}/attributes/client")

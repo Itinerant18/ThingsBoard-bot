@@ -1,0 +1,902 @@
+{
+  "BOI-IMPHAL": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 0,
+    "total_channels": 0,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-MALDATOWN": {
+    "configured": 16,
+    "recording": 32,
+    "not_recording": 0,
+    "total_channels": 32,
+    "compliant": 32,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-BPADA-MAIN": {
+    "configured": 16,
+    "recording": 32,
+    "not_recording": 0,
+    "total_channels": 32,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-BAGULA": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-BERO": {
+    "configured": 16,
+    "recording": 22,
+    "not_recording": 10,
+    "total_channels": 32,
+    "compliant": 22,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-SOHAGPUR": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 10,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-COOCHBEHAR": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 16,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-SAVEDI": {
+    "configured": 12,
+    "recording": 0,
+    "not_recording": 12,
+    "total_channels": 12,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-HGBAD": {
+    "configured": 16,
+    "recording": 20,
+    "not_recording": 12,
+    "total_channels": 32,
+    "compliant": 20,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-ZARKAWT": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 0,
+    "total_channels": 0,
+    "compliant": 0,
+    "available": false,
+    "vendor": null
+  },
+  "BOI-BHUBANESHWAR": {
+    "configured": 0,
+    "recording": 16,
+    "not_recording": 0,
+    "total_channels": 16,
+    "compliant": 11,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-PIPARIYA": {
+    "configured": 12,
+    "recording": 12,
+    "not_recording": 16,
+    "total_channels": 28,
+    "compliant": 9,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-MANGO": {
+    "configured": 16,
+    "recording": 30,
+    "not_recording": 2,
+    "total_channels": 32,
+    "compliant": 30,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-CHANDANNAGAR": {
+    "configured": 16,
+    "recording": 12,
+    "not_recording": 4,
+    "total_channels": 16,
+    "compliant": 12,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-JAYDEVVIHARCC": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 0,
+    "total_channels": 0,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-BERHAMPUR": {
+    "configured": 16,
+    "recording": 32,
+    "not_recording": 0,
+    "total_channels": 32,
+    "compliant": 30,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-SEONIMALWA": {
+    "configured": 16,
+    "recording": 20,
+    "not_recording": 12,
+    "total_channels": 32,
+    "compliant": 20,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-BHADRAK": {
+    "configured": 10,
+    "recording": 10,
+    "not_recording": 0,
+    "total_channels": 10,
+    "compliant": 8,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-RANIHATCC": {
+    "configured": 13,
+    "recording": 0,
+    "not_recording": 13,
+    "total_channels": 13,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-NANDURBAR": {
+    "configured": 15,
+    "recording": 0,
+    "not_recording": 15,
+    "total_channels": 15,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-SINGH-MORE": {
+    "configured": 16,
+    "recording": 10,
+    "not_recording": 22,
+    "total_channels": 32,
+    "compliant": 9,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-KOHIMA": {
+    "configured": 8,
+    "recording": 8,
+    "not_recording": 8,
+    "total_channels": 16,
+    "compliant": 8,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-GUWAHATI": {
+    "configured": 12,
+    "recording": 12,
+    "not_recording": 4,
+    "total_channels": 16,
+    "compliant": 12,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-MALLAGURI": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-SERAMPORE": {
+    "configured": 15,
+    "recording": 15,
+    "not_recording": 0,
+    "total_channels": 15,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-SAKCHI": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 0,
+    "total_channels": 16,
+    "compliant": 6,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-SOBHAPUR": {
+    "configured": 8,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-AGARTALA": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-KRISHNANAGAR": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-BABAI": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 12,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-BARIPADA-CC": {
+    "configured": 16,
+    "recording": 32,
+    "not_recording": 0,
+    "total_channels": 32,
+    "compliant": 28,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-KUSAI": {
+    "configured": 11,
+    "recording": 0,
+    "not_recording": 11,
+    "total_channels": 11,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-SONAHATU": {
+    "configured": 16,
+    "recording": 20,
+    "not_recording": 12,
+    "total_channels": 32,
+    "compliant": 8,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-BASTA-CC": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-KHARVEL": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 0,
+    "total_channels": 0,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-SITHIO": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 14,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-DOBSON": {
+    "configured": 16,
+    "recording": 28,
+    "not_recording": 4,
+    "total_channels": 32,
+    "compliant": 15,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-SALTLAKE": {
+    "configured": 12,
+    "recording": 14,
+    "not_recording": 14,
+    "total_channels": 28,
+    "compliant": 13,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-SEPL-DX2": {
+    "configured": 16,
+    "recording": 31,
+    "not_recording": 1,
+    "total_channels": 32,
+    "compliant": 18,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-DIBRUGARH": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 10,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-SINI": {
+    "configured": 16,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-AIZWAL": {
+    "configured": 12,
+    "recording": 12,
+    "not_recording": 4,
+    "total_channels": 16,
+    "compliant": 12,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-PODASTIA": {
+    "configured": 15,
+    "recording": 16,
+    "not_recording": 0,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-ITARSI": {
+    "configured": 16,
+    "recording": 30,
+    "not_recording": 2,
+    "total_channels": 32,
+    "compliant": 28,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-BALURGHAT": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-KANTATOLI": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-NOKARI": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 16,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-CHAPRA": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 16,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-TARAKESHWAR": {
+    "configured": 14,
+    "recording": 14,
+    "not_recording": 16,
+    "total_channels": 30,
+    "compliant": 14,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-DARJEELING": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 24,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-KAIRO": {
+    "configured": 16,
+    "recording": 26,
+    "not_recording": 6,
+    "total_channels": 32,
+    "compliant": 26,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-CHINSURAH": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 24,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-JAMSOLA": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 24,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-JAMSHEDPUR": {
+    "configured": 16,
+    "recording": 32,
+    "not_recording": 0,
+    "total_channels": 32,
+    "compliant": 2,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-SHILLONG": {
+    "configured": 16,
+    "recording": 0,
+    "not_recording": 32,
+    "total_channels": 32,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-BALLYBAZAR": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-RANIHAT": {
+    "configured": 12,
+    "recording": 11,
+    "not_recording": 0,
+    "total_channels": 11,
+    "compliant": 6,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-RAIGANJ": {
+    "configured": 7,
+    "recording": 10,
+    "not_recording": 0,
+    "total_channels": 10,
+    "compliant": 9,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-BARIPADA-ZO": {
+    "configured": 16,
+    "recording": 32,
+    "not_recording": 0,
+    "total_channels": 32,
+    "compliant": 32,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-KAGALNAGAR": {
+    "configured": 10,
+    "recording": 10,
+    "not_recording": 0,
+    "total_channels": 10,
+    "compliant": 6,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-RANAGHAT": {
+    "configured": 10,
+    "recording": 9,
+    "not_recording": 0,
+    "total_channels": 9,
+    "compliant": 9,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-RANDIA": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-CUTTACK": {
+    "configured": 12,
+    "recording": 12,
+    "not_recording": 0,
+    "total_channels": 12,
+    "compliant": 9,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-JAGULI": {
+    "configured": 15,
+    "recording": 15,
+    "not_recording": 1,
+    "total_channels": 16,
+    "compliant": 10,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-ASHANGI": {
+    "configured": 10,
+    "recording": 10,
+    "not_recording": 6,
+    "total_channels": 16,
+    "compliant": 10,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-ADITYAPUR": {
+    "configured": 13,
+    "recording": 2,
+    "not_recording": 16,
+    "total_channels": 18,
+    "compliant": 2,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-MISROD": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 16,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-JAYDEVVIHARBR": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 0,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-ARAMBAGH": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 0,
+    "total_channels": 16,
+    "compliant": 16,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-RAIRANGPUR": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 8,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-BETHUADAHRI": {
+    "configured": 16,
+    "recording": 15,
+    "not_recording": 17,
+    "total_channels": 32,
+    "compliant": 8,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-GANGTOK": {
+    "configured": 10,
+    "recording": 11,
+    "not_recording": 16,
+    "total_channels": 27,
+    "compliant": 6,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-ALIPURDUAR": {
+    "configured": 11,
+    "recording": 16,
+    "not_recording": 16,
+    "total_channels": 32,
+    "compliant": 11,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-HARDA-ROAD": {
+    "configured": 16,
+    "recording": 28,
+    "not_recording": 4,
+    "total_channels": 32,
+    "compliant": 28,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-LILUAH": {
+    "configured": 11,
+    "recording": 12,
+    "not_recording": 0,
+    "total_channels": 12,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-MURARISHACHOWMATHA": {
+    "configured": 16,
+    "recording": 16,
+    "not_recording": 0,
+    "total_channels": 16,
+    "compliant": 15,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-UPPER BAZAR": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-KOLABERA": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 20,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI LALPUR": {
+    "configured": 10,
+    "recording": 11,
+    "not_recording": 16,
+    "total_channels": 27,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-CHOPDA": {
+    "configured": 12,
+    "recording": 0,
+    "not_recording": 12,
+    "total_channels": 12,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-BALASORE": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-TELCO-TOWN": {
+    "configured": 15,
+    "recording": 20,
+    "not_recording": 12,
+    "total_channels": 32,
+    "compliant": 1,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-PANASPADA": {
+    "configured": 12,
+    "recording": 12,
+    "not_recording": 0,
+    "total_channels": 12,
+    "compliant": 7,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-CHANDEKASARE": {
+    "configured": 10,
+    "recording": 0,
+    "not_recording": 10,
+    "total_channels": 10,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-ROING": {
+    "configured": 14,
+    "recording": 0,
+    "not_recording": 16,
+    "total_channels": 16,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-PATHARDIFATA": {
+    "configured": 11,
+    "recording": 11,
+    "not_recording": 0,
+    "total_channels": 11,
+    "compliant": 8,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-ISLAMPUR": {
+    "configured": 16,
+    "recording": 15,
+    "not_recording": 17,
+    "total_channels": 32,
+    "compliant": 8,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-TATISILWAL": {
+    "configured": 16,
+    "recording": 26,
+    "not_recording": 6,
+    "total_channels": 32,
+    "compliant": 24,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-CHIMTHANA": {
+    "configured": 13,
+    "recording": 14,
+    "not_recording": 0,
+    "total_channels": 14,
+    "compliant": 13,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-PURI": {
+    "configured": 12,
+    "recording": 1,
+    "not_recording": 0,
+    "total_channels": 1,
+    "compliant": 0,
+    "available": true,
+    "vendor": null
+  },
+  "BOI-SATPUR": {
+    "configured": 14,
+    "recording": 0,
+    "not_recording": 14,
+    "total_channels": 14,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-THOUBAL": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 24,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-DANKUNI": {
+    "configured": 16,
+    "recording": 32,
+    "not_recording": 0,
+    "total_channels": 32,
+    "compliant": 32,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-BAGUIHATI": {
+    "configured": 12,
+    "recording": 0,
+    "not_recording": 12,
+    "total_channels": 12,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-LOKANNATH": {
+    "configured": 12,
+    "recording": 12,
+    "not_recording": 0,
+    "total_channels": 12,
+    "compliant": 8,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-BHADRESWAR": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 24,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "BOI-CHHOTAGAMHARIA": {
+    "configured": 16,
+    "recording": 24,
+    "not_recording": 8,
+    "total_channels": 32,
+    "compliant": 24,
+    "available": true,
+    "vendor": "Hikvision"
+  },
+  "SDF-RASP5": {
+    "configured": 0,
+    "recording": 0,
+    "not_recording": 0,
+    "total_channels": 0,
+    "compliant": 0,
+    "available": false,
+    "vendor": null
+  },
+  "BOI-GANERA": {
+    "configured": 7,
+    "recording": 8,
+    "not_recording": 0,
+    "total_channels": 8,
+    "compliant": 0,
+    "available": true,
+    "vendor": "Dahua"
+  },
+  "BOI-AMALNER": {
+    "configured": 8,
+    "recording": 9,
+    "not_recording": 0,
+    "total_channels": 9,
+    "compliant": 7,
+    "available": true,
+    "vendor": null
+  }
+}

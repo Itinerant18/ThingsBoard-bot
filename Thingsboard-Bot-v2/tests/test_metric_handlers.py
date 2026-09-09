@@ -1,5 +1,6 @@
 import json
 import uuid
+from dataclasses import replace
 from types import SimpleNamespace
 from typing import Any
 
@@ -53,7 +54,10 @@ def make_ctx(prefix: str | None = "BOI", token: str | None = "user-token") -> Re
         user_token=token,
     )
     tb = SimpleNamespace(settings=None)
-    return RequestContext(tenant=tenant, db=SimpleNamespace(), redis=SimpleNamespace(), tb=tb)  # type: ignore[arg-type]
+    # db=None, not SimpleNamespace(): these handlers take the no-hierarchy path, and a
+    # namespace that answers every attribute silently passes an `is not None` guard
+    # and then blows up on .execute().
+    return RequestContext(tenant=tenant, db=None, redis=SimpleNamespace(), tb=tb)  # type: ignore[arg-type]
 
 
 def make_handler(scoped: ScopedBranches, client: FakeClient) -> MetricHandler:
@@ -73,16 +77,27 @@ def gateway_intent(device_id: str | None) -> ExtractedIntent:
 # --- security gates ----------------------------------------------------------
 
 
-async def test_missing_device_id_asks_for_one() -> None:
+async def test_missing_device_id_asks_for_a_branch_and_offers_fleet_answers() -> None:
+    """The old reply demanded a device UUID, which no operator types, and
+    dead-ended: 77 real questions were fleet-wide and had a fleet answer
+    available, so the reply now names that route instead."""
     handler = make_handler(ScopedBranches([], []), FakeClient())
     answer = await handler.handle(gateway_intent(None), make_ctx())
-    assert "Name a device" in answer.text
+    assert "needs a branch" in answer.text
+    assert "fleet-wide" in answer.text
 
 
-async def test_invalid_uuid_rejected() -> None:
+async def test_a_scraped_word_is_not_echoed_back_as_a_rejected_id() -> None:
+    """The extractor scrapes device_id from a word after "device"/"asset", so
+    "What NVR models are deployed?" arrived here as device_id="models" and was
+    answered "'models' is not a valid device id." — a word from the user's own
+    sentence handed back as a bad identifier, on 13 real questions. A non-UUID
+    never came from the caller naming a device, so it is ignored."""
     handler = make_handler(ScopedBranches([], []), FakeClient())
-    answer = await handler.handle(gateway_intent("not-a-uuid"), make_ctx())
-    assert "not a valid device id" in answer.text
+    answer = await handler.handle(gateway_intent("models"), make_ctx())
+    assert "not a valid device id" not in answer.text
+    assert "models" not in answer.text
+    assert "needs a branch" in answer.text
 
 
 async def test_no_prefix_denied() -> None:
@@ -142,13 +157,31 @@ async def test_cctv_intent_fetches_vendor_keys() -> None:
     assert "rock_HddINFO" in requested
 
 
-async def test_client_closed_even_on_tb_error() -> None:
+async def test_tb_error_answers_gracefully_and_closes_client() -> None:
+    # A ThingsBoard failure must never escape as a 500 through the chat pipeline.
     device = str(uuid.uuid4())
     client = FakeClient(exc=RuntimeError("tb down"))
     handler = make_handler(ScopedBranches(["b"], [device]), client)
-    with pytest.raises(RuntimeError):
-        await handler.handle(gateway_intent(device), make_ctx())
-    assert client.closed is True  # finally: close() ran
+    answer = await handler.handle(gateway_intent(device), make_ctx())
+    assert "could not reach ThingsBoard" in answer.text
+    assert answer.structured["error"] == "thingsboard_unavailable"
+    assert client.closed is True  # finally: close() still ran
+
+
+async def test_tb_auth_error_tells_user_token_expired() -> None:
+    device = str(uuid.uuid4())
+
+    class _Resp:
+        status_code = 401
+
+    exc = RuntimeError("401")
+    exc.response = _Resp()  # type: ignore[attr-defined]
+    client = FakeClient(exc=exc)
+    handler = make_handler(ScopedBranches(["b"], [device]), client)
+    answer = await handler.handle(gateway_intent(device), make_ctx())
+    assert "may have expired" in answer.text
+    assert answer.structured["error"] == "thingsboard_auth"
+    assert client.closed is True
 
 
 # --- fleet handlers are scope-only (no service-client leak) ------------------
@@ -179,6 +212,46 @@ async def test_device_inventory_lists_only_scoped_names() -> None:
     answer = await handler.handle(ExtractedIntent(name="device_inventory"), make_ctx())
     assert "BOI-A" in answer.text and "BOI-B" in answer.text
     assert "2 branch device" in answer.text
+
+
+async def test_device_inventory_answers_current_region() -> None:
+    handler = DeviceInventory(scope_fn=_scoped_fn(ScopedBranches(["BOI-A"], ["d1"])))
+    ctx = make_ctx()
+    ctx.tenant = replace(ctx.tenant, region="FGMO EAST")
+    answer = await handler.handle(
+        ExtractedIntent(name="device_inventory", raw_question="Which region is currently active?"),
+        ctx,
+    )
+    assert answer.text == "One region is active in your current scope: FGMO EAST."
+
+
+async def test_device_inventory_answers_map_markers(monkeypatch: pytest.MonkeyPatch) -> None:
+    from app.query import handlers
+
+    async def fake_states(redis, customer, device_ids):
+        return {
+            "d1": {
+                "branchName": "BOI-TARAKESHWAR",
+                "lat1": "22.88",
+                "lon1": "88.01",
+                "active": "true",
+            }
+        }
+
+    monkeypatch.setattr(handlers, "load_fleet_states", fake_states)
+    # The map answer moved OUT of DeviceInventory to the orchestrator chokepoint: the
+    # same question reached GlobalOverview on a later run and fell through, because
+    # which handler the extractor picks is not stable. Test it where it now lives.
+    monkeypatch.setattr(
+        handlers, "_default_scope", _scoped_fn(ScopedBranches(["BOI-TARAKESHWAR"], ["d1"]))
+    )
+    answer = await handlers._geo_answer(
+        ExtractedIntent(name="device_inventory", raw_question="Which branch is visible on the map?"),
+        make_ctx(),
+    )
+    assert answer is not None
+    assert "BOI-TARAKESHWAR (ONLINE)" in answer.text
+    assert answer.structured["map_markers"][0]["latitude"] == 22.88
 
 
 async def test_metric_handler_default_reaches_branch_scope() -> None:

@@ -1,5 +1,6 @@
 import hmac
 from collections import defaultdict
+from datetime import UTC, datetime, timedelta
 from typing import Any, cast
 from uuid import UUID
 
@@ -11,6 +12,8 @@ from app.db.models import Customer, HierarchyNode
 from app.hierarchy.parser import ParsedNode, parse_device_path
 from app.hierarchy.prefix import derive_prefix
 from app.hierarchy.store import rebuild_ancestor_paths, upsert_nodes
+from app.tasks.live_sync import sync_all_customers
+from app.tasks.replay import ReplayInProgressError, replay
 
 router = APIRouter(prefix="/api/v1/admin", tags=["admin"])
 
@@ -121,9 +124,54 @@ async def upsert_node(
     return {"nodes": count}
 
 
-@router.post("/init", status_code=501)
-@router.post("/replay", status_code=501)
-async def unavailable(x_admin_token: str | None = Header(default=None)) -> None:
-    if x_admin_token is None:
-        raise HTTPException(403, "Admin token required")
-    raise HTTPException(501, "Not implemented in this slice")
+class ReplayRequest(BaseModel):
+    customer_id: str  # a customer prefix, or "ALL"
+    start_time: datetime | None = None  # default: 7 days ago (Java parity)
+    end_time: datetime | None = None  # default: now
+
+
+@router.post("/replay")
+async def replay_events(
+    request: Request, payload: ReplayRequest, x_admin_token: str | None = Header(default=None)
+) -> dict[str, object]:
+    """Rebuild fleet snapshots from stored DeviceEvent history (port of Java /admin/replay)."""
+    check_admin(request, x_admin_token)
+    start = payload.start_time or datetime.now(UTC) - timedelta(days=7)
+    end = payload.end_time or datetime.now(UTC)
+    try:
+        results = await replay(
+            request.app.state.session_factory,
+            request.app.state.redis,
+            payload.customer_id,
+            start,
+            end,
+        )
+    except ReplayInProgressError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    return {
+        "status": "SUCCESS",
+        "start_time": start.isoformat(),
+        "end_time": end.isoformat(),
+        "results": [
+            {
+                "customer": r.customer,
+                "events": r.events,
+                "devices": r.devices,
+                "skipped_unknown_devices": r.skipped_unknown_devices,
+            }
+            for r in results
+        ],
+    }
+
+
+@router.post("/init")
+async def init_fleet_snapshot(
+    request: Request, x_admin_token: str | None = Header(default=None)
+) -> dict[str, object]:
+    """Bootstrap the fleet snapshot NOW by running one live-sync cycle synchronously —
+    a fresh deployment gets fleet answers without waiting for the scheduler."""
+    check_admin(request, x_admin_token)
+    await sync_all_customers(
+        request.app.state.session_factory, request.app.state.redis, request.app.state.tb
+    )
+    return {"status": "SUCCESS", "message": "Fleet snapshot initialized from ThingsBoard."}

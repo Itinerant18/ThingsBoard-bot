@@ -19,6 +19,7 @@ from collections.abc import Mapping
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from app.normalization.flatten import expand_containers
 from app.normalization.resolver import (
     resolve_ac_voltage,
     resolve_battery_voltage,
@@ -169,7 +170,20 @@ def _as_json(value: object) -> Any:
 
 # Mapper's nested-container search (§10). NOTE: different parent list + different
 # return semantics from the resolver's _find_in_nested_json — kept separate.
-_JSON_PARENTS = ("rock", "dexter_config", "cameraStatus", "gatewayStatus", "ticketStatus", "rockAI")
+_JSON_PARENTS = (
+    "rock",
+    "dexter_config",
+    "cameraStatus",
+    "gatewayStatus",
+    "ticketStatus",
+    "rockAI",
+    # Monthly uptime and fault history. app/query/uptime.py parses these itself
+    # because their nesting is per-month rather than a flat leaf map, but they are
+    # listed here so a dotted lookup finds them like any other container.
+    "mainDevicesOnTimeData",
+    "mainDevicesFaultData",
+    "mainCCTVFaultData",
+)
 
 
 def _find_container(raw: Mapping[str, Any], *candidate_keys: str) -> Any:
@@ -467,7 +481,14 @@ def _build_hardware(raw: Mapping[str, Any]) -> HardwareHealth:
 
 
 def build_snapshot(raw: Mapping[str, Any]) -> BranchSnapshot:
-    """Map one device's raw attribute/telemetry dict to a canonical BranchSnapshot."""
+    """Map one device's raw attribute/telemetry dict to a canonical BranchSnapshot.
+
+    Nested containers are expanded to dotted aliases first (gateway.powerStatus,
+    rock.HddINFO, ...). Doing it here means both callers are covered — the live
+    per-device fetch and the Redis fleet snapshot, which stores container values as
+    JSON strings — so no builder below has to know a value might be nested.
+    """
+    raw = expand_containers(raw)
     warnings: list[str] = []
 
     identity = _build_identity(raw)

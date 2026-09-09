@@ -151,6 +151,11 @@ def extract_region(claims: dict[str, object]) -> RegionalScope:
 class ScopedBranches:
     branch_node_ids: list[str]
     tb_device_ids: list[str]
+    # Devices ThingsBoard authorizes that the local hierarchy has no leaf for, so
+    # they cannot be named or placed. Zero for every caller whose hierarchy import
+    # is complete. Non-zero means the answer is short and the operator should be
+    # told, not left to infer it from a number that looks whole.
+    unplaced_devices: int = 0
 
 
 async def branch_scope(
@@ -172,15 +177,29 @@ async def branch_scope(
     # include the scope. A prefix-only key would let a customer-wide user's
     # cached full inventory leak to a region-scoped user (and vice versa).
     scope_part = f"{'E' if scope.explicit else 'G'}:{normalize(scope.name) if scope.name else '*'}"
-    cache_key = f"branch_scope:{prefix}:{scope_part}"
-    cached = await redis.get(cache_key)
+    # v2: entries written before branch_node_ids and tb_device_ids were made
+    # positionally parallel are not safe to zip, and resolved_scope now does exactly
+    # that. Bumping the key retires them rather than trusting a 60s TTL.
+    cache_key = f"branch_scope:v2:{prefix}:{scope_part}"
+    # The cache is an optimization; the DB below is authoritative. A cache outage must
+    # not break the scope gate (and therefore all of chat), so read failures fall
+    # through. Failing open here is safe: it costs a query, never widens scope.
+    try:
+        cached = await redis.get(cache_key)
+    except Exception:
+        logger.warning("[SCOPE] cache read failed; falling back to DB", exc_info=True)
+        cached = None
     if cached:
         import json
-        data = json.loads(cached)
-        return ScopedBranches(
-            branch_node_ids=data["branch_node_ids"],
-            tb_device_ids=data["tb_device_ids"],
-        )
+
+        try:
+            data = json.loads(cached)
+            return ScopedBranches(
+                branch_node_ids=data["branch_node_ids"],
+                tb_device_ids=data["tb_device_ids"],
+            )
+        except (json.JSONDecodeError, KeyError, TypeError):
+            logger.warning("[SCOPE] corrupt cache entry %s; rebuilding", cache_key)
 
     # Load all nodes for this customer
     result = await session.execute(
@@ -192,28 +211,46 @@ async def branch_scope(
         return ScopedBranches(branch_node_ids=[], tb_device_ids=[])
 
     # Build ancestor_paths from closure table
+    # Select the two columns, not the entity: select(Entity).all() yields Row wrappers
+    # whose attributes are the selected entities, so row.node_id would raise KeyError.
     ancestor_result = await session.execute(
-        select(BranchAncestorPath).where(
+        select(BranchAncestorPath.node_id, BranchAncestorPath.ancestor_id).where(
             BranchAncestorPath.node_id.in_([n.node_id for n in all_nodes])
         )
     )
     ancestor_rows = ancestor_result.all()
 
     ancestor_paths: dict[str, set[str]] = {n.node_id: set() for n in all_nodes}
-    for row in ancestor_rows:
-        ancestor_paths[row.node_id].add(row.ancestor_id)
+    for node_id, ancestor_id in ancestor_rows:
+        ancestor_paths[node_id].add(ancestor_id)
 
     # Filter leaves
     leaf_nodes = [n for n in all_nodes if n.is_leaf]
     filtered_leaves = filter_branches(scope, leaf_nodes, all_nodes, ancestor_paths)
 
-    branch_node_ids = [n.node_id for n in filtered_leaves]
-    tb_device_ids = [str(n.tb_device_id) for n in filtered_leaves if n.tb_device_id]
+    # Both lists must describe the SAME leaves, in the same order. They used to be
+    # built independently — tb_device_ids skipped leaves with no device while
+    # branch_node_ids kept them — so the two drifted apart by exactly the device-less
+    # leaves. Every consumer that pairs them by position then had to guard on equal
+    # length and silently gave up when they differed (see AlarmDetail), and
+    # resolved_scope could not filter one using the other at all.
+    #
+    # A leaf with no ThingsBoard device is not answerable and not authorizable, so
+    # dropping it from both is also the fail-closed choice.
+    usable_leaves = [n for n in filtered_leaves if n.tb_device_id]
+    branch_node_ids = [n.node_id for n in usable_leaves]
+    tb_device_ids = [str(n.tb_device_id) for n in usable_leaves]
 
-    # Cache for 60 seconds
+    # Cache for 60 seconds; a write failure is not worth failing the request over.
     import json
-    await redis.setex(
-        cache_key, 60, json.dumps({"branch_node_ids": branch_node_ids, "tb_device_ids": tb_device_ids})
-    )
+
+    try:
+        await redis.setex(
+            cache_key,
+            60,
+            json.dumps({"branch_node_ids": branch_node_ids, "tb_device_ids": tb_device_ids}),
+        )
+    except Exception:
+        logger.warning("[SCOPE] cache write failed", exc_info=True)
 
     return ScopedBranches(branch_node_ids=branch_node_ids, tb_device_ids=tb_device_ids)

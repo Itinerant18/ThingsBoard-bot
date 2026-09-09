@@ -66,3 +66,7 @@ package-lock.json
 .code-review-graph/
 
 plans/
+
+# local MCP configs hold API keys
+.mcp.json
+Thingsboard-Bot-v2/mcp/mcp_servers.json

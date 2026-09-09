@@ -1,0 +1,2247 @@
+{
+  "device_count": 101,
+  "devices": [
+    {
+      "name": "BOI-MALDATOWN",
+      "id": "01c61bb0-ab4c-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1760700338411,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-IMPHAL",
+      "id": "0a192650-dcbf-11f0-bcba-9f87c351edd8",
+      "createdTime": 1766137351477,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BPADA-MAIN",
+      "id": "0ad74590-b875-11f0-b150-2710a8915e1d",
+      "createdTime": 1762147328105,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BAGULA",
+      "id": "0bfa8fa0-c067-11f0-a562-d9639f025684",
+      "createdTime": 1763020926362,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SOHAGPUR",
+      "id": "0c6c6540-aa63-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760600283540,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BERO",
+      "id": "12e5db10-bbaf-11f0-91ad-09ca52d2dd91",
+      "createdTime": 1762502105921,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-COOCHBEHAR",
+      "id": "148c0c90-ab3e-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1760694356953,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-HGBAD",
+      "id": "194571b0-a998-11f0-b4af-b334f2239a02",
+      "createdTime": 1760513117259,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SAVEDI",
+      "id": "1b7cd5e0-c5f9-11f0-bcf0-0bef5ca18fec",
+      "createdTime": 1763633414718,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-ZARKAWT",
+      "id": "23d4b010-ec77-11f0-a6fc-1dffa956f056",
+      "createdTime": 1767865689489,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-PIPARIYA",
+      "id": "260c9fc0-a9bd-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760529030076,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BHUBANESHWAR",
+      "id": "275da890-d1c4-11f0-b238-bd8a9470eef2",
+      "createdTime": 1764930085273,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-CHANDANNAGAR",
+      "id": "2bc3f440-a5a3-11f0-b150-2710a8915e1d",
+      "createdTime": 1760078068100,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-MANGO",
+      "id": "2d7b5510-a8c0-11f0-b150-2710a8915e1d",
+      "createdTime": 1760420379873,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-JAYDEVVIHARCC",
+      "id": "2d82dc40-d02a-11f0-b238-bd8a9470eef2",
+      "createdTime": 1764754001924,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BERHAMPUR",
+      "id": "2f1e7460-ab4a-11f0-87ea-b9809c1a7a9e",
+      "createdTime": 1760699555494,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SEONIMALWA",
+      "id": "2feb8da0-aa74-11f0-b4af-b334f2239a02",
+      "createdTime": 1760607644538,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BHADRAK",
+      "id": "31bcca70-b886-11f0-b150-2710a8915e1d",
+      "createdTime": 1762154694807,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-NANDURBAR",
+      "id": "352c6c60-ce98-11f0-9dd1-0f70161fd1f6",
+      "createdTime": 1764581357094,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-RANIHATCC",
+      "id": "3799c600-d1d1-11f0-9dd1-0f70161fd1f6",
+      "createdTime": 1764935695968,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SINGH-MORE",
+      "id": "424f3e90-1b96-11f1-88f8-7daa5068de06",
+      "createdTime": 1773046759673,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-GUWAHATI",
+      "id": "46099340-d1af-11f0-9dd1-0f70161fd1f6",
+      "createdTime": 1764921117300,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-KOHIMA",
+      "id": "46218160-da5d-11f0-8b72-69e5355364db",
+      "createdTime": 1765875459190,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SERAMPORE",
+      "id": "488f0ad0-a5ab-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760081552381,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SAKCHI",
+      "id": "4a426620-af2d-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1761126950274,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-MALLAGURI",
+      "id": "4d4f61e0-a8f4-11f0-b4af-b334f2239a02",
+      "createdTime": 1760442767102,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SOBHAPUR",
+      "id": "4f50d080-aa4f-11f0-b150-2710a8915e1d",
+      "createdTime": 1760591805832,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-AGARTALA",
+      "id": "4f7f3da0-e562-11f0-a6fc-1dffa956f056",
+      "createdTime": 1767087085178,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-KRISHNANAGAR",
+      "id": "540b38d0-b888-11f0-b4af-b334f2239a02",
+      "createdTime": 1762155611357,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BABAI",
+      "id": "5472ea20-aa78-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760609423810,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BARIPADA-CC",
+      "id": "57db9c90-b89a-11f0-87ea-b9809c1a7a9e",
+      "createdTime": 1762163348697,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SONAHATU",
+      "id": "589773f0-c44a-11f0-ae8f-9fad3c067e6e",
+      "createdTime": 1763448404143,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-KUSAI",
+      "id": "58c89c30-b64b-11f0-b4af-b334f2239a02",
+      "createdTime": 1761909517683,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SITHIO",
+      "id": "5bb79740-c51c-11f0-ae8f-9fad3c067e6e",
+      "createdTime": 1763538603700,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BASTA-CC",
+      "id": "5d6214b0-b6ff-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1761986834811,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-KHARVEL",
+      "id": "62706590-d1be-11f0-b238-bd8a9470eef2",
+      "createdTime": 1764927607401,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SALTLAKE",
+      "id": "6287e400-a823-11f0-b150-2710a8915e1d",
+      "createdTime": 1760353037888,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-DOBSON",
+      "id": "62e55e90-a5b8-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1760087180025,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SEPL-DX2",
+      "id": "630c1480-63e6-11f1-9555-295f91c5b7c8",
+      "createdTime": 1780997658056,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-DIBRUGARH",
+      "id": "634b0ec0-db2d-11f0-81e4-bd8a9470eef2",
+      "createdTime": 1765964843436,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SINI",
+      "id": "63e4dab0-a8cd-11f0-b4af-b334f2239a02",
+      "createdTime": 1760426054618,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-AIZWAL",
+      "id": "64673b00-ed32-11f0-80c0-fdc442896b74",
+      "createdTime": 1767946113712,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-ITARSI",
+      "id": "64c54530-a9b5-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760525699331,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-PODASTIA",
+      "id": "65acc540-efa1-11f0-a6fc-1dffa956f056",
+      "createdTime": 1768213692308,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BALURGHAT",
+      "id": "668a4210-ab47-11f0-b150-2710a8915e1d",
+      "createdTime": 1760698359985,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-KANTATOLI",
+      "id": "6952b850-be08-11f0-91ad-09ca52d2dd91",
+      "createdTime": 1762760378453,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-DX7",
+      "id": "6aac1ab0-63f4-11f1-9555-295f91c5b7c8",
+      "createdTime": 1781003683803,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-NOKARI",
+      "id": "6c671990-c200-11f0-bb20-a78f8ac460b7",
+      "createdTime": 1763196752297,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-CHAPRA",
+      "id": "702d9350-c143-11f0-bb20-a78f8ac460b7",
+      "createdTime": 1763115583749,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-KAIRO",
+      "id": "73244400-c6a7-11f0-bb20-a78f8ac460b7",
+      "createdTime": 1763708294208,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-TARAKESHWAR",
+      "id": "77f98430-a5b5-11f0-b4af-b334f2239a02",
+      "createdTime": 1760085926899,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-CHINSURAH",
+      "id": "7b0a1200-a5d5-11f0-b4af-b334f2239a02",
+      "createdTime": 1760099675936,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-DARJEELING",
+      "id": "8390bd50-ab36-11f0-87ea-b9809c1a7a9e",
+      "createdTime": 1760691107237,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-JAMSOLA",
+      "id": "8ca57d10-b714-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1761995933537,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-JAMSHEDPUR",
+      "id": "8cb88710-a8f6-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1760443732481,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SHILLONG",
+      "id": "8ea372b0-d4de-11f0-b238-bd8a9470eef2",
+      "createdTime": 1765271278939,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BALLYBAZAR",
+      "id": "9cdeba20-a5a3-11f0-b150-2710a8915e1d",
+      "createdTime": 1760078257858,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-RAIGANJ",
+      "id": "9f2b14b0-ab41-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760695878011,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-RANIHAT",
+      "id": "9f345d90-d1cf-11f0-9cd2-358ed627911d",
+      "createdTime": 1764935010793,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BARIPADA-ZO",
+      "id": "a3e80530-b8a2-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1762166912259,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-KAGALNAGAR",
+      "id": "a46c75f0-a8d4-11f0-87ea-b9809c1a7a9e",
+      "createdTime": 1760429169359,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-RANAGHAT",
+      "id": "a47086e0-d9a3-11f0-81e4-bd8a9470eef2",
+      "createdTime": 1765795731022,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-RANDIA",
+      "id": "a5b88e20-b6ef-11f0-b150-2710a8915e1d",
+      "createdTime": 1761980084226,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-CUTTACK",
+      "id": "a5cf2df0-d1cb-11f0-82a9-69e5355364db",
+      "createdTime": 1764933303887,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-JAGULI",
+      "id": "a9972ec0-1eb4-11f1-92b2-1da25bcc708d",
+      "createdTime": 1773389671340,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-ASHANGI",
+      "id": "ab5e0860-d1ce-11f0-9dd1-0f70161fd1f6",
+      "createdTime": 1764934601702,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-ADITYAPUR",
+      "id": "ad7453e0-a8be-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1760419735582,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-MISROD",
+      "id": "aed666e0-aa69-11f0-b150-2710a8915e1d",
+      "createdTime": 1760603133006,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-JAYDEVVIHARBR",
+      "id": "af00cf90-d037-11f0-b238-bd8a9470eef2",
+      "createdTime": 1764759802633,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-ARAMBAGH",
+      "id": "af53feb0-a5b0-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760083872283,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-RAIRANGPUR",
+      "id": "afe865f0-b708-11f0-87ea-b9809c1a7a9e",
+      "createdTime": 1761990838735,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BETHUADAHRI",
+      "id": "b319f660-bed5-11f0-8304-97baeec450b1",
+      "createdTime": 1762848549062,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-ALIPURDUAR",
+      "id": "b60f6ba0-ab2c-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1760686896986,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-HARDA-ROAD",
+      "id": "b7736000-a98d-11f0-b4af-b334f2239a02",
+      "createdTime": 1760508658176,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-GANGTOK",
+      "id": "b8cd28e0-ab28-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1760685183598,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-MURARISHACHOWMATHA",
+      "id": "bc75d210-b96c-11f0-b150-2710a8915e1d",
+      "createdTime": 1762253711793,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-LILUAH",
+      "id": "bed23640-a821-11f0-b150-2710a8915e1d",
+      "createdTime": 1760352333732,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-UPPER BAZAR",
+      "id": "bf442ba0-badd-11f0-8069-45b80ed85c71",
+      "createdTime": 1762412200794,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-KOLABERA",
+      "id": "bf949270-a8fe-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760447253783,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI LALPUR",
+      "id": "c0ad6070-b4ba-11f0-b150-2710a8915e1d",
+      "createdTime": 1761737463799,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-CHOPDA",
+      "id": "c4722190-cc1c-11f0-82a9-69e5355364db",
+      "createdTime": 1764308437545,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BALASORE",
+      "id": "c9da7dd0-b70e-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1761993459245,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-TELCO-TOWN",
+      "id": "cbca57c0-a8e8-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1760437825340,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-PANASPADA",
+      "id": "d1a4f0f0-d73d-11f0-afc5-358ed627911d",
+      "createdTime": 1765532095871,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-CHANDEKASARE",
+      "id": "d3916330-bec9-11f0-8f53-855df0f2e39c",
+      "createdTime": 1762843449571,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-ROING",
+      "id": "da16d690-da3f-11f0-afc5-358ed627911d",
+      "createdTime": 1765862822521,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-PATHARDIFATA",
+      "id": "dbc2ae10-bef1-11f0-a4c6-e5fe644790a2",
+      "createdTime": 1762860643185,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-ISLAMPUR",
+      "id": "dc0a38d0-ab31-11f0-87ea-b9809c1a7a9e",
+      "createdTime": 1760689108189,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-CHIMTHANA",
+      "id": "dcf3f8c0-d021-11f0-9dd1-0f70161fd1f6",
+      "createdTime": 1764750430796,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-TATISILWAL",
+      "id": "de1cb130-1926-11f1-92b2-1da25bcc708d",
+      "createdTime": 1772779015107,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-PURI",
+      "id": "e1f85910-db3e-11f0-afc5-358ed627911d",
+      "createdTime": 1765972357409,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-SATPUR",
+      "id": "e2275560-bade-11f0-91ad-09ca52d2dd91",
+      "createdTime": 1762412688822,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-THOUBAL",
+      "id": "e69ab6c0-dbe8-11f0-afc5-358ed627911d",
+      "createdTime": 1766045379628,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-DANKUNI",
+      "id": "e8825000-a5c5-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760092987648,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BAGUIHATI",
+      "id": "ef43bf30-aa77-11f0-b8ab-b38af83f6c9c",
+      "createdTime": 1760609254051,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-LOKANNATH",
+      "id": "efc737f0-dd78-11f0-93b7-0f70161fd1f6",
+      "createdTime": 1766217193711,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-BHADRESWAR",
+      "id": "f0a8f490-d5a5-11f0-81e4-bd8a9470eef2",
+      "createdTime": 1765356913241,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-CHHOTAGAMHARIA",
+      "id": "fab6cde0-d27b-11f0-8d27-9f87c351edd8",
+      "createdTime": 1765009037758,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-AMALNER",
+      "id": "fb000f30-ce86-11f0-82a9-69e5355364db",
+      "createdTime": 1764573958051,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "BOI-GANERA",
+      "id": "fb3c7120-aa85-11f0-b150-2710a8915e1d",
+      "createdTime": 1760615287090,
+      "label": null,
+      "type": "BOI Device Profile"
+    },
+    {
+      "name": "SDF-RASP5",
+      "id": "fdba64c0-ae3b-11f0-91df-7ffa16af2ee9",
+      "createdTime": 1761023313164,
+      "label": "*Svault",
+      "type": "BOI Device Profile"
+    }
+  ],
+  "branch_names": [
+    "BOI LALPUR",
+    "BOI-ADITYAPUR",
+    "BOI-AGARTALA",
+    "BOI-AIZWAL",
+    "BOI-ALIPURDUAR",
+    "BOI-AMALNER",
+    "BOI-ARAMBAGH",
+    "BOI-ASHANGI",
+    "BOI-BABAI",
+    "BOI-BAGUIHATI",
+    "BOI-BAGULA",
+    "BOI-BALASORE",
+    "BOI-BALLYBAZAR",
+    "BOI-BALURGHAT",
+    "BOI-BARIPADA-CC",
+    "BOI-BARIPADA-ZO",
+    "BOI-BASTA-CC",
+    "BOI-BERHAMPUR",
+    "BOI-BERO",
+    "BOI-BETHUADAHRI",
+    "BOI-BHADRAK",
+    "BOI-BHADRESWAR",
+    "BOI-BHUBANESHWAR",
+    "BOI-BPADA-MAIN",
+    "BOI-CHANDANNAGAR",
+    "BOI-CHANDEKASARE",
+    "BOI-CHAPRA",
+    "BOI-CHHOTAGAMHARIA",
+    "BOI-CHIMTHANA",
+    "BOI-CHINSURAH",
+    "BOI-CHOPDA",
+    "BOI-COOCHBEHAR",
+    "BOI-CUTTACK",
+    "BOI-DANKUNI",
+    "BOI-DARJEELING",
+    "BOI-DIBRUGARH",
+    "BOI-DOBSON",
+    "BOI-DX7",
+    "BOI-GANERA",
+    "BOI-GANGTOK",
+    "BOI-GUWAHATI",
+    "BOI-HARDA-ROAD",
+    "BOI-HGBAD",
+    "BOI-IMPHAL",
+    "BOI-ISLAMPUR",
+    "BOI-ITARSI",
+    "BOI-JAGULI",
+    "BOI-JAMSHEDPUR",
+    "BOI-JAMSOLA",
+    "BOI-JAYDEVVIHARBR",
+    "BOI-JAYDEVVIHARCC",
+    "BOI-KAGALNAGAR",
+    "BOI-KAIRO",
+    "BOI-KANTATOLI",
+    "BOI-KHARVEL",
+    "BOI-KOHIMA",
+    "BOI-KOLABERA",
+    "BOI-KRISHNANAGAR",
+    "BOI-KUSAI",
+    "BOI-LILUAH",
+    "BOI-LOKANNATH",
+    "BOI-MALDATOWN",
+    "BOI-MALLAGURI",
+    "BOI-MANGO",
+    "BOI-MISROD",
+    "BOI-MURARISHACHOWMATHA",
+    "BOI-NANDURBAR",
+    "BOI-NOKARI",
+    "BOI-PANASPADA",
+    "BOI-PATHARDIFATA",
+    "BOI-PIPARIYA",
+    "BOI-PODASTIA",
+    "BOI-PURI",
+    "BOI-RAIGANJ",
+    "BOI-RAIRANGPUR",
+    "BOI-RANAGHAT",
+    "BOI-RANDIA",
+    "BOI-RANIHAT",
+    "BOI-RANIHATCC",
+    "BOI-ROING",
+    "BOI-SAKCHI",
+    "BOI-SALTLAKE",
+    "BOI-SATPUR",
+    "BOI-SAVEDI",
+    "BOI-SEONIMALWA",
+    "BOI-SEPL-DX2",
+    "BOI-SERAMPORE",
+    "BOI-SHILLONG",
+    "BOI-SINGH-MORE",
+    "BOI-SINI",
+    "BOI-SITHIO",
+    "BOI-SOBHAPUR",
+    "BOI-SOHAGPUR",
+    "BOI-SONAHATU",
+    "BOI-TARAKESHWAR",
+    "BOI-TATISILWAL",
+    "BOI-TELCO-TOWN",
+    "BOI-THOUBAL",
+    "BOI-UPPER BAZAR",
+    "BOI-ZARKAWT",
+    "SDF-RASP5"
+  ],
+  "hierarchy": {
+    "BOI-MALDATOWN": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH MALDA TOWN",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-IMPHAL": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH IMPHAL",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-BPADA-MAIN": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH BARIPADA MAIN",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-BAGULA": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH BAGULA",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-SOHAGPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH SOHAGPUR",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-BERO": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH BERO",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-COOCHBEHAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH COACHBIHAR",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-HGBAD": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH HOSHANGABAD",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-SAVEDI": {
+      "full_path": "BANK OF INDIA \u2192 NBG West II \u2192 ZO NASIK \u2192 BRANCH SAVEDI",
+      "zone": "NBG West II",
+      "zo": "ZO NASIK",
+      "region": "NBG West II"
+    },
+    "BOI-ZARKAWT": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH ZARKAWT",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-PIPARIYA": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH PIPARIYA",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-BHUBANESHWAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH BHUBANESHWAR",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-CHANDANNAGAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH CHANDANNAGAR",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-MANGO": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH MANGO",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-JAYDEVVIHARCC": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH JAYDEVVIHARCC",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-BERHAMPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH BERHAMPORE",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-SEONIMALWA": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH SEONI MALWA",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-BHADRAK": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH BHADRAK",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-NANDURBAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG West II \u2192 ZO NASIK \u2192 BRANCH NANDURBAR",
+      "zone": "NBG West II",
+      "zo": "ZO NASIK",
+      "region": "NBG West II"
+    },
+    "BOI-RANIHATCC": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH RANIHAT CC",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-SINGH-MORE": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH SINGH MORE",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-GUWAHATI": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH GUWAHATI",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-KOHIMA": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH KOHIMA",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-SERAMPORE": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH SERAMPORE",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-SAKCHI": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH SAKCHI",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-MALLAGURI": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH MALLAGURI",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-SOBHAPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH SOBHAPUR",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-AGARTALA": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH AGARTALA",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-KRISHNANAGAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH KRISHNANAGAR",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-BABAI": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH BABAI",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-BARIPADA-CC": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH BARIPADA CC",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-SONAHATU": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH SONAHATU",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-KUSAI": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH KUSAI",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-SITHIO": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH SITHIO",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-BASTA-CC": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH BASTA",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-KHARVEL": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH KHARVEL",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-SALTLAKE": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH SALTLAKE",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-DOBSON": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH DOBSON LANE",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-SEPL-DX2": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 NBG SEPLE \u2192 SEPL-DX2",
+      "zone": "NBG EAST",
+      "zo": "NBG SEPLE",
+      "region": "NBG EAST"
+    },
+    "BOI-DIBRUGARH": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH DIBRUGARH",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-SINI": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH SINI",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-AIZWAL": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH AIZWAL",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-ITARSI": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH ITARSI",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-PODASTIA": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH PODASTIA",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-BALURGHAT": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH BALURGHAT",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-KANTATOLI": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH KANTATOLI",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-DX7": {
+      "full_path": "NBG JH \u2192 NBG SEPLE \u2192 BOI-DX7",
+      "zone": "NBG JH",
+      "zo": "NBG SEPLE",
+      "region": "NBG SEPLE"
+    },
+    "BOI-NOKARI": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH NOKARI",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-CHAPRA": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH CHAPRA",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-KAIRO": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH KARIO",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-TARAKESHWAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH TARAKESHWAR",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-CHINSURAH": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH CHINSURAH",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-DARJEELING": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH DARJEELING",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-JAMSOLA": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH JAMSOLA",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-JAMSHEDPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH JAMSHEDPUR MAIN",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-SHILLONG": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH SHILLONG",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-BALLYBAZAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH BALLY BAZAR",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-RAIGANJ": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH RAIGANJ",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-RANIHAT": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH RANIHAT",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-BARIPADA-ZO": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH BARIPADA ZO",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-KAGALNAGAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH KAGALNAGAR",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-RANAGHAT": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH RANAGHAT",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-RANDIA": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH RANDIA",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-CUTTACK": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH CUTTACK",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-JAGULI": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH JAGULI",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-ASHANGI": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH ASHANGI",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-ADITYAPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH ADITYAPUR",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-MISROD": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH MISROD",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-JAYDEVVIHARBR": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH JAYDEVVIHARBR",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-ARAMBAGH": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH ARAMBAGH",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-RAIRANGPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH RAIRANGPUR",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-BETHUADAHRI": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH BATHUA DOHARI",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-ALIPURDUAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH ALIPURDUAR",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-HARDA-ROAD": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH HARDA ROAD",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "BOI-GANGTOK": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH GANGTOK",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-MURARISHACHOWMATHA": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH MURARISHACHOWMATHA",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-LILUAH": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH LILUAH",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-UPPER BAZAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH UPPER BAZAR",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-KOLABERA": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH KOLABERA",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI LALPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH LALPUR",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-CHOPDA": {
+      "full_path": "BANK OF INDIA \u2192 NBG West II \u2192 ZO NASIK \u2192 BRANCH CHOPDA",
+      "zone": "NBG West II",
+      "zo": "ZO NASIK",
+      "region": "NBG West II"
+    },
+    "BOI-BALASORE": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BARIPADA \u2192 BRANCH BALASORE",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BARIPADA",
+      "region": "NBG ODISHA"
+    },
+    "BOI-TELCO-TOWN": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH TELCO TOWN",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-PANASPADA": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH PANASPADA",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-CHANDEKASARE": {
+      "full_path": "BANK OF INDIA \u2192 NBG West II \u2192 ZO NASIK \u2192 BRANCH CHANDE KASARE",
+      "zone": "NBG West II",
+      "zo": "ZO NASIK",
+      "region": "NBG West II"
+    },
+    "BOI-ROING": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH ROING",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-PATHARDIFATA": {
+      "full_path": "BANK OF INDIA \u2192 NBG West II \u2192 ZO NASIK \u2192 BRANCH PATHARDI",
+      "zone": "NBG West II",
+      "zo": "ZO NASIK",
+      "region": "NBG West II"
+    },
+    "BOI-ISLAMPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO SILIGURI \u2192 BRANCH ISLAMPORE",
+      "zone": "NBG EAST",
+      "zo": "ZO SILIGURI",
+      "region": "NBG EAST"
+    },
+    "BOI-CHIMTHANA": {
+      "full_path": "BANK OF INDIA \u2192 NBG West II \u2192 ZO NASIK \u2192 BRANCH CHIMTHANA",
+      "zone": "NBG West II",
+      "zo": "ZO NASIK",
+      "region": "NBG West II"
+    },
+    "BOI-TATISILWAL": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO RANCHI \u2192 BRANCH TATISILWAI",
+      "zone": "NBG JH",
+      "zo": "ZO RANCHI",
+      "region": "NBG JH"
+    },
+    "BOI-PURI": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH PURI",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-SATPUR": {
+      "full_path": "BANK OF INDIA \u2192 NBG West II \u2192 ZO NASIK \u2192 BRANCH SATPUR",
+      "zone": "NBG West II",
+      "zo": "ZO NASIK",
+      "region": "NBG West II"
+    },
+    "BOI-THOUBAL": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 BRANCH THOUBAL",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    },
+    "BOI-DANKUNI": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH DANKUNI",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-BAGUIHATI": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO BARASAT \u2192 BRANCH BAGUIHATI",
+      "zone": "NBG EAST",
+      "zo": "ZO BARASAT",
+      "region": "NBG EAST"
+    },
+    "BOI-LOKANNATH": {
+      "full_path": "BANK OF INDIA \u2192 NBG ODISHA \u2192 ZO BHUBANESHWAR \u2192 BRANCH LOKANNATH",
+      "zone": "NBG ODISHA",
+      "zo": "ZO BHUBANESHWAR",
+      "region": "NBG ODISHA"
+    },
+    "BOI-BHADRESWAR": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO HOWRAH \u2192 BRANCH BHADRESWAR",
+      "zone": "NBG EAST",
+      "zo": "ZO HOWRAH",
+      "region": "NBG EAST"
+    },
+    "BOI-CHHOTAGAMHARIA": {
+      "full_path": "BANK OF INDIA \u2192 NBG JH \u2192 ZO JAMSHEDPUR \u2192 BRANCH CHHOTA GAMHARIA",
+      "zone": "NBG JH",
+      "zo": "ZO JAMSHEDPUR",
+      "region": "NBG JH"
+    },
+    "BOI-AMALNER": {
+      "full_path": "BANK OF INDIA \u2192 NBG West II \u2192 ZO NASIK \u2192 BRANCH AMALNER",
+      "zone": "NBG West II",
+      "zo": "ZO NASIK",
+      "region": "NBG West II"
+    },
+    "BOI-GANERA": {
+      "full_path": "BANK OF INDIA \u2192 NBG MP \u2192 ZO KHANDWA \u2192 BRANCH GANERA",
+      "zone": "NBG MP",
+      "zo": "ZO KHANDWA",
+      "region": "NBG MP"
+    },
+    "SDF-RASP5": {
+      "full_path": "BANK OF INDIA \u2192 NBG EAST \u2192 ZO GUWAHATI \u2192 SDF-RASP5 CUS",
+      "zone": "NBG EAST",
+      "zo": "ZO GUWAHATI",
+      "region": "NBG EAST"
+    }
+  },
+  "zone_counts": {
+    "NBG EAST": 42,
+    "NBG ODISHA": 20,
+    "NBG MP": 10,
+    "NBG JH": 21,
+    "NBG West II": 8
+  },
+  "region_counts": {
+    "NBG EAST": 42,
+    "NBG ODISHA": 20,
+    "NBG MP": 10,
+    "NBG JH": 20,
+    "NBG West II": 8,
+    "NBG SEPLE": 1
+  },
+  "active_alarm_count": 348,
+  "alarms_by_zone": {
+    "NBG EAST": 114,
+    "": 85,
+    "NBG JH": 50,
+    "NBG ODISHA": 24,
+    "NBG MP": 32,
+    "NBG West II": 14,
+    "NBG-3": 5,
+    "NBG Orissa": 12,
+    "ZO(Kolkata)": 12
+  },
+  "alarms_by_branch": {
+    "BOI-MURARISHACHOWMATHA": 5,
+    "BOI-CHANDANNAGAR": 1,
+    "BOI-DX7": 4,
+    "BOI-NOKARI": 2,
+    "BOI-BETHUADAHRI": 3,
+    "BOI-ZARKAWT": 2,
+    "BOI-JAGULI": 2,
+    "BOI-KRISHNANAGAR": 1,
+    "BOI-CHAPRA": 1,
+    "BOI-SALTLAKE": 2,
+    "BOI-BALLYBAZAR": 9,
+    "": 219,
+    "BOI-DANKUNI": 1,
+    "BOI-TARAKESHWAR": 1,
+    "BOI-BHADRESWAR": 3,
+    "BOI-KANTATOLI": 2,
+    "SEPL-DX2": 8,
+    "BOI-JAYDEVVIHARBR": 1,
+    "BOI-SONAHATU": 1,
+    "CANARA-BURNPUR": 13,
+    "BOI-SERAMPORE": 1,
+    "BOI-DOBSON": 2,
+    "BOI-RANIHAT": 1,
+    "BOI-CHINSURAH": 1,
+    "BOI-PANASPADA": 1,
+    "CANARA-KAMARHATI": 1,
+    "BOI-KHARVEL": 1,
+    "BOI-LILUAH": 2,
+    "BOI-BHUBANESHWAR": 1,
+    "CANARA-CHETLA": 3,
+    "BOI-CUTTACK": 1,
+    "BOI-TATISILWAL": 1,
+    "BOI-LOKANNATH": 1,
+    "BOI-SHILLONG": 1,
+    "BOI-GUWAHATI": 1,
+    "BOI-ROING": 1,
+    "BOI-KOHIMA": 1,
+    "BOI-ADITYAPUR": 1,
+    "BOI-IMPHAL": 1,
+    "BOI-DIBRUGARH": 1,
+    "BOI-AIZWAL": 1,
+    "BOI-AGARTALA": 1,
+    "BOI-THOUBAL": 1,
+    "BOI-MANGO": 1,
+    "BOI-KAGALNAGAR": 1,
+    "BOI-TELCO-TOWN": 1,
+    "BOI-SAKCHI": 2,
+    "BOI-KOLABERA": 1,
+    "BOI-SINI": 1,
+    "BOI-JAMSHEDPUR": 2,
+    "BOI-CHHOTAGAMHARIA": 2,
+    "BOI-ASHANGI": 1,
+    "BOI-HGBAD": 1,
+    "BOI-ITARSI": 1,
+    "BOI-HARDA-ROAD": 1,
+    "BOI-SOBHAPUR": 1,
+    "BOI-SOHAGPUR": 1,
+    "BOI-BABAI": 1,
+    "BOI-GANERA": 1,
+    "BOI-SEONIMALWA": 2,
+    "BOI-PIPARIYA": 1,
+    "BOI-MISROD": 1,
+    "BOI-BPADA-MAIN": 1,
+    "BOI-BARIPADA-ZO": 1,
+    "BOI-RAIRANGPUR": 1,
+    "BOI-ISLAMPUR": 1,
+    "BOI-MALLAGURI": 1,
+    "BOI-BARIPADA-CC": 1,
+    "BOI-JAMSOLA": 1,
+    "BOI-RANDIA": 1,
+    "BOI-BASTA-CC": 1,
+    "BOI-PODASTIA": 1,
+    "BOI-BHADRAK": 1,
+    "BOI-BALASORE": 1,
+    "BOI-BERHAMPUR": 1,
+    "BOI-COOCHBEHAR": 1,
+    "BOI-RAIGANJ": 1,
+    "SEPL-DX8": 1,
+    "SEPL-DX5": 1
+  },
+  "alarms_by_type": {
+    "BOI- FIRE ALARM SYSTEM OFF": 1,
+    "BOI- TIME LOCK SYSTEM OFF": 5,
+    "BOI- CAMERA DISCONNECT CH 2": 2,
+    "BOI- POWER OFF": 2,
+    "BOI- CAMERA TAMPER CH 4": 2,
+    "BOI- CAMERA TAMPER CH 7": 2,
+    "BOI- BATTERY REVERSE RESTORE": 5,
+    "BOI- INTRUSION ALARM SYSTEM OFF": 1,
+    "BOI- BATTERY LOW": 5,
+    "BOI- INTEGRATED ALARM SYSTEM OFF": 1,
+    "BOI- DVR/NVR OFF": 9,
+    "BOI- BATTERY REVERSE": 57,
+    "BOI- CAMERA DISCONNECT CH 3": 1,
+    "BOI- CAMERA DISCONNECT CH 10": 1,
+    "BOI- CAMERA DISCONNECT CH 6": 1,
+    "BOI- CAMERA DISCONNECT CH 4": 1,
+    "Zone 4 Fire": 1,
+    "Zone 2 Fire": 1,
+    "BOI- CAMERA DISCONNECT CH 15": 1,
+    "BOI- CAMERA DISCONNECT CH 13": 1,
+    "BOI- HDD ERROR": 3,
+    "CANARA- CAMERA DISCONNECT CH 10": 1,
+    "CANARA- CAMERA DISCONNECT CH 8": 1,
+    "CANARA- CAMERA DISCONNECT CH 6": 1,
+    "CANARA- CAMERA DISCONNECT CH 4": 1,
+    "CANARA- CAMERA DISCONNECT CH 2": 1,
+    "CANARA- CAMERA DISCONNECT CH 1": 1,
+    "CANARA- CAMERA DISCONNECT CH 14": 1,
+    "CANARA- CAMERA DISCONNECT CH 13": 1,
+    "CANARA- CAMERA DISCONNECT CH 9": 1,
+    "CANARA- CAMERA DISCONNECT CH 7": 1,
+    "CANARA- CAMERA DISCONNECT CH 5": 1,
+    "CANARA- CAMERA DISCONNECT CH 3": 1,
+    "BOI- CAMERA TAMPER": 4,
+    "CANARA- DVR/NVR OFF": 3,
+    "CANARA- INTRUSION ALARM SYSTEM OFF": 1,
+    "CANARA- FIRE ALARM SYSTEM OFF": 1,
+    "BOI- CAMERA TAMPER CH 8": 1,
+    "BOI- CAMERA TAMPER CH 5": 1,
+    "BOI- CAMERA DISCONNECT CH 14": 1,
+    "BOI- CAMERA TAMPER CH 14": 1,
+    "$[hddType]": 48,
+    "HDD ERROR": 2,
+    "CAMERA TAMPER CH 14": 1,
+    "INTRUSION ALARM SYSTEM OFF": 11,
+    "TIME LOCK SYSTEM OFF": 9,
+    "DVR/NVR OFF": 24,
+    "INTEGRATED ALARM SYSTEM OFF": 5,
+    "BATTERY REVERSE": 6,
+    "POWER OFF": 12,
+    "INTRUSION ALARM SYSTEM FAULT": 2,
+    "FIRE ALARM SYSTEM OFF": 8,
+    "INTEGRATED ALARM SYSTEM FAULT": 2,
+    "BATTERY LOW": 49,
+    "CAMERA DISCONNECT CH 8": 1,
+    "CAMERA DISCONNECT CH 7": 2,
+    "CAMERA DISCONNECT CH 6": 1,
+    "CAMERA DISCONNECT CH 5": 1,
+    "$[type]": 1,
+    "TIME LOCK DOOR OPEN": 2,
+    "TIME LOCK SYSTEM TAMPER": 2,
+    "ACCESS CONTROL DOOR OPEN": 2,
+    "ACCESS CONTROL SYSTEM TAMPER": 3,
+    "INTEGRATED ALARM SYSTEM ACTIVATE": 2,
+    "CAMERA DISCONNECT CH 11": 1,
+    "FIRE ALARM SYSTEM ACTIVATE": 3,
+    "Zone 3 Isolate": 1,
+    "ZONE2 FIRE": 1,
+    "ZONE1 FIRE": 1,
+    "ZONE1 OPEN": 1,
+    "ZONE2 OPEN": 1,
+    "ZONE3 OPEN": 1,
+    "ZONE4 OPEN": 1,
+    "FIRE ALARM SYSTEM FAULT": 2,
+    "DOOR OPEN": 1,
+    "CAMERA TAMPER": 1,
+    "Door Open": 1,
+    "ACCESS CONTROL SYSTEM OFF": 3,
+    "CAMERA DISCONNECT CH 1": 5
+  },
+  "user_count": 17,
+  "users": [
+    {
+      "email": "ranchi.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Ranchi",
+      "band": "ZO"
+    },
+    {
+      "email": "headoffice.security@bankofindia.bank.in",
+      "first": "Head Office",
+      "last": "BOI",
+      "band": "HO"
+    },
+    {
+      "email": "nasik.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Nasik",
+      "band": "ZO"
+    },
+    {
+      "email": "romenwork2002@gmail.com",
+      "first": "Roman",
+      "last": "Halder",
+      "band": "branch"
+    },
+    {
+      "email": "NBG.Odisha@bankofindia.bank.in",
+      "first": "BOI NBG",
+      "last": "Odisha",
+      "band": "NBG"
+    },
+    {
+      "email": "baripada.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Baripada",
+      "band": "ZO"
+    },
+    {
+      "email": "khandwa.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Khandwa",
+      "band": "ZO"
+    },
+    {
+      "email": "howrah.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Howrah",
+      "band": "ZO"
+    },
+    {
+      "email": "nb.east@bankofindia.bank.in",
+      "first": "BOI NBG",
+      "last": "East",
+      "band": "NBG"
+    },
+    {
+      "email": "barasat.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Barasat",
+      "band": "ZO"
+    },
+    {
+      "email": "nb.west2@bankofindia.bank.in",
+      "first": "BOI NBG",
+      "last": "WEST II",
+      "band": "NBG"
+    },
+    {
+      "email": "jamshedpur.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Jamshedpur",
+      "band": "ZO"
+    },
+    {
+      "email": "NB.jharkhand-Chattishgarh@bankofindia.bank.in",
+      "first": "BOI NBG",
+      "last": "JHARKHAND",
+      "band": "NBG"
+    },
+    {
+      "email": "bhubaneswar.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Bhubaneshwar",
+      "band": "ZO"
+    },
+    {
+      "email": "Guwahati.Security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Guwahati",
+      "band": "ZO"
+    },
+    {
+      "email": "siliguri.security@bankofindia.bank.in",
+      "first": "BOI ZO",
+      "last": "Siliguri",
+      "band": "ZO"
+    },
+    {
+      "email": "NBG.MP&CG@bankofindia.bank.in",
+      "first": "BOI NBG",
+      "last": "MP&CG",
+      "band": "NBG"
+    }
+  ],
+  "users_by_band": {
+    "HO": 1,
+    "NBG": 5,
+    "ZO": 10,
+    "branch": 1
+  },
+  "camera_totals": {
+    "BOI-MALDATOWN": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-IMPHAL": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BPADA-MAIN": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BAGULA": {
+      "configured": 16,
+      "recording": 9,
+      "not_recording": 7
+    },
+    "BOI-SOHAGPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BERO": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-COOCHBEHAR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-HGBAD": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SAVEDI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-ZARKAWT": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-PIPARIYA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BHUBANESHWAR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-CHANDANNAGAR": {
+      "configured": 16,
+      "recording": 12,
+      "not_recording": 4
+    },
+    "BOI-MANGO": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-JAYDEVVIHARCC": {
+      "configured": 3,
+      "recording": 3,
+      "not_recording": 0
+    },
+    "BOI-BERHAMPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SEONIMALWA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BHADRAK": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-NANDURBAR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-RANIHATCC": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SINGH-MORE": {
+      "configured": 1,
+      "recording": 1,
+      "not_recording": 0
+    },
+    "BOI-GUWAHATI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-KOHIMA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SERAMPORE": {
+      "configured": 31,
+      "recording": 15,
+      "not_recording": 16
+    },
+    "BOI-SAKCHI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-MALLAGURI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SOBHAPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-AGARTALA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-KRISHNANAGAR": {
+      "configured": 16,
+      "recording": 0,
+      "not_recording": 16
+    },
+    "BOI-BABAI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BARIPADA-CC": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SONAHATU": {
+      "configured": 16,
+      "recording": 14,
+      "not_recording": 2
+    },
+    "BOI-KUSAI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SITHIO": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BASTA-CC": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-KHARVEL": {
+      "configured": 3,
+      "recording": 3,
+      "not_recording": 0
+    },
+    "BOI-SALTLAKE": {
+      "configured": 12,
+      "recording": 12,
+      "not_recording": 0
+    },
+    "BOI-DOBSON": {
+      "configured": 16,
+      "recording": 14,
+      "not_recording": 2
+    },
+    "BOI-SEPL-DX2": {
+      "configured": 94,
+      "recording": 90,
+      "not_recording": 4
+    },
+    "BOI-DIBRUGARH": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SINI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-AIZWAL": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-ITARSI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-PODASTIA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BALURGHAT": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-KANTATOLI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-DX7": {
+      "configured": 43,
+      "recording": 43,
+      "not_recording": 0
+    },
+    "BOI-NOKARI": {
+      "configured": 16,
+      "recording": 8,
+      "not_recording": 8
+    },
+    "BOI-CHAPRA": {
+      "configured": 16,
+      "recording": 0,
+      "not_recording": 16
+    },
+    "BOI-KAIRO": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-TARAKESHWAR": {
+      "configured": 14,
+      "recording": 14,
+      "not_recording": 0
+    },
+    "BOI-CHINSURAH": {
+      "configured": 16,
+      "recording": 12,
+      "not_recording": 4
+    },
+    "BOI-DARJEELING": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-JAMSOLA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-JAMSHEDPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SHILLONG": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BALLYBAZAR": {
+      "configured": 16,
+      "recording": 16,
+      "not_recording": 0
+    },
+    "BOI-RAIGANJ": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-RANIHAT": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BARIPADA-ZO": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-KAGALNAGAR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-RANAGHAT": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-RANDIA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-CUTTACK": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-JAGULI": {
+      "configured": 16,
+      "recording": 0,
+      "not_recording": 16
+    },
+    "BOI-ASHANGI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-ADITYAPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-MISROD": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-JAYDEVVIHARBR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-ARAMBAGH": {
+      "configured": 16,
+      "recording": 16,
+      "not_recording": 0
+    },
+    "BOI-RAIRANGPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BETHUADAHRI": {
+      "configured": 16,
+      "recording": 8,
+      "not_recording": 8
+    },
+    "BOI-ALIPURDUAR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-HARDA-ROAD": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-GANGTOK": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-MURARISHACHOWMATHA": {
+      "configured": 16,
+      "recording": 16,
+      "not_recording": 0
+    },
+    "BOI-LILUAH": {
+      "configured": 12,
+      "recording": 12,
+      "not_recording": 0
+    },
+    "BOI-UPPER BAZAR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-KOLABERA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI LALPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-CHOPDA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BALASORE": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-TELCO-TOWN": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-PANASPADA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-CHANDEKASARE": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-ROING": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-PATHARDIFATA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-ISLAMPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-CHIMTHANA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-TATISILWAL": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-PURI": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-SATPUR": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-THOUBAL": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-DANKUNI": {
+      "configured": 16,
+      "recording": 16,
+      "not_recording": 0
+    },
+    "BOI-BAGUIHATI": {
+      "configured": 12,
+      "recording": 12,
+      "not_recording": 0
+    },
+    "BOI-LOKANNATH": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-BHADRESWAR": {
+      "configured": 16,
+      "recording": 12,
+      "not_recording": 4
+    },
+    "BOI-CHHOTAGAMHARIA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-AMALNER": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "BOI-GANERA": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    },
+    "SDF-RASP5": {
+      "configured": 0,
+      "recording": 0,
+      "not_recording": 0
+    }
+  },
+  "camera_sum": {
+    "configured": 465,
+    "recording": 358,
+    "not_recording": 107
+  },
+  "newest_device": {
+    "name": "BOI-DX7",
+    "createdTime": 1781003683803
+  },
+  "panel_brands": {
+    "TRISIM": 36,
+    "SEPLe": 7,
+    "SEPLE": 56,
+    "UTKAL LAXMI": 1,
+    "UTKALLAXMI": 1
+  },
+  "collected_at_ts_ms": 1785818854259
+}
