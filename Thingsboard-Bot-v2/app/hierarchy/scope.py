@@ -24,7 +24,7 @@ class RegionalScope:
 
 
 # Region type prefixes for explicit detection
-REGION_PREFIXES = {"FGMO", "LHO", "ZO", "CO", "RO", "RBO", "NBG"}
+REGION_PREFIXES = {"FGMO", "LHO", "AO", "ZO", "CO", "RO", "RBO", "NBG"}
 
 
 def should_fail_closed(scope: RegionalScope, matched_node_id: str | None) -> bool:

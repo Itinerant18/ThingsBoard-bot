@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 
 from app.db.models import Customer, HierarchyNode
-from app.hierarchy.parser import ParsedNode, parse_device_path
+from app.hierarchy.parser import ParsedNode, parse_device_from_attrs
 from app.hierarchy.prefix import derive_prefix
 from app.hierarchy.store import rebuild_ancestor_paths, upsert_nodes
 from app.tasks.live_sync import sync_all_customers
@@ -64,12 +64,17 @@ async def import_hierarchy(
                 if isinstance(device.get("serverAttributes"), dict)
                 else {}
             )
+            merged_attrs = {**attributes, **telemetry}
             full_path = str(telemetry.get("full_path") or attributes.get("full_path") or "")
             prefix = derive_prefix(name, full_path, prefixes)
             if not prefix:
                 skipped += 1
                 continue
-            nodes.extend(parse_device_path(prefix, name, str(device.get("id") or ""), full_path))
+            nodes.extend(
+                parse_device_from_attrs(
+                    prefix, name, str(device.get("id") or ""), merged_attrs, full_path
+                )
+            )
             touched.add(prefix)
         await upsert_nodes(session, nodes)
         for customer in touched:

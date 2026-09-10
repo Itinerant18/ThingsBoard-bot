@@ -69,3 +69,6 @@ plans/
 # local MCP configs hold API keys
 .mcp.json
 Thingsboard-Bot-v2/mcp/mcp_servers.json
+
+graphify-out/
+hierarchy_probe_report.json
